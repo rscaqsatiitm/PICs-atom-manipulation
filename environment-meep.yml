@@ -1,0 +1,11 @@
+# Optional environment for the 2D FDTD of grating antennas (scripts/m3_grating_fdtd.py).
+# Create with micromamba/conda:  micromamba create -f environment-meep.yml
+# Then run:  make m3g MEEPPY=<env>/bin/python
+name: picsim-meep
+channels: [conda-forge]
+dependencies:
+  - python=3.12
+  - pymeep=1.35.0=mpi_mpich*
+  - numpy
+  - scipy
+  - matplotlib

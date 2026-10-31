@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "picsim"
+version = "0.1.0"
+description = "Simulation of SiN photonic integrated circuit elements (MZI switches, splitter trees, optical phased array) for neutral-atom control, ANRF ARG proposal Phase A."
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=2.0",
+  "scipy>=1.13",
+  "matplotlib>=3.8",
+  "shapely>=2.0",
+  "scikit-fem==12.0.2",
+  "femwell==0.1.12",
+  "gmsh>=4.12",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["picsim*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
