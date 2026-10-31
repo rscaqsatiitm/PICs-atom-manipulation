@@ -109,7 +109,9 @@ def pitch_efficiency(elem, w_e):
     cpl = json.loads((RESULTS / "m1_coupling.json").read_text())["outputs"]["rows"]
     c = sorted([r for r in cpl if r["key"] == "1064_0.4"], key=lambda r: r["pitch"])
     pitch_c = np.array([r["pitch"] for r in c])
-    Lc = np.array([r["Lc_um"] for r in c])
+    # beyond ~1e5 um the supermode splitting (< 1e-6) is at the FEM floor and non-monotonic: treat the
+    # largest value reached as a lower bound and keep L_c monotonic in pitch
+    Lc = np.maximum.accumulate(np.minimum(np.array([r["Lc_um"] for r in c]), 1e5))
 
     def Lc_at(p):
         return float(np.exp(np.interp(p, pitch_c, np.log(Lc))))

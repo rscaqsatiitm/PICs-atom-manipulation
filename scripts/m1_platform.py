@@ -74,7 +74,7 @@ def plot_width(rows, design):
                 ax[0, j].plot(w, [x[key] for x in r], ls, color=c, label=f"{key}, t={t*1e3:.0f} nm" if j == 0 else None)
             ax[0, j].axvline(design[f"{lk}_{t}"]["w_design"], color=c, lw=0.6, alpha=0.6)
         ax[0, j].axhline(nc, color="k", lw=0.8)
-        ax[0, j].set_title(f"lambda = {LAMS[lk]*1e3:.1f} nm (vertical lines: design widths)")
+        ax[0, j].set_title(f"{LAMS[lk]*1e3:.1f} nm (lines: design widths)")
         ax[0, j].set_xlabel("width (um)")
     ax[0, 0].set_ylabel("n_eff")
     ax[0, 0].legend(fontsize=6, ncol=1)
@@ -202,17 +202,24 @@ def bend_loss(design, straight):
 
 # ------------------------------------------------------------------ substrate leakage
 def _box_job(args):
-    key, lam, t, w, tbox, pol = args
+    key, lam, t, w, tbox, pol, n_guess = args
     xs = M.XSection(cores=[(0, w)], t=t, substrate=True, t_box=tbox, x_left=-5, x_right=5)
-    ms = M.solve(xs, lam, num_modes=4, n_guess=None)
+    # shift-invert at the straight-guide index; the default shift would return Si-substrate modes
+    ms = M.solve(xs, lam, num_modes=8, n_guess=n_guess)
     cand = [m for m in ms if (m.te_fraction > 0.5) == (pol == "TE")]
     m = max(cand, key=lambda m: m.gamma_core) if cand else None
-    return {"key": key, "t_box": tbox, "pol": pol, "db_per_cm": max(m.loss_db_per_cm, 0) if m else np.nan}
+    return {"key": key, "t_box": tbox, "pol": pol, "db_per_cm": max(m.loss_db_per_cm, 0) if m else np.nan,
+            "gamma": m.gamma_core if m else np.nan, "neff": m.neff.real if m else np.nan}
 
 
 def box_leakage(design):
-    jobs = [(k, d["lam"], d["t"], d["w_design"], tb, pol) for k, d in design.items()
-            for tb in (1.0, 1.5, 2.0, 3.0, 4.0) for pol in ("TE", "TM")]
+    jobs = []
+    for k, d in design.items():
+        st = M.solve(M.XSection(cores=[(0, d["w_design"])], t=d["t"]), d["lam"], num_modes=4)
+        for pol in ("TE", "TM"):
+            m0 = M.fundamental(st, pol)
+            for tb in (1.0, 1.5, 2.0, 3.0, 4.0):
+                jobs.append((k, d["lam"], d["t"], d["w_design"], tb, pol, m0.neff.real))
     rows = pmap(_box_job, jobs)
     f, ax = fig(1, 1, w=4.0, h=3.0)
     for k in design:

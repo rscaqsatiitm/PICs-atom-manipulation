@@ -1,7 +1,7 @@
 {
  "name": "m1_width_sweep",
  "script": "scripts/m1_platform.py",
- "git": "uncommitted",
+ "git": "980cbd7",
  "notes": "Design width: widest 0.1 um grid width with TE1 cut off or within TE1_margin of the cladding index, and TE0-TM0 splitting >= birefringence_min (a square 400 x 400 nm guide at 895 nm is polarisation-degenerate).",
  "inputs": {
   "thicknesses": {
