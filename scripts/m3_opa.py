@@ -130,21 +130,21 @@ def pitch_efficiency(elem, w_e):
                      "L_parallel_max_for_-20dB_um": 0.064 * Lc_at(p) if p >= pitch_c[0] else None})
     # parallel length each emitter type needs
     L_endfire = 50.0  # um, straight section at the facet after the fan-in (CHOICE)
+    lengths = {"endfire": L_endfire}
     raw = RESULTS / "m3_grating_fdtd_raw.json"
-    L_grating = None
     if raw.exists():
         g = json.loads(raw.read_text())
-        # emitter length that radiates 90% of the power: ln(10)/(2 alpha), for the strongest case simulated
-        best = max(g, key=lambda r: r["alpha_per_um"])
-        L_grating = float(np.log(10) / (2 * best["alpha_per_um"]))
-    out = {"rows": rows, "w_e_1e2_um": w_e,
-           "L_parallel_endfire_um": L_endfire, "L_parallel_grating_90pct_um": L_grating}
-    for name, Lp in (("endfire", L_endfire), ("grating", L_grating)):
-        if Lp is None:
-            continue
-        # minimum pitch at which power coupling over Lp stays below -20 dB: Lp <= 0.064 Lc
-        ok = [r["pitch_um"] for r in rows if r["Lc_um"] and 0.064 * r["Lc_um"] >= Lp]
-        out[f"min_pitch_{name}_um"] = min(ok) if ok else f">{rows[-1]['pitch_um']}"
+        for e in sorted({r["etch_um"] for r in g}):
+            best = max([r for r in g if r["etch_um"] == e], key=lambda r: r["directionality_c"])
+            lengths[f"grating_etch{e*1e3:.0f}nm_box{best['t_box_um']:.0f}um"] = float(
+                np.log(10) / (2 * best["alpha_per_um"]))  # length radiating 90% of the power
+    out = {"rows": rows, "w_e_1e2_um": w_e, "parallel_lengths_um": lengths, "min_pitch_um": {}}
+    p_fine = np.linspace(pitch_c[0], pitch_c[-1], 400)
+    Lc_fine = np.exp(np.interp(p_fine, pitch_c, np.log(Lc)))
+    for name, Lp in lengths.items():
+        # power coupling over Lp below -20 dB: sin^2(pi Lp / (2 Lc)) < 0.01  ->  Lp <= 0.064 Lc
+        ok = p_fine[0.064 * Lc_fine >= Lp]
+        out["min_pitch_um"][name] = float(ok.min()) if len(ok) else f">{p_fine[-1]:.2f}"
     f, ax = fig(1, 2, h=3.0)
     P = [r["pitch_um"] for r in rows]
     ax[0, 0].plot(P, [r["slit_eff_center"] for r in rows], "-o", ms=3, label="on axis")
@@ -154,9 +154,8 @@ def pitch_efficiency(elem, w_e):
     ax[0, 0].set_ylabel("fraction")
     ax[0, 0].legend(fontsize=7)
     ax[0, 1].semilogy(pitch_c, 0.064 * Lc, "-o", ms=3, label="max parallel length for -20 dB")
-    ax[0, 1].axhline(L_endfire, color="C1", lw=1, label="end-fire straight section")
-    if L_grating:
-        ax[0, 1].axhline(L_grating, color="C2", lw=1, label="grating, 90% emitted")
+    for (name, Lp), c in zip(lengths.items(), ("C1", "C2", "C3", "C4")):
+        ax[0, 1].axhline(Lp, color=c, lw=1, label=name)
     ax[0, 1].set_xlabel("pitch (um)")
     ax[0, 1].set_ylabel("length (um)")
     ax[0, 1].legend(fontsize=7)
@@ -363,10 +362,68 @@ def loss_budget(pe, mbs, grating):
     return out
 
 
+# ------------------------------------------------------------------ H. grating-antenna summary (FDTD)
+def grating_summary():
+    """Tabulate the 2D FDTD grating results and derive emission-angle wavelength sensitivity.
+
+    Grating equation (first order, into air): sin(theta) = n_avg - lambda/Lambda, hence
+    d sin(theta)/d lambda = (n_avg - n_g)/lambda - 1/Lambda (n_g: group index of the grating section,
+    approximated by the duty-weighted slab group index).
+    """
+    from picsim import slab
+
+    raw = json.loads((RESULTS / "m3_grating_fdtd_raw.json").read_text())
+    n_sin, n_ox = float(mat.n_sin(LAM)), float(mat.n_sio2(LAM))
+    rows = []
+    for r in sorted(raw, key=lambda r: (r["etch_um"], r["t_box_um"])):
+        e = r["etch_um"]
+        ng = []
+        for tt in (prm.T_SIN.value, prm.T_SIN.value - e):
+            npl = slab.slab_neff(tt, LAM + 0.001, float(mat.n_sin(LAM + 0.001)), float(mat.n_sio2(LAM + 0.001)))
+            nmi = slab.slab_neff(tt, LAM - 0.001, float(mat.n_sin(LAM - 0.001)), float(mat.n_sio2(LAM - 0.001)))
+            n0 = slab.slab_neff(tt, LAM, n_sin, n_ox)
+            ng.append(n0 - LAM * (npl - nmi) / 0.002)
+        n_g = 0.5 * (ng[0] + ng[1])
+        ds = (r["n_avg_slab"] - n_g) / LAM - 1 / r["period_um"]  # per um
+        th = np.radians(r["theta_air_deg"])
+        dth_deg_per_nm = float(np.degrees(ds / np.cos(th)) * 1e-3)
+        lam = np.array(r["lam_um"])
+        d = np.array(r["up"]) / (np.array(r["up"]) + np.array(r["down"]))
+        rows.append({"etch_um": e, "t_box_um": r["t_box_um"], "period_um": r["period_um"],
+                     "theta_air_deg": r["theta_air_deg"], "alpha_per_um": r["alpha_per_um"],
+                     "L_90pct_um": float(np.log(10) / (2 * r["alpha_per_um"])),
+                     "directionality": r["directionality_c"], "reflection": r["refl_c"],
+                     "directionality_min_pm15nm": float(d.min()), "directionality_max_pm15nm": float(d.max()),
+                     "dtheta_dlambda_deg_per_nm": dth_deg_per_nm})
+    f, ax = fig(1, 2, h=3.0)
+    for e, c in zip(sorted({r["etch_um"] for r in rows}), ("C0", "C1", "C2")):
+        rr = [r for r in rows if r["etch_um"] == e]
+        ax[0, 0].plot([r["t_box_um"] for r in rr], [r["directionality"] for r in rr], "-o", color=c, ms=3,
+                      label=f"etch {e*1e3:.0f} nm")
+        ax[0, 1].semilogy([r["t_box_um"] for r in rr], [r["L_90pct_um"] for r in rr], "-o", color=c, ms=3)
+    ax[0, 0].set_xlabel("buried oxide (um)")
+    ax[0, 0].set_ylabel("up / (up + down)")
+    ax[0, 0].legend(fontsize=7)
+    ax[0, 1].set_xlabel("buried oxide (um)")
+    ax[0, 1].set_ylabel("length for 90% emission (um)")
+    save_result("m3_grating", script=SCRIPT, fig=f,
+                inputs={"fdtd": "results/m3_grating_fdtd_raw.json (scripts/m3_grating_fdtd.py, MEEP 1.35, 2D, "
+                                "40 px/um, Si substrate, 2 um top oxide, duty 0.5, nominal 10 deg)"},
+                outputs={"rows": rows},
+                notes="2D model of a uniform grating. Directionality oscillates with buried-oxide thickness through "
+                      "the Si-substrate reflection; a bottom reflector or a two-layer grating is needed for > 0.8.")
+    return rows
+
+
 EMITTER = None
 
 if __name__ == "__main__":
-    parts = sys.argv[1:] or ["field", "pitch", "spot", "multibeam", "noise", "update", "budget"]
+    parts = sys.argv[1:] or ["grating", "field", "pitch", "spot", "multibeam", "noise", "update", "budget"]
+    if "grating" in parts:
+        for r in grating_summary():
+            print({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items()}, flush=True)
+        if parts == ["grating"]:
+            sys.exit(0)
     w = design_width()
     EMITTER = emitter_profile(w)
     elem, w_e, neff = EMITTER
@@ -377,7 +434,7 @@ if __name__ == "__main__":
     pe = None
     if "pitch" in parts:
         pe = pitch_efficiency(elem, w_e)
-        print(json.dumps({k: v for k, v in pe.items() if k != "rows"}), flush=True)
+        print(json.dumps({k: v for k, v in pe.items() if k != "rows"}, default=float), flush=True)
         for r in pe["rows"]:
             print(r, flush=True)
     if "spot" in parts:
