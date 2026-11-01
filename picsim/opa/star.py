@@ -63,11 +63,14 @@ class StarCoupler:
     def field(self, d):
         return self.E0 * np.exp(-1j * self.k_s * d * self.y / self.R)
 
+    def _arm_modes_on_y(self):
+        if not hasattr(self, "_eony"):
+            self._eony = np.interp(self.y[:, None] - self.y_n[None, :], self.eta_x, self.e, left=0.0, right=0.0)
+        return self._eony
+
     def arm_amplitudes(self, d):
         """Complex amplitudes coupled into the N arms from a port at offset d (unit input power)."""
-        E = self.field(d)
-        e_on_y = np.interp(self.y[:, None] - self.y_n[None, :], self.eta_x, self.e, left=0.0, right=0.0)
-        return (E[:, None] * e_on_y).sum(axis=0) * self.dy
+        return (self.field(d) @ self._arm_modes_on_y()) * self.dy
 
     def capture(self, d):
         return float(np.sum(np.abs(self.arm_amplitudes(d)) ** 2))

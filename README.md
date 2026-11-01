@@ -5,7 +5,8 @@ ANRF/ARG/2026/009937 (Phase A, Objective 3): the SiN waveguide platform at 894.6
 MMI splitter trees, MZI switches and the 16-channel 894.6 nm router, thermo-optic phase shifters, and the
 optical-phased-array (OPA) steering engine with its relay to the meta-objective and the atoms.
 
-See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-tweezer design, and
+See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-tweezer design,
+`docs/independent_steering.md` for independently steerable tweezers, and
 `docs/parameters.md` for the provenance of every input.
 
 ## Status (first pass complete)
@@ -20,6 +21,7 @@ See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-twe
 | 6 Power | `scripts/m6_power.py` | self-heating, facet intensity, Kerr phase |
 | 7 Budget | `scripts/m7_budget.py` | error-budget links, `docs/parameters.md` |
 | 8 Twenty tweezers | `scripts/m8_twenty.py` | star-coupler OPA with 20 switched ports vs phase synthesis; `docs/twenty_tweezers.md` |
+| 9 Independent steering | `scripts/m9_independent.py` | sliding-window focal-plane OPA vs AOD-emulation routes; `docs/independent_steering.md` |
 
 ## Layout
 

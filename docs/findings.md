@@ -23,7 +23,9 @@ fill, 64 channels steer over +/-33 um (17 sites at 4 um pitch), not +/-100 um, a
 about 15 tweezers on one row. More than 20 simultaneous tweezers on one row need 128 channels; 128 channels
 at 0.75 fill cover +/-89 um at 1.33 times the power per tweezer. A follow-up study (`docs/twenty_tweezers.md`) shows
 that 20 individually switchable tweezers at 1064.4 and 894.6 nm are best delivered by a 128-emitter OPA fed
-through a 20-port star coupler, with one switch per port and a common phase ramp for parallel moves.
+through a 20-port star coupler, with one switch per port and a common phase ramp for parallel moves; for
+independent motion of each tweezer, as with AOD tones, a sliding-window focal-plane OPA is required
+(`docs/independent_steering.md`).
 
 (iii) **Switch architecture.** A single MZI with the simulated 2x2 MMI spread reaches 50 dB in only 49% of
 devices at 3 mrad phase accuracy. A cascaded pair, as in [ZHAO], reaches >= 50 dB in every trial

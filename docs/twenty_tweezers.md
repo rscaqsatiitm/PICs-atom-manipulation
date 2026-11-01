@@ -4,6 +4,10 @@ Design study for Objective 3 (proposal ANRF/ARG/2026/009937, draft v97). Code: `
 `scripts/m8_twenty.py`; results `results/m8_*.json`. All simulated values are SIM outputs, valid in the
 regime simulated, and must be reviewed before they enter the proposal.
 
+> Follow-up: this design moves all lit tweezers together. For independent motion of each tweezer, as with AOD
+> tones, see `docs/independent_steering.md` (sliding-window focal-plane OPA). The switched-port design below
+> remains the recommendation for the 894.6 nm addressing beams.
+
 ## 1. Result
 
 Twenty tweezers that are steerable and individually switchable can be delivered on the 400 nm SiN platform

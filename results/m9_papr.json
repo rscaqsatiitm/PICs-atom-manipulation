@@ -1,0 +1,29 @@
+{
+ "name": "m9_papr",
+ "script": "scripts/m9_independent.py",
+ "git": "3597a65",
+ "notes": "Complex synthesis on the arms must scale every arm to the largest |c_n|; the efficiency is mean/max. With frequency tags (route F) the maximum is over arms and time.",
+ "inputs": {
+  "K": 20,
+  "N": 128,
+  "positions": "20 random 4 um sites within +/-60 um",
+  "optimisation": "tweezer phases (Powell on a soft-max of |c|^2), best of 6 starts"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "K": 20,
+    "tagged": false,
+    "peak_over_mean": 1.335485235614835,
+    "efficiency": 0.7487915053883892
+   },
+   {
+    "K": 20,
+    "tagged": true,
+    "peak_over_mean": 2.281035373868696,
+    "efficiency": 0.43839740999017196
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
