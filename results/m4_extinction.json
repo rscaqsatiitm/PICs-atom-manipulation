@@ -1,7 +1,7 @@
 {
  "name": "m4_extinction",
  "script": "scripts/m4_switches.py",
- "git": "9c596b3",
+ "git": "4edd7f4",
  "notes": "Trimmed: the input splitter is an MZI trimmed to match the output coupler, limited by the same phase error. Floor: incoherent stray light relative to input.",
  "inputs": {
   "sigma_kappa": {
@@ -199,9 +199,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "none",
-    "median_dB": 54.86119656095005,
-    "p5_dB": 45.94706697430637,
-    "P_ge_target": 0.7815
+    "median_dB": 64.63149836967128,
+    "p5_dB": 58.30733157559392,
+    "P_ge_target": 1.0
    },
    {
     "kappa_case": "fab_spread",
@@ -209,9 +209,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "-70dB",
-    "median_dB": 54.730444524625426,
-    "p5_dB": 45.9301218717992,
-    "P_ge_target": 0.779
+    "median_dB": 63.52476071374981,
+    "p5_dB": 58.02325987843845,
+    "P_ge_target": 1.0
    },
    {
     "kappa_case": "fab_spread",
@@ -219,9 +219,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "none",
-    "median_dB": 51.86867876355292,
-    "p5_dB": 44.54539294914803,
-    "P_ge_target": 0.64775
+    "median_dB": 55.08905732752412,
+    "p5_dB": 48.76492110998095,
+    "P_ge_target": 0.89475
    },
    {
     "kappa_case": "fab_spread",
@@ -229,9 +229,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "-70dB",
-    "median_dB": 51.80232722283089,
-    "p5_dB": 44.53317731385184,
-    "P_ge_target": 0.64425
+    "median_dB": 54.951193914639944,
+    "p5_dB": 48.73242416111636,
+    "P_ge_target": 0.893
    },
    {
     "kappa_case": "fab_spread",
@@ -239,9 +239,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "none",
-    "median_dB": 44.27463996410555,
-    "p5_dB": 37.89257027386013,
-    "P_ge_target": 0.16475
+    "median_dB": 44.631396543244804,
+    "p5_dB": 38.307530667811456,
+    "P_ge_target": 0.17975
    },
    {
     "kappa_case": "fab_spread",
@@ -249,9 +249,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "-70dB",
-    "median_dB": 44.26300813802828,
-    "p5_dB": 37.889877649407445,
-    "P_ge_target": 0.16325
+    "median_dB": 44.61882245062861,
+    "p5_dB": 38.304595813092966,
+    "P_ge_target": 0.1785
    },
    {
     "kappa_case": "fab_spread",
@@ -259,9 +259,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "none",
-    "median_dB": 35.18486734031889,
-    "p5_dB": 28.664631734939427,
-    "P_ge_target": 0.023
+    "median_dB": 35.08846836375269,
+    "p5_dB": 28.766774912952247,
+    "P_ge_target": 0.02125
    },
    {
     "kappa_case": "fab_spread",
@@ -269,9 +269,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "-70dB",
-    "median_dB": 35.18342976210984,
-    "p5_dB": 28.664313371448735,
-    "P_ge_target": 0.0225
+    "median_dB": 35.08706926032828,
+    "p5_dB": 28.766448572442133,
+    "P_ge_target": 0.02125
    },
    {
     "kappa_case": "fab_spread",
@@ -279,8 +279,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "none",
-    "median_dB": 111.09183010929551,
-    "p5_dB": 97.07950926832311,
+    "median_dB": 130.26960406551635,
+    "p5_dB": 120.13521398333586,
     "P_ge_target": 1.0
    },
    {
@@ -289,8 +289,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "-70dB",
-    "median_dB": 69.99939591726962,
-    "p5_dB": 69.94679178119178,
+    "median_dB": 69.99861771210847,
+    "p5_dB": 69.94807292552892,
     "P_ge_target": 1.0
    },
    {
@@ -299,8 +299,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "none",
-    "median_dB": 104.6344833817756,
-    "p5_dB": 93.33390150669456,
+    "median_dB": 111.1847565207755,
+    "p5_dB": 101.05033955087677,
     "P_ge_target": 1.0
    },
    {
@@ -309,8 +309,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "-70dB",
-    "median_dB": 69.99766593308831,
-    "p5_dB": 69.94121009795191,
+    "median_dB": 69.99763454865513,
+    "p5_dB": 69.94739955058644,
     "P_ge_target": 1.0
    },
    {
@@ -319,8 +319,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "none",
-    "median_dB": 89.30179263642691,
-    "p5_dB": 79.06315935293009,
+    "median_dB": 90.26967578013603,
+    "p5_dB": 80.13455722659097,
     "P_ge_target": 1.0
    },
    {
@@ -329,8 +329,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "-70dB",
-    "median_dB": 69.94287880507599,
-    "p5_dB": 69.4943551789379,
+    "median_dB": 69.9494251116127,
+    "p5_dB": 69.5980409164832,
     "P_ge_target": 1.0
    },
    {
@@ -339,8 +339,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "none",
-    "median_dB": 70.99748217838422,
-    "p5_dB": 61.00245946968144,
+    "median_dB": 71.18553567445647,
+    "p5_dB": 61.04509728314453,
     "P_ge_target": 1.0
    },
    {
@@ -349,8 +349,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "-70dB",
-    "median_dB": 67.45508318277706,
-    "p5_dB": 60.48716180393578,
+    "median_dB": 67.54260205751743,
+    "p5_dB": 60.52373318361732,
     "P_ge_target": 1.0
    },
    {
@@ -519,9 +519,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "none",
-    "median_dB": 54.86237966574677,
-    "p5_dB": 45.94688727256797,
-    "P_ge_target": 0.7815
+    "median_dB": 64.62880797687461,
+    "p5_dB": 58.30727512456139,
+    "P_ge_target": 1.0
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -529,9 +529,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "-70dB",
-    "median_dB": 54.73112443480622,
-    "p5_dB": 45.929972879104625,
-    "P_ge_target": 0.779
+    "median_dB": 63.52213750854569,
+    "p5_dB": 58.02317576393224,
+    "P_ge_target": 1.0
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -539,9 +539,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "none",
-    "median_dB": 51.86887148202135,
-    "p5_dB": 44.545394604145805,
-    "P_ge_target": 0.64775
+    "median_dB": 55.08659551034956,
+    "p5_dB": 48.76485913038512,
+    "P_ge_target": 0.89475
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -549,9 +549,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "-70dB",
-    "median_dB": 51.802507518531996,
-    "p5_dB": 44.533178919296255,
-    "P_ge_target": 0.644
+    "median_dB": 54.94851348150917,
+    "p5_dB": 48.732359092141245,
+    "P_ge_target": 0.893
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -559,9 +559,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "none",
-    "median_dB": 44.27353403049098,
-    "p5_dB": 37.89253976170984,
-    "P_ge_target": 0.16475
+    "median_dB": 44.62973873856576,
+    "p5_dB": 38.30744933310029,
+    "P_ge_target": 0.17975
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -569,9 +569,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "-70dB",
-    "median_dB": 44.26187748555779,
-    "p5_dB": 37.88984714158451,
-    "P_ge_target": 0.16325
+    "median_dB": 44.617130235226924,
+    "p5_dB": 38.304514251604104,
+    "P_ge_target": 0.17825
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -579,9 +579,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "none",
-    "median_dB": 35.18115898815199,
-    "p5_dB": 28.6634329851964,
-    "P_ge_target": 0.023
+    "median_dB": 35.088048607797504,
+    "p5_dB": 28.766638213063647,
+    "P_ge_target": 0.02125
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -589,9 +589,9 @@
     "arch": "single_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "-70dB",
-    "median_dB": 35.17972736627282,
-    "p5_dB": 28.663112337242726,
-    "P_ge_target": 0.0225
+    "median_dB": 35.08664953314222,
+    "p5_dB": 28.766311864224384,
+    "P_ge_target": 0.02125
    },
    {
     "kappa_case": "fab_plus_design_offset",
@@ -599,8 +599,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "none",
-    "median_dB": 111.09140437017074,
-    "p5_dB": 97.07993023052019,
+    "median_dB": 130.26769145686552,
+    "p5_dB": 120.13301124124801,
     "P_ge_target": 1.0
    },
    {
@@ -609,8 +609,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.001,
     "floor": "-70dB",
-    "median_dB": 69.99558685543045,
-    "p5_dB": 69.94277896849007,
+    "median_dB": 69.99491689163665,
+    "p5_dB": 69.94495380897013,
     "P_ge_target": 1.0
    },
    {
@@ -619,8 +619,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "none",
-    "median_dB": 104.63340794613376,
-    "p5_dB": 93.33333367821834,
+    "median_dB": 111.18280674037541,
+    "p5_dB": 101.04830881929514,
     "P_ge_target": 1.0
    },
    {
@@ -629,8 +629,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.003,
     "floor": "-70dB",
-    "median_dB": 69.99396062621923,
-    "p5_dB": 69.93734158375213,
+    "median_dB": 69.99411785427918,
+    "p5_dB": 69.94400333613437,
     "P_ge_target": 1.0
    },
    {
@@ -639,8 +639,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "none",
-    "median_dB": 89.30125544053354,
-    "p5_dB": 79.06298945817237,
+    "median_dB": 90.267595876815,
+    "p5_dB": 80.13262570622791,
     "P_ge_target": 1.0
    },
    {
@@ -649,8 +649,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.01,
     "floor": "-70dB",
-    "median_dB": 69.93934399950405,
-    "p5_dB": 69.48960650945534,
+    "median_dB": 69.94598330172786,
+    "p5_dB": 69.59124573051956,
     "P_ge_target": 1.0
    },
    {
@@ -659,8 +659,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "none",
-    "median_dB": 70.99112780250016,
-    "p5_dB": 60.99716700307945,
+    "median_dB": 71.18308380449955,
+    "p5_dB": 61.04184912775811,
     "P_ge_target": 1.0
    },
    {
@@ -669,8 +669,8 @@
     "arch": "cascade2_trimmed",
     "sigma_phi_rad": 0.03,
     "floor": "-70dB",
-    "median_dB": 67.4539193850478,
-    "p5_dB": 60.48462815316628,
+    "median_dB": 67.54122257346799,
+    "p5_dB": 60.520456289819116,
     "P_ge_target": 1.0
    }
   ],

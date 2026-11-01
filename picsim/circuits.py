@@ -48,9 +48,9 @@ def mc_extinction(n, sigma_k, sigma_phi, sigma_a=0.0, stages=1, tunable=False, f
     """Monte Carlo extinction (dB) of a switch channel.
 
     stages: number of cascaded MZIs, all switched together (ON: all at phi = 0; OFF: all at null).
-    tunable: if True, each MZI's input splitter is itself a thermo-optically trimmed MZI, so the effective
-             splitting ratio is set to match the output coupler; residual error is then set by the phase
-             resolution of the trim, sigma_phi (see trimmed_kappa).
+    tunable: if True, each MZI's input splitter is itself a thermo-optically trimmed MZI, set to the exact
+             null condition (compensating coupler and arm-loss imbalance); the residual is set by the trim phase
+             error sigma_phi (see trimmed_kappa).
     floor: incoherent stray-light floor relative to the input (e.g. 1e-7 for -70 dB).
     """
     rng = np.random.default_rng(seed)
@@ -60,9 +60,12 @@ def mc_extinction(n, sigma_k, sigma_phi, sigma_a=0.0, stages=1, tunable=False, f
         for _ in range(stages):
             k1 = np.clip(k_mean + sigma_k * rng.standard_normal(), 1e-6, 1 - 1e-6)
             k2 = np.clip(k_mean + sigma_k * rng.standard_normal(), 1e-6, 1 - 1e-6)
-            if tunable:
-                k1 = trimmed_kappa(k2, sigma_phi * rng.standard_normal())
             a1 = 1 + sigma_a * rng.standard_normal()
+            if tunable:
+                # trim the input splitter to the exact null condition sqrt(k2 (1-k1)) a1 = sqrt((1-k2) k1),
+                # which compensates both coupler and arm-loss imbalance; residual set by the trim phase error
+                k_null = k2 * a1**2 / (k2 * a1**2 + (1 - k2))
+                k1 = trimmed_kappa(k_null, sigma_phi * rng.standard_normal())
             on, off = mzi_on_off(k1, k2, a1, 1.0, sigma_phi * rng.standard_normal())
             T_on *= on
             T_off *= off

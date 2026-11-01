@@ -85,8 +85,17 @@ class OPA:
         return np.exp(-1j * k * np.outer(s, self.xn)) @ c
 
     def far_field(self, phases):
-        """Far-field amplitude U(s) on self.s (element factor x array factor)."""
-        return self._E_el * self.array_factor(phases)
+        """Far-field amplitude U(s) on self.s (element factor x array factor).
+
+        Only the propagating band |s| < 1 is computed; evanescent components never reach the slit or the
+        atoms, and the emitted power is defined on |s| < 1.
+        """
+        if not hasattr(self, "_prop"):
+            self._prop = np.nonzero(np.abs(self.s) < 1)[0]
+        U = np.zeros_like(self._E_el)
+        idx = self._prop
+        U[idx] = self._E_el[idx] * self.array_factor(phases, self.s[idx])
+        return U
 
     # ----------------------------------------------------------------- relay
     def _powers(self, phases):
@@ -120,8 +129,10 @@ class OPA:
         p_em, u_t, _, _ = self._powers(phases)
         nz = np.nonzero(u_t)[0]
         k = 2 * np.pi / self.lam
-        s_eval = self.x_to_s(x_a)
-        E = np.exp(-1j * k * np.outer(s_eval, self.x[nz])) @ u_t[nz] * self.dx
+        s_eval = np.atleast_1d(self.x_to_s(x_a))
+        E = np.empty(len(s_eval), dtype=complex)
+        for i in range(0, len(s_eval), 128):  # chunked direct transform (memory)
+            E[i:i + 128] = np.exp(-1j * k * np.outer(s_eval[i:i + 128], self.x[nz])) @ u_t[nz] * self.dx
         # int |E|^2 ds = lambda int |u_t|^2 dx and ds = dx_a / x_scale
         return np.abs(E) ** 2 / (self.lam * self.x_scale * p_em)
 
@@ -134,10 +145,12 @@ def channel_response(opa: "OPA", x_a):
     slit = np.abs(opa.s) < opa.s_cut
     pupil = np.abs(opa.x) <= opa.A / (2 * opa.fill)
     nz = np.nonzero(pupil)[0]
-    D = np.exp(-1j * k * np.outer(opa.x[nz], opa.x_to_s(x_a))) * opa.dx  # (nz, M)
-    G = np.empty((opa.N, len(np.atleast_1d(x_a))), dtype=complex)
+    D = np.exp(-1j * k * np.outer(opa.x[nz], np.atleast_1d(opa.x_to_s(x_a)))) * opa.dx  # (nz, M)
+    G = np.empty((opa.N, D.shape[1]), dtype=complex)
+    sl = np.nonzero(slit)[0]
     for n, xn in enumerate(opa.xn):
-        U = np.where(slit, opa._E_el * np.exp(-1j * k * opa.s * xn), 0)
+        U = np.zeros_like(opa._E_el)
+        U[sl] = opa._E_el[sl] * np.exp(-1j * k * opa.s[sl] * xn)
         u = np.fft.fftshift(np.fft.ifft(np.fft.ifftshift(U))) / opa.dx
         G[n] = u[nz] @ D
     return G

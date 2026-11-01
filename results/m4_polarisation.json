@@ -1,7 +1,7 @@
 {
  "name": "m4_polarisation",
  "script": "scripts/m4_switches.py",
- "git": "9c596b3",
+ "git": "4edd7f4",
  "notes": "TM light is not nulled when the TE path is at its null. T_TM = 1 is the worst case for one MZI; 0.25 is the mean of two cascaded MZIs with random TM phase. Required suppression S = ER_target - PER + 10 log10(T_TM).",
  "inputs": {
   "ER_target": {

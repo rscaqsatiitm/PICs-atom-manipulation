@@ -1,7 +1,7 @@
 {
  "name": "m4_dynamics",
  "script": "scripts/m4_switches.py",
- "git": "9c596b3",
+ "git": "4edd7f4",
  "notes": "Vpi at 894.6 nm is bracketed, not known: lambda scaling of the 795 nm device and linear interpolation to the 1013 nm device (a different design) differ.",
  "inputs": {
   "rise_ref": {
