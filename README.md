@@ -25,6 +25,7 @@ beam-propagation design and optimisation of that engine, and
 | 9 Independent steering | `scripts/m9_independent.py` | sliding-window focal-plane OPA vs AOD-emulation routes; `docs/independent_steering.md` |
 | 10 Star-coupler BPM | `scripts/m10_fpr.py`, `scripts/m10_fpr_meep.py` | calibrated effective index, wide-angle BPM of the dense-port coupler, FDTD check, least-squares synthesis; `docs/fpr_design.md` |
 | 11 Geometry optimisation | `scripts/m11_optimise.py` | oversampling, emitter facet, slab widths, window width |
+| 12 Scaling | `scripts/m12_scaling.py` | tweezers per row (packing), aberration vs size, scaling table; `docs/scaling.md` |
 
 ## Layout
 

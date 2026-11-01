@@ -1,0 +1,107 @@
+# How far the focal-plane OPA scales
+
+Follow-up to `docs/fpr_design.md`. Code: `scripts/m12_scaling.py`; results `results/m12_*.json`. Packing is
+simulated on the beam-propagation matrix of design D1; aberration with exact path lengths; the rest of the
+scaling table is derived from those results. Values are SIM or DERIVED and valid in the regime stated.
+
+## 1. Result
+
+One focal-plane engine moves about 40 independent tweezers along a row at its present size (128 ports), and
+about 60 when the row is matched to a +/-100 um objective field (192 ports). The packing limit is a spacing of
+3 um, i.e. 2.8 resolution cells or 1.75 spot widths. Below that the spots merge. Power per tweezer does not
+grow with the number of tweezers. A second dimension needs one engine per row: stacking chips with
+fast-axis micro-lenses, as in laser-diode stacks, gives an estimated 8 to 16 rows. Hence several hundred
+independent tweezers (16 rows x 40 to 60) are a realistic target, against a median of 13 (maximum 38) moved in
+parallel with crossed AODs in the 1,024-atom assembly cited in the proposal.
+
+The binding limits, in order: (i) the diffraction-limited field of the objective, which sets the ports per
+row; (ii) the number, speed and accuracy of fast actuators (2 per port, >= 200 kHz, ~1% and 10 mrad); (iii)
+laser power through each chip; (iv) slab size. Star-coupler aberration is not a limit below about 512 ports.
+
+## 2. Tweezers per row: packing
+
+A +/-60 um row of design D1 filled at spacing s, neighbours in phase quadrature, least-squares synthesis:
+
+| spacing | tweezers | intensity midway between neighbours | others' change when one moves 0.25 um | residual after switch-off |
+|---|---|---|---|---|
+| 6 um | 21 | 5e-4 | 0.11%, 1.6 nm | < 1e-5 |
+| 4 um | 31 | 3.8% | 0.10%, 2.6 nm | 1e-5 |
+| 3 um | 41 | 22% | 0.11%, 3.3 nm | 9e-4 |
+| 2.5 um | 49 | 43% | 0.79%, 10 nm | 9e-3 |
+| 2 um | 61 | 76% (spots merge, FWHM 3 um) | 5.2%, 74 nm | 7e-2 |
+
+The peak per tweezer per unit port power stays at 0.256 from 6 to 2.5 um spacing, so power per tweezer is
+independent of how many are lit. At 3 um the barrier between neighbours is 78% of the trap depth, which keeps
+the atoms separate; at 2.5 um independence degrades to the 1% level. We take 3 um as the practical limit.
+It is set by the spot width (1.71 um FWHM), hence by NA: at fixed NA, a narrower spot needs a less apodised
+window, which raises the tails.
+
+## 3. Ports per row: scaling of one engine
+
+With 1.5x oversampled arms, 2.0 um slab pitch and 1.5 um emitter pitch:
+
+| ports | row field | tweezers at 4 um / 3 um | slab radius | slab area | fast actuators | static trims | data rate (200 kHz, 16 bit) | worst aberration (rms) | full row at 4 um, 1.2 mK / 0.5 mK |
+|---|---|---|---|---|---|---|---|---|---|
+| 128 | 136 um | 30 / 40 | 1.3 mm | 0.5 mm^2 | 255 | 192 | 0.8 Gbit/s | 0.03 rad | 1.3 W / 0.54 W |
+| 192 | 204 um | 45 / 60 | 2.0 mm | 1.1 mm^2 | 383 | 288 | 1.2 Gbit/s | 0.05 rad | 1.9 W / 0.81 W |
+| 256 | 272 um | 60 / 80 | 2.7 mm | 2.0 mm^2 | 511 | 384 | 1.6 Gbit/s | 0.07 rad | 2.6 W / 1.1 W |
+| 512 | 545 um | 120 / 160 | 5.3 mm | 8.2 mm^2 | 1023 | 768 | 3.3 Gbit/s | 0.13 rad | 5.2 W / 2.2 W |
+| 1024 | 1090 um | 240 / 320 | 10.6 mm | 33 mm^2 | 2047 | 1536 | 6.6 Gbit/s | 0.27 rad | 10.4 W / 4.3 W |
+
+(Row field used: 88% of the port field. Power: 43 mW per 1.2 mK tweezer, the D1 value, assumed to hold at
+larger N.)
+
+**Aberration.** With the arm envelope produced by the synthesis, the worst-port residual grows linearly with
+size, about 0.033 rad x (ports/128), on the Rowland circle (port arc radius R/2). A quartic correction of the
+port curve gains nothing, so the remainder comes from the circular arm arc; an aspheric arm curve is the next
+step beyond ~512 ports. These geometric values are about half of the BPM figure for D1 (0.079 rad), so they
+are lower bounds. Even doubled, the Strehl ratio stays above 0.93 up to 512 ports.
+
+## 4. What sets the limit, and what pushing it requires
+
+(i) **Objective field.** Each port adds one resolution cell (1.06 um at NA 0.5) to the row, so the row can only
+be as long as the objective's diffraction-limited field. The +/-100 um target corresponds to about 192 ports
+and 60 tweezers per row. Going further needs a larger corrected field at NA 0.5, which is the hardest optical
+requirement in the system.
+
+(ii) **Fast actuators.** Two per port: 383 for a 192-port row, each updated at >= 200 kHz (the transport-heating
+limit at 1.2 mK) and accurate to about 1% in amplitude and 10 mrad in phase for 10 nm position noise. Beyond a
+few hundred channels per chip this needs drivers flip-chip bonded or co-integrated with the photonics, and
+closed-loop calibration (on-chip power taps or camera feedback) against PZT hysteresis and drift. This is the
+main engineering limit.
+
+(iii) **Power.** About 43 mW per tweezer at 1.2 mK, 18 mW at 0.5 mK. A full 192-port row needs 1.9 W (0.8 W at
+0.5 mK), which should enter through 2 to 3 fibres feeding sub-trees, to keep each facet below about
+20 MW/cm^2 (`m6_power`). Lowering the transport depth is the cheapest lever: it scales power linearly and
+relaxes the update rate (`m3_update_rate`).
+
+(iv) **Chip size.** The slab radius grows linearly with ports (2 mm at 192, 5 mm at 512). This is within one
+die but beyond a single electron-beam field, so stitching errors must be absorbed by the static trims, or the
+slab written by DUV lithography.
+
+(v) **Second dimension.** One engine addresses one row. Stacking M chips at 0.5 mm pitch, each with a
+cylindrical fast-axis micro-lens collimating its vertical emission to a ~170 um beam (numerical aperture
+0.004), and imaging the stack with 125x vertical demagnification gives rows 4 um apart at NA 0.5. Chip height
+errors of 1 um become 8 nm at the atoms. Rows from different chips do not overlap (Gaussian tails at 4 um are
+~1e-13). This optical arrangement is not simulated here. Its practical limit is mechanical, set by stacking
+and alignment, and plausibly 8 to 16 rows. With 192 ports per chip, 16 rows give about 700 to 960 independent
+tweezers over about 200 x 64 um, needing about 30 W at 1.2 mK or 13 W at 0.5 mK.
+
+## 5. Next steps
+
+(i) Simulate the stacked-chip anamorphic relay (row pitch, cross-talk between rows, alignment budget).
+(ii) Design an aspheric arm curve for > 512 ports.
+(iii) Specify the driver and calibration architecture for 383 fast channels per chip.
+(iv) Tolerance study of the dense port tapers (0.3 um gaps).
+
+## Verification notes
+
+| value | location | type | pointer |
+|---|---|---|---|
+| packing table | Sec. 2 | SIM | results/m12_packing.json (BPM matrix of D1; review before quoting) |
+| aberration vs size | Sec. 3 | SIM | results/m12_aberration.json (exact path lengths) |
+| scaling table | Sec. 3 | DERIVED | results/m12_table.json |
+| 43 mW per tweezer | Sec. 3, 4 | DERIVED | m10_route_E_LS_opt_A.json with the m9_E_power loss chain |
+| crossed-AOD median 13, max 38 | Sec. 1 | USER | proposal, Table 1, citing its ref. [17] |
+| stacked-chip relay (0.5 mm pitch, 125x, 170 um beam, 8 nm per um) | Sec. 4 | DERIVED | order-of-magnitude optics, not simulated |
+| 8 to 16 rows | Sec. 4 | CHOICE | engineering judgement (laser-diode-stack analogy), not a result |
