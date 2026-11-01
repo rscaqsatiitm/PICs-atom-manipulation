@@ -1,0 +1,75 @@
+{
+ "name": "m5_actuators",
+ "script": "scripts/m5_heaters.py",
+ "git": "745f3cc",
+ "notes": "Thermo-optic bandwidth ~0.35/rise. 64-channel power assumes on average P_pi per channel (phases uniformly spread over 0..2 pi).",
+ "inputs": {
+  "pzt": [
+   {
+    "value": 2.8,
+    "unit": "V",
+    "kind": "SOURCE",
+    "ref": "Montifiore et al., arXiv:2601.15695 (abstract, read 2026-10-31): coil MZM V_pi 2.8 V at 532 nm"
+   },
+   {
+    "value": 400000.0,
+    "unit": "Hz",
+    "kind": "SOURCE",
+    "ref": "Montifiore et al., arXiv:2601.15695 (abstract, read 2026-10-31): coil MZM 3-dB bandwidth 0.4 MHz"
+   }
+  ],
+  "aln": [
+   {
+    "value": 74.7,
+    "unit": "V",
+    "kind": "SOURCE",
+    "ref": "Zhao et al., arXiv:2508.09920 (abstract and Sec. 2, read 2026-10-31): single-ended V_pi 74.7 +/- 3.7 V at 795 nm"
+   },
+   {
+    "value": 200.0,
+    "unit": "V",
+    "kind": "SOURCE",
+    "ref": "Zhao et al., arXiv:2508.09920 (abstract and Sec. 2, read 2026-10-31): V_pi 200 V at 1013 nm"
+   },
+   {
+    "value": 2.6e-08,
+    "unit": "s",
+    "kind": "SOURCE",
+    "ref": "Zhao et al., arXiv:2508.09920 (abstract and Sec. 2, read 2026-10-31): 10-90% rise 26 +/- 7 ns"
+   }
+  ],
+  "PZT_Vpi_1064": {
+   "value": 5.60228947368421,
+   "unit": "V",
+   "kind": "DERIVED",
+   "ref": "2.8 V x 1064.4/532 assuming the same coil length and stress-optic coefficient; real value depends on mode overlap"
+  }
+ },
+ "outputs": {
+  "thermo-optic (plain)": {
+   "P_pi_mW": 83.7170695280202,
+   "bandwidth_Hz": 10372.55048678811,
+   "64ch_static_power_W": 5.357892449793293,
+   "hysteresis": "none"
+  },
+  "thermo-optic (trench + undercut)": {
+   "P_pi_mW": 3.0277428782903337,
+   "bandwidth_Hz": 238.83122672214313,
+   "64ch_static_power_W": 0.19377554421058135,
+   "hysteresis": "none"
+  },
+  "PZT stress-optic": {
+   "V_pi_V_at_1064_lambda_scaled": 5.60228947368421,
+   "bandwidth_Hz": 400000.0,
+   "holding_power": "tens of nW per actuator (SOURCE arXiv:2601.15695)",
+   "hysteresis": "yes (proposal Sec. 4); magnitude [VALUE?]"
+  },
+  "AlN piezo-optomechanical": {
+   "V_pi_V_795": 74.7,
+   "V_pi_V_1013": 200.0,
+   "rise_s": 2.6e-08,
+   "hysteresis": "negligible (AlN not ferroelectric)"
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

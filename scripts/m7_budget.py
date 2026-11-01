@@ -79,7 +79,9 @@ def links():
                 inputs={"NA": prm.NA_OBJ, "lam_addr": prm.LAM_ADDRESS, "site_pitch": prm.SITE_PITCH, "w0": prm.W0_TWEEZER,
                         "alpha": prm.ALPHA_CS_1064, "P_tweezer": prm.P_TWEEZER_ATOMS, "depth": prm.DEPTH_TRANSPORT,
                         "pos_noise": prm.POS_NOISE,
-                        "formulas": P(0, "-", "RECALLED", "heating rates: Savard, O'Hara, Thomas, PRA 56, R1095 (1997)")},
+                        "formulas": P(0, "-", "SOURCE", "heating rates: O'Hara et al., arXiv:physics/0003049 (PRL 82, 4204 "
+                                                  "(1999)), Gamma = pi^2 nu^2 S_I(2 nu), Q_dot = 4 pi^4 M nu^4 S_x(nu); "
+                                                  "read 2026-11-01")},
                 outputs=out,
                 notes="PSF: scalar Debye, aberration-free; a Strehl of 0.8 adds a halo not included here.")
     return out

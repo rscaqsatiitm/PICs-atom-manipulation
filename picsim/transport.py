@@ -98,19 +98,20 @@ def n_bar_smooth(T, d, f_trap, mass=None, n=20001):
 
 
 def heating_rate_position_noise(S_x, f_trap, mass=None):
-    """Mean energy heating rate (quanta/s) from trap-position noise with one-sided PSD S_x (m^2/Hz) at f_trap.
+    """Mean heating rate (quanta/s) from trap-position noise with one-sided PSD S_x (m^2/Hz) at f_trap.
 
-    Savard, O'Hara and Thomas, PRA 56, R1095 (1997) (RECALLED): <E_dot> = (pi/2) m w^4 S_x(w) (w = 2 pi f_trap),
-    hence quanta/s = (pi/2) m w^3 S_x / hbar.
+    O'Hara et al., arXiv:physics/0003049 (PRL 82, 4204 (1999)), read 2026-11-01: Q_dot = 4 pi^4 M nu^4 S_x(nu)
+    with S_x per Hz (checked against their numerical example, 2.8e-4 nK/s nu^4 S_x[um^2/Hz] for 6Li).
+    Hence quanta/s = Q_dot / (h nu) = 2 pi^3 M nu^3 S_x / hbar. (The often-quoted (pi/2) M w^4 S_x form uses a
+    PSD per unit angular frequency and is 2 pi larger when S_x per Hz is inserted.)
     """
     m = mass or prm.CS_MASS.value
-    w = 2 * np.pi * f_trap
-    return np.pi / 2 * m * w**3 * S_x / hbar
+    return 2 * np.pi**3 * m * f_trap**3 * S_x / hbar
 
 
 def heating_rate_intensity_noise(S_eps, f_trap):
     """Parametric heating rate constant Gamma (1/s) from fractional intensity noise PSD S_eps (1/Hz) at 2 f_trap.
 
-    Savard et al. 1997 (RECALLED): Gamma = pi^2 f_trap^2 S_eps(2 f_trap); <E>(t) = <E>(0) exp(Gamma t).
+    O'Hara et al., arXiv:physics/0003049, read 2026-11-01: Gamma = pi^2 nu^2 S_I(2 nu); <E_dot> = Gamma <E>.
     """
     return np.pi**2 * f_trap**2 * S_eps

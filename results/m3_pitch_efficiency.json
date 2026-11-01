@@ -1,0 +1,87 @@
+{
+ "name": "m3_pitch_efficiency",
+ "script": "scripts/m3_opa.py",
+ "git": "745f3cc",
+ "notes": "",
+ "inputs": {
+  "N": 64,
+  "element": "TE0 channel mode lateral |Ex| at 1064.4 nm, t = 400 nm",
+  "coupling": "results/m1_coupling.json (1064_0.4)",
+  "L_endfire_um": "CHOICE 50 um",
+  "grating": "results/m3_grating_fdtd_raw.json"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "pitch_um": 1.0,
+    "slit_eff_center": 0.9961587205589592,
+    "slit_eff_at_0.8_range": 0.6422625404965369,
+    "peak_rel_at_0.8_range": 0.6375547385751361,
+    "Lc_um": 56.47079048522072,
+    "L_parallel_max_for_-20dB_um": 3.614130591054126
+   },
+   {
+    "pitch_um": 1.25,
+    "slit_eff_center": 0.7548710445628712,
+    "slit_eff_at_0.8_range": 0.5964356080343476,
+    "peak_rel_at_0.8_range": 0.7817245831307096,
+    "Lc_um": 241.05492912507978,
+    "L_parallel_max_for_-20dB_um": 15.427515464005106
+   },
+   {
+    "pitch_um": 1.5,
+    "slit_eff_center": 0.6497313085032185,
+    "slit_eff_at_0.8_range": 0.5365374301221466,
+    "peak_rel_at_0.8_range": 0.817198528101787,
+    "Lc_um": 1006.3136299167367,
+    "L_parallel_max_for_-20dB_um": 64.40407231467115
+   },
+   {
+    "pitch_um": 2.0,
+    "slit_eff_center": 0.51925215807358,
+    "slit_eff_at_0.8_range": 0.43364314379570157,
+    "peak_rel_at_0.8_range": 0.8266170294322204,
+    "Lc_um": 16787.33746828282,
+    "L_parallel_max_for_-20dB_um": 1074.3895979701006
+   },
+   {
+    "pitch_um": 2.5,
+    "slit_eff_center": 0.39541883810217676,
+    "slit_eff_at_0.8_range": 0.378465166306983,
+    "peak_rel_at_0.8_range": 0.947435996924535,
+    "Lc_um": 78261.17821570185,
+    "L_parallel_max_for_-20dB_um": 5008.715405804918
+   },
+   {
+    "pitch_um": 3.0,
+    "slit_eff_center": 0.34030151120522845,
+    "slit_eff_at_0.8_range": 0.31139913945514197,
+    "peak_rel_at_0.8_range": 0.90583617234857,
+    "Lc_um": 100000.00000000001,
+    "L_parallel_max_for_-20dB_um": 6400.000000000001
+   },
+   {
+    "pitch_um": 4.0,
+    "slit_eff_center": 0.2532064690014445,
+    "slit_eff_at_0.8_range": 0.23985661546357426,
+    "peak_rel_at_0.8_range": 0.9377619308876962,
+    "Lc_um": 100000.00000000001,
+    "L_parallel_max_for_-20dB_um": 6400.000000000001
+   }
+  ],
+  "w_e_1e2_um": 0.3700000000000001,
+  "parallel_lengths_um": {
+   "endfire": 50.0,
+   "grating_etch50nm_box3um": 383.6927831585298,
+   "grating_etch100nm_box3um": 89.76789136742565,
+   "grating_etch200nm_box2um": 20.17202642644459
+  },
+  "min_pitch_um": {
+   "endfire": 1.4616541353383459,
+   "grating_etch50nm_box3um": 1.8203007518796994,
+   "grating_etch100nm_box3um": 1.563157894736842,
+   "grating_etch200nm_box2um": 1.2992481203007518
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
