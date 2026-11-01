@@ -1,7 +1,7 @@
 {
  "name": "m7_budget",
  "script": "scripts/m7_budget.py",
- "git": "3597a65",
+ "git": "3f89044",
  "notes": "PSF: scalar Debye, aberration-free; a Strehl of 0.8 adds a halo not included here.",
  "inputs": {
   "NA": {

@@ -6,7 +6,8 @@ MMI splitter trees, MZI switches and the 16-channel 894.6 nm router, thermo-opti
 optical-phased-array (OPA) steering engine with its relay to the meta-objective and the atoms.
 
 See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-tweezer design,
-`docs/independent_steering.md` for independently steerable tweezers, and
+`docs/independent_steering.md` for independently steerable tweezers, `docs/fpr_design.md` for the
+beam-propagation design and optimisation of that engine, and
 `docs/parameters.md` for the provenance of every input.
 
 ## Status (first pass complete)
@@ -22,6 +23,8 @@ See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-twe
 | 7 Budget | `scripts/m7_budget.py` | error-budget links, `docs/parameters.md` |
 | 8 Twenty tweezers | `scripts/m8_twenty.py` | star-coupler OPA with 20 switched ports vs phase synthesis; `docs/twenty_tweezers.md` |
 | 9 Independent steering | `scripts/m9_independent.py` | sliding-window focal-plane OPA vs AOD-emulation routes; `docs/independent_steering.md` |
+| 10 Star-coupler BPM | `scripts/m10_fpr.py`, `scripts/m10_fpr_meep.py` | calibrated effective index, wide-angle BPM of the dense-port coupler, FDTD check, least-squares synthesis; `docs/fpr_design.md` |
+| 11 Geometry optimisation | `scripts/m11_optimise.py` | oversampling, emitter facet, slab widths, window width |
 
 ## Layout
 
@@ -38,6 +41,7 @@ See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-twe
 | `picsim/opa/` | OPA near field, Fourier-plane slit, pupil relay, multi-tweezer synthesis, phase noise, star coupler |
 | `picsim/transport.py` | motional excitation of a moved atom (harmonic trap, staircase trajectories) |
 | `picsim/budget.py` | error-budget links from optical specs to atom metrics |
+| `picsim/bpm.py` | 2D wide-angle FD-BPM and the calibrated lateral effective-index model |
 | `scripts/m*_*.py` | one script per module; each writes `results/<name>.json` (+ `.png`) |
 | `tests/` | unit tests against analytic limits |
 

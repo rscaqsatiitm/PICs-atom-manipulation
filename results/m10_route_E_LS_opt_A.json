@@ -1,0 +1,79 @@
+{
+ "name": "m10_route_E_LS_opt_A",
+ "script": "scripts/m10_fpr.py",
+ "git": "3f89044",
+ "notes": "",
+ "inputs": {
+  "T": "results/m10_T_opt_A.npz",
+  "synthesis": "LinearSynth: Gaussian targets, FWHM 1.68 um, Tikhonov 1e-4 of the mean eigenvalue",
+  "focal_plane": {
+   "N_ports": 128,
+   "N_arms": 192,
+   "w_emit": 1.2,
+   "p_out": 1.5,
+   "w_port": 1.7,
+   "w_arm": 1.7
+  }
+ },
+ "outputs": {
+  "tag": "opt_A",
+  "static_pos_err_max_nm": 7.578689966043939,
+  "static_peak_spread": 0.005178617359829427,
+  "peak_per_unit_port_power_mean": 0.25851951407866564,
+  "moves": [
+   {
+    "move_um": 0.1,
+    "moved_pos_err_nm": -0.8665124441122884,
+    "others_pos_change_max_nm": 0.2607193335109059,
+    "others_peak_change_max": 0.00030737618910792186
+   },
+   {
+    "move_um": 0.5,
+    "moved_pos_err_nm": -1.1599367838783792,
+    "others_pos_change_max_nm": 1.3278892355046423,
+    "others_peak_change_max": 0.0009458021772340564
+   },
+   {
+    "move_um": 1.0,
+    "moved_pos_err_nm": 0.1659442309289716,
+    "others_pos_change_max_nm": 3.465481519704383,
+    "others_peak_change_max": 0.0010657896505883446
+   },
+   {
+    "move_um": 2.0,
+    "moved_pos_err_nm": -0.6111178864287581,
+    "others_pos_change_max_nm": 0.4031129568176084,
+    "others_peak_change_max": 0.0005111991273598626
+   },
+   {
+    "move_um": 4.0,
+    "moved_pos_err_nm": -0.35171567585479124,
+    "others_pos_change_max_nm": 0.961828203955406,
+    "others_peak_change_max": 0.0007512901653943249
+   }
+  ],
+  "switch_off": {
+   "residual_at_site": 1.575874614409601e-06,
+   "others_peak_change_max": 0.000568380329028173
+  },
+  "single_peak_centre": 0.2925084228012003,
+  "single_P_eff": 0.2532403294579308,
+  "single_edge_over_centre": 0.7027497011442715,
+  "single_fwhm_centre_um": 1.7142910355444676,
+  "noise": [
+   {
+    "sigma_amp_and_phase": 0.003,
+    "pos_rms_nm": 2.223751121476232
+   },
+   {
+    "sigma_amp_and_phase": 0.01,
+    "pos_rms_nm": 7.814909691730109
+   },
+   {
+    "sigma_amp_and_phase": 0.03,
+    "pos_rms_nm": 26.114472947526007
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

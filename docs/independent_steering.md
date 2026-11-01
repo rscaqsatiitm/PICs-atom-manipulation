@@ -4,6 +4,11 @@ Design study for Objective 3 (proposal ANRF/ARG/2026/009937, draft v97). Code: `
 `picsim/opa/star.py`; results `results/m9_*.json`. Simulated values are SIM outputs, valid in the regime
 simulated, and must be reviewed before they enter the proposal.
 
+> Follow-up: the star coupler has since been designed by beam propagation and optimised
+> (`docs/fpr_design.md`). The optimised design (192 arms, Rowland-type port arc, 1.2 um emitter facets,
+> least-squares port synthesis) needs about 43 mW per 1.2 mK tweezer (0.86 W for 20) and keeps the
+> independence figures below. The numbers in this note are for the first, paraxial design.
+
 ## 1. Result
 
 A sliding-window focal-plane OPA moves 20 tweezers independently along a row, switches each on and off on
