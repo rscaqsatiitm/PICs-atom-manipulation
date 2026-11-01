@@ -1,0 +1,72 @@
+{
+ "name": "m10_route_E_LS_full_A",
+ "script": "scripts/m10_fpr.py",
+ "git": "9eafd86",
+ "notes": "",
+ "inputs": {
+  "T": "results/m10_T_full_A.npz",
+  "synthesis": "LinearSynth: Gaussian targets, FWHM 1.68 um, Tikhonov 1e-4 of the mean eigenvalue",
+  "focal_plane": {}
+ },
+ "outputs": {
+  "tag": "full_A",
+  "static_pos_err_max_nm": 7.088503185485706,
+  "static_peak_spread": 0.005636378088649574,
+  "peak_per_unit_port_power_mean": 0.17509621999184158,
+  "moves": [
+   {
+    "move_um": 0.1,
+    "moved_pos_err_nm": -0.7385254461382829,
+    "others_pos_change_max_nm": 0.2625853762197039,
+    "others_peak_change_max": 0.000315012311207008
+   },
+   {
+    "move_um": 0.5,
+    "moved_pos_err_nm": -0.23052127994560578,
+    "others_pos_change_max_nm": 1.570536435153258,
+    "others_peak_change_max": 0.0010277815751907893
+   },
+   {
+    "move_um": 1.0,
+    "moved_pos_err_nm": 0.7620525352436402,
+    "others_pos_change_max_nm": 3.477210688295429,
+    "others_peak_change_max": 0.0011525405920655984
+   },
+   {
+    "move_um": 2.0,
+    "moved_pos_err_nm": -0.8331443181006648,
+    "others_pos_change_max_nm": 0.3347308466068455,
+    "others_peak_change_max": 0.0004110980766822703
+   },
+   {
+    "move_um": 4.0,
+    "moved_pos_err_nm": -0.8931189826881791,
+    "others_pos_change_max_nm": 0.6442473561563133,
+    "others_peak_change_max": 0.0009058866850208958
+   }
+  ],
+  "switch_off": {
+   "residual_at_site": 1.3366175379043985e-06,
+   "others_peak_change_max": 0.0005821542343251718
+  },
+  "single_peak_centre": 0.22445625235908492,
+  "single_P_eff": 0.16889368882516714,
+  "single_edge_over_centre": 0.5151322219458694,
+  "single_fwhm_centre_um": 1.7141170882005672,
+  "noise": [
+   {
+    "sigma_amp_and_phase": 0.003,
+    "pos_rms_nm": 2.215923340467177
+   },
+   {
+    "sigma_amp_and_phase": 0.01,
+    "pos_rms_nm": 7.803193447564566
+   },
+   {
+    "sigma_amp_and_phase": 0.03,
+    "pos_rms_nm": 26.186858341686957
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
