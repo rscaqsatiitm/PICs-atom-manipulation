@@ -1,7 +1,7 @@
 {
  "name": "m10_bpm_vs_fdtd",
  "script": "scripts/m10_fpr.py",
- "git": "875f14a",
+ "git": "ec7489d",
  "notes": "fidelity = |<T_fdtd|T_bpm>|^2 / (|T_fdtd|^2 |T_bpm|^2): 1 means identical arm amplitude and phase distributions up to a constant.",
  "inputs": {
   "bpm": "dx 0.02 um, dz 0.125 um",
@@ -17,6 +17,15 @@
     "amp_rel_err_rms": 0.034939717525891076,
     "phase_err_rms_rad": 0.25896412006699465,
     "fidelity": 0.9325033931234481
+   },
+   {
+    "port": 0,
+    "res": 30,
+    "capture_meep": 0.36894678152013266,
+    "capture_bpm": 0.3713004900867788,
+    "amp_rel_err_rms": 0.03585576042848308,
+    "phase_err_rms_rad": 0.13152890263119874,
+    "fidelity": 0.9806540241597259
    },
    {
     "port": 2,

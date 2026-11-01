@@ -54,7 +54,9 @@ within 0.5% and arm-field fidelity >= 0.992 against dz = 0.0625 um).
 
 **Against 2D FDTD.** On a reduced 8-port, 8-arm coupler with the same angular range, MEEP (resolution
 20/um) and the BPM agree with arm-field fidelity 0.997 (centre port), 0.985 (middle) and 0.93 (edge port), and
-capture within 2 to 5%. The edge-port difference is under test at FDTD resolution 30/um.
+capture within 2 to 5%. At FDTD resolution 30/um the edge-port fidelity rises to 0.981 (rms phase difference
+0.13 rad, capture 0.369 vs 0.371), and the FDTD result itself changes by fidelity 0.98 between the two
+resolutions; hence the residual difference is dominated by FDTD discretisation rather than by the BPM.
 
 **Exact-path (Huygens) model.** For fast optimisation, a 2D Rayleigh-Sommerfeld model with exact path lengths
 (`star_rs.py`) reproduces the full 128 x 128 BPM to within 1% in capture and with fidelity 0.996 to 0.9996
@@ -129,8 +131,7 @@ splitters, 128 port phase shifters, which also carry the port trims) and 192 sta
 
 ## Verification notes
 
-All numbers are SIM outputs of this repository except the loss-chain assumptions marked above (CHOICE). The
-FDTD comparison at resolution 30/um for the edge port is pending (`results/m10_meep_port0_res30.json`).
+All numbers are SIM outputs of this repository except the loss-chain assumptions marked above (CHOICE).
 
 | value | location | type | pointer |
 |---|---|---|---|
