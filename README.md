@@ -7,6 +7,18 @@ optical-phased-array (OPA) steering engine with its relay to the meta-objective 
 
 See `docs/findings.md` for the results and `docs/parameters.md` for the provenance of every input.
 
+## Status (first pass complete)
+
+| Module | Script | Main outputs |
+|---|---|---|
+| 1 Platform | `scripts/m1_platform.py` | design widths, n_eff, n_g, dn/dT, bend loss, substrate leakage, coupling length |
+| 2 Couplers, MMI | `scripts/m2_couplers_mmi.py` | taper overlap and tolerance; MMI loss, bandwidth, split-ratio statistics |
+| 3 OPA | `scripts/m3_opa.py`, `scripts/m3_grating_fdtd.py` | range vs channels, pitch, gratings (FDTD), multi-tweezer synthesis, noise, update rate, loss |
+| 4 Switches, router | `scripts/m4_switches.py` | extinction Monte Carlo, polarisation, actuator dynamics, 16-channel router |
+| 5 Heaters | `scripts/m5_heaters.py` | P_pi, rise time, thermal crosstalk; actuator comparison |
+| 6 Power | `scripts/m6_power.py` | self-heating, facet intensity, Kerr phase |
+| 7 Budget | `scripts/m7_budget.py` | error-budget links, `docs/parameters.md` |
+
 ## Layout
 
 | path | content |
