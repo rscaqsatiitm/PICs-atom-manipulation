@@ -168,21 +168,15 @@ def full(calname="A"):
 
 
 # ------------------------------------------------------------------ route E with the BPM matrix
-class BPMFocalPlane(m9.FocalPlaneOPA):
-    def __init__(self, T):
-        super().__init__()
-        c = np.exp(-1j * np.angle(T[63] + T[64]))
-        A = T * c[None, :]
-        # orient: port index increasing -> +x at the atoms (same convention as the paraxial model)
-        xs = [spot_metrics(self.x, np.abs(A[k] @ self.G) ** 2)["x_peak"] for k in (10, 117)]
-        self.A = A if xs[1] > xs[0] else A[::-1]
+def route(calname="A", tag=None, fp_kwargs=None):
+    """Route-E metrics with a BPM transfer matrix (static arm and port trims applied, picsim.opa.focal_plane)."""
+    from picsim.opa.focal_plane import FocalPlane
 
-
-def route(calname="A"):
-    T = np.load(RESULTS / f"m10_T_full_{calname}.npz")["T"]
-    fp = BPMFocalPlane(T)
-    ports_x = [spot_metrics(fp.x, np.abs(fp.A[k] @ fp.G) ** 2)["x_peak"] for k in range(0, 128, 8)]
-    slope = float(np.polyfit(np.arange(0, 128, 8), ports_x, 1)[0])
+    tag = tag or f"full_{calname}"
+    T = np.load(RESULTS / f"m10_T_{tag}.npz")["T"]
+    fp = FocalPlane(A=T, **(fp_kwargs or {}))
+    ports_x = [spot_metrics(fp.x, np.abs(fp.A[k] @ fp.G) ** 2)["x_peak"] for k in range(0, fp.N_ports, 8)]
+    slope = float(np.polyfit(np.arange(0, fp.N_ports, 8), ports_x, 1)[0])
     rows, field = m9.window_study(fp)
     calt = m9.calibrated(fp, 0.9)
     ind = m9.independence(fp, cal=calt)
@@ -190,23 +184,16 @@ def route(calname="A"):
     ind["power_factor_mean_over_field"] = float(np.mean([calt[1](u) ** 2 for u in us]))
     ind["power_factor_edge"] = float(calt[1](60.0) ** 2)
     noise = m9.amplitude_noise(fp)
-    s0 = spot_metrics(fp.x, fp.intensity(fp.weights(0.0, 0.9)))
-    par = json.loads((RESULTS / "m9_E_power.json").read_text())["outputs"]
-    # scale the paraxial power result by the ratio of centre peak intensity per unit port power
-    fp_par = m9.FocalPlaneOPA()
-    s_par = spot_metrics(fp_par.x, fp_par.intensity(fp_par.weights(0.0, 0.9)))
-    ratio = s_par["peak"] / s0["peak"]
-    power = {"P_centre_mW": par["P_fibre_per_tweezer_centre_mW"] * ratio,
-             "P_field_mean_mW": par["P_fibre_per_tweezer_centre_mW"] * ratio * ind["power_factor_mean_over_field"],
-             "P_edge_mW": par["P_fibre_per_tweezer_centre_mW"] * ratio * ind["power_factor_edge"],
-             "P_20_W": 20 * par["P_fibre_per_tweezer_centre_mW"] * ratio * ind["power_factor_mean_over_field"] / 1e3,
-             "peak_ratio_paraxial_over_bpm": ratio}
-    out = {"calibration": calname, "port_spacing_um": slope, "window": rows, "field": field, "independence": ind,
-           "noise": noise, "power": power, "centre_fwhm_um": s0["fwhm"]}
-    save_result(f"m10_route_E_{calname}", script=SCRIPT,
-                inputs={"T": f"results/m10_T_full_{calname}.npz", "sigma_ports": 0.9,
-                        "power_reference": "m9_E_power (paraxial), scaled by the centre peak ratio"},
-                outputs=out)
+    scan = fp.field_scan(0.9, x_half=60.0, n=13)
+    pk = np.array([q["peak"] for q in scan])
+    out = {"tag": tag, "port_spacing_um": slope, "window": rows, "field": field, "independence": ind, "noise": noise,
+           "peak_centre": float(pk[len(pk) // 2]), "P_eff": float(1 / np.mean(1 / pk)),
+           "edge_over_centre": float(pk[0] / pk[len(pk) // 2]), "centre_fwhm_um": float(scan[len(scan) // 2]["fwhm"])}
+    save_result(f"m10_route_E_{tag}", script=SCRIPT,
+                inputs={"T": f"results/m10_T_{tag}.npz", "sigma_ports": 0.9, "focal_plane": fp_kwargs or {}},
+                outputs=out,
+                notes="P_eff: harmonic mean over |x| <= 60 um of the peak intensity per unit port power; compare "
+                      "with m11 rows of the same geometry.")
     return out
 
 

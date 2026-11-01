@@ -19,6 +19,24 @@ from .star_rs import StarCouplerRS
 _EMITTER_CACHE = {}
 
 
+def prepare_matrix(A, G, x):
+    """Static calibration of a port-to-arm matrix, as done on a device with trims on every arm and port.
+
+    (i) Arm trims: remove the arm-dependent phase seen by the two central ports.
+    (ii) Orientation: port index increasing -> +x at the atoms.
+    (iii) Port trims: remove each port's piston phase, taken at the peak of its own spot, so that adjacent
+         ports in a window add in phase.
+    """
+    c0 = A.shape[0] // 2
+    A = A * np.exp(-1j * np.angle(A[c0 - 1] + A[c0]))[None, :]
+    F = A @ G
+    pk = np.argmax(np.abs(F), axis=1)
+    if x[pk[-A.shape[0] // 8]] < x[pk[A.shape[0] // 8]]:
+        A, F, pk = A[::-1], F[::-1], pk[::-1]
+    piston = np.angle(F[np.arange(A.shape[0]), pk])
+    return A * np.exp(-1j * piston)[:, None]
+
+
 def emitter_profile(lam, width, t=0.4):
     key = (round(lam, 6), round(width, 4), t)
     if key not in _EMITTER_CACHE:
@@ -48,12 +66,10 @@ class FocalPlane:
             A = np.array([sc.arm_amplitudes(kk * p_port) for kk in self.k])[::-1]
         elif A is None:
             # exact-path model; arm phases calibrated with the two central ports (static arm trims)
-            A = StarCouplerRS(lam, t, N_ports, N_arms, p_port, p_a, self.R, w_port, w_arm,
-                              R_p=rp_ratio * self.R).matrix()
-            c0 = N_ports // 2
-            A = A * np.exp(-1j * np.angle(A[c0 - 1] + A[c0]))[None, :]
-            xs = [spot_metrics(self.x, np.abs(A[k] @ self.G) ** 2)["x_peak"] for k in (N_ports // 8, 7 * N_ports // 8)]
-            A = A if xs[1] > xs[0] else A[::-1]
+            A = prepare_matrix(StarCouplerRS(lam, t, N_ports, N_arms, p_port, p_a, self.R, w_port, w_arm,
+                                             R_p=rp_ratio * self.R).matrix(), self.G, self.x)
+        else:
+            A = prepare_matrix(A, self.G, self.x)
         self.A = A
         self.dx_port = lam / (2 * NA)
         self.e_pow = float(np.sum(self.opa.element(self.opa.x) ** 2) * self.opa.dx)
@@ -65,6 +81,10 @@ class FocalPlane:
     def intensity(self, port_amps):
         c = port_amps @ self.A
         return np.abs(c @ self.G) ** 2 / (self.opa.lam * self.opa.x_scale * self.e_pow)
+
+    def peak_near(self, I, x0, win=0.6):
+        m = np.abs(self.x - x0) < win
+        return spot_metrics(self.x[m], I[m])
 
     def spot(self, u, sigma):
         I = self.intensity(self.weights(u, sigma))
