@@ -96,3 +96,37 @@ class FocalPlane:
         """Peak per unit port power across the field of use (|x| <= x_half)."""
         us = np.linspace(-x_half / self.dx_port, x_half / self.dx_port, n)
         return [self.spot(u, sigma) for u in us]
+
+
+class LinearSynth:
+    """Least-squares port synthesis on the full calibrated response M = A G (ports x atom-plane samples).
+
+    Port amplitudes for a target field t(x) minimise |w M - t|^2 + lam |w|^2, i.e. w = t K with
+    K = M^H (M M^H + lam I)^-1, precomputed once (one matrix product per update). The target is a sum of
+    Gaussian spots (amplitude, phase, centre) with the FWHM of the window design and zero field elsewhere, so the
+    solution also suppresses each tweezer's tails at the others. Port coupling, aberrations and roll-off are all
+    inside M, hence compensated.
+    """
+
+    def __init__(self, fp: FocalPlane, fwhm=1.68, lam_rel=1e-4, x_half=72.0, step=0.04):
+        self.fp = fp
+        m = np.abs(fp.x) <= x_half
+        self.xs = fp.x[m][:: max(1, int(round(step / (fp.x[1] - fp.x[0]))))]
+        sel = np.searchsorted(fp.x, self.xs)
+        self.M = (fp.A @ fp.G[:, sel]) / np.sqrt(fp.opa.lam * fp.opa.x_scale * fp.e_pow)
+        MMh = self.M @ self.M.conj().T
+        lam = lam_rel * np.trace(MMh).real / MMh.shape[0]
+        self.K = self.M.conj().T @ np.linalg.inv(MMh + lam * np.eye(MMh.shape[0]))
+        self.wx = fwhm / np.sqrt(2 * np.log(2))  # Gaussian field 1/e radius giving the intensity FWHM
+
+    def target(self, centres, amps=None, phases=None):
+        centres = np.atleast_1d(centres)
+        amps = np.ones(len(centres)) if amps is None else np.asarray(amps)
+        phases = np.zeros(len(centres)) if phases is None else np.asarray(phases)
+        t = np.zeros(len(self.xs), dtype=complex)
+        for c, a, p in zip(centres, amps, phases):
+            t += a * np.exp(1j * p) * np.exp(-((self.xs - c) ** 2) / self.wx**2)
+        return t
+
+    def weights(self, centres, amps=None, phases=None):
+        return self.target(centres, amps, phases) @ self.K

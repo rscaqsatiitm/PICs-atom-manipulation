@@ -202,7 +202,79 @@ def route(calname="A", tag=None, fp_kwargs=None):
     return out
 
 
+def route_ls(tag="full_A", fp_kwargs=None, seed=0):
+    """Route E with least-squares port synthesis on the calibrated response (picsim.opa.focal_plane.LinearSynth)."""
+    from picsim.opa.focal_plane import FocalPlane, LinearSynth
+
+    T = np.load(RESULTS / f"m10_T_{tag}.npz")["T"]
+    fp = FocalPlane(A=T, **(fp_kwargs or {}))
+    ls = LinearSynth(fp)
+    rng = np.random.default_rng(seed)
+    while True:
+        xt = np.sort(rng.uniform(-60, 60, 20))
+        if np.min(np.diff(xt)) >= 4.0:
+            break
+    th = rng.uniform(0, 2 * np.pi, 20)
+    w0 = ls.weights(xt, phases=th)
+    I0 = fp.intensity(w0)
+    base = [fp.peak_near(I0, x) for x in xt]
+    pk0 = np.array([b["peak"] for b in base])
+    out = {"tag": tag, "static_pos_err_max_nm": float(max(abs(b["x_peak"] - x) for b, x in zip(base, xt)) * 1e3),
+           "static_peak_spread": float(np.ptp(pk0) / pk0.mean()),
+           "peak_per_unit_port_power_mean": float(pk0.mean() / (np.sum(np.abs(w0) ** 2) / 20)), "moves": []}
+    j = int(np.argmax(np.diff(xt)))
+    for d in (0.1, 0.5, 1.0, 2.0, 4.0):
+        xs = xt.copy()
+        xs[j] += d
+        I = fp.intensity(ls.weights(xs, phases=th))
+        mv = fp.peak_near(I, xs[j])
+        oth = [fp.peak_near(I, x) for i, x in enumerate(xs) if i != j]
+        ob = [b for i, b in enumerate(base) if i != j]
+        out["moves"].append({"move_um": d, "moved_pos_err_nm": float((mv["x_peak"] - xs[j]) * 1e3),
+                             "others_pos_change_max_nm": float(max(abs(o["x_peak"] - b["x_peak"]) for o, b in zip(oth, ob)) * 1e3),
+                             "others_peak_change_max": float(max(abs(o["peak"] / b["peak"] - 1) for o, b in zip(oth, ob)))})
+    xo, tho = np.delete(xt, j), np.delete(th, j)
+    I = fp.intensity(ls.weights(xo, phases=tho))
+    ob = [b for i, b in enumerate(base) if i != j]
+    out["switch_off"] = {"residual_at_site": float(np.interp(xt[j], fp.x, I) / base[j]["peak"]),
+                         "others_peak_change_max": float(max(abs(fp.peak_near(I, x)["peak"] / b["peak"] - 1)
+                                                             for x, b in zip(xo, ob)))}
+    # single tweezer across the field: peak per unit port power (sets laser power with depth equalised)
+    xs1 = np.linspace(-60, 60, 13)
+    pk1 = []
+    for x0 in xs1:
+        w = ls.weights([x0])
+        I = fp.intensity(w / np.sqrt(np.sum(np.abs(w) ** 2)))
+        pk1.append(fp.peak_near(I, x0)["peak"])
+    pk1 = np.array(pk1)
+    out.update({"single_peak_centre": float(pk1[6]), "single_P_eff": float(1 / np.mean(1 / pk1)),
+                "single_edge_over_centre": float(pk1[0] / pk1[6]),
+                "single_fwhm_centre_um": float(fp.peak_near(fp.intensity(ls.weights([0.0])), 0.0)["fwhm"])})
+    # actuator errors on the synthesised port amplitudes
+    noise = []
+    w1 = ls.weights([12.3])
+    s1 = fp.peak_near(fp.intensity(w1), 12.3)
+    for sa in (0.003, 0.01, 0.03):
+        dx = []
+        for _ in range(150):
+            w = w1 * (1 + sa * rng.standard_normal(len(w1))) * np.exp(1j * sa * rng.standard_normal(len(w1)))
+            dx.append(fp.peak_near(fp.intensity(w), 12.3)["x_peak"] - s1["x_peak"])
+        noise.append({"sigma_amp_and_phase": sa, "pos_rms_nm": float(np.std(dx) * 1e3)})
+    out["noise"] = noise
+    save_result(f"m10_route_E_LS_{tag}", script=SCRIPT,
+                inputs={"T": f"results/m10_T_{tag}.npz", "synthesis": "LinearSynth: Gaussian targets, FWHM 1.68 um, "
+                        "Tikhonov 1e-4 of the mean eigenvalue", "focal_plane": fp_kwargs or {}},
+                outputs=out)
+    return out
+
+
 if __name__ == "__main__":
+    if "routels" in sys.argv:
+        i = sys.argv.index("routels")
+        tag = sys.argv[i + 1]
+        kw = json.loads(sys.argv[i + 2]) if len(sys.argv) > i + 2 else {}
+        print(json.dumps(route_ls(tag, kw), indent=1, default=float), flush=True)
+        sys.exit(0)
     parts = sys.argv[1:] or ["calib", "small", "full", "route"]
     if "calib" in parts:
         print(json.dumps(calib(), indent=1, default=float), flush=True)
