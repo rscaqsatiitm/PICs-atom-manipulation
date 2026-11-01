@@ -26,6 +26,7 @@ beam-propagation design and optimisation of that engine, and
 | 10 Star-coupler BPM | `scripts/m10_fpr.py`, `scripts/m10_fpr_meep.py` | calibrated effective index, wide-angle BPM of the dense-port coupler, FDTD check, least-squares synthesis; `docs/fpr_design.md` |
 | 11 Geometry optimisation | `scripts/m11_optimise.py` | oversampling, emitter facet, slab widths, window width |
 | 12 Scaling | `scripts/m12_scaling.py` | tweezers per row (packing), aberration vs size, scaling table; `docs/scaling.md` |
+| 13 Stacked relay | `scripts/m13_stack.py` | stacked-chip anamorphic relay: facet far field, y fill, 2D row crosstalk (coherent / incoherent), collimator tolerances, layout; `docs/stacked_relay.md` |
 
 ## Layout
 

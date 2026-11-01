@@ -137,23 +137,35 @@ class OPA:
         return np.abs(E) ** 2 / (self.lam * self.x_scale * p_em)
 
 
-def channel_response(opa: "OPA", x_a, chunk=2048):
+def channel_pupil(opa: "OPA", dz=0.0):
+    """Pupil field of each channel with unit amplitude, after slit and pupil truncation.
+
+    Returns (x, u): pupil-plane positions referred to the chip (um, |x| <= A/(2 fill)) and u (N, len(x)).
+    dz (um) displaces the emitter plane from the plane the relay images onto the pupil (free-space
+    propagation exp(i k dz sqrt(1 - s^2)) applied to the angular spectrum).
+    """
+    k = 2 * np.pi / opa.lam
+    slit = np.abs(opa.s) < opa.s_cut
+    pupil = np.abs(opa.x) <= opa.A / (2 * opa.fill)
+    nz = np.nonzero(pupil)[0]
+    sl = np.nonzero(slit)[0]
+    prop = np.exp(1j * k * dz * np.sqrt(1 - opa.s[sl] ** 2)) if dz else 1.0
+    u = np.empty((opa.N, len(nz)), dtype=complex)  # one FFT at a time: memory
+    for n, xn in enumerate(opa.xn):
+        U = np.zeros(len(opa.s), dtype=complex)
+        U[sl] = opa._E_el[sl] * np.exp(-1j * k * opa.s[sl] * xn) * prop
+        u[n] = np.fft.fftshift(np.fft.ifft(np.fft.ifftshift(U)))[nz] / opa.dx
+    return opa.x[nz], u
+
+
+def channel_response(opa: "OPA", x_a, chunk=2048, dz=0.0):
     """Complex matrix G (N, M): atom-plane field at x_a from channel n with unit amplitude, through slit and
     pupil. For channel amplitudes c_n = apod_n exp(i phi_n), the intensity is |c @ G|^2 / (lambda x_scale p_em),
     identical to OPA.atom_intensity. The pupil-to-atom transform is evaluated in chunks of x_a (memory)."""
     k = 2 * np.pi / opa.lam
     x_a = np.atleast_1d(x_a)
-    slit = np.abs(opa.s) < opa.s_cut
-    pupil = np.abs(opa.x) <= opa.A / (2 * opa.fill)
-    nz = np.nonzero(pupil)[0]
-    sl = np.nonzero(slit)[0]
-    u = np.empty((opa.N, len(nz)), dtype=complex)  # pupil field of each channel (one FFT at a time: memory)
-    for n, xn in enumerate(opa.xn):
-        U = np.zeros(len(opa.s), dtype=complex)
-        U[sl] = opa._E_el[sl] * np.exp(-1j * k * opa.s[sl] * xn)
-        u[n] = np.fft.fftshift(np.fft.ifft(np.fft.ifftshift(U)))[nz] / opa.dx
+    xs, u = channel_pupil(opa, dz)
     G = np.empty((opa.N, len(x_a)), dtype=complex)
-    xs = opa.x[nz]
     for i in range(0, len(x_a), chunk):
         D = np.exp(-1j * k * np.outer(xs, opa.x_to_s(x_a[i:i + chunk]))) * opa.dx
         G[:, i:i + chunk] = u @ D

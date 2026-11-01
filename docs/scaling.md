@@ -79,18 +79,20 @@ relaxes the update rate (`m3_update_rate`).
 die but beyond a single electron-beam field, so stitching errors must be absorbed by the static trims, or the
 slab written by DUV lithography.
 
-(v) **Second dimension.** One engine addresses one row. Stacking M chips at 0.5 mm pitch, each with a
-cylindrical fast-axis micro-lens collimating its vertical emission to a ~170 um beam (numerical aperture
-0.004), and imaging the stack with 125x vertical demagnification gives rows 4 um apart at NA 0.5. Chip height
-errors of 1 um become 8 nm at the atoms. Rows from different chips do not overlap (Gaussian tails at 4 um are
-~1e-13). This optical arrangement is not simulated here. Its practical limit is mechanical, set by stacking
+(v) **Second dimension.** One engine addresses one row. Stacking chips at 0.5 mm pitch, each with its own
+cylindrical collimator (f = 175 um, NA 0.9), and imaging the stack with 125x vertical demagnification gives
+rows 4 um apart at NA 0.5. This relay is now simulated (`docs/stacked_relay.md`). Rows are independent provided
+every chip runs at its own laser frequency; with one shared frequency, crosstalk of about 1e-4 between rows
+interferes and changes neighbouring depths by up to 2.6%. The collimators must be aligned to about 0.1 um in
+height. The cross axis raises the power per tweezer by a factor 1.10 (to about 47 mW at 1.2 mK); the power
+column of the table above does not include this factor. The practical limit is mechanical, set by stacking
 and alignment, and plausibly 8 to 16 rows. With 192 ports per chip, 16 rows give about 720 (4 um spacing) to
-960 (3 um) independent tweezers over about 200 x 64 um, needing about 31 to 41 W at 1.2 mK, or 13 to 17 W at
+960 (3 um) independent tweezers over about 200 x 64 um, needing about 34 to 46 W at 1.2 mK, or 14 to 19 W at
 0.5 mK, spread over 16 chips.
 
 ## 5. Next steps
 
-(i) Simulate the stacked-chip anamorphic relay (row pitch, cross-talk between rows, alignment budget).
+(i) Done: stacked-chip relay, `docs/stacked_relay.md` (next: real collimator and relay lens design).
 (ii) Design an aspheric arm curve for > 512 ports.
 (iii) Specify the driver and calibration architecture for 383 fast channels per chip.
 (iv) Tolerance study of the dense port tapers (0.3 um gaps).
@@ -104,5 +106,5 @@ and alignment, and plausibly 8 to 16 rows. With 192 ports per chip, 16 rows give
 | scaling table | Sec. 3 | DERIVED | results/m12_table.json |
 | 43 mW per tweezer | Sec. 3, 4 | DERIVED | m10_route_E_LS_opt_A.json with the m9_E_power loss chain |
 | crossed-AOD median 13, max 38 | Sec. 1 | USER | proposal, Table 1, citing its ref. [17] |
-| stacked-chip relay (0.5 mm pitch, 125x, 170 um beam, 8 nm per um) | Sec. 4 | DERIVED | order-of-magnitude optics, not simulated |
+| stacked-chip relay (0.5 mm pitch, 125x, 8 nm per um, factor 1.10, frequency per chip) | Sec. 4 | SIM/DERIVED | results/m13_*.json, docs/stacked_relay.md |
 | 8 to 16 rows | Sec. 4 | CHOICE | engineering judgement (laser-diode-stack analogy), not a result |

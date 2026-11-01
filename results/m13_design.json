@@ -1,0 +1,333 @@
+{
+ "name": "m13_design",
+ "script": "scripts/m13_stack.py",
+ "git": "816c88e",
+ "notes": "Thin cylindrical lenses, first order. f_obj from the pupil radius WD tan(asin NA) = f_obj NA.",
+ "inputs": {
+  "d_chip_um": 500.0,
+  "f_obj_mm": 17.320508075688775,
+  "NA": 0.5,
+  "beta_um": 0.7,
+  "NA_FAC": 0.9,
+  "chips": 16,
+  "y_telescope_m": 25,
+  "f_a_mm": 100
+ },
+ "outputs": {
+  "rows": [
+   {
+    "delta_um": 3.0,
+    "n_chips": 16,
+    "D_demag": 166.66666666666666,
+    "f_obj_mm": 17.320508075688775,
+    "F_y_mm": 2886.751345948129,
+    "beta_um": 0.7,
+    "f_FAC_um": 233.33333333333331,
+    "collimated_beam_half_height_um": 210.0,
+    "collimated_beam_1e2_radius_um": 201.37130038641072,
+    "y_telescope": {
+     "m": 25.0,
+     "f_a_mm": 100.0,
+     "f_b_mm": 4.0,
+     "NA_after": 0.042064110308902294
+    },
+    "f_2_mm": 115.47005383792515,
+    "length_facet_to_pupil_mm": 439.406774342517,
+    "x_relay": {
+     "M_x": 60.14065304058602,
+     "f_1x_mm": 3.5934092333854584,
+     "f_2x_mm": 216.10997793787303,
+     "slit_from_facet_mm": 7.186818466770917
+    },
+    "stack_height_mm": 8.0,
+    "field_at_f_a_half_mm": 4.0,
+    "rows_at_atoms_um": [
+     -22.5,
+     22.5
+    ],
+    "abcd": {
+     "y_S_to_atoms": [
+      [
+       0.006000000000000002,
+       -1.6796935369978998e-13
+      ],
+      [
+       -3.468973507615973e-17,
+       166.66666666666663
+      ]
+     ],
+     "y_facet_to_pupil": [
+      [
+       12371.79148263484,
+       2.3195287105172083e-19
+      ],
+      [
+       0.0,
+       8.08290376865476e-05
+      ]
+     ],
+     "x_chip_to_pupil": [
+      [
+       -60.14065304058602,
+       -1.9325833824574641e-16
+      ],
+      [
+       0.0,
+       -0.016627687752661224
+      ]
+     ]
+    },
+    "checks": {
+     "y S->atoms is imaging (B=0)": true,
+     "y magnification": 0.006000000000000002,
+     "1/D": 0.006,
+     "y facet->pupil is imaging (B=0)": true,
+     "y facet->pupil magnification": 12371.79148263484,
+     "x chip->pupil is imaging (B=0)": true,
+     "x magnification": -60.14065304058602,
+     "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
+    },
+    "NA_collimated": 0.0016825644123560919,
+    "lagrange_check": {
+     "stack_half_height_x_NA_mm": 0.0067302576494243675,
+     "atom_half_field_x_NA_mm": 0.0067302576494243675
+    }
+   },
+   {
+    "delta_um": 4.0,
+    "n_chips": 16,
+    "D_demag": 125.0,
+    "f_obj_mm": 17.320508075688775,
+    "F_y_mm": 2165.0635094610966,
+    "beta_um": 0.7,
+    "f_FAC_um": 175.00000000000003,
+    "collimated_beam_half_height_um": 157.50000000000003,
+    "collimated_beam_1e2_radius_um": 151.02847528980809,
+    "y_telescope": {
+     "m": 25.0,
+     "f_a_mm": 100.0,
+     "f_b_mm": 4.0,
+     "NA_after": 0.05608548041186971
+    },
+    "f_2_mm": 86.60254037844386,
+    "length_facet_to_pupil_mm": 381.5550807568877,
+    "x_relay": {
+     "M_x": 60.14065304058602,
+     "f_1x_mm": 3.120305899444729,
+     "f_2x_mm": 187.65723447899913,
+     "slit_from_facet_mm": 6.240611798889458
+    },
+    "stack_height_mm": 8.0,
+    "field_at_f_a_half_mm": 4.0,
+    "rows_at_atoms_um": [
+     -30.0,
+     30.0
+    ],
+    "abcd": {
+     "y_S_to_atoms": [
+      [
+       0.008000000000000002,
+       -1.259770152748425e-13
+      ],
+      [
+       -2.595368652669963e-17,
+       124.99999999999999
+      ]
+     ],
+     "y_facet_to_pupil": [
+      [
+       12371.791482634835,
+       1.8783042160105896e-16
+      ],
+      [
+       0.0,
+       8.082903768654762e-05
+      ]
+     ],
+     "x_chip_to_pupil": [
+      [
+       -60.14065304058602,
+       3.548812055611593e-16
+      ],
+      [
+       0.0,
+       -0.01662768775266122
+      ]
+     ]
+    },
+    "checks": {
+     "y S->atoms is imaging (B=0)": true,
+     "y magnification": 0.008000000000000002,
+     "1/D": 0.008,
+     "y facet->pupil is imaging (B=0)": true,
+     "y facet->pupil magnification": 12371.791482634835,
+     "x chip->pupil is imaging (B=0)": true,
+     "x magnification": -60.14065304058602,
+     "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
+    },
+    "NA_collimated": 0.0022434192164747886,
+    "lagrange_check": {
+     "stack_half_height_x_NA_mm": 0.008973676865899154,
+     "atom_half_field_x_NA_mm": 0.008973676865899154
+    }
+   },
+   {
+    "delta_um": 5.0,
+    "n_chips": 16,
+    "D_demag": 100.0,
+    "f_obj_mm": 17.320508075688775,
+    "F_y_mm": 1732.0508075688774,
+    "beta_um": 0.7,
+    "f_FAC_um": 140.0,
+    "collimated_beam_half_height_um": 126.0,
+    "collimated_beam_1e2_radius_um": 120.82278023184645,
+    "y_telescope": {
+     "m": 25.0,
+     "f_a_mm": 100.0,
+     "f_b_mm": 4.0,
+     "NA_after": 0.07010685051483716
+    },
+    "f_2_mm": 69.2820323027551,
+    "length_facet_to_pupil_mm": 346.8440646055102,
+    "x_relay": {
+     "M_x": 60.14065304058602,
+     "f_1x_mm": 2.8364438990802916,
+     "f_2x_mm": 170.5855884036748,
+     "slit_from_facet_mm": 5.672887798160583
+    },
+    "stack_height_mm": 8.0,
+    "field_at_f_a_half_mm": 4.0,
+    "rows_at_atoms_um": [
+     -37.5,
+     37.5
+    ],
+    "abcd": {
+     "y_S_to_atoms": [
+      [
+       0.010000000000000002,
+       -1.623164181841481e-13
+      ],
+      [
+       -2.063758916710237e-17,
+       100.0
+      ]
+     ],
+     "y_facet_to_pupil": [
+      [
+       12371.791482634839,
+       1.2000386434903755e-16
+      ],
+      [
+       0.0,
+       8.08290376865476e-05
+      ]
+     ],
+     "x_chip_to_pupil": [
+      [
+       -60.14065304058602,
+       -1.8030629649500535e-16
+      ],
+      [
+       -5.551115123125783e-17,
+       -0.016627687752661224
+      ]
+     ]
+    },
+    "checks": {
+     "y S->atoms is imaging (B=0)": true,
+     "y magnification": 0.010000000000000002,
+     "1/D": 0.01,
+     "y facet->pupil is imaging (B=0)": true,
+     "y facet->pupil magnification": 12371.791482634839,
+     "x chip->pupil is imaging (B=0)": true,
+     "x magnification": -60.14065304058602,
+     "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
+    },
+    "NA_collimated": 0.0028042740205934864,
+    "lagrange_check": {
+     "stack_half_height_x_NA_mm": 0.011217096082373946,
+     "atom_half_field_x_NA_mm": 0.011217096082373946
+    }
+   },
+   {
+    "delta_um": 6.0,
+    "n_chips": 16,
+    "D_demag": 83.33333333333333,
+    "f_obj_mm": 17.320508075688775,
+    "F_y_mm": 1443.3756729740644,
+    "beta_um": 0.7,
+    "f_FAC_um": 116.66666666666666,
+    "collimated_beam_half_height_um": 105.0,
+    "collimated_beam_1e2_radius_um": 100.68565019320536,
+    "y_telescope": {
+     "m": 25.0,
+     "f_a_mm": 100.0,
+     "f_b_mm": 4.0,
+     "NA_after": 0.08412822061780459
+    },
+    "f_2_mm": 57.735026918962575,
+    "length_facet_to_pupil_mm": 323.70338717125844,
+    "x_relay": {
+     "M_x": 60.14065304058602,
+     "f_1x_mm": 2.6472025655039997,
+     "f_2x_mm": 159.20449102012523,
+     "slit_from_facet_mm": 5.294405131007999
+    },
+    "stack_height_mm": 8.0,
+    "field_at_f_a_half_mm": 4.0,
+    "rows_at_atoms_um": [
+     -45.0,
+     45.0
+    ],
+    "abcd": {
+     "y_S_to_atoms": [
+      [
+       0.012000000000000005,
+       -8.398467684989499e-14
+      ],
+      [
+       -1.7385518588077893e-17,
+       83.33333333333331
+      ]
+     ],
+     "y_facet_to_pupil": [
+      [
+       12371.79148263484,
+       1.1597643552586041e-19
+      ],
+      [
+       0.0,
+       8.08290376865476e-05
+      ]
+     ],
+     "x_chip_to_pupil": [
+      [
+       -60.140653040586024,
+       1.5323864512474864e-16
+      ],
+      [
+       -5.551115123125783e-17,
+       -0.01662768775266122
+      ]
+     ]
+    },
+    "checks": {
+     "y S->atoms is imaging (B=0)": true,
+     "y magnification": 0.012000000000000005,
+     "1/D": 0.012,
+     "y facet->pupil is imaging (B=0)": true,
+     "y facet->pupil magnification": 12371.79148263484,
+     "x chip->pupil is imaging (B=0)": true,
+     "x magnification": -60.140653040586024,
+     "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
+    },
+    "NA_collimated": 0.0033651288247121837,
+    "lagrange_check": {
+     "stack_half_height_x_NA_mm": 0.013460515298848735,
+     "atom_half_field_x_NA_mm": 0.013460515298848735
+    }
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

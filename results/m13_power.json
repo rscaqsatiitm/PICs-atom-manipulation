@@ -1,0 +1,46 @@
+{
+ "name": "m13_power",
+ "script": "scripts/m13_stack.py",
+ "git": "816c88e",
+ "notes": "factor_vs_assumption multiplies the laser power per tweezer estimated earlier (43 mW at 1.2 mK).",
+ "inputs": {
+  "beta_um": 0.7,
+  "NA_FAC": 0.9,
+  "assumption_replaced": "cross axis Gaussian w0 = 1.04 um, no cross-axis loss (m9_E_power)"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "x_um": 0.0,
+    "peak_gauss_assumption": 0.22441149467103327,
+    "peak_2d": 0.2032760638403512,
+    "peak_2d_square_pupil": 0.20964589156708857,
+    "factor_vs_assumption": 1.1039740264120885,
+    "circle_loss": 0.030383746989379734
+   },
+   {
+    "x_um": 30.0,
+    "peak_gauss_assumption": 0.20393267902057882,
+    "peak_2d": 0.1847218771516089,
+    "peak_2d_square_pupil": 0.19051491668555254,
+    "factor_vs_assumption": 1.103998520181791,
+    "circle_loss": 0.030407275371015285
+   },
+   {
+    "x_um": 60.0,
+    "peak_gauss_assumption": 0.15770475770097206,
+    "peak_2d": 0.1428123362521121,
+    "peak_2d_square_pupil": 0.14732944140804285,
+    "factor_vs_assumption": 1.1042796570638673,
+    "circle_loss": 0.030659894673870425
+   }
+  ],
+  "mean_factor": 1.1040840678859156,
+  "P_old_mW": 43.0,
+  "P_new_mW": 47.47561491909437,
+  "FAC_capture": 0.9882465713759877,
+  "eta_y": 0.9727731057051645,
+  "single_P_eff_old": 0.2532403294579308
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
