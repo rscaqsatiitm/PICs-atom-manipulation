@@ -63,16 +63,22 @@ def coupling_limits(widths, pitch):
     return out
 
 
+RP_ROWLAND = 0.555  # port-arc radius / R minimising aberration over the field (exact path lengths, m11 notes)
+
+
 def stage1():
-    cfgs = [dict(N_arms=na, w_emit=we) for na in (128, 160, 192, 256) for we in (0.6, 0.9, 1.2)]
+    cfgs = [dict(N_arms=na, w_emit=we, model="rs", rp_ratio=RP_ROWLAND) for na in (128, 160, 192, 256)
+            for we in (0.6, 0.9, 1.2)]
+    cfgs += [dict(N_arms=128, w_emit=0.6, model="rs", rp_ratio=1.0), dict(N_arms=128, w_emit=0.6, model="paraxial")]
     rows = pmap(evaluate, cfgs)
-    base = [r for r in rows if r["N_arms"] == 128 and r["w_emit"] == 0.6][0]
+    base = [r for r in rows if r["N_arms"] == 128 and r["w_emit"] == 0.6 and r.get("model") == "rs"
+            and r.get("rp_ratio") == 1.0][0]
     for r in rows:
         r["P_eff_rel_baseline"] = r["P_eff"] / base["P_eff"]
     lim = {"emitters_p1.5": coupling_limits((0.6, 0.9, 1.2), 1.5)}
     f, ax = fig(1, 2, h=3.0)
     for we, c in zip((0.6, 0.9, 1.2), ("C0", "C1", "C2")):
-        r = sorted([x for x in rows if x["w_emit"] == we], key=lambda x: x["N_arms"])
+        r = sorted([x for x in rows if x["w_emit"] == we and x.get("rp_ratio") == RP_ROWLAND], key=lambda x: x["N_arms"])
         ax[0, 0].plot([x["N_arms"] for x in r], [x["P_eff_rel_baseline"] for x in r], "-o", color=c, ms=3,
                       label=f"facet {we} um")
         ax[0, 1].plot([x["N_arms"] for x in r], [x["edge_over_centre"] for x in r], "-o", color=c, ms=3)
@@ -83,16 +89,19 @@ def stage1():
     ax[0, 0].legend(fontsize=7)
     save_result("m11_stage1", script=SCRIPT, fig=f,
                 inputs={"N_ports": 128, "p_port": 2.0, "p_a": 2.0, "w_port": 1.7, "w_arm": 1.7, "p_out": 1.5,
-                        "sigma": 0.9, "field_of_use_um": X_HALF, "model": "picsim.opa.focal_plane (paraxial FPR)"},
+                        "sigma": 0.9, "field_of_use_um": X_HALF,
+                        "model": "picsim.opa.focal_plane with the exact-path star coupler (star_rs), Rowland-type "
+                                 "port arc R_p = 0.555 R; baseline = confocal (R_p = R); paraxial row for reference"},
                 outputs={"rows": rows, "coupling_limits": lim})
     return rows, lim
 
 
 def stage2(n_arms, w_emit):
-    cfgs = [dict(N_arms=n_arms, w_emit=w_emit, w_arm=wa, w_port=wp) for wa in (1.2, 1.5, 1.7) for wp in (1.4, 1.7)]
+    base = dict(N_arms=n_arms, w_emit=w_emit, model="rs", rp_ratio=RP_ROWLAND)
+    cfgs = [dict(base, w_arm=wa, w_port=wp) for wa in (1.2, 1.5, 1.7) for wp in (1.4, 1.7)]
     rows = pmap(evaluate, cfgs)
     best = max(rows, key=lambda r: r["P_eff"])
-    sig = pmap(evaluate, [dict(N_arms=n_arms, w_emit=w_emit, w_arm=best["w_arm"], w_port=best["w_port"], sigma=s)
+    sig = pmap(evaluate, [dict(base, w_arm=best["w_arm"], w_port=best["w_port"], sigma=s)
                           for s in (0.8, 0.85, 0.9, 1.0)])
     lim = {"arms_p2.0": coupling_limits((1.2, 1.5, 1.7), 2.0), "ports_p2.0": coupling_limits((1.4, 1.7), 2.0)}
     save_result("m11_stage2", script=SCRIPT,

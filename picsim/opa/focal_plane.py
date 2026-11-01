@@ -14,6 +14,7 @@ import numpy as np
 from .. import modes as M
 from .array import OPA, channel_response, spot_metrics
 from .star import StarCoupler
+from .star_rs import StarCouplerRS
 
 _EMITTER_CACHE = {}
 
@@ -33,20 +34,28 @@ def emitter_profile(lam, width, t=0.4):
 
 class FocalPlane:
     def __init__(self, lam=1.064435, NA=0.5, N_ports=128, N_arms=128, p_port=2.0, p_a=2.0, w_port=1.7,
-                 w_arm=1.7, p_out=1.5, w_emit=0.6, t=0.4, A=None, dx_atoms=0.02):
+                 w_arm=1.7, p_out=1.5, w_emit=0.6, t=0.4, A=None, dx_atoms=0.02, model="paraxial", rp_ratio=1.0):
         self.lam, self.NA = lam, NA
         self.N_ports, self.N_arms = N_ports, N_arms
         self.opa = OPA(N=N_arms, pitch=p_out, lam=lam, element=emitter_profile(lam, w_emit, t), NA=NA)
         n_s = StarCoupler(lam, t, 2, p_a, 100.0, w_port, w_arm).n_s
         self.R = N_arms * p_a * p_port / (lam / n_s)
         self.k = np.arange(N_ports) - (N_ports - 1) / 2
-        if A is None:
-            sc = StarCoupler(lam, t, N_arms, p_a, self.R, w_port, w_arm)
-            A = np.array([sc.arm_amplitudes(kk * p_port) for kk in self.k])[::-1]
-        self.A = A
-        self.dx_port = lam / (2 * NA)
         self.x = np.arange(-1.02 * self.opa.x_range, 1.02 * self.opa.x_range, dx_atoms)
         self.G = channel_response(self.opa, self.x)
+        if A is None and model == "paraxial":
+            sc = StarCoupler(lam, t, N_arms, p_a, self.R, w_port, w_arm)
+            A = np.array([sc.arm_amplitudes(kk * p_port) for kk in self.k])[::-1]
+        elif A is None:
+            # exact-path model; arm phases calibrated with the two central ports (static arm trims)
+            A = StarCouplerRS(lam, t, N_ports, N_arms, p_port, p_a, self.R, w_port, w_arm,
+                              R_p=rp_ratio * self.R).matrix()
+            c0 = N_ports // 2
+            A = A * np.exp(-1j * np.angle(A[c0 - 1] + A[c0]))[None, :]
+            xs = [spot_metrics(self.x, np.abs(A[k] @ self.G) ** 2)["x_peak"] for k in (N_ports // 8, 7 * N_ports // 8)]
+            A = A if xs[1] > xs[0] else A[::-1]
+        self.A = A
+        self.dx_port = lam / (2 * NA)
         self.e_pow = float(np.sum(self.opa.element(self.opa.x) ** 2) * self.opa.dx)
 
     def weights(self, u, sigma, amp=1.0, phase=0.0):
