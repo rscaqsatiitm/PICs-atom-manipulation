@@ -21,7 +21,9 @@ staircase adds nothing measurable. Hence the >= 100 kHz target of Table 1 holds 
 channel number N, so the range at the atoms is N lambda/(4 NA F), with F the pupil fill. At NA 0.5 and full
 fill, 64 channels steer over +/-33 um (17 sites at 4 um pitch), not +/-100 um, and cannot place more than
 about 15 tweezers on one row. More than 20 simultaneous tweezers on one row need 128 channels; 128 channels
-at 0.75 fill cover +/-89 um at 1.33 times the power per tweezer.
+at 0.75 fill cover +/-89 um at 1.33 times the power per tweezer. A follow-up study (`docs/twenty_tweezers.md`) shows
+that 20 individually switchable tweezers at 1064.4 and 894.6 nm are best delivered by a 128-emitter OPA fed
+through a 20-port star coupler, with one switch per port and a common phase ramp for parallel moves.
 
 (iii) **Switch architecture.** A single MZI with the simulated 2x2 MMI spread reaches 50 dB in only 49% of
 devices at 3 mrad phase accuracy. A cascaded pair, as in [ZHAO], reaches >= 50 dB in every trial
@@ -222,9 +224,9 @@ Intensity noise must satisfy S_I(2 nu) <= 1.4e-11 /Hz at 1.2 mK for a parametric
 (i) Table 1, OPA update rate: ">= 200 kHz" for transport at 1.2 mK. Alternatively, keep >= 100 kHz and
 lower the transport depth to <= 0.4 mK during moves (trap frequency 48 kHz) with move times of >= 100 us,
 for which a 4 um move adds 0.025 quanta (0.008 for a smooth trajectory).
-(ii) Table 1, OPA tweezers: state ">20 tweezers with 128 channels" or ">=15 with 64 channels on one row",
-and state the steering field (+/-33 um at N = 64, F = 1) separately from the +/-100 um meta-objective
-field.
+(ii) Table 1, OPA tweezers: state ">= 20 individually switchable tweezers with 128 emitters and a 20-port
+star coupler" (see `docs/twenty_tweezers.md`), or ">= 15 with 64 channels on one row", and state the steering
+field (+/-33 um at N = 64, +/-68 um at N = 128, F = 1) separately from the +/-100 um meta-objective field.
 (iii) Sec. 4, "~10 dB of chip and OPA loss": the model gives about 6 dB (end-fire) to 7 dB (grating); keep
 10 dB as the conservative value but note the modelled one.
 (iv) Sec. 4 error budget: replace "position noise <= 10 nm rms" by a spectral density at the trap frequency,

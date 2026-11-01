@@ -1,0 +1,33 @@
+{
+ "name": "m8_resynth",
+ "script": "scripts/m8_twenty.py",
+ "git": "8778c95",
+ "notes": "",
+ "inputs": {
+  "N": 128,
+  "pitch": "CHOICE 1.5 um",
+  "K": 20,
+  "method": "synthesise (GSW + refine), then refine with the switched-off site among the dark points, warm-started"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "switched_off_site_um": -38.0,
+    "residual_rel": 0.03321566565399588,
+    "kept_peak_change_max": 0.11880571731334122,
+    "path_kept_deviation_max": 0.18738879996547086,
+    "max_phase_step_rad": 2.7101038743250028,
+    "stray_sites_after": 0.022684874218185904
+   },
+   {
+    "switched_off_site_um": -2.0,
+    "residual_rel": 0.019446685418793856,
+    "kept_peak_change_max": 0.1048995094273446,
+    "path_kept_deviation_max": 0.1881731698399799,
+    "max_phase_step_rad": 2.154096461208159,
+    "stray_sites_after": 0.020029530895126633
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

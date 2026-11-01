@@ -5,7 +5,8 @@ ANRF/ARG/2026/009937 (Phase A, Objective 3): the SiN waveguide platform at 894.6
 MMI splitter trees, MZI switches and the 16-channel 894.6 nm router, thermo-optic phase shifters, and the
 optical-phased-array (OPA) steering engine with its relay to the meta-objective and the atoms.
 
-See `docs/findings.md` for the results and `docs/parameters.md` for the provenance of every input.
+See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-tweezer design, and
+`docs/parameters.md` for the provenance of every input.
 
 ## Status (first pass complete)
 
@@ -18,6 +19,7 @@ See `docs/findings.md` for the results and `docs/parameters.md` for the provenan
 | 5 Heaters | `scripts/m5_heaters.py` | P_pi, rise time, thermal crosstalk; actuator comparison |
 | 6 Power | `scripts/m6_power.py` | self-heating, facet intensity, Kerr phase |
 | 7 Budget | `scripts/m7_budget.py` | error-budget links, `docs/parameters.md` |
+| 8 Twenty tweezers | `scripts/m8_twenty.py` | star-coupler OPA with 20 switched ports vs phase synthesis; `docs/twenty_tweezers.md` |
 
 ## Layout
 
@@ -31,7 +33,7 @@ See `docs/findings.md` for the results and `docs/parameters.md` for the provenan
 | `picsim/mmi.py` | MMI couplers by effective index + eigenmode expansion |
 | `picsim/circuits.py` | MZI transfer matrices, Monte Carlo extinction, actuator dynamics, routing tree |
 | `picsim/heaters.py` | 2D thermal FEM of heaters: P_pi, rise time, crosstalk |
-| `picsim/opa/` | OPA near field, Fourier-plane slit, pupil relay, multi-tweezer synthesis, phase noise |
+| `picsim/opa/` | OPA near field, Fourier-plane slit, pupil relay, multi-tweezer synthesis, phase noise, star coupler |
 | `picsim/transport.py` | motional excitation of a moved atom (harmonic trap, staircase trajectories) |
 | `picsim/budget.py` | error-budget links from optical specs to atom metrics |
 | `scripts/m*_*.py` | one script per module; each writes `results/<name>.json` (+ `.png`) |

@@ -1,0 +1,74 @@
+{
+ "name": "m8_power",
+ "script": "scripts/m8_twenty.py",
+ "git": "8778c95",
+ "notes": "Peak intensity from the simulated port spot along x and a Gaussian (w0 = 1.04 um) along y. The tunable router sends power only to lit ports, so per-tweezer power is independent of the number lit.",
+ "inputs": {
+  "depth": {
+   "value": 0.0012,
+   "unit": "K",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4(ii): transport tweezers ~1.2 mK"
+  },
+  "alpha": {
+   "value": 1160.0,
+   "unit": "a.u.",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 3 citing Le Kien et al. EPJD 67, 92 (2013)"
+  },
+  "w0_y": {
+   "value": 1.04,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget: 1.04 um waist"
+  },
+  "P_site_addr": {
+   "value": [
+    1e-06,
+    2e-05
+   ],
+   "unit": "W",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4: ~1-20 uW per site at the atoms"
+  },
+  "meta_objective": "CHOICE 0.7",
+  "router": "1x32 tunable-splitter tree, 3 um 2x2 MMIs (SIM m2_mmi)",
+  "facet": "SIM m2_couplers, lensed fibre"
+ },
+ "outputs": {
+  "1064": {
+   "chip_items_dB": {
+    "facet": -0.36796725952278764,
+    "router 1x32": -0.2801238777421001,
+    "port switch": -0.05602477554842003,
+    "propagation": -0.3,
+    "meta-objective 0.7": -1.5490195998574319
+   },
+   "port_capture_min": 0.6521531310366007,
+   "port_capture_max": 0.7578239690544792,
+   "delivered_frac_min": 0.37252129629474756,
+   "delivered_frac_max": 0.4849507119450744,
+   "P_fibre_per_tweezer_mW_min": 25.63879062388163,
+   "P_fibre_per_tweezer_mW_max": 33.3825664459425,
+   "P_fibre_total_20_W": 0.567073242818258,
+   "end_to_end_dB_best_port": -5.160670049390708,
+   "end_to_end_dB_worst_port": -6.306891912959115
+  },
+  "895": {
+   "chip_items_dB": {
+    "facet": -0.46280081911924675,
+    "router 1x32": -0.6787642269032568,
+    "port switch": -0.2715056907613027,
+    "propagation": -0.3,
+    "meta-objective 0.7": -1.5490195998574319
+   },
+   "port_capture_min": 0.5997790599691213,
+   "port_capture_max": 0.7272546654734807,
+   "delivered_frac_min": 0.2826948539056025,
+   "delivered_frac_max": 0.38150345658002777,
+   "P_fibre_per_site_uW_for_20uW_equiv_max": 111.38944487071983,
+   "P_fibre_total_20_mW": 1.850800174833206
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
