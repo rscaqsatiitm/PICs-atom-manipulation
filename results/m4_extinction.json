@@ -1,0 +1,680 @@
+{
+ "name": "m4_extinction",
+ "script": "scripts/m4_switches.py",
+ "git": "9c596b3",
+ "notes": "Trimmed: the input splitter is an MZI trimmed to match the output coupler, limited by the same phase error. Floor: incoherent stray light relative to input.",
+ "inputs": {
+  "sigma_kappa": {
+   "fab_spread": {
+    "value": 0.0023748698871815,
+    "unit": "-",
+    "kind": "SIM",
+    "ref": "SIM m2_mmi (895 nm, 4 um 2x2)"
+   },
+   "fab_plus_design_offset": {
+    "value": 0.010466565944314093,
+    "unit": "-",
+    "kind": "SIM",
+    "ref": "SIM m2_mmi (895 nm, 4 um 2x2)"
+   }
+  },
+  "sigma_arm_amplitude": "CHOICE 0.005",
+  "ER_target": {
+   "value": 50.0,
+   "unit": "dB",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Table 1: >= 50 dB at 895 nm"
+  },
+  "floors": {
+   "none": 0.0,
+   "-70dB": 1e-07
+  },
+  "trials": 4000
+ },
+ "outputs": {
+  "rows": [
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 50.925479049203396,
+    "p5_dB": 41.52194423513756,
+    "P_ge_target": 0.5525
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 50.87176408918107,
+    "p5_dB": 41.515852014782084,
+    "P_ge_target": 0.55
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 49.83137649371544,
+    "p5_dB": 41.40367327284939,
+    "P_ge_target": 0.489
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 49.78999957253656,
+    "p5_dB": 41.39770263330677,
+    "P_ge_target": 0.48575
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 45.30471414400612,
+    "p5_dB": 38.81510568071888,
+    "P_ge_target": 0.20625
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 45.28994640274141,
+    "p5_dB": 38.81183945457168,
+    "P_ge_target": 0.2045
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 39.0394250841393,
+    "p5_dB": 30.664923436853936,
+    "P_ge_target": 0.073
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 39.035952990974224,
+    "p5_dB": 30.664418453416808,
+    "P_ge_target": 0.07225
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 103.2609956070088,
+    "p5_dB": 88.73162509488401,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 69.99227538728917,
+    "p5_dB": 69.91905115238183,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 100.21282225713296,
+    "p5_dB": 87.89292275335042,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 69.98959190394335,
+    "p5_dB": 69.91183831485034,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 91.59912598121443,
+    "p5_dB": 81.17752173691018,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 69.96223731020008,
+    "p5_dB": 69.67247018251136,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 78.53983143161226,
+    "p5_dB": 65.82901928201036,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 69.4404805982617,
+    "p5_dB": 64.42884360003507,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 54.86119656095005,
+    "p5_dB": 45.94706697430637,
+    "P_ge_target": 0.7815
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 54.730444524625426,
+    "p5_dB": 45.9301218717992,
+    "P_ge_target": 0.779
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 51.86867876355292,
+    "p5_dB": 44.54539294914803,
+    "P_ge_target": 0.64775
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 51.80232722283089,
+    "p5_dB": 44.53317731385184,
+    "P_ge_target": 0.64425
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 44.27463996410555,
+    "p5_dB": 37.89257027386013,
+    "P_ge_target": 0.16475
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 44.26300813802828,
+    "p5_dB": 37.889877649407445,
+    "P_ge_target": 0.16325
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 35.18486734031889,
+    "p5_dB": 28.664631734939427,
+    "P_ge_target": 0.023
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 35.18342976210984,
+    "p5_dB": 28.664313371448735,
+    "P_ge_target": 0.0225
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 111.09183010929551,
+    "p5_dB": 97.07950926832311,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 69.99939591726962,
+    "p5_dB": 69.94679178119178,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 104.6344833817756,
+    "p5_dB": 93.33390150669456,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 69.99766593308831,
+    "p5_dB": 69.94121009795191,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 89.30179263642691,
+    "p5_dB": 79.06315935293009,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 69.94287880507599,
+    "p5_dB": 69.4943551789379,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 70.99748217838422,
+    "p5_dB": 61.00245946968144,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_spread",
+    "sigma_kappa": 0.0023748698871815,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 67.45508318277706,
+    "p5_dB": 60.48716180393578,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 40.04871551880099,
+    "p5_dB": 30.637559234345503,
+    "P_ge_target": 0.16925
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 40.044322668506815,
+    "p5_dB": 30.637053566255474,
+    "P_ge_target": 0.169
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 39.946984809486715,
+    "p5_dB": 30.610054573733457,
+    "P_ge_target": 0.15125
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 39.9426757483113,
+    "p5_dB": 30.609557057459302,
+    "P_ge_target": 0.1505
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 38.85390278517907,
+    "p5_dB": 30.50761847864353,
+    "P_ge_target": 0.06525
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 38.8505644021684,
+    "p5_dB": 30.507132290207114,
+    "P_ge_target": 0.064
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 35.0607667095049,
+    "p5_dB": 28.562539996108534,
+    "P_ge_target": 0.024
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 35.059377472708746,
+    "p5_dB": 28.562228419883017,
+    "P_ge_target": 0.02375
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 81.79932440677979,
+    "p5_dB": 66.28755602965093,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 69.72301291831275,
+    "p5_dB": 64.76148133243463,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 81.31849260265855,
+    "p5_dB": 66.25584703873484,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 69.69104177369417,
+    "p5_dB": 64.73286401149974,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 78.19704193635974,
+    "p5_dB": 65.77961930908205,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 69.38494689058959,
+    "p5_dB": 64.39502722921937,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 70.89865178686779,
+    "p5_dB": 60.87782924314955,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 67.40945863969276,
+    "p5_dB": 60.373135834608625,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 54.86237966574677,
+    "p5_dB": 45.94688727256797,
+    "P_ge_target": 0.7815
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 54.73112443480622,
+    "p5_dB": 45.929972879104625,
+    "P_ge_target": 0.779
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 51.86887148202135,
+    "p5_dB": 44.545394604145805,
+    "P_ge_target": 0.64775
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 51.802507518531996,
+    "p5_dB": 44.533178919296255,
+    "P_ge_target": 0.644
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 44.27353403049098,
+    "p5_dB": 37.89253976170984,
+    "P_ge_target": 0.16475
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 44.26187748555779,
+    "p5_dB": 37.88984714158451,
+    "P_ge_target": 0.16325
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 35.18115898815199,
+    "p5_dB": 28.6634329851964,
+    "P_ge_target": 0.023
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "single_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 35.17972736627282,
+    "p5_dB": 28.663112337242726,
+    "P_ge_target": 0.0225
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "none",
+    "median_dB": 111.09140437017074,
+    "p5_dB": 97.07993023052019,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.001,
+    "floor": "-70dB",
+    "median_dB": 69.99558685543045,
+    "p5_dB": 69.94277896849007,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "none",
+    "median_dB": 104.63340794613376,
+    "p5_dB": 93.33333367821834,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.003,
+    "floor": "-70dB",
+    "median_dB": 69.99396062621923,
+    "p5_dB": 69.93734158375213,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "none",
+    "median_dB": 89.30125544053354,
+    "p5_dB": 79.06298945817237,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.01,
+    "floor": "-70dB",
+    "median_dB": 69.93934399950405,
+    "p5_dB": 69.48960650945534,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "none",
+    "median_dB": 70.99112780250016,
+    "p5_dB": 60.99716700307945,
+    "P_ge_target": 1.0
+   },
+   {
+    "kappa_case": "fab_plus_design_offset",
+    "sigma_kappa": 0.010466565944314093,
+    "arch": "cascade2_trimmed",
+    "sigma_phi_rad": 0.03,
+    "floor": "-70dB",
+    "median_dB": 67.4539193850478,
+    "p5_dB": 60.48462815316628,
+    "P_ge_target": 1.0
+   }
+  ],
+  "single_balanced_phase_error_for_target_rad": 0.006324555320336759
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

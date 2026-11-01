@@ -35,38 +35,43 @@ def kappa_sigma():
 
 def extinction():
     sk, bias, src = kappa_sigma()
-    sk_eff = float(np.hypot(sk, bias))  # treat the systematic offset as part of the spread (conservative)
+    # two cases: fabrication spread only (design offset removed by redesign), and spread plus the
+    # 2x2 design offset of the first-pass MMI design treated as additional spread (conservative)
+    cases = {"fab_spread": float(sk), "fab_plus_design_offset": float(np.hypot(sk, bias))}
     archs = {"single": dict(stages=1, tunable=False), "cascade2": dict(stages=2, tunable=False),
              "single_trimmed": dict(stages=1, tunable=True), "cascade2_trimmed": dict(stages=2, tunable=True)}
     sig_phis = [0.001, 0.003, 0.01, 0.03]
     floors = {"none": 0.0, "-70dB": 1e-7}
     rows = []
-    for name, kw in archs.items():
-        for sp in sig_phis:
-            for fl_name, fl in floors.items():
-                er = c.mc_extinction(4000, sk_eff, sp, sigma_a=0.005, floor=fl, seed=1, **kw)
-                rows.append({"arch": name, "sigma_phi_rad": sp, "floor": fl_name, "median_dB": float(np.median(er)),
-                             "p5_dB": float(np.percentile(er, 5)), "P_ge_target": float(np.mean(er >= TARGET))})
+    for case, sk_eff in cases.items():
+        for name, kw in archs.items():
+            for sp in sig_phis:
+                for fl_name, fl in floors.items():
+                    er = c.mc_extinction(4000, sk_eff, sp, sigma_a=0.005, floor=fl, seed=1, **kw)
+                    rows.append({"kappa_case": case, "sigma_kappa": sk_eff, "arch": name, "sigma_phi_rad": sp,
+                                 "floor": fl_name, "median_dB": float(np.median(er)),
+                                 "p5_dB": float(np.percentile(er, 5)), "P_ge_target": float(np.mean(er >= TARGET))})
     f, ax = fig(1, 1, w=5.0, h=3.2)
     for name, col in zip(archs, ("C0", "C1", "C2", "C3")):
-        r = [x for x in rows if x["arch"] == name and x["floor"] == "none"]
+        r = [x for x in rows if x["arch"] == name and x["floor"] == "none" and x["kappa_case"] == "fab_spread"]
         ax[0, 0].semilogx([x["sigma_phi_rad"] for x in r], [x["p5_dB"] for x in r], "-o", color=col, ms=3,
                           label=f"{name} (5th percentile)")
         ax[0, 0].semilogx([x["sigma_phi_rad"] for x in r], [x["median_dB"] for x in r], ":", color=col)
     ax[0, 0].axhline(TARGET, color="k", lw=0.8)
+    ax[0, 0].set_title(f"2x2 split spread sigma = {cases['fab_spread']:.4f} (fabrication only)", fontsize=8)
     ax[0, 0].set_xlabel("phase-setting error rms (rad)")
     ax[0, 0].set_ylabel("extinction (dB)")
     ax[0, 0].legend(fontsize=6)
     # analytic: balanced MZI, phase error only: T_off = sin^2(dphi/2) -> ER = -20 log10(dphi/2)
     phi_req = 2 * 10 ** (-TARGET / 20)
     save_result("m4_extinction", script=SCRIPT, fig=f,
-                inputs={"sigma_kappa": P(sk_eff, "-", "SIM", src + " (std and mean offset combined)"),
+                inputs={"sigma_kappa": {k: P(v, "-", "SIM", src) for k, v in cases.items()},
                         "sigma_arm_amplitude": "CHOICE 0.005", "ER_target": prm.ER_TARGET,
                         "floors": floors, "trials": 4000},
                 outputs={"rows": rows, "single_balanced_phase_error_for_target_rad": phi_req},
                 notes="Trimmed: the input splitter is an MZI trimmed to match the output coupler, limited by the "
                       "same phase error. Floor: incoherent stray light relative to input.")
-    return rows, sk_eff
+    return rows, cases
 
 
 def polarisation():
@@ -131,7 +136,8 @@ def router(er_rows):
                      "router_leak_max_p95": float(np.percentile(leak.max(axis=1), 95)),
                      "router_leak_sum_mean": float(leak.sum(axis=1).mean())})
     # combine with output switch OFF state (cascade2, sigma_phi 0.003, 5th percentile)
-    sw = [r for r in er_rows if r["arch"] == "cascade2" and r["sigma_phi_rad"] == 0.003 and r["floor"] == "none"][0]
+    sw = [r for r in er_rows if r["arch"] == "cascade2" and r["sigma_phi_rad"] == 0.003 and r["floor"] == "none"
+          and r["kappa_case"] == "fab_plus_design_offset"][0]
     for r in rows:
         r["idle_site_total_dB"] = float(-10 * np.log10(r["router_leak_max_p95"]) + sw["p5_dB"])
     # insertion loss and input power
@@ -159,10 +165,10 @@ if __name__ == "__main__":
     er_rows = None
     if "extinction" in parts:
         er_rows, sk = extinction()
-        print("sigma_kappa", sk)
+        print("sigma_kappa cases", sk)
         for r in er_rows:
             if r["floor"] == "none":
-                print(r, flush=True)
+                print({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items()}, flush=True)
     if "polarisation" in parts:
         for r in polarisation():
             print(r)

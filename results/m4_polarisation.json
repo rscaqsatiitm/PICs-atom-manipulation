@@ -1,0 +1,59 @@
+{
+ "name": "m4_polarisation",
+ "script": "scripts/m4_switches.py",
+ "git": "9c596b3",
+ "notes": "TM light is not nulled when the TE path is at its null. T_TM = 1 is the worst case for one MZI; 0.25 is the mean of two cascaded MZIs with random TM phase. Required suppression S = ER_target - PER + 10 log10(T_TM).",
+ "inputs": {
+  "ER_target": {
+   "value": 50.0,
+   "unit": "dB",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Table 1: >= 50 dB at 895 nm"
+  }
+ },
+ "outputs": {
+  "rows": [
+   {
+    "input_PER_dB": 15,
+    "TM_transmission_at_TE_null": 1.0,
+    "onchip_TM_suppression_needed_dB": 35.0
+   },
+   {
+    "input_PER_dB": 15,
+    "TM_transmission_at_TE_null": 0.25,
+    "onchip_TM_suppression_needed_dB": 28.979400086720375
+   },
+   {
+    "input_PER_dB": 20,
+    "TM_transmission_at_TE_null": 1.0,
+    "onchip_TM_suppression_needed_dB": 30.0
+   },
+   {
+    "input_PER_dB": 20,
+    "TM_transmission_at_TE_null": 0.25,
+    "onchip_TM_suppression_needed_dB": 23.979400086720375
+   },
+   {
+    "input_PER_dB": 25,
+    "TM_transmission_at_TE_null": 1.0,
+    "onchip_TM_suppression_needed_dB": 25.0
+   },
+   {
+    "input_PER_dB": 25,
+    "TM_transmission_at_TE_null": 0.25,
+    "onchip_TM_suppression_needed_dB": 18.979400086720375
+   },
+   {
+    "input_PER_dB": 30,
+    "TM_transmission_at_TE_null": 1.0,
+    "onchip_TM_suppression_needed_dB": 20.0
+   },
+   {
+    "input_PER_dB": 30,
+    "TM_transmission_at_TE_null": 0.25,
+    "onchip_TM_suppression_needed_dB": 13.979400086720375
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
