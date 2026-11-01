@@ -84,8 +84,9 @@ cylindrical fast-axis micro-lens collimating its vertical emission to a ~170 um 
 0.004), and imaging the stack with 125x vertical demagnification gives rows 4 um apart at NA 0.5. Chip height
 errors of 1 um become 8 nm at the atoms. Rows from different chips do not overlap (Gaussian tails at 4 um are
 ~1e-13). This optical arrangement is not simulated here. Its practical limit is mechanical, set by stacking
-and alignment, and plausibly 8 to 16 rows. With 192 ports per chip, 16 rows give about 700 to 960 independent
-tweezers over about 200 x 64 um, needing about 30 W at 1.2 mK or 13 W at 0.5 mK.
+and alignment, and plausibly 8 to 16 rows. With 192 ports per chip, 16 rows give about 720 (4 um spacing) to
+960 (3 um) independent tweezers over about 200 x 64 um, needing about 31 to 41 W at 1.2 mK, or 13 to 17 W at
+0.5 mK, spread over 16 chips.
 
 ## 5. Next steps
 
