@@ -103,11 +103,16 @@ def stage2(n_arms, w_emit):
     best = max(rows, key=lambda r: r["P_eff"])
     sig = pmap(evaluate, [dict(base, w_arm=best["w_arm"], w_port=best["w_port"], sigma=s)
                           for s in (0.8, 0.85, 0.9, 1.0)])
-    lim = {"arms_p2.0": coupling_limits((1.2, 1.5, 1.7), 2.0), "ports_p2.0": coupling_limits((1.4, 1.7), 2.0)}
+    # emitter pitch with wider facets at a fixed gap of >= 0.5 um (relaxes the facet-taper length limit)
+    em = pmap(evaluate, [dict(base, w_arm=best["w_arm"], w_port=best["w_port"], p_out=po, w_emit=we)
+                         for po, we in ((1.5, 1.0), (1.8, 1.3), (2.0, 1.5), (2.2, 1.7))])
+    lim = {"arms_p2.0": coupling_limits((1.2, 1.5, 1.7), 2.0), "ports_p2.0": coupling_limits((1.4, 1.7), 2.0),
+           "emitters": {f"p{po}": coupling_limits((we,), po) for po, we in ((1.5, 1.0), (1.5, 1.2), (1.8, 1.3),
+                                                                         (2.0, 1.5), (2.2, 1.7))}}
     save_result("m11_stage2", script=SCRIPT,
                 inputs={"N_arms": n_arms, "w_emit": w_emit, "p_out": 1.5, "N_ports": 128},
-                outputs={"rows": rows, "sigma_scan": sig, "coupling_limits": lim})
-    return rows, sig, lim
+                outputs={"rows": rows, "sigma_scan": sig, "emitter_pitch_scan": em, "coupling_limits": lim})
+    return rows, sig + em, lim
 
 
 if __name__ == "__main__":

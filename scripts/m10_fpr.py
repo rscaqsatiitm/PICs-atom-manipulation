@@ -128,21 +128,24 @@ def compare():
 
 
 # ------------------------------------------------------------------ full 128 x 128 FPR
-def full_layout():
-    N, p = 128, 2.0
-    R = N * p * p / (LAM / 1.8423)  # 886 um, one port per resolvable direction (as m9)
-    return FPRLayout(N, N, p, p, R, L_taper=30, L_port=55, L_arm=70, z0=60)
+def full_layout(n_ports=128, n_arms=128, rp_ratio=1.0, w_port=1.7, w_arm=1.7):
+    p = 2.0
+    R = n_arms * p * p / (LAM / 1.8423)  # one port per resolvable direction
+    return FPRLayout(n_ports, n_arms, p, p, R, w_wide=w_port, w_wide_arm=w_arm, L_taper=30, L_port=55, L_arm=70,
+                     z0=60, R_p=rp_ratio * R)
 
 
-def full(calname="A"):
+def full(calname="A", tag=None, **layout):
     nc, ncl = cal(calname)
-    lay = full_layout()
+    lay = full_layout(**layout)
+    tag = tag or f"full_{calname}"
     t0 = time.time()
     T, info = transfer_matrix(lay, LAM, nc, ncl, dx=0.04, dz=0.125, progress=True)
-    np.savez_compressed(RESULTS / f"m10_T_full_{calname}.npz", T=T)
+    np.savez_compressed(RESULTS / f"m10_T_{tag}.npz", T=T)
     cap = np.sum(np.abs(T) ** 2, axis=1)
     # arm-phase calibration with the two central ports (flat phase for the centre of the field)
-    c = np.exp(-1j * np.angle(T[63] + T[64]))
+    c0 = lay.N_ports // 2
+    c = np.exp(-1j * np.angle(T[c0 - 1] + T[c0]))
     Tc = T * c[None, :]
     resid, slope = [], []
     n = np.arange(lay.N_arms)
@@ -154,15 +157,17 @@ def full(calname="A"):
         slope.append(pf[0])
         resid.append(float(np.sqrt(np.sum(w * r**2) / np.sum(w))))
     out = {"calibration": calname, "n_core": nc, "n_clad": ncl, "R_um": lay.R, "runtime_s": time.time() - t0,
-           "capture": cap.tolist(), "capture_centre": float(cap[63:65].mean()), "capture_edge": float(cap[[0, -1]].mean()),
+           "capture": cap.tolist(), "capture_centre": float(cap[c0 - 1:c0 + 1].mean()),
+           "capture_edge": float(cap[[0, -1]].mean()),
            "phase_slope_per_port": float(np.polyfit(np.arange(lay.N_ports), slope, 1)[0]),
            "phase_residual_rms_rad": resid, "phase_residual_max_rad": float(max(resid)),
            "strehl_like_min": float(np.exp(-max(resid) ** 2))}
-    save_result(f"m10_fpr_full_{calname}", script=SCRIPT,
-                inputs={"layout": {"N": 128, "p_port": 2.0, "p_a": 2.0, "R": lay.R, "w_wide": 1.7, "w_narrow": 0.6,
-                                   "L_taper": 30.0}, "calibration": calname, "dx_um": 0.04, "dz_um": 0.125},
+    save_result(f"m10_fpr_{tag}", script=SCRIPT,
+                inputs={"layout": {"N_ports": lay.N_ports, "N_arms": lay.N_arms, "p_port": 2.0, "p_a": 2.0, "R": lay.R,
+                                   "R_p": lay.R_p, "w_port_wide": lay.w_wide, "w_arm_wide": lay.w_wide_arm, "w_narrow": 0.6, "L_taper": 30.0},
+                        "calibration": calname, "dx_um": 0.04, "dz_um": 0.125},
                 outputs=out,
-                notes="T saved in m10_T_full_<cal>.npz. Arm phases calibrated with the two central ports; the "
+                notes=f"T saved in m10_T_{tag}.npz. Arm phases calibrated with the two central ports; the "
                       "residual is the rms deviation of each port's arm phases from a straight line (aberration).")
     return out
 
@@ -208,6 +213,15 @@ if __name__ == "__main__":
     if "compare" in parts:
         for r in compare():
             print(r, flush=True)
+    if "fullopt" in parts:
+        cfg = json.loads(sys.argv[sys.argv.index("fullopt") + 1])
+        o = full("A", tag="opt_A", **cfg)
+        print({k: (v if not isinstance(v, list) else f"[{len(v)}]") for k, v in o.items()}, flush=True)
+    if "routeopt" in parts:
+        cfg = json.loads(sys.argv[sys.argv.index("routeopt") + 1])
+        o = route("A", tag="opt_A", fp_kwargs=cfg)
+        print(json.dumps({k: v for k, v in o.items() if k not in ("window", "field")}, indent=1, default=float),
+              flush=True)
     for cn in ("A", "B"):
         if f"full{cn}" in parts or ("full" in parts and cn == "A"):
             o = full(cn)

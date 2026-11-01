@@ -30,10 +30,13 @@ class FPRLayout:
     z0: float = 60.0
     x_slab: float | None = None
     R_p: float | None = None
+    w_wide_arm: float | None = None  # arm width at the FPR (defaults to w_wide, the port width)
 
     def __post_init__(self):
         if self.R_p is None:
             self.R_p = self.R
+        if self.w_wide_arm is None:
+            self.w_wide_arm = self.w_wide
         kp = np.arange(self.N_ports) - (self.N_ports - 1) / 2
         ka = np.arange(self.N_arms) - (self.N_arms - 1) / 2
         a = kp * self.p_port / self.R_p
@@ -48,10 +51,11 @@ class FPRLayout:
             self.x_slab = max(self.N_ports * self.p_port, self.N_arms * self.p_a)  # covers port-array replicas
 
     # ---------------------------------------------------------------- per-z slices (for BPM)
-    def _width(self, s):
+    def _width(self, s, wide=None):
         """Guide width vs distance from the arc s >= 0 (taper over L_taper)."""
+        wide = self.w_wide if wide is None else wide
         f = np.clip(s / self.L_taper, 0, 1)
-        return self.w_wide + (self.w_narrow - self.w_wide) * f
+        return wide + (self.w_narrow - wide) * f
 
     def ports_at(self, z):
         s = (self.Pz - z) / np.cos(self.theta)  # distance behind the arc along the port axis
@@ -64,7 +68,7 @@ class FPRLayout:
         s = (z - self.Az) / np.cos(self.phi)
         ok = (s >= 0) & (s <= self.L_arm)
         xc = self.Ax + s * np.sin(self.phi)
-        hw = self._width(s) / (2 * np.cos(self.phi))
+        hw = self._width(s, self.w_wide_arm) / (2 * np.cos(self.phi))
         return xc[ok], hw[ok]
 
     def slab_at(self, z):
@@ -142,10 +146,10 @@ class FPRLayout:
             nrm = np.array([np.cos(f), -np.sin(f)])
             A = np.array([self.Ax[n], self.Az[n]])
             pts = []
-            for s, w in ((-1.0, self.w_wide), (self.L_taper, self.w_narrow), (self.L_arm, self.w_narrow)):
+            for s, w in ((-1.0, self.w_wide_arm), (self.L_taper, self.w_narrow), (self.L_arm, self.w_narrow)):
                 c = A + s * u
                 pts.append(c + nrm * w / 2)
-            for s, w in ((self.L_arm, self.w_narrow), (self.L_taper, self.w_narrow), (-1.0, self.w_wide)):
+            for s, w in ((self.L_arm, self.w_narrow), (self.L_taper, self.w_narrow), (-1.0, self.w_wide_arm)):
                 c = A + s * u
                 pts.append(c - nrm * w / 2)
             polys.append([tuple(p) for p in pts])
