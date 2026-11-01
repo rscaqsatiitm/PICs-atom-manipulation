@@ -1,7 +1,7 @@
 {
  "name": "m3_grating",
  "script": "scripts/m3_opa.py",
- "git": "17205c6",
+ "git": "568f2f5",
  "notes": "2D model of a uniform grating. Directionality oscillates with buried-oxide thickness through the Si-substrate reflection; a bottom reflector or a two-layer grating is needed for > 0.8.",
  "inputs": {
   "fdtd": "results/m3_grating_fdtd_raw.json (scripts/m3_grating_fdtd.py, MEEP 1.35, 2D, 40 px/um, Si substrate, 2 um top oxide, duty 0.5, nominal 10 deg)"
