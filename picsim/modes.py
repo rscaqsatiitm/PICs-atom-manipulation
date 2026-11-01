@@ -139,19 +139,26 @@ def fundamental(modes, pol="TE"):
 
 
 def field_on_grid(mode, x, y, component=0):
-    """Interpolate a transverse E component (0: Ex, 1: Ey) of a femwell mode on a grid (complex)."""
+    """Interpolate a transverse E component (0: Ex, 1: Ey) of a femwell mode on a grid (complex).
+
+    The field is projected onto P1 elements (real and imaginary parts separately) and interpolated
+    linearly on the mesh triangulation. (skfem's point locator scales as points x elements in memory.)
+    """
+    from matplotlib.tri import LinearTriInterpolator, Triangulation
     from skfem import ElementTriP1, ElementVector
 
     (et, et_basis), _ = mode.basis.split(mode.E)
-    X, Y = np.meshgrid(x, y, indexing="xy")
-    pts = np.vstack([X.ravel(), Y.ravel()])
-    # project real and imaginary parts onto a P1 vector field for point evaluation
     b_p1 = et_basis.with_element(ElementVector(ElementTriP1()))
-    out = np.zeros(pts.shape[1], dtype=complex)
+    mesh = b_p1.mesh
+    tri = Triangulation(mesh.p[0], mesh.p[1], mesh.t.T)
+    X, Y = np.meshgrid(x, y, indexing="xy")
+    out = np.zeros(X.shape, dtype=complex)
     for part, fac in ((np.real, 1.0), (np.imag, 1j)):
         e_p1 = b_p1.project(et_basis.interpolate(part(et)))
-        out += fac * b_p1.interpolator(e_p1)(pts)[component]
-    return out.reshape(X.shape)
+        nodal = e_p1[b_p1.nodal_dofs[component]]
+        vals = LinearTriInterpolator(tri, nodal)(X, Y)
+        out += fac * np.ma.filled(vals, 0.0)
+    return out
 
 
 def quiet_gmsh():
