@@ -1,5 +1,10 @@
 # 3D transport with handoff between the static array and the moving tweezers
 
+> Follow-up (`docs/rearrangement.md`): slower handoff steps (200 us ramps, 400 us lane steps) cut the heating per
+> move to 0.12 to 0.16 uK at 0.1 / 0.3 mK, confirmed both quantum mechanically and by 3D classical simulation.
+> The shallow 0.3 mK point is then also the low-heating point. The static array's depth uniformity is not a
+> constraint.
+
 Follow-up to `docs/scaling_beyond.md`, whose 1D model left out handoff, the static array and the third
 dimension. Code: `picsim/transport3d.py`, `scripts/m18_transport3d.py`; results `results/m18_*.json`,
 `results/m18_trap.npz`; tests `tests/test_transport3d.py`. Values are SIM (classical Monte Carlo) and valid in the

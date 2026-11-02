@@ -1,0 +1,312 @@
+{
+ "name": "m19_quantum",
+ "script": "scripts/m19_quantum.py",
+ "git": "f991f2e",
+ "notes": "E_gain: mean energy above the final ground state. 1D only: axial motion and the coupling between axes are not included.",
+ "inputs": {
+  "grid": "4 nm, split-step dt 5 ns",
+  "profiles": "results/m18_trap.npz (x and y cuts through focus)",
+  "static_w0_um": 0.85,
+  "update": "200 kHz sample-and-hold",
+  "classical": "2000-atom Wigner sample of the initial ground state (harmonic approximation), velocity Verlet 50 ns"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.08427086912572845,
+     "P_bound_states_used": 0.9998650117373528,
+     "E_gain_uK": 9.65868288475091,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 11.606732467154302,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.8362485018386047,
+     "P_bound_states_used": 0.9999975806835906,
+     "E_gain_uK": 0.8360289139686016,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.528527699400754,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 2.010317441016727,
+    "quantum": {
+     "P_ground": 0.309476709639242,
+     "P_bound_states_used": 0.9999558184106747,
+     "E_gain_uK": 6.771588982029082,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 9.995788737632633,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.2,
+    "Um_mK": 1.0,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 2.010317441016727,
+    "quantum": {
+     "P_ground": 0.6599093137152205,
+     "P_bound_states_used": 0.9999983729613238,
+     "E_gain_uK": 1.5807552247128536,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.583610981244212,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 200.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.21478242846504378,
+     "P_bound_states_used": 0.9999962456466539,
+     "E_gain_uK": 1.9802412260370768,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.3961089743636672,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 200.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.21387344257599122,
+     "P_bound_states_used": 0.999996310794609,
+     "E_gain_uK": 1.9826438069113788,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.446611687335228,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.9802819549520514,
+     "P_bound_states_used": 0.999994982496064,
+     "E_gain_uK": 0.11782509259329693,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.9399765608056372,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 200.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.970964923534601,
+     "P_bound_states_used": 0.999998785940451,
+     "E_gain_uK": 0.27945153014627033,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.0252433709570297,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 200.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.970884612806986,
+     "P_bound_states_used": 0.9999987746529663,
+     "E_gain_uK": 0.28072139535283913,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.9587320679002086,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 1.421509094880515,
+    "quantum": {
+     "P_ground": 0.9889564175612253,
+     "P_bound_states_used": 0.9999958817867604,
+     "E_gain_uK": 0.1333224156191881,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.8729042848367189,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 200.0,
+    "hbar_omega_uK": 2.010317441016727,
+    "quantum": {
+     "P_ground": 0.8620421367982094,
+     "P_bound_states_used": 0.9999980428022971,
+     "E_gain_uK": 1.2300772764046224,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.8768705425495242,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 200.0,
+    "hbar_omega_uK": 2.010317441016727,
+    "quantum": {
+     "P_ground": 0.8619907687056796,
+     "P_bound_states_used": 0.999998051934867,
+     "E_gain_uK": 1.2251667774680832,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.8238956761857696,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "y (handoff + lane)",
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 2.010317441016727,
+    "quantum": {
+     "P_ground": 0.9879713915563426,
+     "P_bound_states_used": 0.9999971374377309,
+     "E_gain_uK": 0.1453208381552989,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.716911433488438,
+     "lost_fraction": 0.0
+    }
+   },
+   {
+    "axis": "x (move)",
+    "Um_mK": 0.3,
+    "d_um": 12.0,
+    "hbar_omega_uK": 3.527192646951961,
+    "quantum": {
+     "P_ground": 0.9934130956615794,
+     "P_bound_states_used": 0.9998953618586994,
+     "E_gain_uK": 0.16892695629010995,
+     "E0_final_minus_initial_uK": 3.117945895304192e-13
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.15751626456641726
+    }
+   },
+   {
+    "axis": "x (move)",
+    "Um_mK": 0.3,
+    "d_um": 40.0,
+    "hbar_omega_uK": 3.527192646951961,
+    "quantum": {
+     "P_ground": 0.9815840825602404,
+     "P_bound_states_used": 0.9999425781531669,
+     "E_gain_uK": 0.08176448894200726,
+     "E0_final_minus_initial_uK": 7.794864738260481e-13
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.1356803450910819
+    }
+   },
+   {
+    "axis": "x (move)",
+    "Um_mK": 0.5,
+    "d_um": 12.0,
+    "hbar_omega_uK": 4.5535861268375495,
+    "quantum": {
+     "P_ground": 0.985736227512302,
+     "P_bound_states_used": 0.9995315149258899,
+     "E_gain_uK": 0.3652156353129312,
+     "E0_final_minus_initial_uK": 4.157261193738923e-13
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.34594120333037787
+    }
+   },
+   {
+    "axis": "x (move)",
+    "Um_mK": 0.5,
+    "d_um": 40.0,
+    "hbar_omega_uK": 4.5535861268375495,
+    "quantum": {
+     "P_ground": 0.9873086365539347,
+     "P_bound_states_used": 0.9998779803766763,
+     "E_gain_uK": 0.1987302659059395,
+     "E0_final_minus_initial_uK": 1.455041417808623e-12
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.2180045813772985
+    }
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

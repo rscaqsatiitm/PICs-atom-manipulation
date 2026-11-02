@@ -32,6 +32,8 @@ beam-propagation design and optimisation of that engine, and
 | 16 PM-to-AM | `scripts/m16_pm_am.py` | intensity noise from filtering the phase-noise-modulated light (gain tilt, band-pass, multipath, PM fibre, dispersion, chain); `docs/pm_am.md` |
 | 17 Scaling II | `scripts/m17_scale.py` | transport depth vs move time (classical Monte Carlo), row select, configuration table; `docs/scaling_beyond.md` |
 | 18 3D transport | `scripts/m18_transport3d.py` | 3D classical transport with handoff between the static array and the moving tweezer (realistic 3D field), lanes, depth ratios, temperature, bystanders, tolerances; `docs/transport3d.md` |
+| 19 Quantum check | `scripts/m19_quantum.py` | 1D split-step propagation of handoff and move from the ground state, Wigner-classical comparison; `docs/rearrangement.md` |
+| 20 Rearrangement | `picsim/rearrange.py`, `scripts/m20_rearrange.py` | greedy pass scheduler for a stack with row select and lanes: passes, cycle time, moves per atom, defects; `docs/rearrangement.md` |
 
 ## Layout
 

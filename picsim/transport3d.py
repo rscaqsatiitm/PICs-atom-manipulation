@@ -27,6 +27,7 @@ class StaticArray:
     w0: float  # m
     lam: float  # m
     depth: float  # J (global)
+    factors: np.ndarray | None = None  # per-site depth factors (non-uniform array); None: uniform
 
     @property
     def zR(self):
@@ -36,16 +37,18 @@ class StaticArray:
         U = np.zeros(len(r))
         F = np.zeros_like(r)
         zR, w0 = self.zR, self.w0
-        for s in self.sites:
+        fac = np.ones(len(self.sites)) if self.factors is None else self.factors
+        for s, fk in zip(self.sites, fac):
+            dep = self.depth * fk
             d = r - s
             zeta = d[:, 2] / zR
             q = 1 + zeta**2
             rho2 = d[:, 0] ** 2 + d[:, 1] ** 2
             A = np.exp(-2 * rho2 / (w0**2 * q)) / q
-            U -= self.depth * A
-            F[:, 0] += self.depth * A * (-4 * d[:, 0] / (w0**2 * q))
-            F[:, 1] += self.depth * A * (-4 * d[:, 1] / (w0**2 * q))
-            F[:, 2] += self.depth * A * (2 * zeta / (zR * q)) * (2 * rho2 / (w0**2 * q) - 1)
+            U -= dep * A
+            F[:, 0] += dep * A * (-4 * d[:, 0] / (w0**2 * q))
+            F[:, 1] += dep * A * (-4 * d[:, 1] / (w0**2 * q))
+            F[:, 2] += dep * A * (2 * zeta / (zR * q)) * (2 * rho2 / (w0**2 * q) - 1)
         return U, F
 
     def site_radial_freq(self):
@@ -201,8 +204,10 @@ def run(static: StaticArray, trap: GridTrap, seq: Sequence, T_atom=10e-6, n=1500
         dst_idx = int(np.argmin(np.linalg.norm(static.sites - start, axis=1)))
     delivered = bound & (near == dst_idx)
     left = bound & (near == src_idx)
-    e_above0 = (E0 + static.depth) / kB
-    e_above1 = (E1[delivered] + static.depth) / kB
+    fac = np.ones(len(static.sites)) if static.factors is None else static.factors
+    s0 = int(np.argmin(np.linalg.norm(static.sites - start, axis=1)))
+    e_above0 = (E0 + static.depth * fac[s0]) / kB
+    e_above1 = (E1[delivered] + static.depth * fac[dst_idx]) / kB
     return {"initially_unbound_fraction_rejected": float(unbound0), "delivered": float(delivered.mean()), "left_behind": float(left.mean()),
             "misplaced": float((bound & (near != dst_idx) & (near != src_idx)).mean()), "lost": float((~bound).mean()),
             "E_initial_uK": float(e_above0.mean() * 1e6),

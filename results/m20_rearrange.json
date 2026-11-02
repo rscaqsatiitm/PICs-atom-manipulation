@@ -1,0 +1,313 @@
+{
+ "name": "m20_rearrange",
+ "script": "scripts/m20_rearrange.py",
+ "git": "f991f2e",
+ "notes": "One rearrangement cycle, no repair round. P_defect_free includes per-move loss and vacuum loss during the cycle, not imaging or scattering.",
+ "inputs": {
+  "array": [
+   50,
+   45
+  ],
+  "monte_carlo": 40,
+  "timing": {
+   "t_ramp": 0.0001,
+   "t_lane": 0.0004,
+   "t_x40": 0.0004,
+   "t_min": 0.0002,
+   "t_reposition": 0.0003,
+   "pitch": 4e-06
+  },
+  "tau_vac_s": [
+   30,
+   300
+  ],
+  "loss_per_move": [
+   0.001,
+   0.0003,
+   0.0001
+  ],
+  "heating_per_move_uK": {
+   "slow lane (ramp 200, lane 400 us), 0.1/0.3 mK, quantum": 0.29000000000000004,
+   "fast lane (100/100 us), 0.1/0.5 mK, quantum": 1.21,
+   "fast lane (100/100 us), 0.1/0.3 mK, classical 3D": 10.0
+  }
+ },
+ "outputs": {
+  "cases": [
+   {
+    "stack_rows": 16,
+    "label": "one stack (16 rows)",
+    "target": [
+     30,
+     30
+    ],
+    "p_load": 0.5,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 4.325,
+    "passes_horizontal_mean": 2.0,
+    "time_ms_mean": 13.257410078118625,
+    "time_ms_max": 17.07685679644816,
+    "moves_per_atom_mean": 1.113888888888889,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1002.5,
+    "frac_atoms_moved_twice_or_more": 0.19577777777777777,
+    "P_defect_free_moves_p0.001": 0.3672567321572665,
+    "expected_defects_moves_p0.001": 1.0025,
+    "P_defect_free_moves_p0.0003": 0.7403163097841905,
+    "expected_defects_moves_p0.0003": 0.30074999999999996,
+    "P_defect_free_moves_p0.0001": 0.9046184924439696,
+    "expected_defects_moves_p0.0001": 0.10024999999999999,
+    "expected_defects_vacuum_tau30s": 0.3977223023435587,
+    "P_defect_free_p1e-4_tau30s": 0.6086830883437748,
+    "expected_defects_vacuum_tau300s": 0.039772230234355874,
+    "P_defect_free_p1e-4_tau300s": 0.8693635312963153
+   },
+   {
+    "stack_rows": 16,
+    "label": "one stack (16 rows)",
+    "target": [
+     32,
+     32
+    ],
+    "p_load": 0.5,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 5.825,
+    "passes_horizontal_mean": 2.0,
+    "time_ms_mean": 17.17243348400273,
+    "time_ms_max": 22.975354337878457,
+    "moves_per_atom_mean": 1.1216552734375,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1148.575,
+    "frac_atoms_moved_twice_or_more": 0.2199462890625,
+    "P_defect_free_moves_p0.001": 0.31764728668426645,
+    "expected_defects_moves_p0.001": 1.148575,
+    "P_defect_free_moves_p0.0003": 0.7086363274499776,
+    "expected_defects_moves_p0.0003": 0.34457249999999995,
+    "P_defect_free_moves_p0.0001": 0.8915090222245133,
+    "expected_defects_moves_p0.0001": 0.11485750000000002,
+    "expected_defects_vacuum_tau30s": 0.5861523962539599,
+    "P_defect_free_p1e-4_tau30s": 0.49757497059192896,
+    "expected_defects_vacuum_tau300s": 0.058615239625395985,
+    "P_defect_free_p1e-4_tau300s": 0.8407838919903261
+   },
+   {
+    "stack_rows": 16,
+    "label": "one stack (16 rows)",
+    "target": [
+     32,
+     32
+    ],
+    "p_load": 0.6,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 5.05,
+    "passes_horizontal_mean": 2.0,
+    "time_ms_mean": 14.756712629791348,
+    "time_ms_max": 17.135203844298037,
+    "moves_per_atom_mean": 1.0320556640625,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1056.825,
+    "frac_atoms_moved_twice_or_more": 0.119970703125,
+    "P_defect_free_moves_p0.001": 0.34788668827100716,
+    "expected_defects_moves_p0.001": 1.056825,
+    "P_defect_free_moves_p0.0003": 0.7283579230227794,
+    "expected_defects_moves_p0.0003": 0.3170475,
+    "P_defect_free_moves_p0.0001": 0.8997187269916701,
+    "expected_defects_moves_p0.0001": 0.10568249999999998,
+    "expected_defects_vacuum_tau30s": 0.503695791096878,
+    "P_defect_free_p1e-4_tau30s": 0.5442484687762731,
+    "expected_defects_vacuum_tau300s": 0.05036957910968781,
+    "P_defect_free_p1e-4_tau300s": 0.8555346479104948
+   },
+   {
+    "stack_rows": 16,
+    "label": "one stack (16 rows)",
+    "target": [
+     36,
+     36
+    ],
+    "p_load": 0.6,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 8.35,
+    "passes_horizontal_mean": 3.0,
+    "time_ms_mean": 25.11460639782215,
+    "time_ms_max": 35.632518052846066,
+    "moves_per_atom_mean": 1.065972222222222,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1381.5,
+    "frac_atoms_moved_twice_or_more": 0.18759645061728394,
+    "P_defect_free_moves_p0.001": 0.25165797619418573,
+    "expected_defects_moves_p0.001": 1.3815,
+    "P_defect_free_moves_p0.0003": 0.6608116168447066,
+    "expected_defects_moves_p0.0003": 0.4144499999999999,
+    "P_defect_free_moves_p0.0001": 0.8709838647730213,
+    "expected_defects_moves_p0.0001": 0.13815,
+    "expected_defects_vacuum_tau30s": 1.0849509963859167,
+    "P_defect_free_p1e-4_tau30s": 0.2978105133464578,
+    "expected_defects_vacuum_tau300s": 0.10849509963859168,
+    "P_defect_free_p1e-4_tau300s": 0.7815361478493745
+   },
+   {
+    "stack_rows": 32,
+    "label": "two stacks (32 rows)",
+    "target": [
+     30,
+     30
+    ],
+    "p_load": 0.5,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 4.225,
+    "passes_horizontal_mean": 1.0,
+    "time_ms_mean": 11.391285099467948,
+    "time_ms_max": 15.18320027640341,
+    "moves_per_atom_mean": 1.1147777777777779,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1003.3,
+    "frac_atoms_moved_twice_or_more": 0.19633333333333333,
+    "P_defect_free_moves_p0.001": 0.366957497710792,
+    "expected_defects_moves_p0.001": 1.0032999999999999,
+    "P_defect_free_moves_p0.0003": 0.7401376222962586,
+    "expected_defects_moves_p0.0003": 0.30099,
+    "P_defect_free_moves_p0.0001": 0.904545984609155,
+    "expected_defects_moves_p0.0001": 0.10033,
+    "expected_defects_vacuum_tau30s": 0.34173855298403844,
+    "P_defect_free_p1e-4_tau30s": 0.6435776246907376,
+    "expected_defects_vacuum_tau300s": 0.034173855298403846,
+    "P_defect_free_p1e-4_tau300s": 0.8741708778013034
+   },
+   {
+    "stack_rows": 32,
+    "label": "two stacks (32 rows)",
+    "target": [
+     32,
+     32
+    ],
+    "p_load": 0.5,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 5.825,
+    "passes_horizontal_mean": 1.0,
+    "time_ms_mean": 15.542498551190263,
+    "time_ms_max": 21.340690327264827,
+    "moves_per_atom_mean": 1.1212158203125,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1148.125,
+    "frac_atoms_moved_twice_or_more": 0.219775390625,
+    "P_defect_free_moves_p0.001": 0.3177737890592707,
+    "expected_defects_moves_p0.001": 1.1481249999999998,
+    "P_defect_free_moves_p0.0003": 0.7087285842500235,
+    "expected_defects_moves_p0.0003": 0.34443749999999995,
+    "P_defect_free_moves_p0.0001": 0.891548659208631,
+    "expected_defects_moves_p0.0001": 0.11481249999999998,
+    "expected_defects_vacuum_tau30s": 0.5305172838806277,
+    "P_defect_free_p1e-4_tau30s": 0.5260730921408336,
+    "expected_defects_vacuum_tau300s": 0.05305172838806277,
+    "P_defect_free_p1e-4_tau300s": 0.8455121258345628
+   },
+   {
+    "stack_rows": 32,
+    "label": "two stacks (32 rows)",
+    "target": [
+     32,
+     32
+    ],
+    "p_load": 0.6,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 5.05,
+    "passes_horizontal_mean": 1.0,
+    "time_ms_mean": 13.120719437842576,
+    "time_ms_max": 15.500539833684405,
+    "moves_per_atom_mean": 1.027685546875,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1052.35,
+    "frac_atoms_moved_twice_or_more": 0.11826171875,
+    "P_defect_free_moves_p0.001": 0.349415761352179,
+    "expected_defects_moves_p0.001": 1.0523500000000001,
+    "P_defect_free_moves_p0.0003": 0.7293306844055495,
+    "expected_defects_moves_p0.0003": 0.315705,
+    "P_defect_free_moves_p0.0001": 0.9001206632272915,
+    "expected_defects_moves_p0.0001": 0.10523500000000001,
+    "expected_defects_vacuum_tau30s": 0.4478538901450266,
+    "P_defect_free_p1e-4_tau30s": 0.5758416653487346,
+    "expected_defects_vacuum_tau300s": 0.04478538901450266,
+    "P_defect_free_p1e-4_tau300s": 0.8607111875787907
+   },
+   {
+    "stack_rows": 32,
+    "label": "two stacks (32 rows)",
+    "target": [
+     36,
+     36
+    ],
+    "p_load": 0.6,
+    "filled_fraction_before_loss": 1.0,
+    "deficit_mean_when_unfilled": 0.0,
+    "passes_vertical_mean": 8.375,
+    "passes_horizontal_mean": 2.0,
+    "time_ms_mean": 23.603459542824208,
+    "time_ms_max": 34.049675340371444,
+    "moves_per_atom_mean": 1.065972222222222,
+    "moves_per_atom_max": 2,
+    "moves_total_mean": 1381.5,
+    "frac_atoms_moved_twice_or_more": 0.1875192901234568,
+    "P_defect_free_moves_p0.001": 0.2516370244389147,
+    "expected_defects_moves_p0.001": 1.3815,
+    "P_defect_free_moves_p0.0003": 0.660806682800654,
+    "expected_defects_moves_p0.0003": 0.4144499999999999,
+    "P_defect_free_moves_p0.0001": 0.8709831431043724,
+    "expected_defects_moves_p0.0001": 0.13815,
+    "expected_defects_vacuum_tau30s": 1.019669452250006,
+    "P_defect_free_p1e-4_tau30s": 0.31783406498238087,
+    "expected_defects_vacuum_tau300s": 0.10196694522500058,
+    "P_defect_free_p1e-4_tau300s": 0.7866539758079079
+   }
+  ],
+  "timing_sensitivity": [
+   {
+    "timing": "base (ramp 100, lane 400, x 400 us/40 um)",
+    "time_ms_mean": 17.2009235688577,
+    "expected_defects_vacuum_tau30s": 0.5871248578170095
+   },
+   {
+    "timing": "fast lane 100 us",
+    "time_ms_mean": 12.490923568857704,
+    "expected_defects_vacuum_tau30s": 0.4263568578170096
+   },
+   {
+    "timing": "fast all: ramp 50, lane 100, x 200 us/40 um",
+    "time_ms_mean": 8.207961784428852,
+    "expected_defects_vacuum_tau30s": 0.2801650955751714
+   },
+   {
+    "timing": "slow: ramp 200, lane 400",
+    "time_ms_mean": 18.7709235688577,
+    "expected_defects_vacuum_tau30s": 0.6407141911503429
+   },
+   {
+    "timing": "scanner settle 1 ms",
+    "time_ms_mean": 22.6959235688577,
+    "expected_defects_vacuum_tau30s": 0.7746875244836764
+   }
+  ],
+  "heating_base_case": {
+   "slow lane (ramp 200, lane 400 us), 0.1/0.3 mK, quantum": {
+    "mean_uK": 0.32528002929687505,
+    "worst_atom_uK": 0.5800000000000001
+   },
+   "fast lane (100/100 us), 0.1/0.5 mK, quantum": {
+    "mean_uK": 1.357202880859375,
+    "worst_atom_uK": 2.42
+   },
+   "fast lane (100/100 us), 0.1/0.3 mK, classical 3D": {
+    "mean_uK": 11.216552734375,
+    "worst_atom_uK": 20.0
+   }
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

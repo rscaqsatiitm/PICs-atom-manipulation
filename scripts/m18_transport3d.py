@@ -88,17 +88,24 @@ def trap():
     return _G["trap"]
 
 
-def static_array(depth_mK, dz=0.0):
+def static_array(depth_mK, dz=0.0, src_factor=1.0, dst_factor=1.0, sigma=0.0, seed=0, d_um=12.0):
     xs = np.arange(-2, 13) * PITCH
     sites = np.array([[x, y, dz] for y in (-PITCH, 0.0, PITCH) for x in xs])
-    return StaticArray(sites, W0_S, LAM_S * 1e-6, depth_mK * 1e-3 * kB)
+    fac = np.ones(len(sites))
+    if sigma:
+        fac = np.clip(1 + sigma * np.random.default_rng(seed).standard_normal(len(sites)), 0.2, None)
+    fac[np.argmin(np.linalg.norm(sites - np.array([0, 0, dz]), axis=1))] *= src_factor
+    fac[np.argmin(np.linalg.norm(sites - np.array([d_um * 1e-6, 0, dz]), axis=1))] *= dst_factor
+    return StaticArray(sites, W0_S, LAM_S * 1e-6, depth_mK * 1e-3 * kB, factors=fac)
 
 
 def one(p):
-    st = static_array(p["Us_mK"], p.get("static_dz_um", 0.0) * 1e-6)
+    st = static_array(p["Us_mK"], p.get("static_dz_um", 0.0) * 1e-6, p.get("src_factor", 1.0), p.get("dst_factor", 1.0),
+                      p.get("sigma", 0.0), p.get("seed", 0), p.get("d_um", 12.0))
     seq = Sequence(src=np.zeros(3), dst=np.array([p.get("d_um", 12.0) * 1e-6, 0, 0]), depth_move=p["Um_mK"] * 1e-3 * kB,
                    t_ramp=p["t_ramp_us"] * 1e-6, t_move=p["t_move_us"] * 1e-6, lane_dy=p.get("lane_um", 0.0) * 1e-6,
-                   f_update=p.get("f_update", 200e3), offset=np.array(p.get("offset_um", [0, 0, 0])) * 1e-6)
+                   f_update=p.get("f_update", 200e3), offset=np.array(p.get("offset_um", [0, 0, 0])) * 1e-6,
+                   t_lane=p.get("t_lane_us", 100.0) * 1e-6)
     site = p.get("bystander_um")
     res = run(st, trap(), seq, T_atom=p.get("T_uK", 10.0) * 1e-6, n=p.get("n", 1500), seed=p.get("seed", 0),
               gravity=p.get("gravity", True), atom_site=None if site is None else np.array(site) * 1e-6)
@@ -208,6 +215,47 @@ def margin():
     return rows
 
 
+# ------------------------------------------------------------------ slower lane steps (3D check of m19)
+def slowlane():
+    P = []
+    for T, Us, Um in ((5.0, 0.1, 0.3), (5.0, 0.1, 0.5), (10.0, 0.2, 0.6)):
+        for tr, tl in ((200.0, 400.0),):
+            P.append({"Us_mK": Us, "Um_mK": Um, "t_ramp_us": tr, "t_lane_us": tl, "t_move_us": 400.0, "lane_um": 2.0,
+                      "T_uK": T, "n": 3000, "label": f"{T} uK, {Us}/{Um} mK, ramp {tr}, lane {tl} us"})
+            P.append({"Us_mK": Us, "Um_mK": Um, "t_ramp_us": tr, "t_lane_us": tl, "t_move_us": 400.0, "lane_um": 2.0,
+                      "T_uK": T, "n": 3000, "bystander_um": [12.0, 4.0, 0.0],
+                      "label": f"{T} uK, {Us}/{Um} mK, ramp {tr}, lane {tl} us, bystander beside drop"})
+    rows = pool_map(P)
+    for r in rows:
+        print(r["label"], round(r["delivered"], 4), round(r["lost"], 4), r["dE_uK"], flush=True)
+    save_result("m18_slowlane", script=SCRIPT, inputs={"atoms": 3000, "move": "12 um in 400 us"}, outputs={"rows": rows})
+    return rows
+
+
+# ------------------------------------------------------------------ static-array depth uniformity
+def uniformity():
+    P = []
+    for T, Us, Um in ((5.0, 0.1, 0.3), (5.0, 0.1, 0.5), (10.0, 0.2, 0.6)):
+        base = {"Us_mK": Us, "Um_mK": Um, "t_ramp_us": 100.0, "t_move_us": 400.0, "lane_um": 2.0, "T_uK": T, "n": 2000}
+        tag = f"{T} uK, {Us}/{Um} mK: "
+        for f in (1.2, 1.4, 1.6):
+            P.append(dict(base, src_factor=f, label=tag + f"source site x{f}"))
+        for f in (0.8, 0.6, 0.4):
+            P.append(dict(base, dst_factor=f, label=tag + f"target site x{f}"))
+        for sg in (0.05, 0.1, 0.2):
+            for sd in (1, 2):
+                P.append(dict(base, sigma=sg, seed=sd, label=tag + f"random {int(sg*100)}% rms, seed {sd}"))
+    rows = pool_map(P)
+    for r in rows:
+        print(r["label"], {k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items()
+                           if k in ("delivered", "left_behind", "lost", "dE_uK")}, flush=True)
+    save_result("m18_uniformity", script=SCRIPT,
+                inputs={"move": "12 um in 400 us, lane 2 um, ramps 100 us", "atoms": 2000,
+                        "random": "independent Gaussian depth factors on all 45 sites (clipped at 0.2)"},
+                outputs={"rows": rows})
+    return rows
+
+
 # ------------------------------------------------------------------ depth vs atom temperature
 def temp():
     P = []
@@ -226,6 +274,6 @@ def temp():
 
 
 if __name__ == "__main__":
-    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin"]
+    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin", "uniformity", "slowlane"]
     for p in parts:
-        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin}[p]()
+        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin, "uniformity": uniformity, "slowlane": slowlane}[p]()
