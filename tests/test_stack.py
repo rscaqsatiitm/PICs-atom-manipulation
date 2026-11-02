@@ -44,3 +44,19 @@ def test_2d_field_is_separable_without_the_circle():
     assert np.max(np.abs(I2 / Iy[:, None] - Ix[None, :])) / Ix.max() < 2e-3
     # the circular pupil can only remove light
     assert np.all(F.intensity(w, x, y)[0].max() <= I2[0].max() * (1 + 1e-9))
+
+
+def test_vector_focus_matches_scalar_and_separates_polarisations():
+    fp = FocalPlane(N_ports=16, N_arms=24, model="paraxial", dx_atoms=0.02)
+    ls = LinearSynth(fp, x_half=7.0, step=0.04)
+    w = ls.weights([1.3])
+    r = gaussian_relay(beta=1.0)
+    F = Focus2D(fp, r, stride=1)
+    x = np.arange(0.0, 2.6, 0.02)
+    y = np.array([0.0])
+    Es = F.field(w, x, y)
+    Ev = F.field_vector(w, x, y, pol="x")
+    Iv = np.sum(np.abs(Ev) ** 2, axis=0)
+    # same peak within the aplanatic apodisation factor (a few %) and negligible cross-polarised field on axis
+    assert abs(Iv.max() / (np.abs(Es) ** 2).max() - 1) < 0.08
+    assert np.abs(Ev[1]).max() / np.abs(Ev[0]).max() < 0.02

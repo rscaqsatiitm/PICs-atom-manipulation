@@ -242,6 +242,36 @@ class Focus2D:
     def intensity(self, port_w, x_a, y_a, **kw):
         return np.abs(self.field(port_w, x_a, y_a, **kw)) ** 2
 
+    def field_vector(self, port_w, x_a, y_a, pol="x", Py=None, dz_a=0.0):
+        """Vector focal field (Richards-Wolf, aplanatic objective) for a pupil linearly polarised along x or y.
+
+        Returns an array (3, len(y_a), len(x_a)) of Ex, Ey, Ez, normalised as the scalar field (the 1/sqrt(cos)
+        apodisation of the aplanatic objective is included, so |E|^2 differs from the scalar model by a few %).
+        """
+        r = self.r
+        ux = self.pupil_x(port_w)
+        Py = r.pupil() if Py is None else Py
+        P = ux[:, None] * Py[None, :]
+        sx = r.NA * self.xi[:, None] + 0 * r.eta[None, :]
+        sy = r.NA * r.eta[None, :] + 0 * self.xi[:, None]
+        st2 = sx**2 + sy**2
+        P = np.where(st2 <= r.NA**2, P, 0)
+        cos = np.sqrt(1 - st2)
+        sin = np.sqrt(st2)
+        phi = np.arctan2(sy, sx)
+        c, s = np.cos(phi), np.sin(phi)
+        if pol == "x":
+            e = (cos * c**2 + s**2, (cos - 1) * c * s, -sin * c)
+        else:
+            e = ((cos - 1) * c * s, cos * s**2 + c**2, -sin * s)
+        fac = P / np.sqrt(cos)
+        if dz_a:
+            fac = fac * np.exp(1j * self.k * dz_a * cos)
+        Ex = np.exp(-1j * self.k * np.outer(self.opa.x_to_s(np.atleast_1d(x_a)), self.xs)) * self.dxp
+        Ey = np.exp(-1j * self.k * r.NA * np.outer(r.eta, np.atleast_1d(y_a))) * r.deta
+        out = [(Ex @ ((fac * ej) @ Ey)).T for ej in e]
+        return np.array(out) * np.sqrt(self.norm_x * r.norm)
+
 
 def peak2d(I, x, y):
     """Peak value and sub-grid position (parabolic in x and y) of a 2D intensity on the grid (y, x)."""

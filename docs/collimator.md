@@ -188,9 +188,11 @@ tweezer window straddling a sub-tree boundary would then fluctuate. The HI1060-m
 Hence one fibre per chip is possible and preferred. Its 0.1 um tip width is at the assumed minimum feature
 size.
 
-**Frequency offsets.** Every chip needs its own optical frequency, with all pairwise differences of at least
-1 MHz (`docs/stacked_relay.md`, Sec. 5). One acousto-optic shifter per chip feed at 80 + 1.13 m MHz (m = 0 to 15)
-gives pairwise differences from 1.13 to 17 MHz, far above 2 nu_trap = 168 kHz. Each shifter must handle 2.6 to 3.4 W at 1064 nm [VALUE?].
+**Frequency offsets.** Superseded by `docs/row_coherence.md`: per-chip shifters are not needed. One phase
+modulator on the seed, driven with Gaussian noise (3 rad rms, 1 to 2 GHz), plus fibre delays in 0.3 m steps gives
+the same row independence. (The original plan was one acousto-optic shifter per chip feed at 80 + 1.13 m MHz,
+m = 0 to 15, pairwise differences 1.13 to 17 MHz, far above 2 nu_trap = 168 kHz, each handling 2.6 to 3.4 W
+[VALUE?].)
 
 **Laser.** 41 to 55 W of single-frequency 1064.4 nm light at 1.2 mK, or 17 to 23 W at 0.5 mK. Lowering the transport
 depth remains the cheapest lever: power scales linearly with depth, and the lower trap frequency also relaxes

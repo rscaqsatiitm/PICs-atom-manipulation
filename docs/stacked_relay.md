@@ -136,6 +136,11 @@ chips. The beat notes then modulate the depth at MHz frequencies with amplitude 
 4 um). This lies far from the parametric resonance at 2 nu_trap, and the atoms see the time average. The
 tweezers within one row stay coherent, as route E requires.
 
+Follow-up (`docs/row_coherence.md`): the chips need not run at different frequencies. Any randomisation of
+their relative phase much faster than the trap period suffices. One phase modulator on the common seed, driven
+with Gaussian noise, plus different fibre delays per chip does this as well as 16 frequency shifters.
+Alternating polarisation is a passive partial alternative.
+
 ## 6. Alignment tolerances
 
 Per-chip errors, single tweezer at x = 0 (the field edge, x = 60 um, gives the same values within 0.1%). The

@@ -1,0 +1,419 @@
+{
+ "name": "m15_coherent",
+ "script": "scripts/m15_coherence.py",
+ "git": "9ee2032",
+ "notes": "With alternating polarisation, rows 4 and 12 um apart are orthogonal, 8 and 16 um parallel.",
+ "inputs": {
+  "row_m": "41 tweezers, 3 um, phases 0/pi/2",
+  "row_n": "11 tweezers offset 1.5 um",
+  "move": "row-m tweezer +0.25 um",
+  "phases": "worst of 8 relative chip phases",
+  "collimator": "Weierstrass + aplanat, AR",
+  "vector": "Richards-Wolf, aplanatic objective, intensity summed over Ex, Ey, Ez (scalar light shift)"
+ },
+ "outputs": {
+  "baseline, scalar": {
+   "beta_um": 0.7,
+   "apod_a": null,
+   "pol": [
+    null,
+    null
+   ],
+   "row_peak_rel": 1.0,
+   "by_distance": {
+    "4.0": {
+     "incoherent": {
+      "static_peak": 0.00011338804459803953,
+      "static_pos_nm": 0.057735560846215284,
+      "move_peak": 1.196357674426718e-05,
+      "move_pos_nm": 0.035944162269457465
+     },
+     "coherent": {
+      "static_peak": 0.0214062792195564,
+      "static_pos_nm": 6.865492025177335,
+      "move_peak": 0.0017114552679715622,
+      "move_pos_nm": 4.7286738773077195
+     }
+    },
+    "8.0": {
+     "incoherent": {
+      "static_peak": 2.853102499145166e-06,
+      "static_pos_nm": 0.0004942669103696221,
+      "move_peak": 1.3606741615657114e-06,
+      "move_pos_nm": 0.0017441632699428445
+     },
+     "coherent": {
+      "static_peak": 0.0033802044536930254,
+      "static_pos_nm": 2.045314815003265,
+      "move_peak": 0.0010578690761586795,
+      "move_pos_nm": 1.3984332745501782
+     }
+    },
+    "12.0": {
+     "incoherent": {
+      "static_peak": 5.611696343166273e-07,
+      "static_pos_nm": 0.003501034754532138,
+      "move_peak": 4.781929741071167e-07,
+      "move_pos_nm": 0.0013020479662521898
+     },
+     "coherent": {
+      "static_peak": 0.0014981195820868987,
+      "static_pos_nm": 4.704271770047806,
+      "move_peak": 0.0006614449858756144,
+      "move_pos_nm": 0.7380206681073951
+     }
+    },
+    "16.0": {
+     "incoherent": {
+      "static_peak": 1.519868845223371e-06,
+      "static_pos_nm": 0.00030315938504142843,
+      "move_peak": 2.634787115152193e-07,
+      "move_pos_nm": 0.00048806389142577234
+     },
+     "coherent": {
+      "static_peak": 0.0024668327015451297,
+      "static_pos_nm": 0.3540600544926569,
+      "move_peak": 0.0003435230737567352,
+      "move_pos_nm": 0.5432768390322645
+     }
+    }
+   }
+  },
+  "baseline, vector, same polarisation": {
+   "beta_um": 0.7,
+   "apod_a": null,
+   "pol": [
+    "x",
+    "x"
+   ],
+   "row_peak_rel": 1.008490373960654,
+   "by_distance": {
+    "4.0": {
+     "incoherent": {
+      "static_peak": 0.00012371057467475133,
+      "static_pos_nm": 0.06283351191315607,
+      "move_peak": 1.290220203842285e-05,
+      "move_pos_nm": 0.037405279704595465
+     },
+     "coherent": {
+      "static_peak": 0.022237989112104062,
+      "static_pos_nm": 7.566422576345916,
+      "move_peak": 0.0018612883654129941,
+      "move_pos_nm": 4.817363908621571
+     }
+    },
+    "8.0": {
+     "incoherent": {
+      "static_peak": 2.8047968221311947e-06,
+      "static_pos_nm": 0.00038241118713001833,
+      "move_peak": 1.3621870318392126e-06,
+      "move_pos_nm": 0.0015374104209938282
+     },
+     "coherent": {
+      "static_peak": 0.0032675902117074163,
+      "static_pos_nm": 2.1425305312944505,
+      "move_peak": 0.0010638757859997572,
+      "move_pos_nm": 1.4426382427342606
+     }
+    },
+    "12.0": {
+     "incoherent": {
+      "static_peak": 7.760135767309606e-07,
+      "static_pos_nm": 0.003429227264612454,
+      "move_peak": 4.849394350525671e-07,
+      "move_pos_nm": 0.0013050859933207606
+     },
+     "coherent": {
+      "static_peak": 0.0014876168769131226,
+      "static_pos_nm": 4.745523211646557,
+      "move_peak": 0.000681509282532855,
+      "move_pos_nm": 0.7466118965078519
+     }
+    },
+    "16.0": {
+     "incoherent": {
+      "static_peak": 1.4604196527656654e-06,
+      "static_pos_nm": 0.00033215606169781375,
+      "move_peak": 2.647459487192805e-07,
+      "move_pos_nm": 0.0004377471707149875
+     },
+     "coherent": {
+      "static_peak": 0.002410253961076192,
+      "static_pos_nm": 0.35475346563507976,
+      "move_peak": 0.0003537110138887023,
+      "move_pos_nm": 0.5503611861192124
+     }
+    }
+   }
+  },
+  "alternating polarisation (x / y), vector": {
+   "beta_um": 0.7,
+   "apod_a": null,
+   "pol": [
+    "x",
+    "y"
+   ],
+   "row_peak_rel": 0.9926535019498004,
+   "by_distance": {
+    "4.0": {
+     "incoherent": {
+      "static_peak": 0.00012569523081484846,
+      "static_pos_nm": 0.06883520990468504,
+      "move_peak": 1.310902248985446e-05,
+      "move_pos_nm": 0.04029454621557221
+     },
+     "coherent": {
+      "static_peak": 0.0008395115597719105,
+      "static_pos_nm": 1.1951306201786474,
+      "move_peak": 0.00015508628152838266,
+      "move_pos_nm": 0.31743815281302623
+     }
+    },
+    "8.0": {
+     "incoherent": {
+      "static_peak": 2.8497266708615854e-06,
+      "static_pos_nm": 0.00040914773116085544,
+      "move_peak": 1.3840089250205523e-06,
+      "move_pos_nm": 0.001618529246673193
+     },
+     "coherent": {
+      "static_peak": 0.00036373121945088016,
+      "static_pos_nm": 0.365561921664863,
+      "move_peak": 7.80943014200286e-05,
+      "move_pos_nm": 0.12150636547650429
+     }
+    },
+    "12.0": {
+     "incoherent": {
+      "static_peak": 7.884890567133596e-07,
+      "static_pos_nm": 0.0037564065563042183,
+      "move_peak": 4.92719184563839e-07,
+      "move_pos_nm": 0.0013821124401627509
+     },
+     "coherent": {
+      "static_peak": 4.950352308275008e-05,
+      "static_pos_nm": 0.34837898262143524,
+      "move_peak": 4.3838407603580265e-05,
+      "move_pos_nm": 0.06390966943224358
+     }
+    },
+    "16.0": {
+     "incoherent": {
+      "static_peak": 1.4838482780277218e-06,
+      "static_pos_nm": 0.0003633916472142551,
+      "move_peak": 2.6893835269881095e-07,
+      "move_pos_nm": 0.0004514419773382042
+     },
+     "coherent": {
+      "static_peak": 0.00017896298364861174,
+      "static_pos_nm": 0.06677080157735647,
+      "move_peak": 2.434647673454915e-05,
+      "move_pos_nm": 0.048952254512678435
+     }
+    }
+   }
+  },
+  "apodiser a=0.8, beta 0.7": {
+   "beta_um": 0.7,
+   "apod_a": 0.8,
+   "pol": [
+    null,
+    null
+   ],
+   "row_peak_rel": 0.6480189627449712,
+   "by_distance": {
+    "4.0": {
+     "incoherent": {
+      "static_peak": 1.4133651692116445e-05,
+      "static_pos_nm": 0.01419648445175003,
+      "move_peak": 2.5067684477075858e-06,
+      "move_pos_nm": 0.005690271410411294
+     },
+     "coherent": {
+      "static_peak": 0.0075328936124070545,
+      "static_pos_nm": 3.8685402438058576,
+      "move_peak": 0.0010859727930150331,
+      "move_pos_nm": 2.1724856951239984
+     }
+    },
+    "8.0": {
+     "incoherent": {
+      "static_peak": 1.2319115767489563e-06,
+      "static_pos_nm": 0.0018810306059074723,
+      "move_peak": 4.608090160562739e-07,
+      "move_pos_nm": 0.0004295310282511097
+     },
+     "coherent": {
+      "static_peak": 0.002220467777090507,
+      "static_pos_nm": 1.7229889135668803,
+      "move_peak": 0.0005488084297218254,
+      "move_pos_nm": 0.6210854606598158
+     }
+    },
+    "12.0": {
+     "incoherent": {
+      "static_peak": 2.401340553070952e-07,
+      "static_pos_nm": 0.0014041782486792945,
+      "move_peak": 1.1526201260103619e-07,
+      "move_pos_nm": 0.0003088695187360621
+     },
+     "coherent": {
+      "static_peak": 0.0009779174883224329,
+      "static_pos_nm": 2.8977871982016166,
+      "move_peak": 0.00027685486855610897,
+      "move_pos_nm": 0.43648726036420976
+     }
+    },
+    "16.0": {
+     "incoherent": {
+      "static_peak": 6.80391379903611e-07,
+      "static_pos_nm": 0.00010326164193851832,
+      "move_peak": 8.433064857538142e-08,
+      "move_pos_nm": 0.0001740624044052315
+     },
+     "coherent": {
+      "static_peak": 0.0016494248598935002,
+      "static_pos_nm": 0.2553374754727918,
+      "move_peak": 0.000150643554523322,
+      "move_pos_nm": 0.308264348989686
+     }
+    }
+   }
+  },
+  "apodiser a=0.65, beta 0.7": {
+   "beta_um": 0.7,
+   "apod_a": 0.65,
+   "pol": [
+    null,
+    null
+   ],
+   "row_peak_rel": 0.5425609796564297,
+   "by_distance": {
+    "4.0": {
+     "incoherent": {
+      "static_peak": 5.52528325159507e-06,
+      "static_pos_nm": 0.006435762765517582,
+      "move_peak": 1.1995223770933094e-06,
+      "move_pos_nm": 0.0027270361205085584
+     },
+     "coherent": {
+      "static_peak": 0.0047065974125724,
+      "static_pos_nm": 2.7861189357198106,
+      "move_peak": 0.0008823595086531189,
+      "move_pos_nm": 1.7058768867947394
+     }
+    },
+    "8.0": {
+     "incoherent": {
+      "static_peak": 6.41032064541136e-07,
+      "static_pos_nm": 0.0014726710807381777,
+      "move_peak": 2.322568379842238e-07,
+      "move_pos_nm": 0.00028603187549369903
+     },
+     "coherent": {
+      "static_peak": 0.0016015382938601164,
+      "static_pos_nm": 1.869658322032179,
+      "move_peak": 0.00039766913736505316,
+      "move_pos_nm": 0.5378572555007698
+     }
+    },
+    "12.0": {
+     "incoherent": {
+      "static_peak": 1.4447123519722993e-07,
+      "static_pos_nm": 0.0008444189704664836,
+      "move_peak": 5.863375585057895e-08,
+      "move_pos_nm": 0.00014710318582029434
+     },
+     "coherent": {
+      "static_peak": 0.0007561968464357971,
+      "static_pos_nm": 2.2627599469170017,
+      "move_peak": 0.00017493482043939856,
+      "move_pos_nm": 0.34756651610225503
+     }
+    },
+    "16.0": {
+     "incoherent": {
+      "static_peak": 4.0376137100395226e-07,
+      "static_pos_nm": 9.67234782708808e-05,
+      "move_peak": 4.9698998139113826e-08,
+      "move_pos_nm": 9.764147936873131e-05
+     },
+     "coherent": {
+      "static_peak": 0.001269483023724094,
+      "static_pos_nm": 0.2199756324652618,
+      "move_peak": 0.00011449246957617731,
+      "move_pos_nm": 0.22757145194417833
+     }
+    }
+   }
+  },
+  "alternating polarisation + apodiser a=0.8, beta 0.7": {
+   "beta_um": 0.7,
+   "apod_a": 0.8,
+   "pol": [
+    "x",
+    "y"
+   ],
+   "row_peak_rel": 0.6471183686711145,
+   "by_distance": {
+    "4.0": {
+     "incoherent": {
+      "static_peak": 1.4847676205853588e-05,
+      "static_pos_nm": 0.016137266991762156,
+      "move_peak": 2.471689358185536e-06,
+      "move_pos_nm": 0.005937862545069057
+     },
+     "coherent": {
+      "static_peak": 0.00026411507601764583,
+      "static_pos_nm": 0.234665903608068,
+      "move_peak": 6.6152262603425e-05,
+      "move_pos_nm": 0.20180896122358577
+     }
+    },
+    "8.0": {
+     "incoherent": {
+      "static_peak": 1.2501240040929673e-06,
+      "static_pos_nm": 0.0018018179695949812,
+      "move_peak": 4.702912395071479e-07,
+      "move_pos_nm": 0.00042360020249709293
+     },
+     "coherent": {
+      "static_peak": 0.00010329987511425998,
+      "static_pos_nm": 0.22430161644279714,
+      "move_peak": 4.110705695736794e-05,
+      "move_pos_nm": 0.05381773691859007
+     }
+    },
+    "12.0": {
+     "incoherent": {
+      "static_peak": 2.57265844405552e-07,
+      "static_pos_nm": 0.0014820771863367005,
+      "move_peak": 1.1753823225824078e-07,
+      "move_pos_nm": 0.00032844142612256406
+     },
+     "coherent": {
+      "static_peak": 2.3556997927887124e-05,
+      "static_pos_nm": 0.19315330621944882,
+      "move_peak": 1.8280578592544394e-05,
+      "move_pos_nm": 0.03810252888347268
+     }
+    },
+    "16.0": {
+     "incoherent": {
+      "static_peak": 6.718855269927104e-07,
+      "static_pos_nm": 9.789856959627697e-05,
+      "move_peak": 8.231870762820392e-08,
+      "move_pos_nm": 0.00017243032828224153
+     },
+     "coherent": {
+      "static_peak": 5.601677511779535e-05,
+      "static_pos_nm": 0.031701785743200296,
+      "move_peak": 1.0258843355481773e-05,
+      "move_pos_nm": 0.027668089912904908
+     }
+    }
+   }
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

@@ -28,6 +28,7 @@ beam-propagation design and optimisation of that engine, and
 | 12 Scaling | `scripts/m12_scaling.py` | tweezers per row (packing), aberration vs size, scaling table; `docs/scaling.md` |
 | 13 Stacked relay | `scripts/m13_stack.py` | stacked-chip anamorphic relay: facet far field, y fill, 2D row crosstalk (coherent / incoherent), collimator tolerances, layout; `docs/stacked_relay.md` |
 | 14 Collimator | `scripts/m14_collimator.py`, `scripts/m14_facet_meep.py` | ray-traced fast-axis collimators (Weierstrass + aplanat adopted), facet FDTD, tolerances, form errors, first x lens vs calibration, power and frequency plan; `docs/collimator.md` |
+| 15 Row coherence | `scripts/m15_coherence.py` | independent rows without per-chip AOMs: common phase-noise modulation with fibre delays, alternating polarisation (vector focusing), passive apodiser; `docs/row_coherence.md` |
 
 ## Layout
 
