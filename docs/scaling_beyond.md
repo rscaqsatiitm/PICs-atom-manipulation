@@ -1,5 +1,10 @@
 # Scaling beyond one row of about 40 tweezers
 
+> Follow-up (`docs/transport3d.md`): the 3D simulation with handoff refines lever 1. The moving trap must be at
+> least three times the static hold depth, the hold about 20 kT, and moves must run along lanes between the rows.
+> The minimum moving depth is therefore 0.3 mK for 5 uK atoms (0.6 mK for 10 uK), not 0.2 mK. That gives 10 to 21 W
+> for 720 tweezers (17 to 34 W for 1 to 2 uK heating per move).
+
 Follow-up to `docs/scaling.md`, `docs/stacked_relay.md`, `docs/collimator.md` and `docs/row_coherence.md`. Code:
 `scripts/m17_scale.py`; results `results/m17_moves.json` (+ .png), `results/m17_table.json`. Transport results
 are SIM from a 1D classical model; the scaling table is DERIVED. They should be reviewed before they are quoted.

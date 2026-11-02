@@ -1,0 +1,42 @@
+{
+ "name": "m18_field",
+ "script": "scripts/m18_transport3d.py",
+ "git": "3c35d42",
+ "notes": "Grid stored in results/m18_trap.npz (normalised intensity, peak at the origin).",
+ "inputs": {
+  "design": "D1 (BPM matrix), LinearSynth tweezer at x = 0; Weierstrass + aplanat; beta 0.7 um",
+  "grid_um": {
+   "x": [
+    -3.5,
+    3.5,
+    0.05
+   ],
+   "y": [
+    -3,
+    3,
+    0.05
+   ],
+   "z": [
+    -10,
+    10,
+    0.25
+   ]
+  }
+ },
+ "outputs": {
+  "fwhm_x_um": 1.7337090441787406,
+  "fwhm_y_um": 1.373189633201537,
+  "fwhm_z_um": 9.82460802313905,
+  "peak_offset_um": [
+   -1.2434497875801753e-14,
+   -1.0658141036401503e-14,
+   0.0
+  ],
+  "freq_at_1mK_kHz_xyz": [
+   53.67299100795666,
+   66.85469580627225,
+   21.94951991486709
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

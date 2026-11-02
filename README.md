@@ -31,6 +31,7 @@ beam-propagation design and optimisation of that engine, and
 | 15 Row coherence | `scripts/m15_coherence.py` | independent rows without per-chip AOMs: common phase-noise modulation with fibre delays, alternating polarisation (vector focusing), passive apodiser; `docs/row_coherence.md` |
 | 16 PM-to-AM | `scripts/m16_pm_am.py` | intensity noise from filtering the phase-noise-modulated light (gain tilt, band-pass, multipath, PM fibre, dispersion, chain); `docs/pm_am.md` |
 | 17 Scaling II | `scripts/m17_scale.py` | transport depth vs move time (classical Monte Carlo), row select, configuration table; `docs/scaling_beyond.md` |
+| 18 3D transport | `scripts/m18_transport3d.py` | 3D classical transport with handoff between the static array and the moving tweezer (realistic 3D field), lanes, depth ratios, temperature, bystanders, tolerances; `docs/transport3d.md` |
 
 ## Layout
 
