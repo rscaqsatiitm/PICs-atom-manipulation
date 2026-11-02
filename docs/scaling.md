@@ -84,11 +84,12 @@ cylindrical collimator (f = 175 um, NA 0.9), and imaging the stack with 125x ver
 rows 4 um apart at NA 0.5. This relay is now simulated (`docs/stacked_relay.md`). Rows are independent provided
 every chip runs at its own laser frequency; with one shared frequency, crosstalk of about 1e-4 between rows
 interferes and changes neighbouring depths by up to 2.6%. The collimators must be aligned to about 0.1 um in
-height. The cross axis raises the power per tweezer by a factor 1.10 (to about 47 mW at 1.2 mK); the power
-column of the table above does not include this factor. The practical limit is mechanical, set by stacking
+height. The cross axis and the emitter facet loss (`docs/collimator.md`) raise the power per tweezer from 43 mW
+to about 57 mW at 1.2 mK (factor 1.34) with a collimator glued to the facets; the power column of the table above
+does not include this factor. The practical limit is mechanical, set by stacking
 and alignment, and plausibly 8 to 16 rows. With 192 ports per chip, 16 rows give about 720 (4 um spacing) to
-960 (3 um) independent tweezers over about 200 x 64 um, needing about 34 to 46 W at 1.2 mK, or 14 to 19 W at
-0.5 mK, spread over 16 chips.
+960 (3 um) independent tweezers over about 200 x 64 um, needing about 41 to 55 W at 1.2 mK, or 17 to 23 W at
+0.5 mK, spread over 16 chips (one input fibre each).
 
 ## 5. Next steps
 

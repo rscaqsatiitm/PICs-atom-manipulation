@@ -1,5 +1,9 @@
 # Focal-plane OPA: beam-propagation design and geometry optimisation
 
+> Follow-up: the power figures below omit the cross axis and the emitter facet loss (about 21% into air). With
+> both included and a collimator glued to the facets, a 1.2 mK tweezer needs about 57 mW instead of 43 mW
+> (`docs/stacked_relay.md`, `docs/collimator.md`).
+
 Follow-up to `docs/independent_steering.md` (route E, sliding-window focal-plane OPA). Code: `picsim/bpm.py`,
 `picsim/opa/fpr_layout.py`, `fpr_bpm.py`, `star_rs.py`, `focal_plane.py`; scripts `m10_fpr.py`,
 `m10_fpr_meep.py`, `m11_optimise.py`; results `results/m10_*`, `results/m11_*`. Simulated values are valid in

@@ -1,0 +1,149 @@
+{
+ "name": "m14_designs",
+ "script": "scripts/m14_collimator.py",
+ "git": "b066493",
+ "notes": "2D ray trace (picsim/raytrace.py), s-polarised Fresnel, no coatings.",
+ "inputs": {
+  "f_um": 175.0,
+  "NA_FAC": 0.9,
+  "n_SiO2": 1.4496257710158857,
+  "n_hi": "CHOICE 1.8",
+  "weierstrass_aplanat": "R 80 um, gap 10 um, aplanat T 250 um (n 1.8), block SiO2",
+  "ellipse_immersed": "SiO2, e = 1/n, vertex n f from the facet",
+  "plano_asphere": "wd 30 um, flat side to facet, exit asphere for exact collimation"
+ },
+ "outputs": {
+  "n_SiO2": 1.4496257710158857,
+  "n_hi": 1.8,
+  "limits": {
+   "plano-hyperbolic in air (curved side to source), NA max sqrt(1 - 1/n^2)": {
+    "SiO2": 0.7239683289701956,
+    "n=1.8": 0.8314794192830981
+   }
+  },
+  "rows": {
+   "ellipse_immersed": {
+    "s_max": 0.9,
+    "g_over_s": {
+     "0.3": 0.9540639614095339,
+     "0.6": 0.8337158370201052,
+     "0.9": 0.6754217660083425
+    },
+    "W_pv_waves": 2.1360973233990995e-13,
+    "exit_height_um": 106.37892814631392,
+    "exit_tilt_mrad_max": 4.6629367034256575e-12,
+    "max_incidence_deg": [
+     43.00359277128845
+    ],
+    "T_uncoated_min": 0.43402867368803333,
+    "z_vertices_um": [
+     253.68450992778
+    ],
+    "ray_height_at_surfaces_um": [
+     106.37892814631353
+    ],
+    "max_slope_deg": [
+     81.38181728685667
+    ],
+    "construction": null
+   },
+   "plano_asphere_n1.8": {
+    "s_max": 0.9,
+    "g_over_s": {
+     "0.3": 0.9883906651506879,
+     "0.6": 0.959799432988283,
+     "0.9": 0.971034372477325
+    },
+    "W_pv_waves": 1.5273095862303563e-11,
+    "exit_height_um": 152.93791366517868,
+    "exit_tilt_mrad_max": 2.9322788641650277e-07,
+    "max_incidence_deg": [
+     64.15806723683288,
+     28.16221257667602
+    ],
+    "T_uncoated_min": 0.5116025497971372,
+    "z_vertices_um": [
+     30.0,
+     291.0
+    ],
+    "ray_height_at_surfaces_um": [
+     61.94224814505168,
+     152.93791362008506
+    ],
+    "max_slope_deg": [
+     0.0,
+     58.16221257667601
+    ],
+    "construction": null
+   },
+   "weierstrass_aplanat": {
+    "s_max": 0.9,
+    "g_over_s": {
+     "0.3": 1.0000000000008067,
+     "0.6": 1.0000000000010087,
+     "0.9": 0.9999999999966163
+    },
+    "W_pv_waves": 3.56805152511292e-08,
+    "exit_height_um": 157.49999999946706,
+    "exit_tilt_mrad_max": 0.0002567642168752396,
+    "max_incidence_deg": [
+     25.358636200997513,
+     18.208260923481422,
+     19.246024229762693
+    ],
+    "T_uncoated_min": 0.7427399291274724,
+    "z_vertices_um": [
+     135.18665685967812,
+     145.18665685967812,
+     395.1866568596781
+    ],
+    "ray_height_at_surfaces_um": [
+     71.74170325170724,
+     95.14609090727805,
+     157.50000000015922
+    ],
+    "max_slope_deg": [
+     63.736860716565744,
+     7.150375277516078,
+     36.39333418848735
+    ],
+    "construction": {
+     "theta_max_deg": 44.972916674154106,
+     "s_max": 0.706772457628345,
+     "edge_thickness_um": 59.801140682840554,
+     "front_height_um": 174.6058880047694,
+     "back_height_um": 259.91387737045847,
+     "s_max_system": 1.4852221564026198,
+     "R_um": 80.0,
+     "block_length_um": 135.18665685967812,
+     "virtual_source_um": -60.783404821592754
+    }
+   },
+   "plano_asphere_SiO2_wd30": {
+    "s_max": 0.9,
+    "max_slope_deg": [
+     0.0,
+     81.38181729410022
+    ],
+    "max_incidence_deg": [
+     64.15806723683288,
+     43.00359277853198
+    ],
+    "g_over_s_at_smax": 0.7230196784743059
+   },
+   "plano_asphere_SiO2_wd60": {
+    "s_max": 0.8955000000000001,
+    "max_slope_deg": [
+     0.0,
+     81.11734801604197
+    ],
+    "max_incidence_deg": [
+     63.572725608918375,
+     42.96565259255391
+    ],
+    "g_over_s_at_smax": 0.7712084340650214
+   }
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

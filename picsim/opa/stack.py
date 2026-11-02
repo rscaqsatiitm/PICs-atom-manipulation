@@ -65,10 +65,13 @@ def facet_profile(lam, width, t, dy=0.005):
 
 
 class FacetY:
-    """Angular spectrum A(s) in air of a vertical facet profile (femwell mode, or Gaussian of 1/e^2 radius w)."""
+    """Angular spectrum A(s) of a vertical facet profile (femwell mode, or Gaussian of 1/e^2 radius w), radiated
+    into a medium of index n_m (1: air; > 1: a lens glued or printed onto the facet). s = k_y / k0, so that
+    s = n_m sin(theta_m); the propagating band is |s| < n_m."""
 
-    def __init__(self, lam, width=1.2, t=0.4, gaussian_w=None, dy=0.005, nfft=2**16):
+    def __init__(self, lam, width=1.2, t=0.4, gaussian_w=None, dy=0.005, nfft=2**16, n_m=1.0):
         self.lam = lam
+        self.n_m = n_m
         if gaussian_w is not None:
             y = (np.arange(-1200, 1201)) * dy
             Y = np.exp(-(y / gaussian_w) ** 2).astype(complex)
@@ -81,13 +84,24 @@ class FacetY:
         pad[i0:i0 + len(y)] = Y
         s = np.fft.fftshift(np.fft.fftfreq(nfft, d=dy)) * lam
         A = np.fft.fftshift(np.fft.fft(np.fft.ifftshift(pad))) * dy
-        keep = np.abs(s) < 1
+        self._P_all = float(np.sum(np.abs(A) ** 2) * (s[1] - s[0]))
+        keep = np.abs(s) < n_m
         self.s, self.A = s[keep], A[keep]
         self.ds = s[1] - s[0]
-        self.cos = np.sqrt(1 - self.s**2)
+        self.cos = np.sqrt(1 - (self.s / n_m) ** 2)
         dens = np.abs(self.A) ** 2 * self.cos  # radiated power per unit s
         self.P_rad = float(np.sum(dens) * self.ds)
         self._dens = dens
+
+    @property
+    def T_facet(self):
+        """Approximate fraction of the guided power radiated into the medium (Kirchhoff field with normal-incidence
+        Fresnel transmission): 4 n_eff n_m / (n_eff + n_m)^2 x the share of the angular spectrum that propagates,
+        int_{|s|<n_m} |A|^2 cos ds / int |A|^2 ds. Used to compare facets in air and immersed."""
+        if self.neff is None:
+            return 1.0
+        frac = self.P_rad / self._P_all
+        return float(4 * self.neff * self.n_m / (self.neff + self.n_m) ** 2 * frac)
 
     def fraction_within(self, NA_FAC):
         return float(np.sum(self._dens[np.abs(self.s) < NA_FAC]) * self.ds / self.P_rad)
@@ -108,8 +122,9 @@ class FacetY:
 class RelayY:
     """Cross-axis (y) relay of one chip: facet -> FAC -> S -> pupil -> atoms."""
 
-    def __init__(self, facet: FacetY, beta, NA=0.5, NA_FAC=0.8, n_eta=801, apod=None):
+    def __init__(self, facet: FacetY, beta, NA=0.5, NA_FAC=0.8, n_eta=801, apod=None, lens=None):
         self.f, self.beta, self.NA, self.NA_FAC = facet, beta, NA, NA_FAC
+        self.lens = lens  # traced collimator (picsim.opa.collimator.LensMap); None: ideal sine-condition lens
         self.apod = apod  # amplitude transmission T(s) of the FAC aperture (graded edge); None: hard edge
         self.lam = facet.lam
         self.k = 2 * np.pi / self.lam
@@ -118,28 +133,44 @@ class RelayY:
         # all radiated power, referred to the pupil coordinate eta: int |P_y|^2 d eta = lam P_rad / beta
         self.P_full = self.lam * facet.P_rad / beta
 
-    def spectrum(self, dz=0.0, delta=0.0, W=None):
-        """Angular spectrum after the FAC, sqrt(cos) power factor, aperture and phase errors included."""
+    def spectrum(self, dz=0.0, delta=0.0, W=None, Ws=None):
+        """Angular spectrum after the FAC, sqrt(cos) power factor, aperture and phase errors included.
+
+        Returns (s, amplitude, kernel): the pupil field is sum amplitude exp(i k kernel y') ds, with kernel = s for
+        the ideal (sine-condition) lens and kernel = y_S(s) / f for a traced lens. Phases: dz focus error (source
+        displaced along the axis in the medium n_m), delta decentre, W(u) aberration in waves (u = s/NA_FAC),
+        Ws(s) aberration in waves as a function of s.
+        """
         f = self.f
         a = f.A * np.sqrt(f.cos)
         if self.apod is not None:
             a = a * self.apod(f.s)
         m = np.abs(f.s) < self.NA_FAC
-        ph = self.k * dz * f.cos - self.k * f.s * delta
+        ph = self.k * dz * f.n_m * f.cos - self.k * f.s * delta
         if W is not None:
             ph = ph + 2 * np.pi * W(f.s / self.NA_FAC)
-        return f.s[m], a[m] * np.exp(1j * ph[m])
+        if Ws is not None:
+            ph = ph + 2 * np.pi * Ws(f.s)
+        kern = f.s
+        if self.lens is not None:
+            L = self.lens
+            m = m & (np.abs(f.s) < L.s_max)
+            sa = np.abs(f.s)
+            a = a * np.interp(sa, L.s, L.t) * np.sqrt(np.interp(sa, L.s, L.dg))
+            ph = ph + 2 * np.pi * np.interp(sa, L.s, L.W)
+            kern = np.sign(f.s) * np.interp(sa, L.s, L.g)
+        return f.s[m], a[m] * np.exp(1j * ph[m]), kern[m]
 
     def pupil(self, eta=None, **err):
         """Pupil field P_y(eta), eta in units of the pupil radius (facet image, magnified)."""
         eta = self.eta if eta is None else np.asarray(eta)
-        s, a = self.spectrum(**err)
+        s, a, kern = self.spectrum(**err)
         yp = self.beta * eta
         out = np.empty(yp.shape, dtype=complex)
         flat = yp.ravel()
         o = out.ravel()
         for i in range(0, len(flat), 4096):
-            o[i:i + 4096] = np.exp(1j * self.k * np.outer(flat[i:i + 4096], s)) @ a * self.f.ds
+            o[i:i + 4096] = np.exp(1j * self.k * np.outer(flat[i:i + 4096], kern)) @ a * self.f.ds
         return out
 
     @property

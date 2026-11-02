@@ -1,0 +1,104 @@
+{
+ "name": "m14_plan",
+ "script": "scripts/m14_collimator.py",
+ "git": "b066493",
+ "notes": "",
+ "inputs": {
+  "P_m13": "m13_power (47 mW at 1.2 mK, facet transmission 1)",
+  "facet": "m14_facet_meep (2D FDTD) scaling the Kirchhoff estimate",
+  "facet_limit": "20 MW/cm^2 (CHOICE, m6)",
+  "trap": "84 kHz radial at 1.2 mK"
+ },
+ "outputs": {
+  "facet_fdtd_correction": {
+   "air": 1.067235164975549,
+   "SiO2": 1.0277442098691936
+  },
+  "per_design": {
+   "ideal lens in air": {
+    "peak_vs_m13": 0.7805221368831384,
+    "P_tweezer_mW": 60.82545603213625,
+    "eps4": 0.00010602529359419005
+   },
+   "Weierstrass + aplanat (immersed, AR)": {
+    "peak_vs_m13": 0.8266813113001793,
+    "P_tweezer_mW": 57.429161963787664,
+    "eps4": 8.392049668030436e-05
+   },
+   "ellipse printed on facet (AR, beta 0.9)": {
+    "peak_vs_m13": 0.7775681583113875,
+    "P_tweezer_mW": 61.056531715747205,
+    "eps4": 0.00018367369970256355
+   },
+   "plano-asphere n 1.8 in air (AR)": {
+    "peak_vs_m13": 0.8024563747959331,
+    "P_tweezer_mW": 59.16286094825722,
+    "eps4": 0.00016794867436735337
+   }
+  },
+  "P_tweezer_adopted_W": 0.05742916196378767,
+  "P_fibre_max_W": 0.620768848341114,
+  "P_fibre_max_HI1060_tip_W": 6.117595700969303,
+  "HI1060_tip_coupling_dB": -0.48148793815154145,
+  "rows": [
+   {
+    "tweezers_per_row": 45,
+    "depth_mK": 1.2,
+    "P_chip_W": 2.584312288370445,
+    "fibres_per_chip_lensed_tip": 5,
+    "fibres_per_chip_HI1060_tip": 1,
+    "facet_MW_cm2_HI1060_tip": 8.448784178271124,
+    "P_16_chips_W": 41.34899661392712
+   },
+   {
+    "tweezers_per_row": 60,
+    "depth_mK": 1.2,
+    "P_chip_W": 3.44574971782726,
+    "fibres_per_chip_lensed_tip": 6,
+    "fibres_per_chip_HI1060_tip": 1,
+    "facet_MW_cm2_HI1060_tip": 11.265045571028168,
+    "P_16_chips_W": 55.13199548523616
+   },
+   {
+    "tweezers_per_row": 45,
+    "depth_mK": 0.5,
+    "P_chip_W": 1.0767967868210189,
+    "fibres_per_chip_lensed_tip": 2,
+    "fibres_per_chip_HI1060_tip": 1,
+    "facet_MW_cm2_HI1060_tip": 3.5203267409463024,
+    "P_16_chips_W": 17.228748589136302
+   },
+   {
+    "tweezers_per_row": 60,
+    "depth_mK": 0.5,
+    "P_chip_W": 1.435729049094692,
+    "fibres_per_chip_lensed_tip": 3,
+    "fibres_per_chip_HI1060_tip": 1,
+    "facet_MW_cm2_HI1060_tip": 4.6937689879284035,
+    "P_16_chips_W": 22.97166478551507
+   }
+  ],
+  "offsets_MHz": [
+   80.0,
+   81.13,
+   82.26,
+   83.39,
+   84.52,
+   85.65,
+   86.78,
+   87.91,
+   89.04,
+   90.17,
+   91.3,
+   92.43,
+   93.56,
+   94.69,
+   95.82,
+   96.95
+  ],
+  "min_pair_difference_MHz": 1.13,
+  "max_pair_difference_MHz": 16.95,
+  "2nu_trap_kHz": 168.0
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

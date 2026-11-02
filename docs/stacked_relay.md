@@ -19,7 +19,7 @@ chip runs at its own laser frequency. Design point, 1064.4 nm, NA 0.5:
 | collimator (FAC) per chip: focal length / numerical aperture | 175 um / 0.9 |
 | y spot FWHM at the atoms (x: 1.71 um) | 1.31 um |
 | cross-axis transmission (FAC capture x pupil) / loss to the circular pupil | 0.973 / 3% |
-| laser power per 1.2 mK tweezer, field mean (was 43 mW with an assumed Gaussian cross axis) | 47 mW |
+| laser power per 1.2 mK tweezer, field mean (was 43 mW with an assumed Gaussian cross axis) | 47 mW (57 mW with the facet loss, `docs/collimator.md`) |
 | crosstalk of a full row (41 tweezers) at the neighbouring row, 4 um / 3 um | 1.8e-4 / 4.3e-4 |
 | neighbouring row, chips at different frequencies: depth / position change when a tweezer moves | 2.4e-5 / 0.04 nm |
 | the same with all chips at one frequency (coherent) | 2.8e-3 / 4.5 nm (static: 2.6%, 11 nm) |
@@ -31,7 +31,8 @@ chip runs at its own laser frequency. Design point, 1064.4 nm, NA 0.5:
 Hence the stacked relay is optically sound. Its costs are (i) one frequency shifter per chip, (ii)
 collimator alignment to about 0.1 um in height, which is set by the small vertical facet mode, and (iii) a
 diffraction-limited collimator at NA 0.9. With 192-port chips, 16 rows give 720 (4 um spacing) to 960 (3 um)
-independent tweezers and need 34 to 46 W at 1.2 mK, or 14 to 19 W at 0.5 mK, spread over 16 chips.
+independent tweezers. Including the emitter facet loss found later (`docs/collimator.md`), they need 41 to 55 W
+at 1.2 mK, or 17 to 23 W at 0.5 mK, spread over 16 chips.
 
 ## 2. Optical layout
 
@@ -177,7 +178,11 @@ and electrical access to chips stacked at 0.5 mm pitch is not addressed. Facets 
 100 um (Sec. 6), so stair-step stacking for wire bonds is excluded, and access must come from the chip sides or
 back.
 
-Next steps: (i) ray-trace a real collimator (acylinder or two-photon-printed lens) to NA 0.9 and check the
+Next steps (i) to (iii) below are addressed in `docs/collimator.md` (ray-traced collimators, assembly and drift,
+power and frequency plan) together with the first x lens of the relay. Remaining: a full lens design of the
+anamorphic relay over its 8 mm field.
+
+Original list: (i) ray-trace a real collimator (acylinder or two-photon-printed lens) to NA 0.9 and check the
 0.03-wave target; (ii) an assembly study of the 0.1 um collimator alignment, including adhesive shrinkage;
 (iii) the frequency plan and power distribution for 16 chips (16 shifters, about 2 to 3 W each); (iv) a real lens
 design of the anamorphic relay, including its field (16 chips over 8 mm).

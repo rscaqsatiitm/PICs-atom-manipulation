@@ -27,6 +27,7 @@ beam-propagation design and optimisation of that engine, and
 | 11 Geometry optimisation | `scripts/m11_optimise.py` | oversampling, emitter facet, slab widths, window width |
 | 12 Scaling | `scripts/m12_scaling.py` | tweezers per row (packing), aberration vs size, scaling table; `docs/scaling.md` |
 | 13 Stacked relay | `scripts/m13_stack.py` | stacked-chip anamorphic relay: facet far field, y fill, 2D row crosstalk (coherent / incoherent), collimator tolerances, layout; `docs/stacked_relay.md` |
+| 14 Collimator | `scripts/m14_collimator.py`, `scripts/m14_facet_meep.py` | ray-traced fast-axis collimators (Weierstrass + aplanat adopted), facet FDTD, tolerances, form errors, first x lens vs calibration, power and frequency plan; `docs/collimator.md` |
 
 ## Layout
 
