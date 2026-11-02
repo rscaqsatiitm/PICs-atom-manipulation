@@ -1,0 +1,101 @@
+{
+ "name": "m17_table",
+ "script": "scripts/m17_scale.py",
+ "git": "e307c22",
+ "notes": "DERIVED. Row select moves all rows of a stack rigidly in y; atoms wait in the static array between passes.",
+ "inputs": {
+  "site_pitch_um": 4.0,
+  "row_length": "88% of the port field (m12)",
+  "P_tweezer": "m14_plan",
+  "depths": "m17_moves minimum depth for 12 um moves at 200 kHz updates"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "configuration": "one D1 chip",
+    "ports_per_chip": 128,
+    "chips": 1,
+    "row_length_um": 119.89401600000001,
+    "tweezers_per_row": 30,
+    "simultaneous_tweezers": 30,
+    "sites_served": 30,
+    "passes_per_cycle": 1,
+    "fast_actuators": 255,
+    "actuators_per_simultaneous_tweezer": 8.5,
+    "power_W_1.2mK": 1.72287485891363,
+    "power_W_0.2mK_(200us moves)": 0.28714580981893834,
+    "power_W_0.8mK_(100us moves)": 1.1485832392757533,
+    "note": ""
+   },
+   {
+    "configuration": "one chip, 192 ports (objective field +/-100 um)",
+    "ports_per_chip": 192,
+    "chips": 1,
+    "row_length_um": 179.841024,
+    "tweezers_per_row": 45,
+    "simultaneous_tweezers": 45,
+    "sites_served": 45,
+    "passes_per_cycle": 1,
+    "fast_actuators": 383,
+    "actuators_per_simultaneous_tweezer": 8.511111111111111,
+    "power_W_1.2mK": 2.584312288370445,
+    "power_W_0.2mK_(200us moves)": 0.4307187147284075,
+    "power_W_0.8mK_(100us moves)": 1.72287485891363,
+    "note": ""
+   },
+   {
+    "configuration": "stack of 16 chips",
+    "ports_per_chip": 192,
+    "chips": 16,
+    "row_length_um": 179.841024,
+    "tweezers_per_row": 45,
+    "simultaneous_tweezers": 720,
+    "sites_served": 720,
+    "passes_per_cycle": 1,
+    "fast_actuators": 6128,
+    "actuators_per_simultaneous_tweezer": 8.511111111111111,
+    "power_W_1.2mK": 41.34899661392712,
+    "power_W_0.2mK_(200us moves)": 6.89149943565452,
+    "power_W_0.8mK_(100us moves)": 27.56599774261808,
+    "note": ""
+   },
+   {
+    "configuration": "stack of 16 + row select (y tilt at a pupil-conjugate plane)",
+    "ports_per_chip": 192,
+    "chips": 16,
+    "row_length_um": 179.841024,
+    "tweezers_per_row": 45,
+    "simultaneous_tweezers": 720,
+    "sites_served": 2250,
+    "passes_per_cycle": 4,
+    "fast_actuators": 6128,
+    "actuators_per_simultaneous_tweezer": 8.511111111111111,
+    "power_W_1.2mK": 41.34899661392712,
+    "power_W_0.2mK_(200us moves)": 6.89149943565452,
+    "power_W_0.8mK_(100us moves)": 27.56599774261808,
+    "note": "50 rows = +/-100 um at 4 um"
+   },
+   {
+    "configuration": "two stacks combined by polarisation + row select",
+    "ports_per_chip": 192,
+    "chips": 32,
+    "row_length_um": 179.841024,
+    "tweezers_per_row": 45,
+    "simultaneous_tweezers": 1440,
+    "sites_served": 2250,
+    "passes_per_cycle": 2,
+    "fast_actuators": 12256,
+    "actuators_per_simultaneous_tweezer": 8.511111111111111,
+    "power_W_1.2mK": 82.69799322785424,
+    "power_W_0.2mK_(200us moves)": 13.78299887130904,
+    "power_W_0.8mK_(100us moves)": 55.13199548523616,
+    "note": "second stack orthogonally polarised"
+   }
+  ],
+  "site_pitch_um": 4.0,
+  "P_tweezer_1.2mK_W": 0.05742916196378767,
+  "U_min_mK_200us_12um": 0.2,
+  "U_min_mK_100us_12um": 0.8
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

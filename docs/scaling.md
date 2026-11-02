@@ -91,6 +91,10 @@ and alignment, and plausibly 8 to 16 rows. With 192 ports per chip, 16 rows give
 960 (3 um) independent tweezers over about 200 x 64 um, needing about 41 to 55 W at 1.2 mK, or 17 to 23 W at
 0.5 mK, spread over 16 chips (one input fibre each).
 
+Follow-up (`docs/scaling_beyond.md`): on a 4 um site lattice the useful number per row is the row length / 4 um
+(30 for D1, 45 for 192 ports). Transport at 0.2 to 0.5 mK with 200 to 400 us moves cuts the power 2.4 to 6 times,
+and a row-select tilt lets one 16-chip stack serve all 50 rows of the +/-100 um field (2,250 sites).
+
 ## 5. Next steps
 
 (i) Done: stacked-chip relay, `docs/stacked_relay.md` (next: real collimator and relay lens design).
