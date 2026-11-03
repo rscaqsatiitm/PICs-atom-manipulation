@@ -52,7 +52,26 @@ fewer: ramps, lane steps and scanner settling make up 1.3 of the 2.2 ms per pass
 
 ## 3. Axial motion during the handoff
 
-Pending: the 1D quantum run along the optical axis (`scripts/m19_quantum.py axial`) is in progress; its results will be added here and stored in `results/m19_axial.json`.
+1D split-step propagation along the optical axis from the ground state of the static site (axial trap quantum
+0.41 uK at 0.1 mK). The static site's depth follows the lateral separation of the moving-trap centre, which
+carries the atom 2 um into the lane and back, and the moving trap's axial profile comes from the 3D grid. The
+parameter is the axial offset dz between the 1075 nm and 1064 nm foci (results/m19_axial.json):
+
+| hold / moving | ramp / lane step | dz = 0 | 0.5 um | 1 um | 2 um |
+|---|---|---|---|---|---|
+| 0.1 / 0.3 mK | 100 / 100 us | 0.06 uK | 4.1 uK | 16.6 uK | 40.7 uK |
+| 0.1 / 0.3 mK | 200 / 400 us | < 0.01 uK | **0.19 uK** | 2.0 uK | 8.3 uK |
+| 0.1 / 0.5 mK | 100 / 100 us | 0.02 uK | 6.4 uK | 31.0 uK | 28.3 uK |
+| 0.1 / 0.5 mK | 200 / 400 us | < 0.01 uK | **0.22 uK** | 1.8 uK | 4.4 uK |
+
+(Quantum energy gain; the classical Wigner values agree to within 20% above 1 uK and are pessimistic below.)
+With the foci coincident, the axial motion is not excited: the change of axial trap frequency during the
+handoff is adiabatic. A focus offset displaces the axial equilibrium twice per move, and that is what heats.
+With the slow handoff, keeping the heating per move below the lateral 0.12 to 0.15 uK of `docs/rearrangement.md`
+needs dz <= 0.5 um. A 1 um offset costs about 2 uK per move, and 2 um costs 4 to 8 uK. This tightens the +/-1 um
+delivery tolerance of `docs/transport3d.md` into a heating tolerance of +/-0.5 um. Since a diffractive objective
+puts the two foci about 170 um apart, the 1064 nm path needs a focus adjustment that holds 0.5 um (0.3% of the
+chromatic offset), for example a slow stage on the relay's last y and x lenses, calibrated on the atoms.
 
 ## 4. Limits and next steps
 
@@ -60,6 +79,9 @@ The repair model moves one reservoir atom per hole, through the lanes; repaired 
 under the pass rules. Detection is assumed perfect apart from the imaging-induced loss, with no false positives or
 negatives. The imaging time (10 ms) and losses are CHOICE values, not measured. The axial check is 1D, with the atom
 assumed to sit at the moving-trap centre laterally.
+
+Next steps: (i) image-free or low-loss detection (the floor of Sec. 1); (ii) shorter passes (Sec. 2); (iii) an
+active focus lock between the 1064 and 1075 nm paths to 0.5 um (Sec. 3).
 
 ## Verification notes
 

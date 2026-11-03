@@ -1,0 +1,304 @@
+{
+ "name": "m19_axial",
+ "script": "scripts/m19_quantum.py",
+ "git": "93e02f5",
+ "notes": "P_bound_states_used: weight in the 200 lowest static states (projection completeness).",
+ "inputs": {
+  "model": "1D along the optical axis; the static site's depth follows the lateral separation of the moving-trap centre (atom assumed at that centre)",
+  "grid": "4 nm, dt 5 ns",
+  "profiles": "moving: m18_trap.npz axial cut; static: Gaussian beam, w0 0.85 um, 1075 nm"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 0.0,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.9359140918501144,
+     "P_bound_states_used": 0.9999999998960216,
+     "E_gain_uK": 0.055805728525745994,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.033554575083544355
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 0.5,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.11855570721046998,
+     "P_bound_states_used": 0.9999999999089821,
+     "E_gain_uK": 4.10857124964591,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 3.4741264829642238
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 1.0,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.00022156097014182632,
+     "P_bound_states_used": 0.9999999998115967,
+     "E_gain_uK": 16.5636027650519,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 16.89361459213903
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 2.0,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 3.7956285385460145e-06,
+     "P_bound_states_used": 0.9999995237680871,
+     "E_gain_uK": 40.72108794871196,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 40.56085814614959
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 0.0,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.999972963284552,
+     "P_bound_states_used": 0.9999999998611931,
+     "E_gain_uK": 2.2250690207446984e-05,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.0006333916134859402
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 0.5,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.8178345092700893,
+     "P_bound_states_used": 0.9999999998683089,
+     "E_gain_uK": 0.19111416016595972,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.6068757119886027
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 1.0,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.1571861362479074,
+     "P_bound_states_used": 0.9999999998567632,
+     "E_gain_uK": 1.956841393013407,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 2.224423368705701
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "focus_offset_um": 2.0,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.025058252163629408,
+     "P_bound_states_used": 0.9999999998508896,
+     "E_gain_uK": 8.322993938936708,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 9.50636460759342
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 0.0,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.9703123438869895,
+     "P_bound_states_used": 0.9999999998657728,
+     "E_gain_uK": 0.024230825273366525,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.013241850418980915
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 0.5,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.11202048939623847,
+     "P_bound_states_used": 0.9999999998704379,
+     "E_gain_uK": 6.364823033410882,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 5.872169276137049
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 1.0,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.0002550005575654534,
+     "P_bound_states_used": 0.9999999986879471,
+     "E_gain_uK": 30.960459062557792,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 31.212210669714988
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 2.0,
+    "T_ramp_us": 100.0,
+    "T_lane_us": 100.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 2.2396249023258574e-05,
+     "P_bound_states_used": 0.9999754043224585,
+     "E_gain_uK": 28.27636302402047,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 28.908005972624956
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 0.0,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.999993532418654,
+     "P_bound_states_used": 0.9999999998545895,
+     "E_gain_uK": 5.461629279232624e-06,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": -9.413769903930058e-05
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 0.5,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.6989717584240112,
+     "P_bound_states_used": 0.9999999998667665,
+     "E_gain_uK": 0.2174404429691368,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 0.36169523694866396
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 1.0,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.30086397469143394,
+     "P_bound_states_used": 0.9999999998553744,
+     "E_gain_uK": 1.846459305767697,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 1.9778645521405185
+    }
+   },
+   {
+    "axis": "z (handoff, axial)",
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "focus_offset_um": 2.0,
+    "T_ramp_us": 200.0,
+    "T_lane_us": 400.0,
+    "hbar_omega_uK": 0.4046451232538664,
+    "quantum": {
+     "P_ground": 0.19605184756267885,
+     "P_bound_states_used": 0.9999999998201923,
+     "E_gain_uK": 4.438689203030949,
+     "E0_final_minus_initial_uK": 0.0
+    },
+    "classical_wigner": {
+     "E_gain_uK": 5.915236890130586
+    }
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
