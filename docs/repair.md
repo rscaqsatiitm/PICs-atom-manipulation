@@ -53,7 +53,7 @@ fewer: ramps, lane steps and scanner settling make up 1.3 of the 2.2 ms per pass
 ## 3. Axial motion during the handoff
 
 1D split-step propagation along the optical axis from the ground state of the static site (axial trap quantum
-0.41 uK at 0.1 mK). The static site's depth follows the lateral separation of the moving-trap centre, which
+0.40 uK at 0.1 mK). The static site's depth follows the lateral separation of the moving-trap centre, which
 carries the atom 2 um into the lane and back, and the moving trap's axial profile comes from the 3D grid. The
 parameter is the axial offset dz between the 1075 nm and 1064 nm foci (results/m19_axial.json):
 
