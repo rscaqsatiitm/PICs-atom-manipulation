@@ -42,10 +42,10 @@ def interp(prof, q):
     return np.interp(q, a, b, left=0.0, right=0.0)
 
 
-def ground_state(V, dq):
+def ground_state(V, dq, n_states=61):
     n = len(V)
     t = hbar**2 / (2 * M * dq**2)
-    w, v = eigh_tridiagonal(V + 2 * t, -t * np.ones(n - 1), select="i", select_range=(0, 60))
+    w, v = eigh_tridiagonal(V + 2 * t, -t * np.ones(n - 1), select="i", select_range=(0, n_states - 1))
     return w, v / np.sqrt(dq)
 
 
@@ -162,6 +162,61 @@ def case_x(Um_mK, d_um, px, T=400e-6, n_cl=2000):
             "quantum": qres, "classical_wigner": {"E_gain_uK": float((E_f.mean() - E_i.mean()) / kB * 1e6)}}
 
 
+def profile_z():
+    d = np.load(RESULTS / "m18_trap.npz")
+    g, x, y, z = d["g"].astype(float), d["x"], d["y"], d["z"]
+    return z, g[np.argmin(abs(x)), np.argmin(abs(y)), :]
+
+
+def case_z(Us_mK, Um_mK, pz, dz_um, T_ramp, T_lane, n_cl=500):
+    """Axial motion during handoff: static site (Gaussian beam on axis, focus at dz) weighted by the lateral
+    separation of the atom (at the moving-trap centre) from the static site, plus the moving trap's axial profile."""
+    Us, Um = Us_mK * 1e-3 * kB, Um_mK * 1e-3 * kB
+    zR = np.pi * W0_S**2 / (prm.LAM_STATIC.value * 1e-6)
+    q = np.arange(-12e-6, 12e-6, 4e-9)
+    dz = dz_um * 1e-6
+
+    def Vt(qq, t):
+        c, dep = schedule_y(t, Um, T_ramp=T_ramp, T_lane=T_lane)
+        return -Us * np.exp(-2 * c**2 / W0_S**2) / (1 + ((qq - dz) / zR) ** 2) - dep * interp(pz, qq)
+
+    V0 = Vt(q, 0.0)
+    w0, v0 = ground_state(V0, q[1] - q[0], n_states=200)
+    t_end = 2 * T_ramp + 2 * T_lane + 400e-6 + 100e-6
+    psi = run_quantum(Vt, q, t_end, v0[:, 0], 5e-9)
+    qres = analyse(psi, V0, q, w0, v0, w0[0])
+    om = np.sqrt(2 * Us / (M * zR**2))
+    rng = np.random.default_rng(0)
+    x0 = dz + rng.normal(0, np.sqrt(hbar / (2 * M * om)), n_cl)
+    vv = rng.normal(0, np.sqrt(hbar * om / (2 * M)), n_cl)
+    E_i = 0.5 * M * vv**2 + np.interp(x0, q, V0)
+    x1, v1 = run_classical(Vt, q, t_end, x0, vv, 50e-9)
+    E_f = 0.5 * M * v1**2 + np.interp(x1, q, V0)
+    return {"axis": "z (handoff, axial)", "Us_mK": Us_mK, "Um_mK": Um_mK, "focus_offset_um": dz_um,
+            "T_ramp_us": T_ramp * 1e6, "T_lane_us": T_lane * 1e6, "hbar_omega_uK": float(hbar * om / kB * 1e6),
+            "quantum": qres, "classical_wigner": {"E_gain_uK": float((E_f.mean() - E_i.mean()) / kB * 1e6)}}
+
+
+def axial():
+    pz = profile_z()
+    rows = []
+    for Us, Um in ((0.1, 0.3), (0.1, 0.5)):
+        for Tr, Tl in ((100e-6, 100e-6), (200e-6, 400e-6)):
+            for dz in (0.0, 0.5, 1.0, 2.0):
+                r = case_z(Us, Um, pz, dz, Tr, Tl)
+                rows.append(r)
+                print(Us, Um, Tr, Tl, dz, "Q dE %.3f P0 %.3f bound %.4f | Cl %.3f" % (
+                    r["quantum"]["E_gain_uK"], r["quantum"]["P_ground"], r["quantum"]["P_bound_states_used"],
+                    r["classical_wigner"]["E_gain_uK"]), flush=True)
+    save_result("m19_axial", script=SCRIPT,
+                inputs={"model": "1D along the optical axis; the static site's depth follows the lateral separation of "
+                        "the moving-trap centre (atom assumed at that centre)", "grid": "4 nm, dt 5 ns",
+                        "profiles": "moving: m18_trap.npz axial cut; static: Gaussian beam, w0 0.85 um, 1075 nm"},
+                outputs={"rows": rows},
+                notes="P_bound_states_used: weight in the 200 lowest static states (projection completeness).")
+    return rows
+
+
 def main():
     px, py = profiles()
     rows = []
@@ -190,4 +245,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    {"all": main, "axial": axial}[sys.argv[1] if len(sys.argv) > 1 else "all"]()

@@ -19,3 +19,17 @@ def test_order_preserving_match():
     src = [a for a, _ in pairs]
     dst = [b for _, b in pairs]
     assert src == sorted(src) and dst == sorted(dst) and len(set(dst)) == 3
+
+
+def test_repair_fills_holes_one_move_each():
+    from picsim.rearrange import repair
+    rng = np.random.default_rng(4)
+    occ = rng.random((24, 20)) < 0.55
+    _, out, _ = schedule(occ, 12, 12, 8)
+    holes = [(7, 6), (10, 9), (14, 13)]  # inside the 12 x 12 block (rows 6-17, columns 4-15)
+    for h in holes:
+        out[h] = False
+    new, rep, npass, t, pairs = repair(out, 12, 12, 8)
+    assert new.sum() == out.sum()
+    assert len(pairs) == 3 and rep.sum() == 3
+    assert all(new[h] for h in holes)

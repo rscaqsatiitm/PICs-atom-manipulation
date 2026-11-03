@@ -1,0 +1,37 @@
+{
+ "name": "m21_modes",
+ "script": "scripts/m21_repair.py",
+ "git": "68bbd07",
+ "notes": "Lower bound on balancing passes about 4 (Sec. 2 of docs/repair.md); compaction 2.",
+ "inputs": {
+  "array": [
+   50,
+   45
+  ],
+  "target": [
+   32,
+   32
+  ],
+  "S": 16,
+  "loadings": 40,
+  "p_load": 0.5
+ },
+ "outputs": {
+  "greedy": {
+   "passes_mean": 8.05,
+   "time_ms_mean": 17.780239090563317,
+   "time_ms_max": 23.097250888134635
+  },
+  "rate": {
+   "passes_mean": 8.05,
+   "time_ms_mean": 17.5825347201886,
+   "time_ms_max": 22.767625385448515
+  },
+  "lookahead": {
+   "passes_mean": 7.975,
+   "time_ms_mean": 17.618177837237987,
+   "time_ms_max": 22.85066463571485
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

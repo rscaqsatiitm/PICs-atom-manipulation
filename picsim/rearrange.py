@@ -69,8 +69,68 @@ def _monotone_match(src, dst):
     return list(zip(src, best))
 
 
-def schedule(occ, R_t, C_t, S, timing=Timing(), max_passes=200):
-    """occ: boolean array (R, C) of loaded sites; returns Result and the final occupancy and move counts."""
+def _transfers(n, in_t, C_t, S):
+    """Candidate vertical passes: T[jj, k] = atoms that a pass with row shift j = J[jj] and stack position k moves
+    from surplus rows into target rows lacking atoms (counts only)."""
+    R = len(n)
+    sur = np.clip(np.where(in_t, n - C_t, n), 0, None)
+    dfc = np.where(in_t, np.clip(C_t - n, 0, None), 0)
+    J = np.array([j for j in range(-(R - 1), R) if j != 0])
+    T = np.zeros((len(J), R - S + 1), dtype=int)
+    for a, j in enumerate(J):
+        t = np.zeros(R, dtype=int)
+        r = np.arange(R)
+        ok = (r + j >= 0) & (r + j < R)
+        t[ok] = np.minimum(sur[ok], dfc[r[ok] + j])
+        cs = np.concatenate([[0], np.cumsum(t)])
+        T[a] = cs[S:] - cs[:-S]
+    return J, T
+
+
+def _apply_counts(n, in_t, C_t, S, j, k):
+    n = n.copy()
+    sur = np.clip(np.where(in_t, n - C_t, n), 0, None)
+    dfc = np.where(in_t, np.clip(C_t - n, 0, None), 0)
+    for r in range(k, k + S):
+        rr = r + j
+        if 0 <= rr < len(n):
+            m = min(sur[r], dfc[rr])
+            n[r] -= m
+            n[rr] += m
+    return n
+
+
+def _choose(n, in_t, C_t, S, timing, mode, n_top=8):
+    J, T = _transfers(n, in_t, C_t, S)
+    if T.max() <= 0:
+        return None
+    t_pass = np.array([timing.pass_time(40e-6, abs(j) * timing.pitch) for j in J])[:, None]
+    if mode == "greedy":  # most atoms, ties to the smallest |j|
+        score = T - 1e-3 * np.abs(J)[:, None]
+    elif mode == "rate":  # most atoms per unit pass time
+        score = T / t_pass
+    elif mode == "lookahead":  # most atoms over this pass and the best next one
+        flat = np.argsort(T, axis=None)[::-1][:n_top]
+        best, bsc = None, -np.inf
+        for f in flat:
+            a, k = np.unravel_index(f, T.shape)
+            if T[a, k] <= 0:
+                continue
+            n2 = _apply_counts(n, in_t, C_t, S, J[a], k)
+            _, T2 = _transfers(n2, in_t, C_t, S)
+            sc = T[a, k] + T2.max() - 1e-3 * abs(J[a])
+            if sc > bsc:
+                best, bsc = (int(T[a, k]), int(J[a]), int(k)), sc
+        return best
+    else:
+        raise ValueError(mode)
+    a, k = np.unravel_index(np.argmax(score), score.shape)
+    return int(T[a, k]), int(J[a]), int(k)
+
+
+def schedule(occ, R_t, C_t, S, timing=Timing(), max_passes=200, mode="greedy"):
+    """occ: boolean array (R, C) of loaded sites; returns Result and the final occupancy and move counts.
+    mode: pass selection in the balancing stage ('greedy', 'rate' or 'lookahead')."""
     R, C = occ.shape
     occ = occ.copy()
     moves = np.zeros((R, C), dtype=int)  # move count of the atom currently at each site
@@ -90,18 +150,7 @@ def schedule(occ, R_t, C_t, S, timing=Timing(), max_passes=200):
 
     # ---------------- stage 1: vertical balancing
     for _ in range(max_passes):
-        best = None
-        for j in range(-(R - 1), R):
-            if j == 0:
-                continue
-            for k in range(0, R - S + 1):
-                tot = 0
-                for r in range(k, k + S):
-                    rr = r + j
-                    if 0 <= rr < R and in_t[rr]:
-                        tot += min(max(surplus(r), 0), deficit(rr))
-                if tot > 0 and (best is None or tot > best[0] or (tot == best[0] and abs(j) < abs(best[1]))):
-                    best = (tot, j, k)
+        best = _choose(occ.sum(axis=1), in_t, C_t, S, timing, mode)
         if best is None:
             break
         _, j, k = best
@@ -174,3 +223,94 @@ def schedule(occ, R_t, C_t, S, timing=Timing(), max_passes=200):
     res.deficit = int((~block).sum())
     res.moves_per_atom = moves[np.ix_(trows, tcols)][block].tolist()
     return res, occ, moves
+
+
+# ------------------------------------------------------------------ losses, imaging and repair
+def lose(occ, rng, p_keep):
+    """Remove atoms independently with keep probability p_keep (array or scalar)."""
+    return occ & (rng.random(occ.shape) < p_keep)
+
+
+def repair(occ, R_t, C_t, S, timing=Timing(), max_passes=50):
+    """Fill the holes of the block directly from reservoir atoms (outside the block), one move per repaired atom.
+
+    Each pass has a common row shift j (j = 0 allowed: a reservoir atom in the same row) and stack position k; in
+    every stack row the chosen reservoir atoms are matched in order to holes of row r + j (the lanes let them pass
+    other atoms). Returns the new occupancy, a mask of repaired sites, passes and time."""
+    R, C = occ.shape
+    occ = occ.copy()
+    r0, c0 = (R - R_t) // 2, (C - C_t) // 2
+    blk = np.zeros((R, C), bool)
+    blk[r0:r0 + R_t, c0:c0 + C_t] = True
+    repaired = np.zeros((R, C), bool)
+    pairs = []  # ((r, a), (rr, b)) source and destination of every repair move
+    passes, t = 0, 0.0
+    for _ in range(max_passes):
+        res_n = (occ & ~blk).sum(axis=1)
+        hole_n = (~occ & blk).sum(axis=1)
+        if hole_n.sum() == 0 or res_n.sum() == 0:
+            break
+        best = None
+        for j in range(-(R - 1), R):
+            tr = np.zeros(R, dtype=int)
+            r = np.arange(R)
+            ok = (r + j >= 0) & (r + j < R)
+            tr[ok] = np.minimum(res_n[ok], hole_n[r[ok] + j])
+            cs = np.concatenate([[0], np.cumsum(tr)])
+            win = cs[S:] - cs[:-S]
+            k = int(np.argmax(win))
+            sc = win[k] - 1e-3 * abs(j)
+            if win[k] > 0 and (best is None or sc > best[0]):
+                best = (sc, j, k)
+        if best is None:
+            break
+        _, j, k = best
+        dxm = 0.0
+        for r in range(k, k + S):
+            rr = r + j
+            if not (0 <= rr < R):
+                continue
+            holes = np.nonzero(~occ[rr] & blk[rr])[0]
+            resv = np.nonzero(occ[r] & ~blk[r])[0]
+            m = min(len(holes), len(resv))
+            if m == 0:
+                continue
+            centre = holes.mean()
+            resv = np.sort(resv[np.argsort(np.abs(resv - centre))[:m]])
+            for a, b in zip(resv, np.sort(holes[:m])):
+                occ[r, a] = False
+                occ[rr, b] = True
+                repaired[rr, b] = True
+                pairs.append(((r, a), (rr, b)))
+                dxm = max(dxm, abs(b - a) * timing.pitch)
+        passes += 1
+        t += timing.pass_time(dxm, abs(j) * timing.pitch)
+    return occ, repaired, passes, t, pairs
+
+
+def cycle_with_repair(occ0, R_t, C_t, S, rng, p_move, tau, eps_img, t_img=10e-3, rounds=2, timing=Timing(),
+                      sched=None):
+    """One rearrangement cycle followed by `rounds` of (image, repair). Detection precedes the imaging-induced loss,
+    so atoms lost by an image are not seen. Returns defects after the cycle and after each round, and times."""
+    R, C = occ0.shape
+    r0, c0 = (R - R_t) // 2, (C - C_t) // 2
+    blk = np.zeros((R, C), bool)
+    blk[r0:r0 + R_t, c0:c0 + C_t] = True
+    res, occ, moves = sched if sched is not None else schedule(occ0, R_t, C_t, S, timing)
+    occ = lose(occ, rng, (1 - p_move) ** moves * np.exp(-res.time_s / tau))
+    out = {"t_cycle_ms": res.time_s * 1e3, "defects": [int((~occ & blk).sum())], "repair_passes": [], "t_round_ms": []}
+    for _ in range(rounds):
+        seen = occ.copy()  # image: detection
+        occ = lose(occ, rng, (1 - eps_img) * np.exp(-t_img / tau))  # imaging-induced and vacuum loss, unseen
+        _, _, npass, trep, pairs = repair(seen, R_t, C_t, S, timing)
+        moved = np.zeros_like(occ)
+        for (r, a), (rr, b) in pairs:  # a repair succeeds only if its source atom survived the image
+            if occ[r, a]:
+                occ[r, a] = False
+                occ[rr, b] = True
+                moved[rr, b] = True
+        occ = lose(occ, rng, np.where(moved, 1 - p_move, 1.0) * np.exp(-trep / tau))
+        out["defects"].append(int((~occ & blk).sum()))
+        out["repair_passes"].append(npass)
+        out["t_round_ms"].append((t_img + trep) * 1e3)
+    return out
