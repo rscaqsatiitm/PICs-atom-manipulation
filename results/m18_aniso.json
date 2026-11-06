@@ -1,0 +1,1071 @@
+{
+ "name": "m18_aniso",
+ "script": "scripts/m18_transport3d.py",
+ "git": "c9d511d",
+ "notes": "Bystander rows: 'delivered' = stayed in its own site.",
+ "inputs": {
+  "layouts": {
+   "3 x 4 um (rows 4 um apart, lane 2 um)": {
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "by": [
+     [
+      3.0,
+      0.0,
+      0.0
+     ],
+     [
+      -3.0,
+      0.0,
+      0.0
+     ],
+     [
+      6.0,
+      0.0,
+      0.0
+     ],
+     [
+      9.0,
+      4.0,
+      0.0
+     ]
+    ]
+   },
+   "3 um with corridors (rows 6 um apart, lane 3 um)": {
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "by": [
+     [
+      3.0,
+      0.0,
+      0.0
+     ],
+     [
+      6.0,
+      0.0,
+      0.0
+     ],
+     [
+      9.0,
+      6.0,
+      0.0
+     ]
+    ]
+   },
+   "4 x 4 um reference (in-row neighbour)": {
+    "pitch_um": 4.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "by": [
+     [
+      4.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "d": 12.0
+   }
+  },
+  "ramps_us": 200,
+  "lane_steps_us": 400,
+  "move_us": 400,
+  "atoms": 3000
+ },
+ "outputs": {
+  "rows": [
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.3 mK: transported 9.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.450254028757175,
+    "dE_uK": 0.15960222253337827
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.3 mK: bystander at [3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.295053898310849,
+    "dE_uK": 0.0044020920870519896
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     -3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.3 mK: bystander at [-3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.29114774537173,
+    "dE_uK": 0.0004959391479317866
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.3 mK: bystander at [6.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.298256190897341,
+    "dE_uK": 0.00760438467354404
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     9.0,
+     4.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.3 mK: bystander at [9.0, 4.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.291246001590984,
+    "dE_uK": 0.0005941953671869342
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.5 mK: transported 9.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.3414829614378,
+    "dE_uK": 0.05083115521400292
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.5 mK: bystander at [3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.301936967330864,
+    "dE_uK": 0.011285161107065877
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     -3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.5 mK: bystander at [-3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.291374708544058,
+    "dE_uK": 0.0007229023202615835
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.5 mK: bystander at [6.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.31015171214941,
+    "dE_uK": 0.019499905925614267
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     9.0,
+     4.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 5.0 uK, 0.1/0.5 mK: bystander at [9.0, 4.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 0.999,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.001,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.255686245301709,
+    "dE_uK": -0.034965560922088634
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 10.0 uK, 0.2/0.6 mK: transported 9.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447595,
+    "E_final_uK": 29.169389410667254,
+    "dE_uK": 0.5880857982196592
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 10.0 uK, 0.2/0.6 mK: bystander at [3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447595,
+    "E_final_uK": 28.581286485168658,
+    "dE_uK": -1.712727893809097e-05
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     -3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 10.0 uK, 0.2/0.6 mK: bystander at [-3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447595,
+    "E_final_uK": 28.582125529415844,
+    "dE_uK": 0.0008219169682488069
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 10.0 uK, 0.2/0.6 mK: bystander at [6.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447595,
+    "E_final_uK": 28.582014172741516,
+    "dE_uK": 0.0007105602939230045
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     9.0,
+     4.0,
+     0.0
+    ],
+    "label": "3 x 4 um (rows 4 um apart, lane 2 um) | 10.0 uK, 0.2/0.6 mK: bystander at [9.0, 4.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447595,
+    "E_final_uK": 28.58302869719648,
+    "dE_uK": 0.001725084748884127
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.3 mK: transported 9.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223801,
+    "E_final_uK": 15.393427155364623,
+    "dE_uK": 1.1027753491408236
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.3 mK: bystander at [3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.291077926394589,
+    "dE_uK": 0.00042612017079224785
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.3 mK: bystander at [6.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.290887387550988,
+    "dE_uK": 0.00023558132719169334
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     9.0,
+     6.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.3 mK: bystander at [9.0, 6.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.290987076523539,
+    "dE_uK": 0.0003352702997413054
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.5 mK: transported 9.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223801,
+    "E_final_uK": 14.566654384525577,
+    "dE_uK": 0.27600257830177605
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.5 mK: bystander at [3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.291269283196723,
+    "dE_uK": 0.0006174769729256718
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.5 mK: bystander at [6.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.290894284485397,
+    "dE_uK": 0.00024247826159908145
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     9.0,
+     6.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 5.0 uK, 0.1/0.5 mK: bystander at [9.0, 6.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651806223797,
+    "E_final_uK": 14.29100354363712,
+    "dE_uK": 0.0003517374133213478
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 10.0 uK, 0.2/0.6 mK: transported 9.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447602,
+    "E_final_uK": 30.05840834527255,
+    "dE_uK": 1.4771047328249478
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 10.0 uK, 0.2/0.6 mK: bystander at [3.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447602,
+    "E_final_uK": 28.58242637736654,
+    "dE_uK": 0.0011227649189399767
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 10.0 uK, 0.2/0.6 mK: bystander at [6.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447595,
+    "E_final_uK": 28.582268519676624,
+    "dE_uK": 0.0009649072290312925
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 3.0,
+    "rows_um": [
+     -6.0,
+     0.0,
+     6.0
+    ],
+    "lane_um": 3.0,
+    "d_um": 9.0,
+    "bystander_um": [
+     9.0,
+     6.0,
+     0.0
+    ],
+    "label": "3 um with corridors (rows 6 um apart, lane 3 um) | 10.0 uK, 0.2/0.6 mK: bystander at [9.0, 6.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303612447602,
+    "E_final_uK": 28.581812209229643,
+    "dE_uK": 0.0005085967820397767
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 4.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 12.0,
+    "label": "4 x 4 um reference (in-row neighbour) | 5.0 uK, 0.1/0.3 mK: transported 12.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651829761817,
+    "E_final_uK": 14.453552795678009,
+    "dE_uK": 0.16290096591619294
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 4.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 12.0,
+    "bystander_um": [
+     4.0,
+     0.0,
+     0.0
+    ],
+    "label": "4 x 4 um reference (in-row neighbour) | 5.0 uK, 0.1/0.3 mK: bystander at [4.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651829761817,
+    "E_final_uK": 14.298254952247712,
+    "dE_uK": 0.007603122485895194
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 4.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 12.0,
+    "label": "4 x 4 um reference (in-row neighbour) | 5.0 uK, 0.1/0.5 mK: transported 12.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651829761817,
+    "E_final_uK": 14.342468359946484,
+    "dE_uK": 0.05181653018466812
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 5.0,
+    "n": 3000,
+    "pitch_um": 4.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 12.0,
+    "bystander_um": [
+     4.0,
+     0.0,
+     0.0
+    ],
+    "label": "4 x 4 um reference (in-row neighbour) | 5.0 uK, 0.1/0.5 mK: bystander at [4.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 0.9996666666666667,
+    "left_behind": 0.0,
+    "misplaced": 0.0003333333333333333,
+    "lost": 0.0,
+    "E_initial_uK": 14.290651829761817,
+    "E_final_uK": 14.296741736609375,
+    "dE_uK": 0.00608990684755922
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 4.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 12.0,
+    "label": "4 x 4 um reference (in-row neighbour) | 10.0 uK, 0.2/0.6 mK: transported 12.0 um",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303659523638,
+    "E_final_uK": 29.168029037929397,
+    "dE_uK": 0.5867253784057629
+   },
+   {
+    "Us_mK": 0.2,
+    "Um_mK": 0.6,
+    "t_ramp_us": 200.0,
+    "t_lane_us": 400.0,
+    "t_move_us": 400.0,
+    "T_uK": 10.0,
+    "n": 3000,
+    "pitch_um": 4.0,
+    "rows_um": [
+     -4.0,
+     0.0,
+     4.0
+    ],
+    "lane_um": 2.0,
+    "d_um": 12.0,
+    "bystander_um": [
+     4.0,
+     0.0,
+     0.0
+    ],
+    "label": "4 x 4 um reference (in-row neighbour) | 10.0 uK, 0.2/0.6 mK: bystander at [4.0, 0.0]",
+    "initially_unbound_fraction_rejected": 0.0,
+    "delivered": 1.0,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.0,
+    "E_initial_uK": 28.581303659523634,
+    "E_final_uK": 28.583908735446407,
+    "dE_uK": 0.002605075922774286
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
