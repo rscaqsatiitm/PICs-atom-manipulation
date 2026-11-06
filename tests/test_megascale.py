@@ -55,3 +55,13 @@ def test_time_average_between_pre_and_post_image():
     m = sim.mean_defect(1.5)
     assert late[:, 2].mean() <= late[:, 1].mean()  # the image itself removes atoms
     assert 0.5 * late[:, 2].mean() <= m <= 1.5 * late[:, 1].mean()
+
+
+def test_time_average_vacuum_only():
+    """No repair (no reservoir), no imaging loss: the mean over one long idle period is T/(2 tau)."""
+    from picsim.megasort import Layout, Params, Sim
+    P = Params(tau=10.0, eps_img=0.0, p_move=0.0, T_img=1.0, t_img=0.0, f_load=1.0, t_reload=1e9)
+    sim = Sim(Layout(200, 200, 1, 1), Block(10, 1, 50), P, seed=3)
+    sim.run(1.0 + 1e-9)
+    m = sim.mean_defect(0.0)
+    assert abs(m - (1 - np.exp(-0.5 / 10.0))) < 0.01

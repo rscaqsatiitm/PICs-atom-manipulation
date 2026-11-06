@@ -110,8 +110,9 @@ class Sim:
             self.occ.flat[self.rng.choice(idx, size=min(k, len(idx)), replace=False)] = False
 
     def _advance(self, dt):
-        self._integ += dt * self.defect_fraction()  # left Riemann sum; dt is one visit, image or idle interval
-        self._vacuum(dt)
+        d0 = self.defect_fraction()
+        self._vacuum(dt)  # losses are uniform in time over dt, so the trapezoid rule is exact in expectation
+        self._integ += 0.5 * dt * (d0 + self.defect_fraction())
         self.t += dt
 
     def image(self):
