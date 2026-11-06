@@ -16,6 +16,10 @@ Parts:
           row of 41 tweezers (crosstalk max over x), and the neighbour row (11 tweezers) static and with a moving
           tweezer, incoherent and coherent, with the comb-windowed y pupil of both chips; comb roll and edge
           straightness by a local window a(X) (Sigma space is telecentric in x)
+  lens    the same with the adopted traced collimator (glued Weierstrass + aplanat, docs/collimator.md), on axis,
+          with the real x slit-plane distance (m14 x lens)
+  skew    x dependence through the cylindrical collimator: light of a tweezer at x_a has k_x = k0 x_a / x_scale,
+          and the y-z problem is the 2D trace with effective indices sqrt(n^2 - sx^2)
   layout  first-order layouts for 32 / 48 / 64 rows (m13 design), comb z-range, path equality, tilt tolerances,
           chip pitch and I/O per chip.
 
@@ -23,11 +27,14 @@ Output: results/m26_edge.json (+ .png), results/m26_layout.json
 """
 from __future__ import annotations
 
+import copy
 import sys
 
 import numpy as np
 
-from picsim.opa.stack import FacetY, RelayY, raised_cosine
+from picsim import materials as mat
+from picsim.opa import collimator as C
+from picsim.opa.stack import FacetY, Focus2D, RelayY, raised_cosine
 from picsim.plotting import fig
 from picsim.provenance import RESULTS, save_result
 
@@ -36,6 +43,8 @@ from m13_stack import BETA, D_CHIP, F_OBJ, LAM, NA, NA_FAC, design, eps_at, metr
 from picsim.opa.stack import peak2d  # noqa: E402
 
 SCRIPT = "scripts/m26_stack_combine.py"
+N_SIO2 = float(mat.n_sio2(LAM))
+N_HI = 1.8  # aplanat glass of the adopted collimator (m14, CHOICE)
 DELTA = 4.0  # um, row pitch at the atoms
 D = D_CHIP / DELTA
 F_FAC = BETA * D / NA  # um
@@ -43,21 +52,58 @@ DY = 0.5  # um, grid at S
 NY = 2**16  # 32.8 mm span
 
 
-class CombY:
-    """1D field at S of one chip, with an optional comb window at distance z from S."""
+def skewed(d, sx):
+    """The cylindrical collimator d seen by light with k_x = k0 sx: the normals of its surfaces have no x component,
+    so k_x is conserved and the y-z problem is the 2D trace with effective indices sqrt(n^2 - sx^2) (exact)."""
+    dd = copy.deepcopy(d)
+    dd.indices = [float(np.sqrt(n**2 - sx**2)) for n in d.indices]
+    return dd
 
-    def __init__(self, apod=None, clip_at_S=False):
-        self.fa = FacetY(LAM, 1.2, 0.4)
-        self.r = RelayY(self.fa, BETA, NA=NA, NA_FAC=NA_FAC, apod=apod)
+
+def fac_adopted():
+    """Adopted collimator of docs/collimator.md: Weierstrass block (fused silica, glued) + 10 um gap + 250 um
+    aplanat of index 1.8."""
+    return C.fac_design(N_SIO2, n2=N_HI)
+
+
+class CombY:
+    """1D field at S of one chip, with an optional comb window at distance z from S.
+
+    design None: ideal thin sine-condition collimator in air (aperture f_FAC before S). design given: the traced
+    collimator (facet in its first medium), exit field at the plane d.z_out from its lens map, S at the nominal back
+    focal plane; sx > 0: the same lens seen by light of x direction sine sx (effective indices)."""
+
+    def __init__(self, apod=None, clip_at_S=False, design=None, sx=0.0):
+        self.sx = sx
+        if design is None:
+            self.fa = FacetY(LAM, 1.2, 0.4)
+            self.r = RelayY(self.fa, BETA, NA=NA, NA_FAC=NA_FAC, apod=apod)
+            self.z_ap = 0.0 if clip_at_S else -F_FAC  # exit-field plane relative to S
+            n_air = 1.0
+        else:
+            dd = skewed(design, sx)
+            self.L = dd.lensmap(LAM, NA_FAC, coated=True)
+            self.fa = FacetY(LAM, 1.2, 0.4, n_m=dd.indices[0])
+            self.r = RelayY(self.fa, BETA, NA=NA, NA_FAC=NA_FAC, apod=apod, lens=self.L)
+            self.z_ap = design.z_out - C.back_focal_plane(design)
+            n_air = dd.indices[-1]
         self.y = (np.arange(NY) - NY // 2) * DY
-        s, a, _ = self.r.spectrum()
-        sy = self.y / F_FAC
-        U = np.interp(sy, s, a.real, left=0, right=0) + 1j * np.interp(sy, s, a.imag, left=0, right=0)
-        U[np.abs(sy) >= NA_FAC] = 0
-        self.U_exit = U  # sine-condition lens: collimated, amplitude a(y / f), clipped at the lens exit
-        self.clip_at_S = clip_at_S  # True: RelayY convention (clip in S itself)
+        s, amp, kern = self.r.spectrum()
+        if design is None:
+            dg = np.ones_like(s)
+        else:
+            dg = np.interp(np.abs(s), self.L.s, self.L.dg)
+        U_s = amp / np.sqrt(dg) / np.sqrt(dg)  # amp carries sqrt(dg) for the s integral; U dy = amp ds, dy = f dg ds
+        yk = F_FAC * kern
+        o = np.argsort(yk)
+        U = np.interp(self.y, yk[o], U_s[o].real, left=0, right=0) + 1j * np.interp(self.y, yk[o], U_s[o].imag,
+                                                                                     left=0, right=0)
+        U[(self.y < yk.min()) | (self.y > yk.max())] = 0
+        self.U_exit = U
+        self.clip_at_S = clip_at_S
         self.k = 2 * np.pi / LAM
-        self.kz = np.sqrt((self.k**2 - (2 * np.pi * np.fft.fftfreq(NY, DY)) ** 2).astype(complex))
+        k_yz = self.k * n_air  # projected wavenumber in air for x direction sine sx
+        self.kz = np.sqrt((k_yz**2 - (2 * np.pi * np.fft.fftfreq(NY, DY)) ** 2).astype(complex))
         self.eta = self.r.eta
         self.Py_ref = self.r.pupil()  # RelayY reference
         self._scale = None
@@ -69,7 +115,7 @@ class CombY:
 
     def field_S(self, z=None, a=None, mode="slot"):
         """Field at S. z: comb distance from S (um); a: comb half-aperture (slot) or edge position (um)."""
-        z0 = 0.0 if self.clip_at_S else -F_FAC  # plane of the aperture relative to S
+        z0 = self.z_ap
         if z is None or a is None:
             return self.prop(self.U_exit, -z0)
         Uc = self.prop(self.U_exit, z - z0)
@@ -81,8 +127,8 @@ class CombY:
         m = np.abs(self.y) < 2000.0
         ph = np.exp(1j * self.k * NA / D * np.outer(self.eta, self.y[m]))
         P = ph @ US[m] * DY
-        if self._scale is None:  # fix the constant against RelayY with the clip in S
-            ref = self.prop(self.U_exit, 0.0)
+        if self._scale is None:  # fix the constant against RelayY (exit field placed in S, as RelayY does)
+            ref = self.U_exit
             Pr = ph @ ref[m] * DY
             self._scale = complex(np.vdot(Pr, self.Py_ref) / np.vdot(Pr, Pr))
             self.scale_check = float(np.max(np.abs(Pr * self._scale - self.Py_ref)) / np.max(np.abs(self.Py_ref)))
@@ -267,6 +313,212 @@ def twod():
     return res
 
 
+def _sigma_from_facet_um(d):
+    """x slit plane from the facet: back focal distance of the traced x lens (results/m14_xlens.json, aplanat SiO2,
+    measured from the emitter plane in air) plus the x-focus shift of the collimator glass, t (1 - 1/n) per section
+    on axis (the collimator has no x power)."""
+    import json
+    zb = json.load(open(RESULTS / "m14_xlens.json"))["outputs"]["aplanat SiO2"]["back_focal_z_um"]
+    zs = [0.0] + [sf.z_v for sf in d.surfaces]
+    shift = sum((zs[j + 1] - zs[j]) * (1 - 1 / n) for j, n in enumerate(d.indices[:-1]) if n > 1)
+    return zb + shift, zb, shift
+
+
+def lens():
+    """The comb with the traced collimator (on axis, sx = 0): baseline, scan, worst row in 2D, real geometry."""
+    d = fac_adopted()
+    cy = CombY(design=d)
+    base = cy.metrics(cy.pupil(cy.field_S()))
+    relay = cy.metrics(cy.Py_ref)
+    thin = CombY()
+    tbase = thin.metrics(thin.pupil(thin.field_S()))
+    zS = C.back_focal_plane(d)
+    sig, zb_x, shift = _sigma_from_facet_um(d)
+    z_c = (sig - zS) * 1e-3 + 0.5  # mm, comb start 0.5 mm beyond the slit plane (CHOICE)
+    geo = {"S_from_facet_um": zS, "exit_plane_from_facet_um": d.z_out, "x_lens_back_focal_um": zb_x,
+           "collimator_glass_x_shift_um": shift, "sigma_from_facet_um": sig, "sigma_from_S_mm": (sig - zS) * 1e-3,
+           "z_c_mm": z_c, "worst_row_z_mm_32_rows": z_c + 16.0}
+    print("geometry", geo, flush=True)
+    print("baseline (lens)", {k: float("%.4g" % v) for k, v in base.items()}, "RelayY xt4 %.3g" % relay["xt_4um"], flush=True)
+    rows = []
+    for mode in ("slot", "edge"):
+        for z_mm in (5.0, 10.0, 15.0, 20.0, round(z_c + 16.0, 2), 30.0, 45.0):
+            for a in (200.0, 225.0, 250.0, 275.0):
+                out = {"mode": mode, "z_mm": z_mm, "a_um": a}
+                for name, c, b in (("lens", cy, base), ("thin", thin, tbase)):
+                    m = c.metrics(c.pupil(c.field_S(z_mm * 1e3, a, mode)))
+                    out[name] = {"loss": 1 - m["transmission"] / b["transmission"], "peak_rel": m["peak"] / b["peak"],
+                                 "xt_4um": m["xt_4um"], "xt_3um": m["xt_3um"],
+                                 "row_shift_nm": m["centroid_nm"] - b["centroid_nm"]}
+                rows.append(out)
+                if a in (225.0, 250.0):
+                    print(mode, z_mm, a, "| lens loss %.2e peak %.4f xt4 %.2e | thin loss %.2e peak %.4f xt4 %.2e" % (
+                        out["lens"]["loss"], out["lens"]["peak_rel"], out["lens"]["xt_4um"], out["thin"]["loss"],
+                        out["thin"]["peak_rel"], out["thin"]["xt_4um"]), flush=True)
+    # 2D at the worst row (32 rows comb, or 64 rows comb + PBS)
+    fp, ls, _, _ = setup()
+    F = Focus2D(fp, cy.r)
+    zw = (z_c + 16.0) * 1e3
+    P0 = cy.Py_ref
+    cases = {"no comb": (P0, P0)}
+    for a in (250.0, 225.0):
+        P = cy.pupil(cy.field_S(zw, a, "slot"))
+        cases[f"slot z {zw / 1e3:.1f} mm a {a:g} um"] = (P, P)
+    w0 = unit(ls.weights([0.0]))
+    m0 = metrics(F, w0, 0.0, Py=P0)
+    twod_rows = {}
+    for name, (Pm, Pn) in cases.items():
+        s0 = metrics(F, w0, 0.0, Py=Pm)
+        row = {"single_peak_rel": s0["peak"] / m0["peak"], "single_eps4": s0["eps4"], "single_eps3": s0["eps3"]}
+        row.update(_row_metrics(F, ls, Pm, Pn))
+        twod_rows[name] = row
+        print("2D", name, "| peak %.4f eps4 %.2e | row eps4 %.2e |" % (row["single_peak_rel"], row["single_eps4"],
+              row["eps_row"]["4.0"]), {m: {k: float("%.3g" % v) for k, v in vv.items()}
+                                       for m, vv in row["neighbour_4um"].items()}, flush=True)
+    save_result("m26_lens", script=SCRIPT,
+                inputs={"collimator": "collimator.fac_design(n_SiO2, n2=1.8): Weierstrass block glued to the facet, "
+                                      "10 um gap, 250 um aplanat; AR coated; facet radiating into fused silica",
+                        "exit_plane": "d.z_out (60 um beyond the last vertex)", "S": "collimator.back_focal_plane",
+                        "comb_start": "0.5 mm beyond the x slit plane (CHOICE)"},
+                outputs={"baseline_lens": base, "baseline_relayY_lens": relay, "baseline_thin": tbase,
+                         "geometry": geo, "rows": rows, "twod_worst_row": twod_rows})
+    return rows
+
+
+def _best_focus_at(F, w, xa, zs=np.arange(-3.0, 3.01, 0.25)):
+    """Atom-plane defocus (um) that maximises the peak of a tweezer at xa (2D, window around xa)."""
+    x = np.arange(xa - 1.0, xa + 1.0, 0.02)
+    y = np.arange(-3.0, 3.0, 0.02)
+    pk = [F.intensity(w, x, y, dz_a=z).max() for z in zs]
+    i = int(np.argmax(pk))
+    return float(zs[i]), float(pk[i])
+
+
+def _profile_2d(F, w, xa):
+    """y profile (max over |x - xa| < 1 um) at the atoms, for diagnosis of strongly aberrated cases."""
+    x = np.arange(xa - 1.0, xa + 1.0, 0.04)
+    y = np.arange(-8.0, 8.0, 0.04)
+    I = F.intensity(w, x, y)
+    return y, I.max(axis=1)
+
+
+def skew():
+    """x dependence: the cylindrical collimator for tweezers at x_a (x direction sine sx = x_a / x_scale)."""
+    d = fac_adopted()
+    fp, ls, _, _ = setup()
+    x_scale, s_cut = fp.opa.x_scale, fp.opa.s_cut
+    ya = np.arange(-12.0, 12.0001, 0.01)
+    sig, _, _ = _sigma_from_facet_um(d)
+    zw = ((sig - C.back_focal_plane(d)) * 1e-3 + 0.5 + 16.0) * 1e3
+    rows = []
+    dzs = np.arange(-8.0, 8.001, 0.25)
+    peak_vs_dz = {}
+    for xa in (0.0, 10.0, 15.0, 20.0, 30.0, 45.0, 60.0, 75.0, 90.0, s_cut * x_scale):
+        sx = xa / x_scale
+        cy = CombY(design=d, sx=sx)
+        r = cy.r
+        ideal = RelayY(cy.fa, BETA, NA=NA, NA_FAC=NA_FAC)
+        I_id = ideal.atom_line(ya)
+        I = r.atom_line(ya)
+        L = cy.L
+        nm = cy.fa.n_m
+        basis = (nm * np.sqrt(1 - (L.s / nm) ** 2) - nm) / LAM  # W of a facet displaced by +1 um (first order)
+        dz_eq = float(-np.sum(L.W * basis) / np.sum(basis**2))
+        resid = L.W + dz_eq * basis
+        I_fix = r.atom_line(ya, dz=dz_eq)  # facet refocused for this tweezer alone
+        base = cy.metrics(cy.pupil(cy.field_S()))
+        comb = cy.metrics(cy.pupil(cy.field_S(zw, 250.0, "slot")))
+        F = Focus2D(fp, r)
+        Fi = Focus2D(fp, ideal)
+        w = unit(ls.weights([xa]))
+        m2 = metrics(F, w, xa)
+        m2i = metrics(Fi, w, xa)
+        zb, pb = _best_focus_at(F, w, xa)
+        row = {"x_a_um": xa, "sx": sx, "peak_rel_ideal": float(I.max() / I_id.max()), "dz_equiv_um": dz_eq,
+               "W_pv_waves": float(np.ptp(L.W)), "W_resid_after_focus_pv_waves": float(np.ptp(resid)),
+               "peak_rel_ideal_refocused_facet": float(I_fix.max() / I_id.max()),
+               "xt_3um": eps_at(ya, I, 3.0), "xt_4um": eps_at(ya, I, 4.0),
+               "g_edge_over_s": float(L.g[-1] / L.s[-1]),
+               "twod_peak_rel_ideal": m2["peak"] / m2i["peak"], "twod_eps4": m2["eps4"],
+               "twod_best_focus_um": zb, "twod_peak_at_best_focus_rel_ideal": pb / m2i["peak"],
+               "comb_worst_row": {"loss": 1 - comb["transmission"] / base["transmission"],
+                                  "peak_rel": comb["peak"] / base["peak"], "xt_4um": comb["xt_4um"]}}
+        rows.append(row)
+        peak_vs_dz[f"{xa:.1f}"] = [float(r.atom_line(ya, dz=dz).max() / I_id.max()) for dz in dzs]
+        print("x_a %5.1f sx %.3f | peak %.3f (2D %.3f, best focus %.1f um -> %.3f) | dz_eq %+.2f um, W pv %.2f, resid %.3f "
+              "| refocused %.3f | xt4 %.1e (2D %.1e) | comb: loss %.1e xt4 %.1e" % (
+                  xa, sx, row["peak_rel_ideal"], row["twod_peak_rel_ideal"], zb, row["twod_peak_at_best_focus_rel_ideal"],
+                  dz_eq, row["W_pv_waves"], row["W_resid_after_focus_pv_waves"], row["peak_rel_ideal_refocused_facet"],
+                  row["xt_4um"], row["twod_eps4"], row["comb_worst_row"]["loss"], row["comb_worst_row"]["xt_4um"]),
+              flush=True)
+    sxs = np.array([r["sx"] for r in rows])
+    dzq = np.array([r["dz_equiv_um"] for r in rows])
+    c = float(np.sum(dzq * sxs**2) / np.sum(sxs**4))  # dz_equiv = c sx^2
+    # one common facet offset for the whole row: maximise the worst peak over |x_a| <= 90 um
+    keys = [k for k in peak_vs_dz if float(k) <= 90.0 + 1e-6]
+    worst = [min(peak_vs_dz[k][j] for k in keys) for j in range(len(dzs))]
+    jb = int(np.argmax(worst))
+    usable = {}
+    for crit in (0.97, 0.9):
+        ok = [r["x_a_um"] for r in rows if r["peak_rel_ideal"] >= crit]
+        usable[f"peak >= {crit}"] = max(ok)
+    ok = [r["x_a_um"] for r in rows if r["xt_4um"] <= 2e-4]
+    usable["xt_4um <= 2e-4"] = max(ok)
+    n = N_SIO2
+    thin_c = -F_FAC * (n + 1) / (2 * n)  # thin glass lens in air: delta f / f = -(n + 1) sx^2 / (2 n)
+    need = {"tolerance_um": 0.5, "c_max_for_90um_um": 0.5 / (90.0 / x_scale) ** 2,
+            "c_max_for_90um_with_balance_um": 1.0 / (90.0 / x_scale) ** 2}
+    out = {"x_scale_um": x_scale, "s_cut": s_cut, "rows": rows, "dz_equiv_coefficient_um": c,
+           "thin_lens_air_estimate_um": thin_c, "usable_x_a_um": usable,
+           "balance": {"facet_offset_um": float(dzs[jb]), "worst_peak_rel_ideal": worst[jb],
+                       "peak_vs_offset": {"dz_um": dzs.tolist(), **peak_vs_dz}},
+           "requirement": need}
+    print({k: v for k, v in out.items() if k not in ("rows", "balance")}, "balance", dzs[jb], worst[jb], flush=True)
+    f, ax = fig(1, 2, h=3.0)
+    ax[0, 0].plot([r["x_a_um"] for r in rows], [r["peak_rel_ideal"] for r in rows], "o-", ms=3, label="1D")
+    ax[0, 0].plot([r["x_a_um"] for r in rows], [r["twod_peak_rel_ideal"] for r in rows], "s--", ms=3, label="2D")
+    ax[0, 0].set_xlabel("tweezer position x_a (um)")
+    ax[0, 0].set_ylabel("peak / ideal collimator")
+    ax[0, 0].legend(fontsize=7)
+    ax[0, 1].semilogy([r["x_a_um"] for r in rows], [r["xt_4um"] for r in rows], "o-", ms=3)
+    ax[0, 1].axhline(2e-4, color="0.5", lw=0.7)
+    ax[0, 1].set_xlabel("tweezer position x_a (um)")
+    ax[0, 1].set_ylabel("crosstalk at 4 um")
+    save_result("m26_skew", script=SCRIPT, fig=f,
+                inputs={"collimator": "adopted (m14)", "method": "cylindrical surfaces conserve k_x: the y-z problem is "
+                        "the 2D trace with effective indices sqrt(n^2 - sx^2) (exact); facet spectrum FacetY with the "
+                        "effective source index; AR coated; downstream y relay ideal for every sx",
+                        "sx": "x_a / x_scale (D1 slit relay)", "comb": f"slot a = 250 um at z = {zw / 1e3:.1f} mm"},
+                outputs=out,
+                notes="peak_rel_ideal: y-line peak relative to an ideal sine-condition collimator with the same facet "
+                      "spectrum and sx. dz_equiv: facet focus error (in the source medium) whose first-order wavefront "
+                      "best matches the traced W(s). refocused: the same tweezer with the facet moved by dz_equiv.")
+    return out
+
+
+def skew_offset():
+    """A common facet offset (block length) for the whole row: peak and crosstalk vs x_a (1D)."""
+    d = fac_adopted()
+    ya = np.arange(-12.0, 12.0001, 0.01)
+    out = {}
+    for off in (0.0, -0.5, -0.75, -1.0, -1.25, -1.5):
+        rows = []
+        for xa in (0.0, 15.0, 30.0, 40.0, 45.0, 50.0, 60.0):
+            cy = CombY(design=d, sx=xa / 288.0)
+            I = cy.r.atom_line(ya, dz=off)
+            Ii = RelayY(cy.fa, BETA, NA=NA, NA_FAC=NA_FAC).atom_line(ya)
+            rows.append({"x_a_um": xa, "peak_rel_ideal": float(I.max() / Ii.max()), "xt_4um": eps_at(ya, I, 4.0),
+                         "xt_3um": eps_at(ya, I, 3.0)})
+        out[f"{off:g}"] = rows
+        print(off, " | ".join("x %g: %.3f, %.1e" % (r["x_a_um"], r["peak_rel_ideal"], r["xt_4um"]) for r in rows), flush=True)
+    save_result("m26_skew_offset", script=SCRIPT,
+                inputs={"collimator": "adopted (m14)", "x_scale_um": 288.0,
+                        "offset": "facet moved along z by the same amount for every tweezer (first-order focus phase, "
+                                  "RelayY dz, um in the source medium)"},
+                outputs={"rows": out})
+    return out
+
+
 Z_C = 7.0  # mm, nearest comb point from S: beyond the x slit plane (2 f1 = 6.24 mm from the facets), CHOICE
 
 
@@ -341,4 +593,4 @@ def layout():
 if __name__ == "__main__":
     parts = sys.argv[1:] or ["edge", "layout"]
     for p in parts:
-        {"edge": edge, "layout": layout, "twod": twod}[p]()
+        {"edge": edge, "layout": layout, "twod": twod, "lens": lens, "skew": skew, "skew_offset": skew_offset}[p]()

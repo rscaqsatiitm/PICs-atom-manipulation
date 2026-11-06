@@ -17,6 +17,12 @@
 > worst-row cost of 0.45% in power and, in 2D, a full-row crosstalk of 2.3e-4 at 4 um (1.8e-4 without the
 > comb). Two such pairs and a PBS form a 64-row block,
 > so the 64 x 4 block (256 engines on 12 mm chip edges) is buildable.
+>
+> Follow-up (Sec. 12): with the real (glued, traced) collimator the comb results hold. But a cylindrical
+> collimator at NA 0.9 defocuses the light of tweezers away from the row centre (equivalent facet focus error
+> -99 s_x^2 um, s_x = x_a / 288 um). With the best common focus offset a row is usable over |x_a| <= 45 um, half
+> of the 180 um segment. Earlier power and crosstalk figures hold near the row centre only; a collimator that is
+> insensitive to the x angle (for example all-reflective) is needed for full segments.
 
 Follow-up to `docs/scaling_beyond.md`, `docs/transport3d.md`, `docs/rearrangement.md` and `docs/repair.md`. Code:
 `scripts/m22_megascale.py` (budget, tiling), `picsim/megasort.py` and `scripts/m23_steady.py` (assembly and steady
@@ -532,6 +538,96 @@ same windowed pupil; both assume an ideal thin collimator and the window of each
 0.25 mm before and after that distance, which changes z by at most 4% at z_c = 7 mm. Tooth-edge roughness,
 scatter from the comb, and a lens design of the larger y-relay field are not included.
 
+## 12. Follow-up: the real collimator
+
+Sec. 11 used an ideal thin collimator in air. The adopted collimator (`docs/collimator.md`) is a fused-silica
+Weierstrass block glued to the facet, followed by a 10 um gap and a 250 um aplanat of index 1.8. We repeat the
+comb study with this traced lens (`scripts/m26_stack_combine.py lens`, `results/m26_lens.json`). We then ask how
+the cylindrical collimator treats light that leaves the chip at an angle along x (`skew`, `skew_offset`;
+`results/m26_skew.json`, `results/m26_skew_offset.json`). The first changes little. The second limits the whole
+stacked relay.
+
+**The comb with the real collimator.** The exit field is built from the traced lens map (exit height, wavefront
+and amplitude per ray) at a plane 60 um beyond the last vertex. S lies at the traced back focal plane,
+0.44 mm from the facet. Without a comb this reproduces the m14 wave model: crosstalk 8.0e-5 at 4 um against 8.0e-5,
+and 3.8e-4 against 4.0e-4 at 3 um. The real geometry also moves the comb. The traced x lens of m14 puts the x slit
+plane 7.37 mm from the facet, the collimator glass adds 0.15 mm in x (t (1 - 1/n) per section), and we keep
+0.5 mm of clearance. The comb therefore starts 7.6 mm from S, and the far row of a 32-row comb sits at 23.6 mm.
+Slot window a = 250 um (225 um in brackets):
+
+| z from S | real collimator: loss / peak / crosstalk at 4 um | thin collimator (Sec. 11) |
+|---|---|---|
+| 15 mm | 5e-4 / 0.994 / 7.6e-5 (3.4e-3 / 0.986 / 7.5e-5) | 5e-4 / 0.994 / 1.2e-4 |
+| 20 mm | 2.6e-3 / 0.991 / 9.2e-5 (7.6e-3 / 0.985 / 9.7e-5) | 2.5e-3 / 0.992 / 1.5e-4 |
+| 23.6 mm (far row) | 5.2e-3 / 0.991 / 1.1e-4 (9.6e-3 / 0.985 / 1.2e-4) | 4.7e-3 / 0.991 / 1.8e-4 |
+| 30 mm | 9.0e-3 / 0.988 / 1.9e-4 (1.7e-2 / 0.983 / 2.0e-4) | 8.5e-3 / 0.987 / 2.7e-4 |
+
+The immersed facet puts more light near the edge of the beam at S, but loss and peak follow the thin-lens values
+within 12%, and the crosstalk is lower. The rule z_max = (a - f_FAC NA_FAC) D / NA therefore still holds. In 2D at
+the far row (z = 23.6 mm, a = 250 um), the full-row crosstalk at 4 um is 1.6e-4 (1.75e-4 without the comb). A
+moving tweezer changes the next row by 2.8e-5 in depth at 4 um (1.2e-5 without the comb) and by 7.0e-5 at 3 um
+(3.6e-5). Hence the comb conclusions of Sec. 11 hold for the real collimator, at the slightly larger distances of
+the real geometry.
+
+**Light that leaves the chip at an angle along x.** A tweezer at x_a along the row is formed by light that leaves
+the emitters with x direction sine s_x = x_a / x_scale (x_scale = 288 um for D1). That is up to 0.31 at the end
+of a 180 um segment and 0.355 at the slit edge. The collimator is cylindrical. Its surface normals have no x
+component, so k_x is conserved, and the y-z problem is exactly the 2D trace with every index n replaced by
+sqrt(n^2 - s_x^2). A unit test checks this against 3D vector refraction. All the earlier y models (m13, m14, and
+Sec. 11 above) used s_x = 0. For s_x > 0 the effective index ratios of the lens rise: 1.45 -> 1.50 for the block
+and 1.80 -> 1.89 for the aplanat at s_x = 0.355. The lens is then no longer aplanatic for the facet. Peak relative
+to an ideal collimator at the same s_x (1D, 2D in brackets), equivalent facet focus error, and crosstalk at 4 um:
+
+| x_a (s_x) | peak | equivalent facet defocus | residual after refocusing the facet | crosstalk at 4 um |
+|---|---|---|---|---|
+| 0 | 1.000 (1.000) | 0 | 0 | 8.4e-5 |
+| 15 um (0.052) | 0.999 (0.997) | -0.27 um | 0.001 waves | 2.2e-4 |
+| 30 um (0.104) | 0.971 (0.942) | -1.10 um | 0.005 waves | 3.0e-3 |
+| 45 um (0.156) | 0.794 (0.725) | -2.46 um | 0.014 waves | 8.2e-3 |
+| 60 um (0.208) | 0.481 (0.440) | -4.36 um | 0.029 waves | 6.9e-3 |
+| 90 um (0.312) | 0.231 | -9.67 um | 0.096 waves | 9.0e-3 |
+
+The error is almost purely a focus shift of the facet, dz = -99 s_x^2 um. A thin glass lens in air would give
+-f (n + 1) s_x^2 / (2 n) = -148 s_x^2 um, the same order. Refocusing the facet for one tweezer restores its peak
+fully; the residual after refocusing stays below 0.1 waves up to 90 um. But all tweezers of a row share the facet
+and the collimator. The phase sits at S, which is conjugate to the atoms, so refocusing the atom plane does not
+help either. In 2D the best atom-plane focus recovers the peak up to x_a = 30 um (1.02, with a 1.5 um y-focus
+shift, outside the +/-0.5 um axial registration of `docs/transport3d.md`), and not beyond. Beyond about 60 um the
+2D spot breaks up (peak 0.11 at 75 um), because the y pupil is then filled to its rim and the circular pupil cuts
+it differently for each x pupil column.
+
+**What a common focus offset recovers.** A single facet offset for the whole row (the length of the glued block,
+set at fabrication) trades the centre against the ends. With dz = -1.25 um the peak stays at or above 0.96 out to
+|x_a| = 45 um, and the static crosstalk at 4 um stays at or below 3.6e-3. That is within the criteria of
+`docs/row_coherence.md` (others' depth change below 3e-3 when a tweezer moves), since for incoherent rows the
+moving-tweezer effect was about 0.13 of the static crosstalk in m13. We did not recompute it for these cases.
+Beyond 50 um no offset helps: 0.90 at 50 um and 0.66 at 60 um. No offset brings the worst peak over
+|x_a| <= 90 um above 0.43.
+
+Hence a refractive cylindrical collimator at NA 0.9 serves about half of the 180 um segment (|x_a| <= 45 um,
+about 23 sites at 4 um), not all of it. Every power and crosstalk figure of m13, m14 and Sec. 11 holds near the
+row centre and is optimistic for the outer half. For the large arrays this doubles the number of engines per row
+at fixed coverage: 90 um segments instead of 180 um. Alternatively, the collimator must become insensitive to s_x.
+Serving |x_a| <= 90 um within the +/-0.5 um focus tolerance, with the best common offset, needs
+|dz/s_x^2| <= 10 um: ten times less than now. We see four routes, none of them designed here.
+
+(i) An all-reflective collimator in one medium. The law of reflection and a uniform medium are unchanged by the
+effective-index map, so W = 0 for every s_x; a flat exit face normal to the collimated beam keeps it so (DERIVED).
+It does not obey the sine condition and needs a folded geometry within the 0.5 mm chip pitch.
+
+(ii) A cemented refractive design. Glass-glass interfaces are less sensitive than glass-air ones (relative power
+change 0.41 s_x^2 for 1.45 | 2.0 against 0.84 s_x^2 for 1.45 | air, DERIVED), but a factor of two is not enough on
+its own.
+
+(iii) A corrector at the x slit plane, where x encodes s_x. This fails at large s_x. At x_a = 90 um the error acts at
+S like a y lens of 4 mm focal length (2.9 waves at 158 um), so the beam has passed a focus before the slit plane,
+7 mm later.
+
+(iv) A larger vertical facet mode (lower facet NA). This helps by less than a factor of two, because the optimal
+pupil fill, and with it f_FAC, grows with the mode.
+
+The downstream cylindrical lenses of the y relay see x angles below about 0.05 and are not modelled here.
+
 ## Verification notes
 
 | value | location | type | pointer |
@@ -566,3 +662,9 @@ scatter from the comb, and a lens design of the larger y-relay field are not inc
 | 2D comb check: full row, neighbour static and moving | Sec. 11 | SIM | results/m26_twod.json (m13 Focus2D; review) |
 | roll and straightness by a local window a(X) | Sec. 11 | DERIVED | telecentric slit space; footprint (A/2)/f1 |
 | comb fabrication, edge quality, scatter; mount stability ~10 urad | Sec. 11 | open | [REF?] |
+| comb with the traced collimator, real slit-plane distance | Sec. 12 | SIM | results/m26_lens.json (1D and 2D; review) |
+| skew-ray detuning of the collimator vs x_a | Sec. 12 | SIM | results/m26_skew.json (effective-index trace, exact for cylindrical surfaces; downstream relay ideal; review) |
+| common facet offset | Sec. 12 | SIM | results/m26_skew_offset.json (first-order focus phase, 1D; review) |
+| thin-lens skew estimate, glass-glass sensitivity, corrector focal length | Sec. 12 | DERIVED | formulas in the text |
+| moving-tweezer / static crosstalk ratio 0.13 | Sec. 12 | SIM | m13 (results/m13_crosstalk.json); not recomputed for skewed tweezers |
+| skew-insensitive collimator (reflective) | Sec. 12 | open | not designed |
