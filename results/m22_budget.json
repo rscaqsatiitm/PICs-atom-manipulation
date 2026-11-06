@@ -1,0 +1,725 @@
+{
+ "name": "m22_budget",
+ "script": "scripts/m22_megascale.py",
+ "git": "b8afb33",
+ "notes": "Static powers include the reservoir sites (total sites = N / (1 - r)).",
+ "inputs": {
+  "static": {
+   "w0_um": 0.85,
+   "alpha_au": 1120.0,
+   "eta_laser_to_atoms": 0.3,
+   "U_hold_mK": 0.1,
+   "U_load_mK": 1.0
+  },
+  "engine": {
+   "ports": 192,
+   "segment_um": 180.0,
+   "actuators": 383
+  },
+  "reservoir": "fraction r with r f >= (1 - r)(1 - f): r = 1 - f (one-shot fill)",
+  "objective_cell_um": 1.064435
+ },
+ "outputs": {
+  "p_site_W_per_mK": 0.004504643477059429,
+  "p_tweezer_0.3mK_W": 0.014357290490946919,
+  "rows": [
+   {
+    "N": 10000.0,
+    "pitch_um": 4.0,
+    "f_load": 0.5,
+    "sites_per_side": 100,
+    "side_mm": 0.396,
+    "cells_per_side": 372.02835306993853,
+    "space_bandwidth_cells": 138405.09548793084,
+    "single_objective_field_radius_mm": 0.2800142853498728,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 1296,
+      "zones": 8
+     },
+     "+/-250 um": {
+      "sites_per_zone": 7921,
+      "zones": 2
+     }
+    },
+    "static_W_at_atoms_hold": 9.00928695411886,
+    "static_W_at_atoms_load": 90.09286954118859,
+    "static_laser_W_load": 300.3095651372953,
+    "reservoir_fraction_of_sites": 0.5,
+    "total_sites": 20000.0,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 736,
+      "laser_W_0.3mK": 10.566965801336933,
+      "field_positions": 21
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 2944,
+      "laser_W_0.3mK": 42.26786320534773,
+      "field_positions": 14
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 5888,
+      "laser_W_0.3mK": 84.53572641069546,
+      "field_positions": 8
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 33.333333333333336,
+     "tau 3000 s": 3.3333333333333335,
+     "tau 30000 s": 0.3333333333333333
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 10.0,
+     "eps 0.0001": 1.0,
+     "eps 1e-05": 0.1
+    }
+   },
+   {
+    "N": 10000.0,
+    "pitch_um": 4.0,
+    "f_load": 0.85,
+    "sites_per_side": 100,
+    "side_mm": 0.396,
+    "cells_per_side": 372.02835306993853,
+    "space_bandwidth_cells": 138405.09548793084,
+    "single_objective_field_radius_mm": 0.2800142853498728,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 1296,
+      "zones": 8
+     },
+     "+/-250 um": {
+      "sites_per_zone": 7921,
+      "zones": 2
+     }
+    },
+    "static_W_at_atoms_hold": 5.299580561246389,
+    "static_W_at_atoms_load": 52.995805612463876,
+    "static_laser_W_load": 176.65268537487958,
+    "reservoir_fraction_of_sites": 0.15000000000000002,
+    "total_sites": 11764.705882352942,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 736,
+      "laser_W_0.3mK": 10.566965801336933,
+      "field_positions": 21
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 2944,
+      "laser_W_0.3mK": 42.26786320534773,
+      "field_positions": 14
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 5888,
+      "laser_W_0.3mK": 84.53572641069546,
+      "field_positions": 8
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 33.333333333333336,
+     "tau 3000 s": 3.3333333333333335,
+     "tau 30000 s": 0.3333333333333333
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 10.0,
+     "eps 0.0001": 1.0,
+     "eps 1e-05": 0.1
+    }
+   },
+   {
+    "N": 10000.0,
+    "pitch_um": 3.0,
+    "f_load": 0.5,
+    "sites_per_side": 100,
+    "side_mm": 0.297,
+    "cells_per_side": 279.02126480245386,
+    "space_bandwidth_cells": 77852.86621196108,
+    "single_objective_field_radius_mm": 0.2100107140124046,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 2304,
+      "zones": 5
+     },
+     "+/-250 um": {
+      "sites_per_zone": 13924,
+      "zones": 1
+     }
+    },
+    "static_W_at_atoms_hold": 9.00928695411886,
+    "static_W_at_atoms_load": 90.09286954118859,
+    "static_laser_W_load": 300.3095651372953,
+    "reservoir_fraction_of_sites": 0.5,
+    "total_sites": 20000.0,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 976,
+      "laser_W_0.3mK": 14.012715519164193,
+      "field_positions": 14
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 3904,
+      "laser_W_0.3mK": 56.05086207665677,
+      "field_positions": 14
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 7808,
+      "laser_W_0.3mK": 112.10172415331354,
+      "field_positions": 8
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 33.333333333333336,
+     "tau 3000 s": 3.3333333333333335,
+     "tau 30000 s": 0.3333333333333333
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 10.0,
+     "eps 0.0001": 1.0,
+     "eps 1e-05": 0.1
+    }
+   },
+   {
+    "N": 10000.0,
+    "pitch_um": 3.0,
+    "f_load": 0.85,
+    "sites_per_side": 100,
+    "side_mm": 0.297,
+    "cells_per_side": 279.02126480245386,
+    "space_bandwidth_cells": 77852.86621196108,
+    "single_objective_field_radius_mm": 0.2100107140124046,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 2304,
+      "zones": 5
+     },
+     "+/-250 um": {
+      "sites_per_zone": 13924,
+      "zones": 1
+     }
+    },
+    "static_W_at_atoms_hold": 5.299580561246389,
+    "static_W_at_atoms_load": 52.995805612463876,
+    "static_laser_W_load": 176.65268537487958,
+    "reservoir_fraction_of_sites": 0.15000000000000002,
+    "total_sites": 11764.705882352942,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 976,
+      "laser_W_0.3mK": 14.012715519164193,
+      "field_positions": 14
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 3904,
+      "laser_W_0.3mK": 56.05086207665677,
+      "field_positions": 14
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 7808,
+      "laser_W_0.3mK": 112.10172415331354,
+      "field_positions": 8
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 33.333333333333336,
+     "tau 3000 s": 3.3333333333333335,
+     "tau 30000 s": 0.3333333333333333
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 10.0,
+     "eps 0.0001": 1.0,
+     "eps 1e-05": 0.1
+    }
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": 4.0,
+    "f_load": 0.5,
+    "sites_per_side": 317,
+    "side_mm": 1.264,
+    "cells_per_side": 1187.484440102026,
+    "space_bandwidth_cells": 1410119.295484422,
+    "single_objective_field_radius_mm": 0.893782971419796,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 1296,
+      "zones": 78
+     },
+     "+/-250 um": {
+      "sites_per_zone": 7921,
+      "zones": 13
+     }
+    },
+    "static_W_at_atoms_hold": 90.0928695411886,
+    "static_W_at_atoms_load": 900.9286954118859,
+    "static_laser_W_load": 3003.095651372953,
+    "reservoir_fraction_of_sites": 0.5,
+    "total_sites": 200000.0,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 736,
+      "laser_W_0.3mK": 10.566965801336933,
+      "field_positions": 140
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 2944,
+      "laser_W_0.3mK": 42.26786320534773,
+      "field_positions": 80
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 5888,
+      "laser_W_0.3mK": 84.53572641069546,
+      "field_positions": 40
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 333.3333333333333,
+     "tau 3000 s": 33.333333333333336,
+     "tau 30000 s": 3.3333333333333335
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 100.0,
+     "eps 0.0001": 10.0,
+     "eps 1e-05": 1.0
+    }
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": 4.0,
+    "f_load": 0.85,
+    "sites_per_side": 317,
+    "side_mm": 1.264,
+    "cells_per_side": 1187.484440102026,
+    "space_bandwidth_cells": 1410119.295484422,
+    "single_objective_field_radius_mm": 0.893782971419796,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 1296,
+      "zones": 78
+     },
+     "+/-250 um": {
+      "sites_per_zone": 7921,
+      "zones": 13
+     }
+    },
+    "static_W_at_atoms_hold": 52.99580561246389,
+    "static_W_at_atoms_load": 529.9580561246388,
+    "static_laser_W_load": 1766.5268537487962,
+    "reservoir_fraction_of_sites": 0.15000000000000002,
+    "total_sites": 117647.05882352941,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 736,
+      "laser_W_0.3mK": 10.566965801336933,
+      "field_positions": 140
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 2944,
+      "laser_W_0.3mK": 42.26786320534773,
+      "field_positions": 80
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 5888,
+      "laser_W_0.3mK": 84.53572641069546,
+      "field_positions": 40
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 333.3333333333333,
+     "tau 3000 s": 33.333333333333336,
+     "tau 30000 s": 3.3333333333333335
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 100.0,
+     "eps 0.0001": 10.0,
+     "eps 1e-05": 1.0
+    }
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": 3.0,
+    "f_load": 0.5,
+    "sites_per_side": 317,
+    "side_mm": 0.948,
+    "cells_per_side": 890.6133300765194,
+    "space_bandwidth_cells": 793192.1037099874,
+    "single_objective_field_radius_mm": 0.670337228564847,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 2304,
+      "zones": 44
+     },
+     "+/-250 um": {
+      "sites_per_zone": 13924,
+      "zones": 8
+     }
+    },
+    "static_W_at_atoms_hold": 90.0928695411886,
+    "static_W_at_atoms_load": 900.9286954118859,
+    "static_laser_W_load": 3003.095651372953,
+    "reservoir_fraction_of_sites": 0.5,
+    "total_sites": 200000.0,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 976,
+      "laser_W_0.3mK": 14.012715519164193,
+      "field_positions": 120
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 3904,
+      "laser_W_0.3mK": 56.05086207665677,
+      "field_positions": 80
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 7808,
+      "laser_W_0.3mK": 112.10172415331354,
+      "field_positions": 40
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 333.3333333333333,
+     "tau 3000 s": 33.333333333333336,
+     "tau 30000 s": 3.3333333333333335
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 100.0,
+     "eps 0.0001": 10.0,
+     "eps 1e-05": 1.0
+    }
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": 3.0,
+    "f_load": 0.85,
+    "sites_per_side": 317,
+    "side_mm": 0.948,
+    "cells_per_side": 890.6133300765194,
+    "space_bandwidth_cells": 793192.1037099874,
+    "single_objective_field_radius_mm": 0.670337228564847,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 2304,
+      "zones": 44
+     },
+     "+/-250 um": {
+      "sites_per_zone": 13924,
+      "zones": 8
+     }
+    },
+    "static_W_at_atoms_hold": 52.99580561246389,
+    "static_W_at_atoms_load": 529.9580561246388,
+    "static_laser_W_load": 1766.5268537487962,
+    "reservoir_fraction_of_sites": 0.15000000000000002,
+    "total_sites": 117647.05882352941,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 976,
+      "laser_W_0.3mK": 14.012715519164193,
+      "field_positions": 120
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 3904,
+      "laser_W_0.3mK": 56.05086207665677,
+      "field_positions": 80
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 7808,
+      "laser_W_0.3mK": 112.10172415331354,
+      "field_positions": 40
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 333.3333333333333,
+     "tau 3000 s": 33.333333333333336,
+     "tau 30000 s": 3.3333333333333335
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 100.0,
+     "eps 0.0001": 10.0,
+     "eps 1e-05": 1.0
+    }
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": 4.0,
+    "f_load": 0.5,
+    "sites_per_side": 1000,
+    "side_mm": 3.996,
+    "cells_per_side": 3754.1042900693797,
+    "space_bandwidth_cells": 14093299.020717321,
+    "single_objective_field_radius_mm": 2.8255986976214436,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 1296,
+      "zones": 772
+     },
+     "+/-250 um": {
+      "sites_per_zone": 7921,
+      "zones": 127
+     }
+    },
+    "static_W_at_atoms_hold": 900.928695411886,
+    "static_W_at_atoms_load": 9009.28695411886,
+    "static_laser_W_load": 30030.956513729532,
+    "reservoir_fraction_of_sites": 0.5,
+    "total_sites": 2000000.0,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 736,
+      "laser_W_0.3mK": 10.566965801336933,
+      "field_positions": 1386
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 2944,
+      "laser_W_0.3mK": 42.26786320534773,
+      "field_positions": 756
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 5888,
+      "laser_W_0.3mK": 84.53572641069546,
+      "field_positions": 384
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 3333.3333333333335,
+     "tau 3000 s": 333.3333333333333,
+     "tau 30000 s": 33.333333333333336
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 1000.0,
+     "eps 0.0001": 100.0,
+     "eps 1e-05": 10.0
+    }
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": 4.0,
+    "f_load": 0.85,
+    "sites_per_side": 1000,
+    "side_mm": 3.996,
+    "cells_per_side": 3754.1042900693797,
+    "space_bandwidth_cells": 14093299.020717321,
+    "single_objective_field_radius_mm": 2.8255986976214436,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 1296,
+      "zones": 772
+     },
+     "+/-250 um": {
+      "sites_per_zone": 7921,
+      "zones": 127
+     }
+    },
+    "static_W_at_atoms_hold": 529.9580561246388,
+    "static_W_at_atoms_load": 5299.580561246388,
+    "static_laser_W_load": 17665.268537487962,
+    "reservoir_fraction_of_sites": 0.15000000000000002,
+    "total_sites": 1176470.5882352942,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 736,
+      "laser_W_0.3mK": 10.566965801336933,
+      "field_positions": 1386
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 2944,
+      "laser_W_0.3mK": 42.26786320534773,
+      "field_positions": 756
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 5888,
+      "laser_W_0.3mK": 84.53572641069546,
+      "field_positions": 384
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 3333.3333333333335,
+     "tau 3000 s": 333.3333333333333,
+     "tau 30000 s": 33.333333333333336
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 1000.0,
+     "eps 0.0001": 100.0,
+     "eps 1e-05": 10.0
+    }
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": 3.0,
+    "f_load": 0.5,
+    "sites_per_side": 1000,
+    "side_mm": 2.997,
+    "cells_per_side": 2815.5782175520344,
+    "space_bandwidth_cells": 7927480.699153491,
+    "single_objective_field_radius_mm": 2.119199023216083,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 2304,
+      "zones": 435
+     },
+     "+/-250 um": {
+      "sites_per_zone": 13924,
+      "zones": 72
+     }
+    },
+    "static_W_at_atoms_hold": 900.928695411886,
+    "static_W_at_atoms_load": 9009.28695411886,
+    "static_laser_W_load": 30030.956513729532,
+    "reservoir_fraction_of_sites": 0.5,
+    "total_sites": 2000000.0,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 976,
+      "laser_W_0.3mK": 14.012715519164193,
+      "field_positions": 1071
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 3904,
+      "laser_W_0.3mK": 56.05086207665677,
+      "field_positions": 630
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 7808,
+      "laser_W_0.3mK": 112.10172415331354,
+      "field_positions": 320
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 3333.3333333333335,
+     "tau 3000 s": 333.3333333333333,
+     "tau 30000 s": 33.333333333333336
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 1000.0,
+     "eps 0.0001": 100.0,
+     "eps 1e-05": 10.0
+    }
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": 3.0,
+    "f_load": 0.85,
+    "sites_per_side": 1000,
+    "side_mm": 2.997,
+    "cells_per_side": 2815.5782175520344,
+    "space_bandwidth_cells": 7927480.699153491,
+    "single_objective_field_radius_mm": 2.119199023216083,
+    "zones": {
+     "+/-100 um": {
+      "sites_per_zone": 2304,
+      "zones": 435
+     },
+     "+/-250 um": {
+      "sites_per_zone": 13924,
+      "zones": 72
+     }
+    },
+    "static_W_at_atoms_hold": 529.9580561246388,
+    "static_W_at_atoms_load": 5299.580561246388,
+    "static_laser_W_load": 17665.268537487962,
+    "reservoir_fraction_of_sites": 0.15000000000000002,
+    "total_sites": 1176470.5882352942,
+    "block": {
+     "16 rows x 1 segments": {
+      "engines": 16,
+      "fast_actuators": 6128,
+      "simultaneous_tweezers": 976,
+      "laser_W_0.3mK": 14.012715519164193,
+      "field_positions": 1071
+     },
+     "16 rows x 4 segments": {
+      "engines": 64,
+      "fast_actuators": 24512,
+      "simultaneous_tweezers": 3904,
+      "laser_W_0.3mK": 56.05086207665677,
+      "field_positions": 630
+     },
+     "32 rows x 4 segments": {
+      "engines": 128,
+      "fast_actuators": 49024,
+      "simultaneous_tweezers": 7808,
+      "laser_W_0.3mK": 112.10172415331354,
+      "field_positions": 320
+     }
+    },
+    "vacuum_losses_per_s": {
+     "tau 300 s": 3333.3333333333335,
+     "tau 3000 s": 333.3333333333333,
+     "tau 30000 s": 33.333333333333336
+    },
+    "imaging_losses_per_image": {
+     "eps 0.001": 1000.0,
+     "eps 0.0001": 100.0,
+     "eps 1e-05": 10.0
+    }
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

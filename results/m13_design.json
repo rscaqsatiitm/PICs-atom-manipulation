@@ -1,7 +1,7 @@
 {
  "name": "m13_design",
  "script": "scripts/m13_stack.py",
- "git": "816c88e",
+ "git": "b8afb33",
  "notes": "Thin cylindrical lenses, first order. f_obj from the pupil radius WD tan(asin NA) = f_obj NA.",
  "inputs": {
   "d_chip_um": 500.0,
@@ -24,12 +24,12 @@
     "beta_um": 0.7,
     "f_FAC_um": 233.33333333333331,
     "collimated_beam_half_height_um": 210.0,
-    "collimated_beam_1e2_radius_um": 201.37130038641072,
+    "collimated_beam_1e2_radius_um": 201.37130038641078,
     "y_telescope": {
      "m": 25.0,
      "f_a_mm": 100.0,
      "f_b_mm": 4.0,
-     "NA_after": 0.042064110308902294
+     "NA_after": 0.04206411030890228
     },
     "f_2_mm": 115.47005383792515,
     "length_facet_to_pupil_mm": 439.406774342517,
@@ -87,10 +87,10 @@
      "x magnification": -60.14065304058602,
      "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
     },
-    "NA_collimated": 0.0016825644123560919,
+    "NA_collimated": 0.0016825644123560912,
     "lagrange_check": {
-     "stack_half_height_x_NA_mm": 0.0067302576494243675,
-     "atom_half_field_x_NA_mm": 0.0067302576494243675
+     "stack_half_height_x_NA_mm": 0.006730257649424365,
+     "atom_half_field_x_NA_mm": 0.006730257649424365
     }
    },
    {
@@ -102,12 +102,12 @@
     "beta_um": 0.7,
     "f_FAC_um": 175.00000000000003,
     "collimated_beam_half_height_um": 157.50000000000003,
-    "collimated_beam_1e2_radius_um": 151.02847528980809,
+    "collimated_beam_1e2_radius_um": 151.0284752898081,
     "y_telescope": {
      "m": 25.0,
      "f_a_mm": 100.0,
      "f_b_mm": 4.0,
-     "NA_after": 0.05608548041186971
+     "NA_after": 0.056085480411869705
     },
     "f_2_mm": 86.60254037844386,
     "length_facet_to_pupil_mm": 381.5550807568877,
@@ -165,10 +165,10 @@
      "x magnification": -60.14065304058602,
      "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
     },
-    "NA_collimated": 0.0022434192164747886,
+    "NA_collimated": 0.002243419216474788,
     "lagrange_check": {
-     "stack_half_height_x_NA_mm": 0.008973676865899154,
-     "atom_half_field_x_NA_mm": 0.008973676865899154
+     "stack_half_height_x_NA_mm": 0.008973676865899153,
+     "atom_half_field_x_NA_mm": 0.008973676865899153
     }
    },
    {
@@ -180,12 +180,12 @@
     "beta_um": 0.7,
     "f_FAC_um": 140.0,
     "collimated_beam_half_height_um": 126.0,
-    "collimated_beam_1e2_radius_um": 120.82278023184645,
+    "collimated_beam_1e2_radius_um": 120.82278023184648,
     "y_telescope": {
      "m": 25.0,
      "f_a_mm": 100.0,
      "f_b_mm": 4.0,
-     "NA_after": 0.07010685051483716
+     "NA_after": 0.07010685051483714
     },
     "f_2_mm": 69.2820323027551,
     "length_facet_to_pupil_mm": 346.8440646055102,
@@ -243,10 +243,10 @@
      "x magnification": -60.14065304058602,
      "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
     },
-    "NA_collimated": 0.0028042740205934864,
+    "NA_collimated": 0.0028042740205934855,
     "lagrange_check": {
-     "stack_half_height_x_NA_mm": 0.011217096082373946,
-     "atom_half_field_x_NA_mm": 0.011217096082373946
+     "stack_half_height_x_NA_mm": 0.011217096082373942,
+     "atom_half_field_x_NA_mm": 0.011217096082373944
     }
    },
    {
@@ -258,12 +258,12 @@
     "beta_um": 0.7,
     "f_FAC_um": 116.66666666666666,
     "collimated_beam_half_height_um": 105.0,
-    "collimated_beam_1e2_radius_um": 100.68565019320536,
+    "collimated_beam_1e2_radius_um": 100.68565019320539,
     "y_telescope": {
      "m": 25.0,
      "f_a_mm": 100.0,
      "f_b_mm": 4.0,
-     "NA_after": 0.08412822061780459
+     "NA_after": 0.08412822061780456
     },
     "f_2_mm": 57.735026918962575,
     "length_facet_to_pupil_mm": 323.70338717125844,
@@ -321,10 +321,10 @@
      "x magnification": -60.140653040586024,
      "y telecentric at S (C of S->pupil = -1/F_y, A = 0)": true
     },
-    "NA_collimated": 0.0033651288247121837,
+    "NA_collimated": 0.0033651288247121824,
     "lagrange_check": {
-     "stack_half_height_x_NA_mm": 0.013460515298848735,
-     "atom_half_field_x_NA_mm": 0.013460515298848735
+     "stack_half_height_x_NA_mm": 0.01346051529884873,
+     "atom_half_field_x_NA_mm": 0.01346051529884873
     }
    }
   ]

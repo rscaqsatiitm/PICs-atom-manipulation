@@ -28,6 +28,7 @@ from numpy.polynomial import legendre as L
 
 from picsim import modes as Mo
 from picsim import params as prm
+from picsim.abcd import abcd_free, abcd_lens, chain
 from picsim.opa.array import channel_response
 from picsim.opa.focal_plane import FocalPlane, LinearSynth
 from picsim.opa.stack import FacetY, Focus2D, RelayY, fwhm, peak2d, raised_cosine
@@ -124,21 +125,6 @@ def fill():
 
 
 # ------------------------------------------------------------------ first-order design
-def abcd_free(d):
-    return np.array([[1.0, d], [0.0, 1.0]])
-
-
-def abcd_lens(f):
-    return np.array([[1.0, 0.0], [-1.0 / f, 1.0]])
-
-
-def chain(*ms):
-    out = np.eye(2)
-    for m in ms:
-        out = m @ out
-    return out
-
-
 def design(delta=4.0, n_chips=16, beta=BETA, m_t=25.0, f_a=100.0):
     """First-order layout (mm). y: facet -> FAC -> S -> telescope (f_a, f_b) -> Fourier lens f_2 -> pupil;
     x: emitter plane -> f_1x -> slit -> f_2x -> pupil (4f). Lengths matched so both pupils coincide."""

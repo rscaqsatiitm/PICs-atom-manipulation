@@ -88,9 +88,9 @@ def trap():
     return _G["trap"]
 
 
-def static_array(depth_mK, dz=0.0, src_factor=1.0, dst_factor=1.0, sigma=0.0, seed=0, d_um=12.0):
-    xs = np.arange(-2, 13) * PITCH
-    sites = np.array([[x, y, dz] for y in (-PITCH, 0.0, PITCH) for x in xs])
+def static_array(depth_mK, dz=0.0, src_factor=1.0, dst_factor=1.0, sigma=0.0, seed=0, d_um=12.0, pitch=PITCH):
+    xs = np.arange(-2, 13) * pitch
+    sites = np.array([[x, y, dz] for y in (-pitch, 0.0, pitch) for x in xs])
     fac = np.ones(len(sites))
     if sigma:
         fac = np.clip(1 + sigma * np.random.default_rng(seed).standard_normal(len(sites)), 0.2, None)
@@ -101,7 +101,7 @@ def static_array(depth_mK, dz=0.0, src_factor=1.0, dst_factor=1.0, sigma=0.0, se
 
 def one(p):
     st = static_array(p["Us_mK"], p.get("static_dz_um", 0.0) * 1e-6, p.get("src_factor", 1.0), p.get("dst_factor", 1.0),
-                      p.get("sigma", 0.0), p.get("seed", 0), p.get("d_um", 12.0))
+                      p.get("sigma", 0.0), p.get("seed", 0), p.get("d_um", 12.0), p.get("pitch_um", 4.0) * 1e-6)
     seq = Sequence(src=np.zeros(3), dst=np.array([p.get("d_um", 12.0) * 1e-6, 0, 0]), depth_move=p["Um_mK"] * 1e-3 * kB,
                    t_ramp=p["t_ramp_us"] * 1e-6, t_move=p["t_move_us"] * 1e-6, lane_dy=p.get("lane_um", 0.0) * 1e-6,
                    f_update=p.get("f_update", 200e3), offset=np.array(p.get("offset_um", [0, 0, 0])) * 1e-6,
@@ -232,6 +232,26 @@ def slowlane():
     return rows
 
 
+# ------------------------------------------------------------------ 3 um pitch (lane 1.5 um)
+def pitch3():
+    P = []
+    for T, Us, Um in ((5.0, 0.1, 0.3), (5.0, 0.1, 0.5), (10.0, 0.2, 0.6), (10.0, 0.2, 1.0)):
+        base = {"Us_mK": Us, "Um_mK": Um, "t_ramp_us": 200.0, "t_lane_us": 400.0, "t_move_us": 400.0,
+                "lane_um": 1.5, "pitch_um": 3.0, "d_um": 9.0, "T_uK": T, "n": 3000}
+        tag = f"{T} uK, {Us}/{Um} mK: "
+        P.append(dict(base, label=tag + "transported 9 um"))
+        P.append(dict(base, bystander_um=[6.0, 0.0, 0.0], label=tag + "bystander same row, passed at 1.5 um"))
+        P.append(dict(base, bystander_um=[9.0, 3.0, 0.0], label=tag + "bystander next row, beside drop"))
+    rows = pool_map(P)
+    for r in rows:
+        print(r["label"], round(r["delivered"], 4), round(r["lost"], 4), r["dE_uK"], flush=True)
+    save_result("m18_pitch3", script=SCRIPT,
+                inputs={"pitch_um": 3.0, "lane_um": 1.5, "move": "9 um (3 sites) in 400 us", "ramps_us": 200,
+                        "lane_steps_us": 400, "atoms": 3000},
+                outputs={"rows": rows}, notes="Bystander rows: 'delivered' = stayed in its own site.")
+    return rows
+
+
 # ------------------------------------------------------------------ static-array depth uniformity
 def uniformity():
     P = []
@@ -274,6 +294,6 @@ def temp():
 
 
 if __name__ == "__main__":
-    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin", "uniformity", "slowlane"]
+    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin", "uniformity", "slowlane", "pitch3"]
     for p in parts:
-        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin, "uniformity": uniformity, "slowlane": slowlane}[p]()
+        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin, "uniformity": uniformity, "slowlane": slowlane, "pitch3": pitch3}[p]()
