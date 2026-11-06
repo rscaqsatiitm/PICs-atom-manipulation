@@ -139,5 +139,47 @@ def mixed():
     return rows
 
 
+REMEDY_TIMINGS = {  # name: (Timing kwargs, heating per move in uK)
+    "fast": (dict(t_ramp=50e-6, t_lane=100e-6, t_x40=200e-6, t_min=100e-6), 10.0),
+    "intermediate": (dict(t_ramp=100e-6, t_lane=200e-6, t_x40=300e-6, t_min=150e-6), 2.0),
+    "slow": (dict(t_ramp=200e-6, t_lane=400e-6), 0.3),
+}
+
+
+def one_remedy(cfg):
+    px, (S, Mx), tname = cfg["pitch_x"], cfg["block"], cfg["timing"]
+    py, f, N = 4.0, 0.85, 1e6
+    B, Bc = LAYOUTS[f]
+    C = int(np.ceil(np.sqrt(N * py / px)))
+    R = int(np.ceil(N / C * B / Bc))
+    seg = int(180.0 // px) + 1
+    kw, heat = REMEDY_TIMINGS[tname]
+    tm = Timing(**kw, pitch=px * 1e-6, pitch_y=py * 1e-6)
+    sim = Sim(Layout(R, C, B, Bc), Block(S, Mx, seg), Params(tau=3000.0, f_load=f, timing=tm, heat_slow=heat), seed=4)
+    t_end = 20.0
+    t3 = sim.run(t_end, target=1e-3)
+    d = np.array(sim.log)
+    late = d[d[:, 0] >= t_end - 3.0, 1]
+    return {**cfg, "engines": S * Mx, "fast_actuators": 383 * S * Mx, "positions": len(sim.positions),
+            "t_1e-3_s": t3, "steady_defect_fraction": float(late.mean()), "heat": sim.heat_stats()}
+
+
+def remedy():
+    cfgs = [{"pitch_x": px, "block": blk, "timing": tn} for px in (3.0, 4.0)
+            for blk in ((32, 4), (32, 8), (48, 4), (64, 4)) for tn in ("fast", "intermediate", "slow")]
+    with ProcessPoolExecutor(4) as ex:
+        rows = list(ex.map(one_remedy, cfgs))
+    for r in rows:
+        print(r["pitch_x"], r["block"], r["timing"], "| engines", r["engines"], "| t1e-3", r["t_1e-3_s"],
+              "| steady %.2e" % r["steady_defect_fraction"], "| heat max", r["heat"]["max_uK"], flush=True)
+    save_result("m23_remedy", script=SCRIPT,
+                inputs={"N": 1e6, "f_load": 0.85, "tau_s": 3000, "row_spacing_um": 4.0,
+                        "timings": {k: {"kwargs": v[0], "heat_uK": v[1]} for k, v in REMEDY_TIMINGS.items()},
+                        "heat_source": "fast: m18 classical 3D (100 us steps, 0.3 mK); intermediate: m19 quantum "
+                                       "(ramp 100, lane 200 us, 0.1/0.3 mK); slow: m19/m18"},
+                outputs={"rows": rows})
+    return rows
+
+
 if __name__ == "__main__":
-    {"all": main, "mixed": mixed}[sys.argv[1] if len(sys.argv) > 1 else "all"]()
+    {"all": main, "mixed": mixed, "remedy": remedy}[sys.argv[1] if len(sys.argv) > 1 else "all"]()

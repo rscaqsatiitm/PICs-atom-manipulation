@@ -266,6 +266,26 @@ def aniso():
     return rows
 
 
+# ------------------------------------------------------------------ intermediate steps on the 3 x 4 um lattice
+def midlane():
+    P = []
+    for T, Us, Um in ((5.0, 0.1, 0.3), (10.0, 0.2, 0.6)):
+        base = {"Us_mK": Us, "Um_mK": Um, "t_ramp_us": 100.0, "t_lane_us": 200.0, "t_move_us": 300.0, "T_uK": T,
+                "n": 3000, "pitch_um": 3.0, "rows_um": [-4.0, 0.0, 4.0], "lane_um": 2.0, "d_um": 9.0}
+        tag = f"{T} uK, {Us}/{Um} mK: "
+        P.append(dict(base, label=tag + "transported 9 um"))
+        for b in ([3.0, 0.0, 0.0], [6.0, 0.0, 0.0], [9.0, 4.0, 0.0]):
+            P.append(dict(base, bystander_um=b, label=tag + f"bystander at {b[:2]}"))
+    rows = pool_map(P)
+    for r in rows:
+        print(r["label"], round(r["delivered"], 4), round(r["lost"], 4), r["dE_uK"], flush=True)
+    save_result("m18_midlane", script=SCRIPT,
+                inputs={"layout": "3 x 4 um, lane 2 um", "ramps_us": 100, "lane_steps_us": 200, "move_us": 300,
+                        "atoms": 3000}, outputs={"rows": rows},
+                notes="Bystander rows: 'delivered' = stayed in its own site.")
+    return rows
+
+
 # ------------------------------------------------------------------ 3 um pitch (lane 1.5 um)
 def pitch3():
     P = []
@@ -328,6 +348,6 @@ def temp():
 
 
 if __name__ == "__main__":
-    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin", "uniformity", "slowlane", "pitch3", "aniso"]
+    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin", "uniformity", "slowlane", "pitch3", "aniso", "midlane"]
     for p in parts:
-        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin, "uniformity": uniformity, "slowlane": slowlane, "pitch3": pitch3, "aniso": aniso}[p]()
+        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin, "uniformity": uniformity, "slowlane": slowlane, "pitch3": pitch3, "aniso": aniso, "midlane": midlane}[p]()
