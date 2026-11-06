@@ -14,7 +14,8 @@
 >
 > Follow-up (Sec. 11): stacks combine in space as well as by polarisation. A slotted 45 deg comb mirror in the
 > 184 um gaps between chip beams at the collimator plane interleaves two 16-chip stacks built at 1.0 mm pitch, at a
-> worst-row cost of 0.45% in power and 1.8e-4 crosstalk at 4 um. Two such pairs and a PBS form a 64-row block,
+> worst-row cost of 0.45% in power and, in 2D, a full-row crosstalk of 2.3e-4 at 4 um (1.8e-4 without the
+> comb). Two such pairs and a PBS form a 64-row block,
 > so the 64 x 4 block (256 engines on 12 mm chip edges) is buildable.
 
 Follow-up to `docs/scaling_beyond.md`, `docs/transport3d.md`, `docs/rearrangement.md` and `docs/repair.md`. Code:
@@ -449,9 +450,42 @@ which is 23 mm for a = 250 um and 17 mm for a = 225 um. This agrees with the sca
 the worst row loses 0.25% and the crosstalk at 4 um rises from 1.1e-4 to 1.5e-4, while at 30 mm it reaches
 2.7e-4. A single edge (block combining, rows 0-15 from one stack and 16-31 from the other) behaves similarly. It
 also shifts the boundary row by 1.7 nm at z = 20 mm (a = 250 um) and by 12 nm at a = 200 um, a static offset to
-calibrate. The rows are mutually incoherent (`docs/row_coherence.md`), so this crosstalk adds in intensity. We did
-not recompute the 2D dynamic crosstalk. Since the static value rises by at most a factor 1.8 within z_max, we
-expect the m13 dynamic figure (2.4e-5 in depth for a moving tweezer, 4 um rows) to rise by a similar factor.
+calibrate. The rows are mutually incoherent (`docs/row_coherence.md`), so this crosstalk adds in intensity.
+
+**2D check (`results/m26_twod.json`).** The 1D model leaves out the circular pupil, which couples x and y, and the
+full rows. We therefore pass the comb-windowed y pupil of both chips through the 2D model of `docs/stacked_relay.md`
+(D1 x response, circular NA 0.5 pupil). Chip m forms a full row of 41 tweezers at 3 um, and chip m+1 forms
+11 tweezers offset by 1.5 um; one tweezer of chip m then moves by 0.25 um. Without a comb this reproduces the m13
+values. Rows incoherent, neighbour row at 4 um (at 3 um in brackets):
+
+| comb (both chips windowed) | single tweezer: peak / crosstalk at 4 um | full row: crosstalk at 4 um, max over x | neighbour, static: depth / position | neighbour, moving tweezer: depth / position |
+|---|---|---|---|---|
+| none | 1 / 1.1e-4 | 1.8e-4 | 1.7e-4 / 0.002 nm (2.0e-4) | 2.4e-5 / 0.04 nm (6.2e-5) |
+| z 15 mm, a 250 um | 0.995 / 1.1e-4 | 1.8e-4 | 1.8e-4 / 0.02 nm (2.2e-4) | 2.9e-5 / 0.03 nm (7.4e-5) |
+| z 23 mm, a 250 um (worst row, bold layouts) | 0.990 / 1.5e-4 | 2.3e-4 | 2.1e-4 / 0.08 nm (2.6e-4) | 3.9e-5 / 0.03 nm (9.6e-5) |
+| z 23 mm, a 225 um | 0.982 / 1.6e-4 | 2.4e-4 | 2.2e-4 / 0.12 nm (2.2e-4) | 3.9e-5 / 0.03 nm (8.0e-5) |
+| z 30 mm, a 250 um (beyond z_max) | 0.984 / 2.1e-4 | 2.9e-4 | 2.5e-4 / 0.14 nm (3.1e-4) | 5.3e-5 / 0.03 nm (1.2e-4) |
+| single edge, z 23 mm, a 250 um (block boundary) | 0.995 / 1.3e-4 | 2.0e-4 | 1.9e-4 / 0.07 nm (2.2e-4) | 3.4e-5 / 0.03 nm (8.4e-5) |
+
+Hence 2D does not change the conclusions. At the worst row the full-row crosstalk rises by a factor 1.3, and the
+effect of a moving tweezer on the next row by a factor 1.55 to 1.65 (to 3.9e-5 in depth at 4 um, 9.6e-5 at 3 um). This is
+still more than an order of magnitude below the in-row figures of D1 (0.11%, 3.5 nm). Tweezers at x = 0 and at the
+row end (60 um) give the same values to 0.1%, because the comb acts on y alone and the circular pupil couples the
+two only weakly. The 1D single-tweezer figure (1.8e-4 at z = 23 mm) slightly overstated the 2D one (1.5e-4). The
+block-combining edge moves the boundary row by 7 nm in 2D (peak position), a static offset to calibrate. With
+coherent rows the comb would raise the static depth change at 4 um from 2.6% to 2.9%; rows must stay incoherent,
+as they must without a comb.
+
+**Comb roll and edge straightness.** A comb edge that is not parallel to x makes the window depend on x. Beyond the
+slit plane the x relay is telecentric (chief rays leave the slit plane parallel to the axis), so each tweezer
+meets the comb at its slit-plane position X = f1 s. Four engines at 3.0 mm pitch span X = +/-5.6 mm. One tweezer's
+footprint at the comb is at most +/-0.78 mm (17 mm beyond the slit plane, half-angle (A/2)/f1 = 0.046). Hence, for a
+roll of 2 mrad, the edge moves by only 3 um across one tweezer, against the tens of um over which the result
+changes. We therefore treat each tweezer with its local window a(X), without a non-separable propagation. In 2D,
+at z = 23 mm, the peak falls from 0.989 to 0.972 as a goes from 250 to 205 um (about 0.04% per um), while the
+crosstalk at 4 um stays at 1.4 to 1.6e-4. A roll therefore mainly makes the depth vary along the row: about +/-0.4%
+for a +/-10 um change of a, which a 1.8 mrad roll gives over +/-5.6 mm. The engines set each tweezer's power in any
+case, so this is a calibration, not a limit. The same holds for edge straightness of +/-10 um over 12 mm.
 
 **Layouts (`results/m26_layout.json`; first comb point z_c = 7 mm, just beyond the x slit plane at 6.24 mm,
 CHOICE).** The worst row is the one at the far end of the comb:
@@ -493,8 +527,8 @@ orthogonal-polarisation decorrelation of `docs/row_coherence.md` comes for free 
 pitch (12 mm edge) then form the 64 x 4 block: 256 engines, 98,048 fast actuators. With intermediate steps at
 10^6 sites it reaches a time average of 2.9e-4 on 4 x 4 um and 2.7e-4 on 3 x 4 um (Sec. 10), without the 24 mm
 chip edge that 32 x 8 needs. The worst rows lose 0.9 to 1.5% of their peak depth to the comb (a = 250 / 225 um),
-which is recovered by the per-tweezer power the engines set in any case. The model is 1D in y, with an ideal thin
-collimator and the window of each slot at one distance z; the 45 deg tilt places the two edges of a 0.5 mm slot
+which is recovered by the per-tweezer power the engines set in any case. The edge scan is 1D in y and the 2D check uses the
+same windowed pupil; both assume an ideal thin collimator and the window of each slot at one distance z; the 45 deg tilt places the two edges of a 0.5 mm slot
 0.25 mm before and after that distance, which changes z by at most 4% at z_c = 7 mm. Tooth-edge roughness,
 scatter from the comb, and a lens design of the larger y-relay field are not included.
 
@@ -529,4 +563,6 @@ scatter from the comb, and a lens design of the larger y-relay field are not inc
 | layouts, worst-row penalty, y-relay field | Sec. 11 | SIM/DERIVED | results/m26_layout.json; scripts/m13_stack.design |
 | comb tilt tolerance, row shift per urad | Sec. 11 | DERIVED | m13 decentre tolerance (results/m13_tolerance.json) and conjugations |
 | z_c = 7 mm, tooth plate 50 um, +/-10 um edge placement | Sec. 11 | CHOICE | stated assumptions |
+| 2D comb check: full row, neighbour static and moving | Sec. 11 | SIM | results/m26_twod.json (m13 Focus2D; review) |
+| roll and straightness by a local window a(X) | Sec. 11 | DERIVED | telecentric slit space; footprint (A/2)/f1 |
 | comb fabrication, edge quality, scatter; mount stability ~10 urad | Sec. 11 | open | [REF?] |

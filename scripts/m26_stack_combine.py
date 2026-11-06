@@ -12,6 +12,10 @@ Parts:
   edge    1D wave optics (y): field at the FAC exit (aperture plane, f_FAC before S) -> propagate to the comb at
           distance z from S -> window (slot |y| < a, or a single edge y < a) -> propagate back to S -> pupil ->
           atoms (picsim.opa.stack.RelayY). Transmission, peak, crosstalk at 3 / 4 / 8 um, row shift vs z and a.
+  twod    2D atom-plane check through the circular pupil (m13 Focus2D): single tweezers at x = 0 / 60 um, a full
+          row of 41 tweezers (crosstalk max over x), and the neighbour row (11 tweezers) static and with a moving
+          tweezer, incoherent and coherent, with the comb-windowed y pupil of both chips; comb roll and edge
+          straightness by a local window a(X) (Sigma space is telecentric in x)
   layout  first-order layouts for 32 / 48 / 64 rows (m13 design), comb z-range, path equality, tilt tolerances,
           chip pitch and I/O per chip.
 
@@ -28,7 +32,8 @@ from picsim.plotting import fig
 from picsim.provenance import RESULTS, save_result
 
 sys.path.insert(0, str(RESULTS.parent / "scripts"))
-from m13_stack import BETA, D_CHIP, F_OBJ, LAM, NA, NA_FAC, design, eps_at  # noqa: E402
+from m13_stack import BETA, D_CHIP, F_OBJ, LAM, NA, NA_FAC, design, eps_at, metrics, setup, unit  # noqa: E402
+from picsim.opa.stack import peak2d  # noqa: E402
 
 SCRIPT = "scripts/m26_stack_combine.py"
 DELTA = 4.0  # um, row pitch at the atoms
@@ -160,6 +165,108 @@ def edge():
     return rows, ok
 
 
+def _row_metrics(F, ls, Py_m, Py_n, deltas=(3.0, 4.0)):
+    """m13 'crosstalk' metrics with given y pupils for chip m (row at 0) and chip m+1 (row at +delta)."""
+    xt = np.arange(-60.0, 60.0 + 1e-9, 3.0)
+    th = np.where(np.arange(len(xt)) % 2 == 0, 0.0, np.pi / 2)
+    w = ls.weights(xt, phases=th)
+    x = np.arange(-63, 63, 0.04)
+    y = np.arange(-1.6, 9.0, 0.04)
+    I = np.abs(F.field(w, x, y, Py=Py_m)) ** 2
+    pk = np.mean([peak2d(I[:, np.abs(x - x0) < 0.6], x[np.abs(x - x0) < 0.6], y)[0] for x0 in xt])
+    prof = I.max(axis=1) / pk
+    out = {"row_peak_mean": float(pk),
+           "eps_row": {str(d): float(prof[np.abs(np.abs(y) - d) <= 0.5].max()) for d in (3.0, 4.0, 6.0, 8.0)}}
+    for delta in deltas:
+        yy = np.arange(delta - 1.2, delta + 1.2, 0.02)
+        xs_n = xt[15:26] + 1.5
+        xx = np.arange(xs_n[0] - 1.5, xs_n[-1] + 1.5, 0.02)
+        En = F.field(ls.weights(xs_n, phases=np.where(np.arange(len(xs_n)) % 2 == 0, 0.0, np.pi / 2)), xx, yy - delta,
+                     Py=Py_n)
+        Em = F.field(w, xx, yy, Py=Py_m)
+        xs_m2 = xt.copy()
+        xs_m2[20] += 0.25
+        Em2 = F.field(ls.weights(xs_m2, phases=th), xx, yy, Py=Py_m)
+
+        def tw(Iv):
+            return np.array([peak2d(Iv[:, np.abs(xx - x0) < 0.6], xx[np.abs(xx - x0) < 0.6], yy) for x0 in xs_n])
+
+        base = tw(np.abs(En) ** 2)
+        rows = {}
+        for mode in ("incoherent", "coherent"):
+            dpk = dpos = dmk = dmp = 0.0
+            for ph in ([0.0] if mode == "incoherent" else np.linspace(0, 2 * np.pi, 8, endpoint=False)):
+                if mode == "incoherent":
+                    Ia, Ib = np.abs(En) ** 2 + np.abs(Em) ** 2, np.abs(En) ** 2 + np.abs(Em2) ** 2
+                else:
+                    Ia, Ib = np.abs(En + np.exp(1j * ph) * Em) ** 2, np.abs(En + np.exp(1j * ph) * Em2) ** 2
+                a, b = tw(Ia), tw(Ib)
+                dpk = max(dpk, np.max(np.abs(a[:, 0] / base[:, 0] - 1)))
+                dpos = max(dpos, np.max(np.hypot(a[:, 1] - base[:, 1], a[:, 2] - base[:, 2])))
+                dmk = max(dmk, np.max(np.abs(b[:, 0] / a[:, 0] - 1)))
+                dmp = max(dmp, np.max(np.hypot(b[:, 1] - a[:, 1], b[:, 2] - a[:, 2])))
+            rows[mode] = {"static_peak_change": float(dpk), "static_pos_nm": float(1e3 * dpos),
+                          "move_peak_change": float(dmk), "move_pos_nm": float(1e3 * dmp)}
+        out[f"neighbour_{delta:g}um"] = rows
+    return out
+
+
+def twod():
+    fp, ls, r, F = setup()
+    cy = CombY()
+    P0 = r.pupil()
+    cases = {"no comb": (P0, P0)}
+    for z_mm, a in ((23.0, 250.0), (23.0, 225.0), (15.0, 250.0), (30.0, 250.0)):
+        P = cy.pupil(cy.field_S(z_mm * 1e3, a, "slot"))
+        cases[f"slot z {z_mm:g} mm a {a:g} um"] = (P, P)  # chip m (slot) and m+1 (tooth) see the same window
+    # block combining: the boundary between chip m (edge above it) and chip m+1 (edge below it, mirror image)
+    Pe = cy.pupil(cy.field_S(23e3, 250.0, "edge"))
+    cases["edge z 23 mm a 250 um"] = (Pe, Pe[::-1])
+    res = {}
+    w0, w60 = unit(ls.weights([0.0])), unit(ls.weights([60.0]))
+    m00, m60 = metrics(F, w0, 0.0, Py=P0), metrics(F, w60, 60.0, Py=P0)
+    for name, (Pm, Pn) in cases.items():
+        s0, s60 = metrics(F, w0, 0.0, Py=Pm), metrics(F, w60, 60.0, Py=Pm)
+        row = {"single_x0": {"peak_rel": s0["peak"] / m00["peak"], "y_nm": s0["y_nm"], "fwhm_y": s0["fwhm_y"],
+                             "eps3": s0["eps3"], "eps4": s0["eps4"], "eps6": s0["eps6"]},
+               "single_x60": {"peak_rel": s60["peak"] / m60["peak"], "y_nm": s60["y_nm"], "eps4": s60["eps4"]}}
+        row.update(_row_metrics(F, ls, Pm, Pn))
+        res[name] = row
+        print(name, "| single x0: peak %.4f eps4 %.2e y %.1f nm | x60: peak %.4f eps4 %.2e | row eps3/4/8 %.2e %.2e %.2e" % (
+            row["single_x0"]["peak_rel"], row["single_x0"]["eps4"], row["single_x0"]["y_nm"],
+            row["single_x60"]["peak_rel"], row["single_x60"]["eps4"], row["eps_row"]["3.0"], row["eps_row"]["4.0"],
+            row["eps_row"]["8.0"]), flush=True)
+        for k in ("neighbour_3um", "neighbour_4um"):
+            print("   ", k, {m: {kk: float("%.3g" % vv) for kk, vv in v.items()} for m, v in row[k].items()}, flush=True)
+    # local-window sensitivity for comb roll / edge straightness (single tweezer at x = 0, 2D)
+    sens = []
+    for a in (205.0, 215.0, 225.0, 235.0, 250.0):
+        P = cy.pupil(cy.field_S(23e3, a, "slot"))
+        s0 = metrics(F, w0, 0.0, Py=P)
+        sens.append({"a_um": a, "peak_rel": s0["peak"] / m00["peak"], "eps4": s0["eps4"], "eps3": s0["eps3"]})
+        print("a", a, sens[-1], flush=True)
+    # Sigma-space footprint: chief rays parallel beyond the slit plane (telecentric), X = f1 s; one tweezer's
+    # geometric half-width at L beyond Sigma is L (A/2) / f1; four engines at 3.0 mm pitch with slit zones +/- f1 s_cut
+    f1 = 3120.0
+    A = fp.opa.A
+    X_half_4eng = 1.5 * 3000.0 + f1 * fp.opa.s_cut
+    geo = {"f1_um": f1, "emitter_aperture_um": A, "sigma_from_S_mm": (2 * f1 - F_FAC) * 1e-3,
+           "tweezer_half_footprint_um_at_17mm_beyond_sigma": 17e3 * (A / 2) / f1,
+           "X_half_span_4_engines_um": X_half_4eng,
+           "roll_mrad_for_10um": 10.0 / X_half_4eng * 1e3,
+           "edge_change_across_one_tweezer_um_at_2mrad": 2e-3 * 2 * 17e3 * (A / 2) / f1}
+    print(geo, flush=True)
+    save_result("m26_twod", script=SCRIPT,
+                inputs={"model": "m13 Focus2D (D1 BPM x response, circular NA 0.5 pupil), y pupil from CombY",
+                        "row_m": "41 tweezers at 3 um, phases 0 / pi/2", "row_m+1": "11 tweezers offset 1.5 um",
+                        "move": "one row-m tweezer moves 0.25 um", "coherent": "worst of 8 relative phases"},
+                outputs={"cases": res, "local_window_sensitivity_z23mm": sens, "geometry": geo},
+                notes="slot: both chips windowed by |y| < a at the same z (interleaving comb); edge: chip m windowed "
+                      "by y < a, chip m+1 by the mirror image (block combining boundary). Roll and straightness use "
+                      "the local window a(X) at each tweezer's chief-ray position X = f1 s (telecentric Sigma space).")
+    return res
+
+
 Z_C = 7.0  # mm, nearest comb point from S: beyond the x slit plane (2 f1 = 6.24 mm from the facets), CHOICE
 
 
@@ -234,4 +341,4 @@ def layout():
 if __name__ == "__main__":
     parts = sys.argv[1:] or ["edge", "layout"]
     for p in parts:
-        {"edge": edge, "layout": layout}[p]()
+        {"edge": edge, "layout": layout, "twod": twod}[p]()
