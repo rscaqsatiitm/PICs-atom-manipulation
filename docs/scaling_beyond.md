@@ -1,5 +1,9 @@
 # Scaling beyond one row of about 40 tweezers
 
+> Follow-up (`docs/megascale.md`): scaling to 1e4, 1e5 and 1e6 sites. A 32 x 4 engine block assembles 1e6 sites
+> in 1.5 s and holds them at the loss-limited floor rho ~ 1.5-1.8 (eps_img + T_img/tau); static trapping power,
+> the objective's field and the 3 um lane distance are the walls.
+
 > Follow-up (`docs/transport3d.md`): the 3D simulation with handoff refines lever 1. The moving trap must be at
 > least three times the static hold depth, the hold about 20 kT, and moves must run along lanes between the rows.
 > The minimum moving depth is therefore 0.3 mK for 5 uK atoms (0.6 mK for 10 uK), not 0.2 mK. That gives 10 to 21 W

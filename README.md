@@ -35,6 +35,8 @@ beam-propagation design and optimisation of that engine, and
 | 19 Quantum check | `scripts/m19_quantum.py` | 1D split-step propagation of handoff and move from the ground state, Wigner-classical comparison; `docs/rearrangement.md` |
 | 20 Rearrangement | `picsim/rearrange.py`, `scripts/m20_rearrange.py` | greedy pass scheduler for a stack with row select and lanes: passes, cycle time, moves per atom, defects; `docs/rearrangement.md` |
 | 21 Repair | `scripts/m21_repair.py` | stochastic losses, image-and-repair rounds, scheduler pass-selection modes; `docs/repair.md` |
+| 22 Megascale budget | `scripts/m22_megascale.py` | 1e4-1e6 sites at 3-4 um: field, zones, static power, engine blocks, x-tiling optics, loss rates; `docs/megascale.md` |
+| 23 Steady state | `picsim/megasort.py`, `scripts/m23_steady.py` | assembly and steady-state refilling of 1e4-1e6 sites with engine blocks, reservoir bands and losses; `docs/megascale.md` |
 
 ## Layout
 
