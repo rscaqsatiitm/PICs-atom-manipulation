@@ -87,5 +87,41 @@ def main():
     return rows
 
 
+def latency_fit():
+    """Fit the time-averaged defect fraction of results/m25_imaging.json to the hole-lifetime model
+
+        rho_mean = eps (T + d)/T + (T/2 + d)/tau,   T = T_img + t_img (imaging period),
+
+    in which an imaging loss is unseen for one period and then repaired after a mean delay d, and a vacuum loss
+    waits T/2 on average for the next image and then d. One d per (N, timing) group, least squares in log rho."""
+    import json
+
+    from scipy.optimize import minimize_scalar
+
+    from picsim.provenance import RESULTS
+    rows = json.load(open(RESULTS / "m25_imaging.json"))["outputs"]["rows"]
+
+    def model(r, d):
+        T = r["T_img"] + r["t_img"]
+        return r["eps"] * (T + d) / T + (T / 2 + d) / r["tau"]
+
+    out = {}
+    for key in sorted({(r["N"], r["timing"]) for r in rows}):
+        g = [r for r in rows if (r["N"], r["timing"]) == key]
+        y = np.log([r["mean_defect_fraction"] for r in g])
+        res = minimize_scalar(lambda d: np.sum((np.log([model(r, d) for r in g]) - y) ** 2), bounds=(0, 2), method="bounded")
+        rel = [model(r, res.x) / r["mean_defect_fraction"] - 1 for r in g]
+        d0 = [model(r, 0.0) / r["mean_defect_fraction"] - 1 for r in g]
+        out[f"{int(key[0])} {key[1]}"] = {"d_s": float(res.x), "n_points": len(g),
+                                           "median_abs_rel_error": float(np.median(np.abs(rel))),
+                                           "max_abs_rel_error": float(np.max(np.abs(rel))),
+                                           "median_rel_error_with_d0": float(np.median(d0))}
+        print(key, out[f"{int(key[0])} {key[1]}"], flush=True)
+    save_result("m25_imaging_fit", script=SCRIPT,
+                inputs={"source": "results/m25_imaging.json", "model": latency_fit.__doc__.strip()},
+                outputs={"fits": out})
+    return out
+
+
 if __name__ == "__main__":
-    main()
+    {"all": main, "fit": latency_fit}[sys.argv[1] if len(sys.argv) > 1 else "all"]()

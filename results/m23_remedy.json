@@ -1,7 +1,7 @@
 {
  "name": "m23_remedy",
  "script": "scripts/m23_steady.py",
- "git": "965807c",
+ "git": "064f90b",
  "notes": "",
  "inputs": {
   "N": 1000000.0,
@@ -52,7 +52,7 @@
     "t_1e-3_s": 1.3426072779615887,
     "steady_defect_fraction": 0.00024088859152296294,
     "pre_image_defect_fraction": 0.00013706941811516976,
-    "mean_defect_fraction": 0.00018640183302476087,
+    "mean_defect_fraction": 0.00018691066151572524,
     "heat": {
      "mean_uK": 1.713070034980774,
      "p99_uK": 10.0,
@@ -73,7 +73,7 @@
     "t_1e-3_s": 2.3536334650484334,
     "steady_defect_fraction": 0.0004311171884083402,
     "pre_image_defect_fraction": 0.0003311128372917794,
-    "mean_defect_fraction": 0.0003831180083485014,
+    "mean_defect_fraction": 0.00038353477442565337,
     "heat": {
      "mean_uK": 0.3422408401966095,
      "p99_uK": 2.0,
@@ -94,7 +94,7 @@
     "t_1e-3_s": 6.7670035240647755,
     "steady_defect_fraction": 0.001054654687872681,
     "pre_image_defect_fraction": 0.0009485324364217097,
-    "mean_defect_fraction": 0.0010023679533279946,
+    "mean_defect_fraction": 0.0010031738027278263,
     "heat": {
      "mean_uK": 0.05116640031337738,
      "p99_uK": 0.30000001192092896,
@@ -115,7 +115,7 @@
     "t_1e-3_s": 0.7888494240729431,
     "steady_defect_fraction": 0.00023630235087366958,
     "pre_image_defect_fraction": 0.00013451739710870813,
-    "mean_defect_fraction": 0.00017472298426336898,
+    "mean_defect_fraction": 0.00017582641569181394,
     "heat": {
      "mean_uK": 1.7139335870742798,
      "p99_uK": 10.0,
@@ -136,7 +136,7 @@
     "t_1e-3_s": 1.4607999110688417,
     "steady_defect_fraction": 0.00030101167026525406,
     "pre_image_defect_fraction": 0.00019950939377533548,
-    "mean_defect_fraction": 0.0002531416076092403,
+    "mean_defect_fraction": 0.00025359439531474833,
     "heat": {
      "mean_uK": 0.34283894300460815,
      "p99_uK": 2.0,
@@ -157,7 +157,7 @@
     "t_1e-3_s": 4.399287559307732,
     "steady_defect_fraction": 0.0006390778401543492,
     "pre_image_defect_fraction": 0.0005392161485971559,
-    "mean_defect_fraction": 0.000592842116594769,
+    "mean_defect_fraction": 0.0005937032107942939,
     "heat": {
      "mean_uK": 0.051251281052827835,
      "p99_uK": 0.30000001192092896,
@@ -178,7 +178,7 @@
     "t_1e-3_s": 0.7888800606660452,
     "steady_defect_fraction": 0.0002365982373671724,
     "pre_image_defect_fraction": 0.00013429548223858103,
-    "mean_defect_fraction": 0.00017927274339158414,
+    "mean_defect_fraction": 0.00018005739843180536,
     "heat": {
      "mean_uK": 1.7150033712387085,
      "p99_uK": 10.0,
@@ -199,7 +199,7 @@
     "t_1e-3_s": 1.9082637674142804,
     "steady_defect_fraction": 0.00037112884369434055,
     "pre_image_defect_fraction": 0.00026659505156786424,
-    "mean_defect_fraction": 0.00032334577824273827,
+    "mean_defect_fraction": 0.00032382897348539556,
     "heat": {
      "mean_uK": 0.3424287736415863,
      "p99_uK": 2.0,
@@ -220,7 +220,7 @@
     "t_1e-3_s": 4.288387157044826,
     "steady_defect_fraction": 0.0007502571900880245,
     "pre_image_defect_fraction": 0.0006440709247322089,
-    "mean_defect_fraction": 0.0007015261705959924,
+    "mean_defect_fraction": 0.0007023222107873122,
     "heat": {
      "mean_uK": 0.05123122036457062,
      "p99_uK": 0.30000001192092896,
@@ -241,7 +241,7 @@
     "t_1e-3_s": 0.6778980054405807,
     "steady_defect_fraction": 0.00023848451376325271,
     "pre_image_defect_fraction": 0.00013544204240090437,
-    "mean_defect_fraction": 0.00017624152499996155,
+    "mean_defect_fraction": 0.0001773568495380801,
     "heat": {
      "mean_uK": 1.712860345840454,
      "p99_uK": 10.0,
@@ -262,7 +262,7 @@
     "t_1e-3_s": 1.4615551191054785,
     "steady_defect_fraction": 0.00032436556850243893,
     "pre_image_defect_fraction": 0.00021769848759468138,
-    "mean_defect_fraction": 0.0002736118139385469,
+    "mean_defect_fraction": 0.0002740830449786186,
     "heat": {
      "mean_uK": 0.342486709356308,
      "p99_uK": 2.0,
@@ -283,7 +283,7 @@
     "t_1e-3_s": 2.3894838392796327,
     "steady_defect_fraction": 0.0005793457542784725,
     "pre_image_defect_fraction": 0.0004772649140200082,
-    "mean_defect_fraction": 0.0005278288497130456,
+    "mean_defect_fraction": 0.0005286348223097221,
     "heat": {
      "mean_uK": 0.051260631531476974,
      "p99_uK": 0.30000001192092896,
@@ -304,7 +304,7 @@
     "t_1e-3_s": 1.673303034987331,
     "steady_defect_fraction": 0.0002484182484182484,
     "pre_image_defect_fraction": 0.00014093314093314093,
-    "mean_defect_fraction": 0.00019557158809104745,
+    "mean_defect_fraction": 0.000195885823988915,
     "heat": {
      "mean_uK": 1.714598298072815,
      "p99_uK": 10.0,
@@ -325,7 +325,7 @@
     "t_1e-3_s": 3.138013751504268,
     "steady_defect_fraction": 0.0005248085248085249,
     "pre_image_defect_fraction": 0.0004233914233914234,
-    "mean_defect_fraction": 0.00047781780637044834,
+    "mean_defect_fraction": 0.00047828877915406657,
     "heat": {
      "mean_uK": 0.3417232632637024,
      "p99_uK": 2.0,
@@ -346,7 +346,7 @@
     "t_1e-3_s": null,
     "steady_defect_fraction": 0.0011899951899951898,
     "pre_image_defect_fraction": 0.0010865060865060863,
-    "mean_defect_fraction": 0.0011391396163960316,
+    "mean_defect_fraction": 0.0011398927743264502,
     "heat": {
      "mean_uK": 0.05105331912636757,
      "p99_uK": 0.30000001192092896,
@@ -367,7 +367,7 @@
     "t_1e-3_s": 1.0085321023412626,
     "steady_defect_fraction": 0.0002369112369112369,
     "pre_image_defect_fraction": 0.00013456913456913455,
-    "mean_defect_fraction": 0.00017872066214302031,
+    "mean_defect_fraction": 0.00017945229244695953,
     "heat": {
      "mean_uK": 1.7081129550933838,
      "p99_uK": 10.0,
@@ -388,7 +388,7 @@
     "t_1e-3_s": 1.5791881410129454,
     "steady_defect_fraction": 0.0003926073926073926,
     "pre_image_defect_fraction": 0.0002884258598544313,
-    "mean_defect_fraction": 0.00034401725769863946,
+    "mean_defect_fraction": 0.00034445806607023626,
     "heat": {
      "mean_uK": 0.34229227900505066,
      "p99_uK": 2.0,
@@ -409,7 +409,7 @@
     "t_1e-3_s": 4.175762588467232,
     "steady_defect_fraction": 0.0008500018500018502,
     "pre_image_defect_fraction": 0.0007458097458097457,
-    "mean_defect_fraction": 0.0007976900838908322,
+    "mean_defect_fraction": 0.0007984791118169823,
     "heat": {
      "mean_uK": 0.05111052095890045,
      "p99_uK": 0.30000001192092896,
@@ -430,7 +430,7 @@
     "t_1e-3_s": 1.0074142264070574,
     "steady_defect_fraction": 0.00023343323343323342,
     "pre_image_defect_fraction": 0.00013294113294113293,
-    "mean_defect_fraction": 0.0001768153622918428,
+    "mean_defect_fraction": 0.00017740650936003206,
     "heat": {
      "mean_uK": 1.711259365081787,
      "p99_uK": 10.0,
@@ -451,7 +451,7 @@
     "t_1e-3_s": 2.246530950995149,
     "steady_defect_fraction": 0.0004101454101454101,
     "pre_image_defect_fraction": 0.000306989306989307,
-    "mean_defect_fraction": 0.00036248700667900716,
+    "mean_defect_fraction": 0.00036297867122163347,
     "heat": {
      "mean_uK": 0.34147369861602783,
      "p99_uK": 2.0,
@@ -472,7 +472,7 @@
     "t_1e-3_s": 3.0589453403968507,
     "steady_defect_fraction": 0.000867835867835868,
     "pre_image_defect_fraction": 0.000763199763199763,
-    "mean_defect_fraction": 0.0008152968824506559,
+    "mean_defect_fraction": 0.000816076823107691,
     "heat": {
      "mean_uK": 0.051082905381917953,
      "p99_uK": 0.30000001192092896,
@@ -493,7 +493,7 @@
     "t_1e-3_s": 0.8979537881711075,
     "steady_defect_fraction": 0.00024035224035224035,
     "pre_image_defect_fraction": 0.00013597513597513598,
-    "mean_defect_fraction": 0.00018054247962019272,
+    "mean_defect_fraction": 0.0001813883176868088,
     "heat": {
      "mean_uK": 1.7136402130126953,
      "p99_uK": 10.0,
@@ -514,7 +514,7 @@
     "t_1e-3_s": 1.4696027797763962,
     "steady_defect_fraction": 0.0003355533355533355,
     "pre_image_defect_fraction": 0.00023495023495023493,
-    "mean_defect_fraction": 0.00028893559110821265,
+    "mean_defect_fraction": 0.0002893946978281148,
     "heat": {
      "mean_uK": 0.34183716773986816,
      "p99_uK": 2.0,
@@ -535,7 +535,7 @@
     "t_1e-3_s": 2.7204930401858984,
     "steady_defect_fraction": 0.0006549006549006549,
     "pre_image_defect_fraction": 0.0005556665556665555,
-    "mean_defect_fraction": 0.0006071134448185985,
+    "mean_defect_fraction": 0.0006079331789323493,
     "heat": {
      "mean_uK": 0.051158323884010315,
      "p99_uK": 0.30000001192092896,

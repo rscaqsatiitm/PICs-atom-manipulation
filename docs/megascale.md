@@ -4,6 +4,13 @@
 > and has 33% more sites. This supersedes the corridor conclusion of Sec. 5. A free-space lattice needs more power
 > than tweezers; only a cavity lattice (buildup ~100) needs less. At 10^6 sites, fast handoff steps are needed in
 > steady state as well, at a cost of at most 10 uK per refilled atom.
+>
+> Follow-up (Sec. 10): engines tiled along x can sit at 3.0 mm pitch (ghost below 2e-7 of a tweezer peak), so six
+> fit on an 18 mm chip edge. The 3 x 4 um floor of 8e-4 in Sec. 9 was an edge artefact; it is 2.4e-4 at image, as on
+> 4 x 4 um. The defect fractions quoted in Sec. 1-9 are sampled just after an image and count imaging losses
+> twice; the time average is about 25% lower (1.8e-4 against 2.4e-4 at the nominal point). Intermediate steps
+> (2 uK per move) reach a time average of 2.2e-4 at 10^6 sites with the 128-engine block if the imaging period is
+> raised from 0.1 to 0.3 s.
 
 Follow-up to `docs/scaling_beyond.md`, `docs/transport3d.md`, `docs/rearrangement.md` and `docs/repair.md`. Code:
 `scripts/m22_megascale.py` (budget, tiling), `picsim/megasort.py` and `scripts/m23_steady.py` (assembly and steady
@@ -86,7 +93,8 @@ magnification -60.1 for every engine and all chief rays at the pupil centre. The
 with 1.5 um emitter pitch, each engine's first lobe lands 204 um from its spot at the atoms, inside the
 neighbouring segment. A shared slit plane must therefore have opaque gaps at least as wide as the slit zones to
 absorb the lobes. That sets an engine pitch of at least 4.4 mm on the chip (four engines per 18 mm edge) and lets
-one block position address every other segment. Two scanner positions cover a row; baffles between the lenslet
+one block position address every other segment (Sec. 10 supersedes this pitch: the wave-optics check allows
+3.0 mm, six engines per edge). Two scanner positions cover a row; baffles between the lenslet
 channels are needed against stray lobe light.
 
 **Block.** 32 rows (two polarisation-combined 16-chip stacks) x 4 engines per row = 128 engines, 49,024 fast
@@ -274,16 +282,15 @@ angles that miss the engine's own lenslet) checks the same question geometricall
 | 2.4 mm | 6.7e-5 ; 5.6e-5 | 7.2e-5 | none |
 
 (Worst case over x_a = 0, 60, 90 um at fill 1; it is the segment-edge tweezer, x_a = 90 um, except at 3.5 mm, where
-x_a = 60 um is marginally worse. A lenslet fill of 0.8 at
-4.43 mm raises the accepted ghost to 2e-9.) The first-order lobes are not the limit: the lenslet aperture and the
+x_a = 60 um is marginally worse. A lenslet fill of 0.8 at 4.43 mm raises the accepted ghost to 2e-9.) The first-order lobes are not the limit: the lenslet aperture and the
 pupil acceptance remove them, and no accepted ray reaches another slit zone at any pitch scanned. What sets the
 pitch is the lenslet aperture needed to pass the engine's own slit zone, 2 f1 tan(asin s_cut) = 2.37 mm. Below
 2.6 mm the lenslet clips the own beam and its diffraction tail enters the neighbour zone. At Pe = 3.0 mm the
 accepted ghost is below 2e-7 of a tweezer peak, under the coherent criterion of 1e-6 (`docs/row_coherence.md`).
 Hence six engines fit on an 18 mm chip edge instead of four. Two scanner positions per row are still needed:
 the segment pitch at the atoms, Pe f_obj / f_c = 0.092 Pe = 277 um at Pe = 3.0 mm (m22 combiner, f_c 188 mm,
-f_obj 17.3 mm), exceeds the 180 um segment, so one block position addresses every other segment. The model is 1D (x only), uses an ideal thin lens
-and no surface scatter; baffles between lenslet channels remain the defence against scattered light, which this
+f_obj 17.3 mm), exceeds the 180 um segment, so one block position addresses every other segment. The model is
+1D (x only), uses an ideal thin lens and no surface scatter; baffles between lenslet channels remain the defence against scattered light, which this
 calculation does not include.
 
 **Intermediate steps on 3 x 4 um (`results/m18_midlane.json`, 3,000 atoms per case).** Ramps 100 us, lane steps
@@ -297,7 +304,101 @@ calculation does not include.
 Hence intermediate steps are clean on the dense lattice, at 1 to 3 uK per move. We use 2 uK per move below
 (the quantum check gave a similar figure).
 
-REMEDY_PLACEHOLDER
+**Three defect fractions.** Until now we quoted the defect fraction sampled just after each image. That value
+counts imaging losses twice: the image removes a fraction eps_img of the atoms after detecting them, so those holes
+stay unseen for a full period, and at the next image they are still there when the new losses are added. The
+simulator now also records the value just before each image and the time average (`Sim.mean_defect`, a trapezoid sum over visit, image and idle intervals; vacuum losses are uniform in time, so
+the rule is exact for them in expectation, while each visit's fills are booked at its start, which biases the
+average low by at most one visit time, 1 to 2 ms against T_img = 100 ms). The time average is what a
+computation started at a random moment sees. With fast steps at 10^6 sites the three are 2.4e-4 (at image),
+1.4e-4 (before image) and 1.8e-4 (average): the at-image value is close to 2 eps_img + (T_img + t_img)/tau =
+2.4e-4, and the average is close to eps_img + (T_img + t_img)/(2 tau) = 1.2e-4 plus the repair latency.
+
+**Remedies at 10^6 sites (`results/m23_remedy.json`, 85% loading, tau 3000 s, eps_img 1e-4, T_img 100 ms, rows
+4 um apart).** Blocks of 128 to 256 engines, three step timings, heating per move 10 / 2 / 0.3 uK (fast /
+intermediate / slow). Defect fraction at image / time average over the last 3 s of a 20 s run, and the time from
+the first image to 1e-3 (at image):
+
+| block (engines) | pitch along rows | fast | intermediate | slow |
+|---|---|---|---|---|
+| 32 x 4 (128) | 4 um | 2.5e-4 / 2.0e-4, 1.67 s | 5.3e-4 / 4.8e-4, 3.14 s | 1.2e-3 / 1.1e-3, not in 20 s |
+| 32 x 8 (256) | 4 um | 2.4e-4 / 1.8e-4, 1.01 s | 3.9e-4 / 3.4e-4, 1.58 s | 8.5e-4 / 8.0e-4, 4.18 s |
+| 48 x 4 (192) | 4 um | 2.3e-4 / 1.8e-4, 1.01 s | 4.1e-4 / 3.6e-4, 2.25 s | 8.7e-4 / 8.2e-4, 3.06 s |
+| 64 x 4 (256) | 4 um | 2.4e-4 / 1.8e-4, 0.90 s | 3.4e-4 / 2.9e-4, 1.47 s | 6.6e-4 / 6.1e-4, 2.72 s |
+| 32 x 4 (128) | 3 um | 2.4e-4 / 1.9e-4, 1.34 s | 4.3e-4 / 3.8e-4, 2.35 s | 1.1e-3 / 1.0e-3, 6.77 s |
+| 32 x 8 (256) | 3 um | 2.4e-4 / 1.8e-4, 0.79 s | 3.0e-4 / 2.5e-4, 1.46 s | 6.4e-4 / 5.9e-4, 4.40 s |
+| 48 x 4 (192) | 3 um | 2.4e-4 / 1.8e-4, 0.79 s | 3.7e-4 / 3.2e-4, 1.91 s | 7.5e-4 / 7.0e-4, 4.29 s |
+| 64 x 4 (256) | 3 um | 2.4e-4 / 1.8e-4, 0.68 s | 3.2e-4 / 2.7e-4, 1.46 s | 5.8e-4 / 5.3e-4, 2.39 s |
+
+Four results follow. First, the 8.1e-4 reported in Sec. 9 for 3 x 4 um was an artefact. The last row of block
+positions ended short of the array edge, and the holes in rows below it had no reservoir row in any block that
+reached them (563 of 716 remaining holes sat there). `Block.positions` now places the last block flush with the
+edge, and 3 x 4 um holds 2.4e-4 with the 32 x 4 block and fast steps, as 4 x 4 um does. Second, fast steps reach
+the loss floor with any block from 128 engines; more engines only shorten assembly (1.67 to 0.90 s at 4 um).
+Third, intermediate steps (2 uK per move) come within a factor of 1.4 to 1.9 of that floor with 256 engines (time
+average 2.5e-4 to 3.4e-4) but not with 128. Fourth, slow steps (0.3 uK) do not reach the floor with any block
+tried; their best is 5.3e-4. The 3 um rows do slightly better than 4 um rows with the slower timings. We
+attribute this to fewer block positions per sweep (a 180 um segment holds 61 sites at 3 um against 46 at 4 um, so
+the 32 x 4 block has 222 positions against 252); we did not isolate this cause.
+
+The block shape is a hardware choice. A 32-row block is two 16-chip stacks combined by polarisation (Sec. 4);
+48 or 64 rows need three or four stacks and a combining method beyond polarisation, which we have not designed.
+32 x 8 needs eight engines per chip edge: at the 3.0 mm pitch allowed above that is a 24 mm edge. At 2.6 mm
+(21 mm edge) the accepted ghost rises to 1.6e-6, just above the 1e-6 criterion. Hence our preferred block for
+10^6 sites is 32 x 8 on a 24 mm chip edge (98,048 fast actuators), with fast steps if the 10 uK per refilled atom
+is acceptable and intermediate steps (time average 2.5e-4 on 3 x 4 um) if it is not.
+
+**Imaging cadence and loss (`results/m25_imaging.json`, `results/m25_imaging_fit.json`).** We scan the imaging
+period T_img (0.03, 0.1, 0.3, 1 s), the loss per image eps_img (1e-5, 1e-4, 1e-3) and the vacuum lifetime tau
+(300, 3000, 30000 s) at 10^5 sites (4 x 4 um, 85% loading, 32 x 4 block, intermediate steps, t_img 10 ms, 8 s
+runs, averages over the second half), add t_img = 3 and 20 ms, and take three points at 10^6 sites per timing.
+Selected time-averaged defect fractions at 10^5 sites:
+
+| eps_img, tau | T_img 0.03 s | 0.1 s | 0.3 s | 1 s |
+|---|---|---|---|---|
+| 1e-5, 3000 s | 2.0e-5 | 3.1e-5 | 6.7e-5 | 1.8e-4 |
+| 1e-4, 300 s | 2.9e-4 | 4.1e-4 | 7.8e-4 | 1.9e-3 |
+| 1e-4, 3000 s | 1.6e-4 | 1.3e-4 | 1.8e-4 | 3.1e-4 |
+| 1e-4, 30000 s | 1.4e-4 | 1.2e-4 | 1.2e-4 | 1.5e-4 |
+| 1e-3, 3000 s | 3.1e-3 | 1.4e-3 | 1.2e-3 | 1.3e-3 |
+
+The values at image fit rho_image = 2.42 eps_img + 0.96 (T_img + t_img)/tau (median error 12%, worst 33%), close
+to the 2 eps_img + (T_img + t_img)/tau expected from the double counting. This replaces the rule
+rho ~ 1.5-1.8 (eps_img + T_img/tau) of Sec. 1 and 6, which was fitted to at-image values over a narrower range.
+The time average follows a hole-lifetime model. An imaging loss is unseen for one period T = T_img + t_img and
+is then repaired after a mean delay d; a vacuum loss waits T/2 on average for the next image, and then d. Hence
+
+rho_mean = eps_img (T + d)/T + (T/2 + d)/tau.
+
+One delay, d = 25 ms, fits all 40 points at 10^5 sites with a median error of 10% (d = 0 underestimates by a
+median 16%). The worst point (61%) is eps_img = 1e-3 at T_img = 30 ms, where the repair saturates (below).
+Minimising rho_mean over T gives the optimum imaging period, T* = (2 eps_img d tau)^(1/2) when d << T. For
+d = 25 ms and tau = 3000 s this is 40 ms, 0.12 s and 0.39 s for eps_img = 1e-5, 1e-4 and 1e-3, in agreement with
+the minima of the scan (0.03, 0.1 and 0.3 s). At the optimum, rho_mean ~ eps_img + (2 eps_img d / tau)^(1/2) + d/tau:
+for eps_img = 1e-4 and tau = 3000 s that is 1.5e-4 (simulated 1.3e-4 at T_img = 0.1 s). Hence the loss per image dominates the floor
+once tau exceeds a few thousand seconds. Lowering eps_img, not imaging more often, is the lever. The imaging time
+matters only through the dead time at short periods: at T_img = 30 ms, t_img = 3 / 10 / 20 ms gives
+1.35 / 1.55 / 1.70e-4.
+
+At 10^6 sites the delay is not a constant, because the block needs a sweep over all its positions to reach a hole
+(252 positions for a 32 x 4 block on 4 x 4 um; a one-pass visit takes 0.9 to 1.0 ms with fast steps and 1.35 to
+1.5 ms with intermediate steps, from `Timing.pass_time`). Time averages for eps_img = 1e-4 and
+tau = 3000 s:
+
+| timing (32 x 4 block) | T_img 0.03 s | 0.1 s | 0.3 s |
+|---|---|---|---|
+| fast | 1.2e-3 | 1.8e-4 | 2.0e-4 |
+| intermediate | 2.3e-3 | 4.9e-4 | 2.2e-4 |
+
+At T_img = 30 ms both timings saturate: the loss rate, eps_img / T + 1/tau = 2.8e-3 per site per second, needs
+2,800 fills/s. At rho = 2e-4 a block position holds about 0.8 holes (2e-4 x 10^6 / 252), so a sweep of 252 visits
+(0.25 to 0.4 s) refills only about 200 atoms, and the imaging dead time takes 25% of the time. The holes
+therefore pile up until each visit has enough work. By Little's law, the mean
+hole lifetime is rho_mean / (eps_img / T + 1/tau): 0.15 s for fast steps at T_img = 0.1 s, and 0.40 and 0.34 s
+for intermediate steps at 0.1 and 0.3 s. Intermediate steps at T_img = 0.3 s reach 2.2e-4, within 20% of fast
+steps at 0.1 s, with the 128-engine block and at one fifth of the heating per refilled atom (2 against 10 uK).
+Hence, at 10^6 sites, a slower imaging cadence is an alternative to a larger block. The imaging period should
+match the sweep time of the block rather than be as short as possible.
 
 ## Verification notes
 
@@ -307,7 +408,7 @@ REMEDY_PLACEHOLDER
 | x-tiling lobe geometry and ABCD | Sec. 4 | DERIVED | results/m22_tiling.json |
 | 3 um pitch transport | Sec. 5 | SIM | results/m18_pitch3.json (3,000 atoms; review) |
 | assembly and steady state | Sec. 1, 6 | SIM | results/m23_steady.json (review) |
-| rho ~ 1.5-1.8 (eps + T_img/tau) | Sec. 1, 6 | SIM/DERIVED | fit to m23 floors |
+| rho ~ 1.5-1.8 (eps + T_img/tau) | Sec. 1, 6 | SIM/DERIVED | fit to m23 floors (at-image values; superseded by Sec. 10) |
 | 23 min lifetime, 99.98952% imaging survival, 6,100 atoms | Sec. 6 | SOURCE | Manetsch et al., arXiv:2403.12021, abstract read 2026-11-06 |
 | 30,000 qubits/s, > 3,000 atoms for > 2 h | Sec. 6 | SOURCE | Chiu et al., arXiv:2506.20660, abstract read 2026-11-06 |
 | 2,088 sites at 6 K, 828-atom rearrangement | context | SOURCE | Pichard et al., arXiv:2405.19503, abstract read 2026-11-06 |
@@ -317,3 +418,11 @@ REMEDY_PLACEHOLDER
 | anisotropic and corridor transport | Sec. 9 | SIM | results/m18_aniso.json (3,000 atoms; review) |
 | tweezer and lattice power | Sec. 9 | DERIVED | results/m22_lattice.json (interference gain 8 / 16, -20% uniformity, eta 0.3, cavity buildup CHOICE) |
 | mixed timing and heating | Sec. 9 | SIM | results/m23_mixed.json (review) |
+| ghost in the neighbour slit zone vs engine pitch | Sec. 10 | SIM | results/m24_tiling_wave.json (1D, ideal thin lenslet, no surface scatter; review) |
+| segment pitch at the atoms 0.092 Pe | Sec. 10 | DERIVED | f_obj / f_c from results/m22_tiling.json |
+| intermediate-step transport on 3 x 4 um | Sec. 10 | SIM | results/m18_midlane.json (3,000 atoms; review) |
+| remedies at 10^6 sites, edge-artefact correction | Sec. 10 | SIM | results/m23_remedy.json (one seed per case; review) |
+| imaging map, rho_image fit, latency d = 25 ms | Sec. 10 | SIM | results/m25_imaging.json, results/m25_imaging_fit.json (one seed per case; review) |
+| T* = (2 eps d tau)^(1/2), Little's-law hole lifetimes, holes per position | Sec. 10 | DERIVED | from the hole-lifetime model and the SIM values |
+| coherent ghost criterion 1e-6 | Sec. 10 | DERIVED | docs/row_coherence.md |
+| combining 48 or 64 rows beyond polarisation; 24 mm chip edge | Sec. 10 | open | not designed |

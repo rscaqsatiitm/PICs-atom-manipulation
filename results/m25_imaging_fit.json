@@ -1,0 +1,36 @@
+{
+ "name": "m25_imaging_fit",
+ "script": "scripts/m25_imaging.py",
+ "git": "064f90b",
+ "notes": "",
+ "inputs": {
+  "source": "results/m25_imaging.json",
+  "model": "Fit the time-averaged defect fraction of results/m25_imaging.json to the hole-lifetime model\n\n    rho_mean = eps (T + d)/T + (T/2 + d)/tau,   T = T_img + t_img (imaging period),\n\nin which an imaging loss is unseen for one period and then repaired after a mean delay d, and a vacuum loss\nwaits T/2 on average for the next image and then d. One d per (N, timing) group, least squares in log rho."
+ },
+ "outputs": {
+  "fits": {
+   "100000 intermediate": {
+    "d_s": 0.025081862550240586,
+    "n_points": 40,
+    "median_abs_rel_error": 0.09627523216824235,
+    "max_abs_rel_error": 0.6083136334181589,
+    "median_rel_error_with_d0": -0.15747517071200778
+   },
+   "1000000 fast": {
+    "d_s": 0.18099989770525968,
+    "n_points": 3,
+    "median_abs_rel_error": 0.4790556455063747,
+    "max_abs_rel_error": 0.8667070155415464,
+    "median_rel_error_with_d0": -0.35639293704467123
+   },
+   "1000000 intermediate": {
+    "d_s": 0.3983218818113641,
+    "n_points": 3,
+    "median_abs_rel_error": 0.46698571702970704,
+    "max_abs_rel_error": 0.8744780455958823,
+    "median_rel_error_with_d0": -0.7596100722310001
+   }
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

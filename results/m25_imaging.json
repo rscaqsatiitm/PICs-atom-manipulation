@@ -1,7 +1,7 @@
 {
  "name": "m25_imaging",
  "script": "scripts/m25_imaging.py",
- "git": "965807c",
+ "git": "064f90b",
  "notes": "",
  "inputs": {
   "layout": "4 x 4 um, 3:1 computation:reservoir rows",
@@ -40,7 +40,7 @@
     "steady_defect_fraction": 0.0023647318199042336,
     "steady_std": 0.00018800380312535375,
     "pre_image_defect_fraction": 0.002259816046022942,
-    "mean_defect_fraction": 0.0023166542243524997,
+    "mean_defect_fraction": 0.0023174713535166376,
     "fills_per_s": 15042.166666666666,
     "comp_sites": 1001000
    },
@@ -55,7 +55,7 @@
     "steady_defect_fraction": 0.0012304362304362305,
     "steady_std": 5.6027526919683285e-05,
     "pre_image_defect_fraction": 0.0011275051479133112,
-    "mean_defect_fraction": 0.0011885828033051497,
+    "mean_defect_fraction": 0.0011891859558917307,
     "fills_per_s": 15169.5,
     "comp_sites": 1001000
    },
@@ -70,7 +70,7 @@
     "steady_defect_fraction": 0.0005420875420875419,
     "steady_std": 2.753135931897904e-05,
     "pre_image_defect_fraction": 0.00043791393791393793,
-    "mean_defect_fraction": 0.0004917768532227135,
+    "mean_defect_fraction": 0.0004922557880505063,
     "fills_per_s": 13684.5,
     "comp_sites": 1001000
    },
@@ -85,7 +85,7 @@
     "steady_defect_fraction": 0.00023472823472823475,
     "steady_std": 1.4258174412976996e-05,
     "pre_image_defect_fraction": 0.0001343841343841344,
-    "mean_defect_fraction": 0.00018343463688835752,
+    "mean_defect_fraction": 0.0001838595940665533,
     "fills_per_s": 13709.25,
     "comp_sites": 1001000
    },
@@ -100,7 +100,7 @@
     "steady_defect_fraction": 0.00030474788369525213,
     "steady_std": 1.3787332698929804e-05,
     "pre_image_defect_fraction": 0.00020069404279930597,
-    "mean_defect_fraction": 0.00021501927414040994,
+    "mean_defect_fraction": 0.00022029148746618475,
     "fills_per_s": 13142.083333333334,
     "comp_sites": 1001000
    },
@@ -115,7 +115,7 @@
     "steady_defect_fraction": 0.0003075871496924128,
     "steady_std": 1.5122473584061027e-05,
     "pre_image_defect_fraction": 0.00020248172879751828,
-    "mean_defect_fraction": 0.00018553081141424642,
+    "mean_defect_fraction": 0.00020070235389520554,
     "fills_per_s": 13146.333333333334,
     "comp_sites": 1001000
    },
@@ -130,7 +130,7 @@
     "steady_defect_fraction": 0.00018288543704827697,
     "steady_std": 4.508615405476695e-05,
     "pre_image_defect_fraction": 0.00013816236073952803,
-    "mean_defect_fraction": 0.00011949108381023883,
+    "mean_defect_fraction": 0.00013440482486121782,
     "fills_per_s": 2213.875,
     "comp_sites": 100172
    },
@@ -145,7 +145,7 @@
     "steady_defect_fraction": 3.1046599848260995e-05,
     "steady_std": 1.7851967793642086e-05,
     "pre_image_defect_fraction": 1.9566345885077665e-05,
-    "mean_defect_fraction": 1.631753300249995e-05,
+    "mean_defect_fraction": 1.945998125240641e-05,
     "fills_per_s": 1929.5,
     "comp_sites": 100172
    },
@@ -160,7 +160,7 @@
     "steady_defect_fraction": 2.2760851335702596e-05,
     "steady_std": 1.3838376752915751e-05,
     "pre_image_defect_fraction": 1.20792237351755e-05,
-    "mean_defect_fraction": 1.3913550890202366e-05,
+    "mean_defect_fraction": 1.447218599741372e-05,
     "fills_per_s": 1907.0,
     "comp_sites": 100172
    },
@@ -175,7 +175,7 @@
     "steady_defect_fraction": 0.00036816675318452263,
     "steady_std": 5.689827518687244e-05,
     "pre_image_defect_fraction": 0.0002356946052789203,
-    "mean_defect_fraction": 0.00028344661387626376,
+    "mean_defect_fraction": 0.00029189151011838434,
     "fills_per_s": 2436.375,
     "comp_sites": 100172
    },
@@ -190,7 +190,7 @@
     "steady_defect_fraction": 0.00022092001756978,
     "steady_std": 4.218037864130014e-05,
     "pre_image_defect_fraction": 0.00011580082258515355,
-    "mean_defect_fraction": 0.00015289769738453753,
+    "mean_defect_fraction": 0.00015500407504246807,
     "fills_per_s": 2163.75,
     "comp_sites": 100172
    },
@@ -205,7 +205,7 @@
     "steady_defect_fraction": 0.0002024517829333546,
     "steady_std": 4.381268156064735e-05,
     "pre_image_defect_fraction": 0.00010162520464800545,
-    "mean_defect_fraction": 0.00013985776628850884,
+    "mean_defect_fraction": 0.00014006430126261944,
     "fills_per_s": 2128.375,
     "comp_sites": 100172
    },
@@ -220,7 +220,7 @@
     "steady_defect_fraction": 0.0037883798200428597,
     "steady_std": 0.0002522516810077875,
     "pre_image_defect_fraction": 0.00277158703696309,
-    "mean_defect_fraction": 0.0033520962442314785,
+    "mean_defect_fraction": 0.003359789016503281,
     "fills_per_s": 4562.75,
     "comp_sites": 100172
    },
@@ -235,7 +235,7 @@
     "steady_defect_fraction": 0.0034894148730849604,
     "steady_std": 0.00027233308950534143,
     "pre_image_defect_fraction": 0.0024801092121550933,
-    "mean_defect_fraction": 0.00306357845108874,
+    "mean_defect_fraction": 0.0030643533879390074,
     "fills_per_s": 4295.625,
     "comp_sites": 100172
    },
@@ -250,7 +250,7 @@
     "steady_defect_fraction": 0.003361537742711403,
     "steady_std": 0.00020486572195913777,
     "pre_image_defect_fraction": 0.0023642839470749484,
-    "mean_defect_fraction": 0.002954745043830366,
+    "mean_defect_fraction": 0.0029548007329244846,
     "fills_per_s": 4263.25,
     "comp_sites": 100172
    },
@@ -265,7 +265,7 @@
     "steady_defect_fraction": 0.0004206653444963552,
     "steady_std": 6.34497969123794e-05,
     "pre_image_defect_fraction": 0.0003760199124173089,
-    "mean_defect_fraction": 0.00021725392634434584,
+    "mean_defect_fraction": 0.000287763800433244,
     "fills_per_s": 2212.5,
     "comp_sites": 100172
    },
@@ -280,7 +280,7 @@
     "steady_defect_fraction": 5.6846668175183135e-05,
     "steady_std": 2.192430846903544e-05,
     "pre_image_defect_fraction": 4.4368131258679516e-05,
-    "mean_defect_fraction": 1.827650649145968e-05,
+    "mean_defect_fraction": 3.129352252364903e-05,
     "fills_per_s": 1917.125,
     "comp_sites": 100172
    },
@@ -295,7 +295,7 @@
     "steady_defect_fraction": 2.4957073833007228e-05,
     "steady_std": 1.533952344849008e-05,
     "pre_image_defect_fraction": 1.4142341838704097e-05,
-    "mean_defect_fraction": 1.251665317472165e-05,
+    "mean_defect_fraction": 1.4056861159845191e-05,
     "fills_per_s": 1887.125,
     "comp_sites": 100172
    },
@@ -310,7 +310,7 @@
     "steady_defect_fraction": 0.0006078433982439093,
     "steady_std": 7.368900818460118e-05,
     "pre_image_defect_fraction": 0.0004733525003660371,
-    "mean_defect_fraction": 0.000347989847209346,
+    "mean_defect_fraction": 0.00041000083041645835,
     "fills_per_s": 2295.375,
     "comp_sites": 100172
    },
@@ -325,7 +325,7 @@
     "steady_defect_fraction": 0.00023043698172476673,
     "steady_std": 5.183893902925433e-05,
     "pre_image_defect_fraction": 0.00013227249131493832,
-    "mean_defect_fraction": 0.00012198798861363232,
+    "mean_defect_fraction": 0.00013422859930710214,
     "fills_per_s": 1994.625,
     "comp_sites": 100172
    },
@@ -340,7 +340,7 @@
     "steady_defect_fraction": 0.00020714371281396,
     "steady_std": 4.09833351194399e-05,
     "pre_image_defect_fraction": 0.00010426510845789687,
-    "mean_defect_fraction": 0.00011690095842226608,
+    "mean_defect_fraction": 0.00011807732085770671,
     "fills_per_s": 1967.125,
     "comp_sites": 100172
    },
@@ -355,7 +355,7 @@
     "steady_defect_fraction": 0.0023881146649984255,
     "steady_std": 0.00014662475903949444,
     "pre_image_defect_fraction": 0.0013640427353840282,
-    "mean_defect_fraction": 0.0016860764741077592,
+    "mean_defect_fraction": 0.0017061573483196756,
     "fills_per_s": 3097.375,
     "comp_sites": 100172
    },
@@ -370,7 +370,7 @@
     "steady_defect_fraction": 0.002073378233882167,
     "steady_std": 0.00014131218244928787,
     "pre_image_defect_fraction": 0.0010531885157529048,
-    "mean_defect_fraction": 0.0014052248902853364,
+    "mean_defect_fraction": 0.0014080506309743725,
     "fills_per_s": 2807.125,
     "comp_sites": 100172
    },
@@ -385,7 +385,7 @@
     "steady_defect_fraction": 0.001938887336004295,
     "steady_std": 0.00014550658692558027,
     "pre_image_defect_fraction": 0.0009733258794872818,
-    "mean_defect_fraction": 0.0013078975781562517,
+    "mean_defect_fraction": 0.0013080794403345238,
     "fills_per_s": 2769.625,
     "comp_sites": 100172
    },
@@ -400,7 +400,7 @@
     "steady_defect_fraction": 0.001124220187431464,
     "steady_std": 0.00010244621183396782,
     "pre_image_defect_fraction": 0.0010735381298013571,
-    "mean_defect_fraction": 0.00037314703497934613,
+    "mean_defect_fraction": 0.0006889481754180306,
     "fills_per_s": 2201.75,
     "comp_sites": 100172
    },
@@ -415,7 +415,7 @@
     "steady_defect_fraction": 0.00012900887396754504,
     "steady_std": 3.069719481154981e-05,
     "pre_image_defect_fraction": 0.00011672231454206459,
-    "mean_defect_fraction": 1.972992410767307e-05,
+    "mean_defect_fraction": 6.658698349499484e-05,
     "fills_per_s": 1908.875,
     "comp_sites": 100172
    },
@@ -430,7 +430,7 @@
     "steady_defect_fraction": 2.9180578635516145e-05,
     "steady_std": 1.5886644867425874e-05,
     "pre_image_defect_fraction": 1.9965659066405783e-05,
-    "mean_defect_fraction": 9.892738880348452e-06,
+    "mean_defect_fraction": 1.5087011295279102e-05,
     "fills_per_s": 1881.5,
     "comp_sites": 100172
    },
@@ -445,7 +445,7 @@
     "steady_defect_fraction": 0.0012916245596036357,
     "steady_std": 0.00010517843873622868,
     "pre_image_defect_fraction": 0.0011664552354565532,
-    "mean_defect_fraction": 0.0004737370251078776,
+    "mean_defect_fraction": 0.0007841753893689228,
     "fills_per_s": 2232.5,
     "comp_sites": 100172
    },
@@ -460,7 +460,7 @@
     "steady_defect_fraction": 0.0003194505450624925,
     "steady_std": 5.0296637149680436e-05,
     "pre_image_defect_fraction": 0.00020733569030498316,
-    "mean_defect_fraction": 0.0001380827761261752,
+    "mean_defect_fraction": 0.00017635385334139754,
     "fills_per_s": 1935.625,
     "comp_sites": 100172
    },
@@ -475,7 +475,7 @@
     "steady_defect_fraction": 0.00023037298922775907,
     "steady_std": 5.021450097915221e-05,
     "pre_image_defect_fraction": 0.00011672231454206457,
-    "mean_defect_fraction": 0.0001168249468522117,
+    "mean_defect_fraction": 0.0001206877343760817,
     "fills_per_s": 1910.0,
     "comp_sites": 100172
    },
@@ -490,7 +490,7 @@
     "steady_defect_fraction": 0.003016350338955458,
     "steady_std": 0.00020476863115527954,
     "pre_image_defect_fraction": 0.002011156195958336,
-    "mean_defect_fraction": 0.0015260925813251397,
+    "mean_defect_fraction": 0.0017986380344215936,
     "fills_per_s": 2498.625,
     "comp_sites": 100172
    },
@@ -505,7 +505,7 @@
     "steady_defect_fraction": 0.0021662740087050273,
     "steady_std": 0.00014030704843738005,
     "pre_image_defect_fraction": 0.0011311313771082967,
-    "mean_defect_fraction": 0.0011934688964468773,
+    "mean_defect_fraction": 0.0012247572447886016,
     "fills_per_s": 2223.5,
     "comp_sites": 100172
    },
@@ -520,7 +520,7 @@
     "steady_defect_fraction": 0.0019773681575382643,
     "steady_std": 9.978693776701166e-05,
     "pre_image_defect_fraction": 0.0009821568440743459,
-    "mean_defect_fraction": 0.0011080250813978924,
+    "mean_defect_fraction": 0.0011122550192073882,
     "fills_per_s": 2177.625,
     "comp_sites": 100172
    },
@@ -535,7 +535,7 @@
     "steady_defect_fraction": 0.0033791877969891783,
     "steady_std": 0.00018003722394353144,
     "pre_image_defect_fraction": 0.003334265064089766,
-    "mean_defect_fraction": 0.0004786120191480938,
+    "mean_defect_fraction": 0.0018198904093942928,
     "fills_per_s": 2165.875,
     "comp_sites": 100172
    },
@@ -550,7 +550,7 @@
     "steady_defect_fraction": 0.0003518947410454019,
     "steady_std": 5.2052104416938375e-05,
     "pre_image_defect_fraction": 0.0003394162041288983,
-    "mean_defect_fraction": 2.853235828196933e-05,
+    "mean_defect_fraction": 0.00018011041509808642,
     "fills_per_s": 1903.875,
     "comp_sites": 100172
    },
@@ -565,7 +565,7 @@
     "steady_defect_fraction": 6.239268458251807e-05,
     "steady_std": 2.7678733843812186e-05,
     "pre_image_defect_fraction": 5.240985504931518e-05,
-    "mean_defect_fraction": 1.0703701844048633e-05,
+    "mean_defect_fraction": 3.530297525220228e-05,
     "fills_per_s": 1878.875,
     "comp_sites": 100172
    },
@@ -580,7 +580,7 @@
     "steady_defect_fraction": 0.003498981751387613,
     "steady_std": 0.00014126673819116022,
     "pre_image_defect_fraction": 0.003374196382222577,
-    "mean_defect_fraction": 0.0005470756965178366,
+    "mean_defect_fraction": 0.001870177414504216,
     "fills_per_s": 2182.0,
     "comp_sites": 100172
    },
@@ -595,7 +595,7 @@
     "steady_defect_fraction": 0.000631413967975083,
     "steady_std": 5.5301181483249664e-05,
     "pre_image_defect_fraction": 0.0005066285988100468,
-    "mean_defect_fraction": 0.0001542516767397551,
+    "mean_defect_fraction": 0.0003073160092511653,
     "fills_per_s": 1918.0,
     "comp_sites": 100172
    },
@@ -610,7 +610,7 @@
     "steady_defect_fraction": 0.00026454498262987663,
     "steady_std": 4.547395269708251e-05,
     "pre_image_defect_fraction": 0.00014724673561474264,
-    "mean_defect_fraction": 0.00011910872450458316,
+    "mean_defect_fraction": 0.00014675172248893335,
     "fills_per_s": 1887.125,
     "comp_sites": 100172
    },
@@ -625,7 +625,7 @@
     "steady_defect_fraction": 0.005622828734576528,
     "steady_std": 0.00012965674248153718,
     "pre_image_defect_fraction": 0.004484786167791399,
-    "mean_defect_fraction": 0.0016275418466240108,
+    "mean_defect_fraction": 0.0030498222452363466,
     "fills_per_s": 2260.375,
     "comp_sites": 100172
    },
@@ -640,7 +640,7 @@
     "steady_defect_fraction": 0.002468254602084415,
     "steady_std": 0.0001162849674282409,
     "pre_image_defect_fraction": 0.0014075789641816076,
-    "mean_defect_fraction": 0.0011767843880267656,
+    "mean_defect_fraction": 0.0013289375546482872,
     "fills_per_s": 1993.5,
     "comp_sites": 100172
    },
@@ -655,7 +655,7 @@
     "steady_defect_fraction": 0.0020040530287904804,
     "steady_std": 7.482961481534243e-05,
     "pre_image_defect_fraction": 0.0010157529050033942,
-    "mean_defect_fraction": 0.0010279546133128026,
+    "mean_defect_fraction": 0.0010418746792230419,
     "fills_per_s": 1961.625,
     "comp_sites": 100172
    },
@@ -670,7 +670,7 @@
     "steady_defect_fraction": 0.000212012387873186,
     "steady_std": 3.970675378919784e-05,
     "pre_image_defect_fraction": 0.00011013843075156633,
-    "mean_defect_fraction": 0.00013360718257934116,
+    "mean_defect_fraction": 0.00013513155339580412,
     "fills_per_s": 2210.5,
     "comp_sites": 100172
    },
@@ -685,7 +685,7 @@
     "steady_defect_fraction": 0.0002408677587370235,
     "steady_std": 4.737588906571681e-05,
     "pre_image_defect_fraction": 0.00013566409365634694,
-    "mean_defect_fraction": 0.00012256553274734699,
+    "mean_defect_fraction": 0.00013340477771478225,
     "fills_per_s": 2001.75,
     "comp_sites": 100172
    },
@@ -700,7 +700,7 @@
     "steady_defect_fraction": 0.0002236153815437448,
     "steady_std": 4.257650463629781e-05,
     "pre_image_defect_fraction": 0.00011704867627680392,
-    "mean_defect_fraction": 0.000167861997074334,
+    "mean_defect_fraction": 0.00017020858410689876,
     "fills_per_s": 2111.5,
     "comp_sites": 100172
    },
@@ -715,7 +715,7 @@
     "steady_defect_fraction": 0.0002196222497304636,
     "steady_std": 3.7433089748076984e-05,
     "pre_image_defect_fraction": 0.00012463411417210882,
-    "mean_defect_fraction": 0.00012250603990164377,
+    "mean_defect_fraction": 0.0001331357829956529,
     "fills_per_s": 1983.625,
     "comp_sites": 100172
    }
