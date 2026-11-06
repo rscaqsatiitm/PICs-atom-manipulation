@@ -1,0 +1,501 @@
+{
+ "name": "m23_remedy",
+ "script": "scripts/m23_steady.py",
+ "git": "3526121",
+ "notes": "",
+ "inputs": {
+  "N": 1000000.0,
+  "f_load": 0.85,
+  "tau_s": 3000,
+  "row_spacing_um": 4.0,
+  "timings": {
+   "fast": {
+    "kwargs": {
+     "t_ramp": 5e-05,
+     "t_lane": 0.0001,
+     "t_x40": 0.0002,
+     "t_min": 0.0001
+    },
+    "heat_uK": 10.0
+   },
+   "intermediate": {
+    "kwargs": {
+     "t_ramp": 0.0001,
+     "t_lane": 0.0002,
+     "t_x40": 0.0003,
+     "t_min": 0.00015
+    },
+    "heat_uK": 2.0
+   },
+   "slow": {
+    "kwargs": {
+     "t_ramp": 0.0002,
+     "t_lane": 0.0004
+    },
+    "heat_uK": 0.3
+   }
+  },
+  "heat_source": "fast: m18 classical 3D (100 us steps, 0.3 mK); intermediate: m19 quantum (ramp 100, lane 200 us, 0.1/0.3 mK); slow: m19/m18"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "pitch_x": 3.0,
+    "block": [
+     32,
+     4
+    ],
+    "timing": "fast",
+    "engines": 128,
+    "fast_actuators": 49024,
+    "positions": 222,
+    "t_1e-3_s": 1.3417048059255194,
+    "steady_defect_fraction": 0.0008529298033334942,
+    "heat": {
+     "mean_uK": 1.7097536325454712,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.1709753630777964
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     32,
+     4
+    ],
+    "timing": "intermediate",
+    "engines": 128,
+    "fast_actuators": 49024,
+    "positions": 222,
+    "t_1e-3_s": 3.6878946643952886,
+    "steady_defect_fraction": 0.0010703693902463607,
+    "heat": {
+     "mean_uK": 0.3408319056034088,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.17041595904083423
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     32,
+     4
+    ],
+    "timing": "slow",
+    "engines": 128,
+    "fast_actuators": 49024,
+    "positions": 222,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.0016102882692655854,
+    "heat": {
+     "mean_uK": 0.05094515159726143,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.1698171704372368
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     32,
+     8
+    ],
+    "timing": "fast",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 148,
+    "t_1e-3_s": 0.8966257039449529,
+    "steady_defect_fraction": 0.000840983386158319,
+    "heat": {
+     "mean_uK": 1.70937979221344,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.17093798436442892
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     32,
+     8
+    ],
+    "timing": "intermediate",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 148,
+    "t_1e-3_s": 1.4530401124409797,
+    "steady_defect_fraction": 0.0009459861055401231,
+    "heat": {
+     "mean_uK": 0.3420371413230896,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.17101857163702655
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     32,
+     8
+    ],
+    "timing": "slow",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 148,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.001218312636997758,
+    "heat": {
+     "mean_uK": 0.05115446820855141,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.17051488282394248
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     48,
+     4
+    ],
+    "timing": "fast",
+    "engines": 192,
+    "fast_actuators": 73536,
+    "positions": 150,
+    "t_1e-3_s": 0.7873400202061066,
+    "steady_defect_fraction": 0.0008517462573594829,
+    "heat": {
+     "mean_uK": 1.7090728282928467,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.17090727752782714
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     48,
+     4
+    ],
+    "timing": "intermediate",
+    "engines": 192,
+    "fast_actuators": 73536,
+    "positions": 150,
+    "t_1e-3_s": 1.6794368862188869,
+    "steady_defect_fraction": 0.0009721892321991185,
+    "heat": {
+     "mean_uK": 0.3413722515106201,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.1706861226325521
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     48,
+     4
+    ],
+    "timing": "slow",
+    "engines": 192,
+    "fast_actuators": 73536,
+    "positions": 150,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.0013371110641391302,
+    "heat": {
+     "mean_uK": 0.05106440186500549,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.17021465930371957
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     64,
+     4
+    ],
+    "timing": "fast",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 114,
+    "t_1e-3_s": 0.6760749473702371,
+    "steady_defect_fraction": 0.0008324396636584258,
+    "heat": {
+     "mean_uK": 1.7085257768630981,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.170852579003016
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     64,
+     4
+    ],
+    "timing": "intermediate",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 114,
+    "t_1e-3_s": 1.245091402555798,
+    "steady_defect_fraction": 0.0009131796905730009,
+    "heat": {
+     "mean_uK": 0.3414486348628998,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.17072432134226417
+    }
+   },
+   {
+    "pitch_x": 3.0,
+    "block": [
+     64,
+     4
+    ],
+    "timing": "slow",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 114,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.0011862459382643927,
+    "heat": {
+     "mean_uK": 0.05099441483616829,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.1699813853237974
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     32,
+     4
+    ],
+    "timing": "fast",
+    "engines": 128,
+    "fast_actuators": 49024,
+    "positions": 252,
+    "t_1e-3_s": 1.672994416523206,
+    "steady_defect_fraction": 0.00024623524623524625,
+    "heat": {
+     "mean_uK": 1.7121845483779907,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.17121845695757956
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     32,
+     4
+    ],
+    "timing": "intermediate",
+    "engines": 128,
+    "fast_actuators": 49024,
+    "positions": 252,
+    "t_1e-3_s": 3.021416966100897,
+    "steady_defect_fraction": 0.0005065675065675066,
+    "heat": {
+     "mean_uK": 0.34206095337867737,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.17103047419742018
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     32,
+     4
+    ],
+    "timing": "slow",
+    "engines": 128,
+    "fast_actuators": 49024,
+    "positions": 252,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.001191846614923538,
+    "heat": {
+     "mean_uK": 0.051044922322034836,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.17014973736953487
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     32,
+     8
+    ],
+    "timing": "fast",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 168,
+    "t_1e-3_s": 0.8986546888699333,
+    "steady_defect_fraction": 0.00024708624708624706,
+    "heat": {
+     "mean_uK": 1.7122218608856201,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.17122218059198202
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     32,
+     8
+    ],
+    "timing": "intermediate",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 168,
+    "t_1e-3_s": 1.6889898937157815,
+    "steady_defect_fraction": 0.0003563579277864991,
+    "heat": {
+     "mean_uK": 0.34141770005226135,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.17070884616268578
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     32,
+     8
+    ],
+    "timing": "slow",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 168,
+    "t_1e-3_s": 3.605123535908641,
+    "steady_defect_fraction": 0.0007854737854737855,
+    "heat": {
+     "mean_uK": 0.051204487681388855,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.1706816248309259
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     48,
+     4
+    ],
+    "timing": "fast",
+    "engines": 192,
+    "fast_actuators": 73536,
+    "positions": 168,
+    "t_1e-3_s": 0.8991948295719278,
+    "steady_defect_fraction": 0.00023765123765123766,
+    "heat": {
+     "mean_uK": 1.7104449272155762,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.17104449366981103
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     48,
+     4
+    ],
+    "timing": "intermediate",
+    "engines": 192,
+    "fast_actuators": 73536,
+    "positions": 168,
+    "t_1e-3_s": 1.5800146745311092,
+    "steady_defect_fraction": 0.0004010804010804011,
+    "heat": {
+     "mean_uK": 0.3421916663646698,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.17109582593419068
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     48,
+     4
+    ],
+    "timing": "slow",
+    "engines": 192,
+    "fast_actuators": 73536,
+    "positions": 168,
+    "t_1e-3_s": 4.071047330593918,
+    "steady_defect_fraction": 0.000913900913900914,
+    "heat": {
+     "mean_uK": 0.051178157329559326,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.17059385201441762
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     64,
+     4
+    ],
+    "timing": "fast",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 126,
+    "t_1e-3_s": 0.7854302637660141,
+    "steady_defect_fraction": 0.00024379324379324377,
+    "heat": {
+     "mean_uK": 1.7123539447784424,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.17123539508943292
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     64,
+     4
+    ],
+    "timing": "intermediate",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 126,
+    "t_1e-3_s": 1.4661987277304664,
+    "steady_defect_fraction": 0.0003444333444333445,
+    "heat": {
+     "mean_uK": 0.3419763743877411,
+     "p99_uK": 2.0,
+     "max_uK": 2.0,
+     "moved_fraction": 0.17098819403156584
+    }
+   },
+   {
+    "pitch_x": 4.0,
+    "block": [
+     64,
+     4
+    ],
+    "timing": "slow",
+    "engines": 256,
+    "fast_actuators": 98048,
+    "positions": 126,
+    "t_1e-3_s": 3.7286494929823295,
+    "steady_defect_fraction": 0.0006682206682206683,
+    "heat": {
+     "mean_uK": 0.05119632929563522,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.1706544240167047
+    }
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

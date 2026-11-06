@@ -37,3 +37,9 @@ def test_heating_is_one_move_per_refill():
     s.run(2.0)
     st = s.heat_stats()
     assert st["max_uK"] <= 0.3 + 1e-6 and 0 < st["moved_fraction"] < 1
+
+
+def test_last_block_is_full_height():
+    b = Block(32, 1, 45)
+    ks = sorted({k for k, _ in b.positions(1155, 90)})
+    assert ks[-1] == 1155 - 32 and all(k + 32 <= 1155 for k in ks)

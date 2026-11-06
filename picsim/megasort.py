@@ -45,7 +45,10 @@ class Block:
     def positions(self, R, C):
         nseg = int(np.ceil(C / self.seg))
         pos = []
-        for k in range(0, R, self.S):
+        ks = list(range(0, max(R - self.S, 0) + 1, self.S))
+        if ks[-1] + self.S < R:  # last block flush with the array edge, so it always spans S rows (and a reservoir)
+            ks.append(R - self.S)
+        for k in ks:
             if self.Mx == 1:
                 for g in range(nseg):
                     pos.append((k, (g,)))

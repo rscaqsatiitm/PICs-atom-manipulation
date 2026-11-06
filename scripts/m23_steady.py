@@ -164,15 +164,15 @@ def one_remedy(cfg):
             "t_1e-3_s": t3, "steady_defect_fraction": float(late.mean()), "heat": sim.heat_stats()}
 
 
-def remedy():
-    cfgs = [{"pitch_x": px, "block": blk, "timing": tn} for px in (3.0, 4.0)
+def remedy(pitches=(3.0, 4.0)):
+    cfgs = [{"pitch_x": px, "block": blk, "timing": tn} for px in pitches
             for blk in ((32, 4), (32, 8), (48, 4), (64, 4)) for tn in ("fast", "intermediate", "slow")]
     with ProcessPoolExecutor(4) as ex:
         rows = list(ex.map(one_remedy, cfgs))
     for r in rows:
         print(r["pitch_x"], r["block"], r["timing"], "| engines", r["engines"], "| t1e-3", r["t_1e-3_s"],
               "| steady %.2e" % r["steady_defect_fraction"], "| heat max", r["heat"]["max_uK"], flush=True)
-    save_result("m23_remedy", script=SCRIPT,
+    save_result("m23_remedy" if len(pitches) > 1 else "m23_remedy_3um", script=SCRIPT,
                 inputs={"N": 1e6, "f_load": 0.85, "tau_s": 3000, "row_spacing_um": 4.0,
                         "timings": {k: {"kwargs": v[0], "heat_uK": v[1]} for k, v in REMEDY_TIMINGS.items()},
                         "heat_source": "fast: m18 classical 3D (100 us steps, 0.3 mK); intermediate: m19 quantum "
@@ -182,4 +182,4 @@ def remedy():
 
 
 if __name__ == "__main__":
-    {"all": main, "mixed": mixed, "remedy": remedy}[sys.argv[1] if len(sys.argv) > 1 else "all"]()
+    {"all": main, "mixed": mixed, "remedy": remedy, "remedy3": lambda: remedy((3.0,))}[sys.argv[1] if len(sys.argv) > 1 else "all"]()
