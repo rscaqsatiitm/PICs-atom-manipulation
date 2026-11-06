@@ -28,3 +28,12 @@ def test_lenslet_array_and_common_lens_overlap_in_pupil():
         M = chain(aug_free(f1), aug_lens(f1, X), aug_free(f1), aug_free(fc), aug_lens(fc), aug_free(fc))
         y, _ = trace(M, np.full(5, X), np.linspace(-0.3, 0.3, 5))
         assert np.ptp(y) < 1e-9 and abs(y[0]) < 1e-9  # every engine's emitter centre lands on the pupil centre
+
+
+def test_heating_is_one_move_per_refill():
+    L = Layout(60, 45, 3, 1)
+    P = Params(tau=1e12, eps_img=0.0, p_move=0.0, f_load=0.5, t_reload=1e9, heat_slow=0.3)
+    s = Sim(L, Block(12, 1, 45), P, seed=5)
+    s.run(2.0)
+    st = s.heat_stats()
+    assert st["max_uK"] <= 0.3 + 1e-6 and 0 < st["moved_fraction"] < 1
