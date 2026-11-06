@@ -69,6 +69,10 @@ class Params:
     f_load: float = 0.5
     max_passes: int = 4  # per visit
     timing: Timing = field(default_factory=Timing)
+    timing_fast: Timing | None = None  # if set, used while the last imaged defect fraction exceeds switch_defect
+    switch_defect: float = 1e-2
+    heat_slow: float = 0.3  # uK per move with `timing` (m19 quantum, m18 slow-lane 3D)
+    heat_fast: float = 10.0  # uK per move with `timing_fast` (m18 classical 3D, 100 us steps, 0.3 mK)
 
 
 class Sim:
@@ -80,6 +84,7 @@ class Sim:
         self.known_holes = np.zeros_like(self.occ)
         self.known_res = np.zeros_like(self.occ)
         self.moves = np.zeros(self.occ.shape, dtype=np.int16)
+        self.heat = np.zeros(self.occ.shape, dtype=np.float32)  # uK added by moves to the atom at each site
         self.t = 0.0
         self.n_moves = 0
         self.n_fills = 0
@@ -119,16 +124,30 @@ class Sim:
         new = empty & (self.rng.random(self.occ.shape) < self.P.f_load)
         self.occ |= new
         self.known_res |= new
+        self.heat[new] = 0.0  # fresh atoms
+        self.moves[new] = 0
+
+    def heat_stats(self):
+        h = self.heat[self.comp & self.occ]
+        return {"mean_uK": float(h.mean()), "p99_uK": float(np.percentile(h, 99)), "max_uK": float(h.max()),
+                "moved_fraction": float((self.moves[self.comp & self.occ] > 0).mean())}
 
     def defect_fraction(self):
         return float((self.comp & ~self.occ).sum() / self.comp.sum())
 
     # ------------------------------------------------------------------ one visit
+    def _timing(self):
+        if self.P.timing_fast is not None and (not self.log or self.log[-1][1] > self.P.switch_defect):
+            return self.P.timing_fast, self.P.heat_fast
+        return self.P.timing, self.P.heat_slow
+
     def visit(self, k, gs):
         S, seg = self.Bk.S, self.Bk.seg
+        tm, h_move = self._timing()
+        py = tm.pitch if tm.pitch_y is None else tm.pitch_y
         rows = np.arange(k, min(k + S, self.L.R))
         cols = np.concatenate([np.arange(g * seg, min((g + 1) * seg, self.L.C)) for g in gs])
-        t_used = self.P.timing.t_reposition
+        t_used = tm.t_reposition
         n_pass = 0
         for _ in range(self.P.max_passes):
             H = self.known_holes[np.ix_(rows, cols)]
@@ -171,9 +190,10 @@ class Sim:
                             if self.rng.random() > self.P.p_move:
                                 self.occ[r_dst, b_] = True
                                 self.moves[r_dst, b_] = self.moves[r_src, a_] + 1
+                                self.heat[r_dst, b_] = self.heat[r_src, a_] + h_move
                                 self.n_fills += 1
-                        dxm = max(dxm, abs(int(b_) - int(a_)) * self.P.timing.pitch)
-            t_used += self.P.timing.pass_time(dxm, abs(j) * self.P.timing.pitch) - self.P.timing.t_reposition
+                        dxm = max(dxm, abs(int(b_) - int(a_)) * tm.pitch)
+            t_used += tm.pass_time(dxm, abs(j) * py) - tm.t_reposition
             n_pass += 1
         return t_used, n_pass
 

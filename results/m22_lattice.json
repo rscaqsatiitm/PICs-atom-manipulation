@@ -1,0 +1,230 @@
+{
+ "name": "m22_lattice",
+ "script": "scripts/m22_megascale.py",
+ "git": "7e12b6b",
+ "notes": "Lattice per site ~ 15.4 a^2 I / G (Gaussian, -20% corners) or 1.2 a^2 I / G (flat top), against pi w0^2 I / 2 for a tweezer. A light sheet for axial confinement adds roughly I x (pi/2) w_x w_z, small for w_z of a few um; not included.",
+ "inputs": {
+  "alpha_au": 1120.0,
+  "w0_tweezer_um": 0.85,
+  "eta_delivery": 0.3,
+  "reservoir": "25% of sites",
+  "uniformity": "depth >= 0.8 of peak over the array (m18: +/-20% costs nothing)",
+  "interference_gain": {
+   "incoherent (two 1D standing waves)": 8,
+   "coherent four-beam": 16
+  },
+  "cavity_buildup": [
+   10,
+   100
+  ]
+ },
+ "outputs": {
+  "rows": [
+   {
+    "N": 10000.0,
+    "pitch_um": [
+     4.0,
+     4.0
+    ],
+    "U_mK": 0.1,
+    "array_side_mm": 0.46188021535170065,
+    "tweezers_W": 20.02063767581969,
+    "lattice_gauss_incoherent_W": 496.724641938228,
+    "lattice_flattop_incoherent_W": 84.67621071170097,
+    "lattice_gauss_coherent_W": 248.362320969114,
+    "lattice_flattop_coherent_W": 42.33810535585049,
+    "lattice_gauss_incoherent_cavity10_W": 49.6724641938228,
+    "lattice_gauss_incoherent_cavity100_W": 4.96724641938228,
+    "gaussian_waist_mm": 0.9777710835268332
+   },
+   {
+    "N": 10000.0,
+    "pitch_um": [
+     4.0,
+     4.0
+    ],
+    "U_mK": 1.0,
+    "array_side_mm": 0.46188021535170065,
+    "tweezers_W": 200.2063767581969,
+    "lattice_gauss_incoherent_W": 4967.246419382281,
+    "lattice_flattop_incoherent_W": 846.7621071170098,
+    "lattice_gauss_coherent_W": 2483.6232096911403,
+    "lattice_flattop_coherent_W": 423.3810535585049,
+    "lattice_gauss_incoherent_cavity10_W": 496.72464193822805,
+    "lattice_gauss_incoherent_cavity100_W": 49.672464193822805,
+    "gaussian_waist_mm": 0.9777710835268332
+   },
+   {
+    "N": 10000.0,
+    "pitch_um": [
+     3.0,
+     4.0
+    ],
+    "U_mK": 0.1,
+    "array_side_mm": 0.4,
+    "tweezers_W": 20.02063767581969,
+    "lattice_gauss_incoherent_W": 372.54348145367106,
+    "lattice_flattop_incoherent_W": 63.50715803377572,
+    "lattice_gauss_coherent_W": 186.27174072683553,
+    "lattice_flattop_coherent_W": 31.75357901688786,
+    "lattice_gauss_incoherent_cavity10_W": 37.2543481453671,
+    "lattice_gauss_incoherent_cavity100_W": 3.7254348145367104,
+    "gaussian_waist_mm": 0.8467745974200738
+   },
+   {
+    "N": 10000.0,
+    "pitch_um": [
+     3.0,
+     4.0
+    ],
+    "U_mK": 1.0,
+    "array_side_mm": 0.4,
+    "tweezers_W": 200.2063767581969,
+    "lattice_gauss_incoherent_W": 3725.434814536711,
+    "lattice_flattop_incoherent_W": 635.0715803377573,
+    "lattice_gauss_coherent_W": 1862.7174072683556,
+    "lattice_flattop_coherent_W": 317.53579016887863,
+    "lattice_gauss_incoherent_cavity10_W": 372.5434814536711,
+    "lattice_gauss_incoherent_cavity100_W": 37.25434814536711,
+    "gaussian_waist_mm": 0.8467745974200738
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": [
+     4.0,
+     4.0
+    ],
+    "U_mK": 0.1,
+    "array_side_mm": 1.4605934866804429,
+    "tweezers_W": 200.2063767581969,
+    "lattice_gauss_incoherent_W": 4967.24641938228,
+    "lattice_flattop_incoherent_W": 846.7621071170097,
+    "lattice_gauss_coherent_W": 2483.62320969114,
+    "lattice_flattop_coherent_W": 423.38105355850485,
+    "lattice_gauss_incoherent_cavity10_W": 496.724641938228,
+    "lattice_gauss_incoherent_cavity100_W": 49.6724641938228,
+    "gaussian_waist_mm": 3.0919836541955346
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": [
+     4.0,
+     4.0
+    ],
+    "U_mK": 1.0,
+    "array_side_mm": 1.4605934866804429,
+    "tweezers_W": 2002.0637675819692,
+    "lattice_gauss_incoherent_W": 49672.4641938228,
+    "lattice_flattop_incoherent_W": 8467.621071170097,
+    "lattice_gauss_coherent_W": 24836.2320969114,
+    "lattice_flattop_coherent_W": 4233.8105355850485,
+    "lattice_gauss_incoherent_cavity10_W": 4967.24641938228,
+    "lattice_gauss_incoherent_cavity100_W": 496.724641938228,
+    "gaussian_waist_mm": 3.0919836541955346
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": [
+     3.0,
+     4.0
+    ],
+    "U_mK": 0.1,
+    "array_side_mm": 1.2649110640673518,
+    "tweezers_W": 200.2063767581969,
+    "lattice_gauss_incoherent_W": 3725.434814536709,
+    "lattice_flattop_incoherent_W": 635.0715803377573,
+    "lattice_gauss_coherent_W": 1862.7174072683545,
+    "lattice_flattop_coherent_W": 317.53579016887863,
+    "lattice_gauss_incoherent_cavity10_W": 372.5434814536709,
+    "lattice_gauss_incoherent_cavity100_W": 37.25434814536709,
+    "gaussian_waist_mm": 2.677736392619572
+   },
+   {
+    "N": 100000.0,
+    "pitch_um": [
+     3.0,
+     4.0
+    ],
+    "U_mK": 1.0,
+    "array_side_mm": 1.2649110640673518,
+    "tweezers_W": 2002.0637675819692,
+    "lattice_gauss_incoherent_W": 37254.3481453671,
+    "lattice_flattop_incoherent_W": 6350.715803377572,
+    "lattice_gauss_coherent_W": 18627.17407268355,
+    "lattice_flattop_coherent_W": 3175.357901688786,
+    "lattice_gauss_incoherent_cavity10_W": 3725.43481453671,
+    "lattice_gauss_incoherent_cavity100_W": 372.54348145367095,
+    "gaussian_waist_mm": 2.677736392619572
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": [
+     4.0,
+     4.0
+    ],
+    "U_mK": 0.1,
+    "array_side_mm": 4.618802153517006,
+    "tweezers_W": 2002.0637675819682,
+    "lattice_gauss_incoherent_W": 49672.46419382277,
+    "lattice_flattop_incoherent_W": 8467.621071170095,
+    "lattice_gauss_coherent_W": 24836.232096911386,
+    "lattice_flattop_coherent_W": 4233.810535585048,
+    "lattice_gauss_incoherent_cavity10_W": 4967.246419382277,
+    "lattice_gauss_incoherent_cavity100_W": 496.7246419382277,
+    "gaussian_waist_mm": 9.777710835268328
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": [
+     4.0,
+     4.0
+    ],
+    "U_mK": 1.0,
+    "array_side_mm": 4.618802153517006,
+    "tweezers_W": 20020.637675819686,
+    "lattice_gauss_incoherent_W": 496724.6419382278,
+    "lattice_flattop_incoherent_W": 84676.21071170096,
+    "lattice_gauss_coherent_W": 248362.3209691139,
+    "lattice_flattop_coherent_W": 42338.10535585048,
+    "lattice_gauss_incoherent_cavity10_W": 49672.46419382278,
+    "lattice_gauss_incoherent_cavity100_W": 4967.246419382278,
+    "gaussian_waist_mm": 9.777710835268328
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": [
+     3.0,
+     4.0
+    ],
+    "U_mK": 0.1,
+    "array_side_mm": 4.0,
+    "tweezers_W": 2002.0637675819682,
+    "lattice_gauss_incoherent_W": 37254.348145367105,
+    "lattice_flattop_incoherent_W": 6350.715803377572,
+    "lattice_gauss_coherent_W": 18627.174072683552,
+    "lattice_flattop_coherent_W": 3175.357901688786,
+    "lattice_gauss_incoherent_cavity10_W": 3725.4348145367103,
+    "lattice_gauss_incoherent_cavity100_W": 372.54348145367106,
+    "gaussian_waist_mm": 8.467745974200739
+   },
+   {
+    "N": 1000000.0,
+    "pitch_um": [
+     3.0,
+     4.0
+    ],
+    "U_mK": 1.0,
+    "array_side_mm": 4.0,
+    "tweezers_W": 20020.637675819686,
+    "lattice_gauss_incoherent_W": 372543.48145367106,
+    "lattice_flattop_incoherent_W": 63507.15803377573,
+    "lattice_gauss_coherent_W": 186271.74072683553,
+    "lattice_flattop_coherent_W": 31753.579016887867,
+    "lattice_gauss_incoherent_cavity10_W": 37254.348145367105,
+    "lattice_gauss_incoherent_cavity100_W": 3725.4348145367107,
+    "gaussian_waist_mm": 8.467745974200739
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

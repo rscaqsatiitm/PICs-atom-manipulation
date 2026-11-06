@@ -1,5 +1,10 @@
 # Rearranging 10^4, 10^5 and 10^6-atom arrays at 3-4 um pitch
 
+> Follow-up (Sec. 9): a 3 x 4 um lattice (3 um along the rows, rows 4 um apart) transports as cleanly as 4 x 4 um
+> and has 33% more sites. This supersedes the corridor conclusion of Sec. 5. A free-space lattice needs more power
+> than tweezers; only a cavity lattice (buildup ~100) needs less. At 10^6 sites, fast handoff steps are needed in
+> steady state as well, at a cost of at most 10 uK per refilled atom.
+
 Follow-up to `docs/scaling_beyond.md`, `docs/transport3d.md`, `docs/rearrangement.md` and `docs/repair.md`. Code:
 `scripts/m22_megascale.py` (budget, tiling), `picsim/megasort.py` and `scripts/m23_steady.py` (assembly and steady
 state), `scripts/m18_transport3d.py pitch3` (3 um pitch); `picsim/abcd.py`; results `results/m22_*.json`,
@@ -189,6 +194,64 @@ potential and its power budget at 10^6; (iii) an optical design of the large-fie
 layout; (iv) per-atom heating in the steady-state model, with fast and slow steps mixed (slow for refills, fast
 for assembly).
 
+## 9. Follow-up: denser lattice, static potential and step timing
+
+**3 um along the rows, 4 um across (`results/m18_aniso.json`, 3,000 atoms per case, 200 us ramps and 400 us lane
+steps).** Only the closest approach to waiting atoms matters, and that is set by the lane (2 um from the rows), not
+by the pitch along the row. Hence a 3 x 4 um lattice transports as cleanly as 4 x 4 um:
+
+| layout | hold / moving | transported | heating | waiting atoms lost: in-row neighbour at 3 um, passed by the lane, next row beside the drop |
+|---|---|---|---|---|
+| 3 x 4 um, lane 2 um | 0.1 / 0.3 mK (5 uK) | 3000/3000 | 0.16 uK | 0 / 0 / 0 |
+| 3 x 4 um, lane 2 um | 0.1 / 0.5 mK (5 uK) | 3000/3000 | 0.05 uK | 0 / 0 / 3 of 3000 |
+| 3 x 4 um, lane 2 um | 0.2 / 0.6 mK (10 uK) | 3000/3000 | 0.59 uK | 0 / 0 / 0 |
+| 3 um, corridor rows 6 um apart, lane 3 um | all three | 3000/3000 | 0.3-1.5 uK | 0 / 0 / 0 |
+
+The 3 x 4 um lattice has 33% more sites per area than 4 x 4 um (0.063 against 0.047 computation sites per um^2
+with a 3:1 reservoir layout), at no transport cost. The corridor layout is safe but less dense. This replaces
+the conclusion of Sec. 5: 3 um pitch works along the rows. Only the row spacing must stay at 4 um.
+
+**Static potential: tweezers or a lattice (`results/m22_lattice.json`, DERIVED).** The figures are laser power at
+30% delivery, for N sites plus a 25% reservoir at 4 x 4 um, at depths of 0.1 / 1 mK. The lattice uses two
+orthogonal retro-reflected beams (incoherent sum, peak 8 I per beam; coherent four-beam: 16), held within -20% of
+the peak over the array.
+
+| static potential | 10^4 sites | 10^5 sites | 10^6 sites |
+|---|---|---|---|
+| tweezer array (w0 0.85 um) | 20 / 200 W | 0.2 / 2.0 kW | 2.0 / 20 kW |
+| free-space lattice, Gaussian beams | 0.5 / 5.0 kW | 5 / 50 kW | 50 / 500 kW |
+| free-space lattice, flat-top beams (incoherent / coherent) | 85 / 42 W ; 0.85 / 0.42 kW | 0.85 / 0.42 ; 8.5 / 4.2 kW | 8.5 / 4.2 ; 85 / 42 kW |
+| cavity lattice, Gaussian, buildup 10 / 100 | 50 / 5 W ; 0.5 / 0.05 kW | 0.5 / 0.05 ; 5 / 0.5 kW | 5 / 0.5 ; 50 / 5 kW |
+
+(Each pair is 10 / 100 buildup or incoherent / coherent; then ";" separates 0.1 mK and 1 mK.) A tweezer puts its
+power into about pi w0^2/2 = 1.1 um^2 per site. A Gaussian lattice beam that keeps the corners within 20% spreads
+it over about 15 a^2 / G = 31 um^2. Hence a free-space lattice loses by about 25 with Gaussian beams and by 2 to 4
+with flat-top beams. Only a cavity with a buildup near 100 wins, by a factor of about 4. That cavity would need a
+waist near 10 mm for 10^6 sites, which is demanding. Two levers do more than the choice of potential: depth (a
+factor of 10 between 1 and 0.1 mK), and a higher delivery efficiency for the simpler lattice optics (up to about
+2.7 if 0.8 instead of 0.3). For 10^6 sites, the static potential needs about 2 kW at the hold depth with tweezers,
+or about 0.5 kW with a buildup-100 cavity lattice. Loading and imaging must happen at a lower depth, or in a
+smaller zone.
+
+**Step timing in steady state, with heating per atom (`results/m23_mixed.json`, 32 x 4 block, 85% loading,
+tau 3000 s).** Heating per move: 0.3 uK with slow steps and 10 uK with fast steps (Sec. 6).
+
+| sites, pitch | timing | to 1e-3 | steady-state defects | atoms moved | heating: mean / max |
+|---|---|---|---|---|---|
+| 10^5, 4 x 4 | slow | 0.35 s | 2.5e-4 | 16% | 0.05 / 0.3 uK |
+| 10^5, 3 x 4 | slow | 0.23 s | 2.5e-4 | 16% | 0.05 / 0.3 uK |
+| 10^6, 4 x 4 | slow | not in 20 s | 1.2e-3 | 17% | 0.05 / 0.3 uK |
+| 10^6, 4 x 4 | fast | 1.45 s | 2.5e-4 | 17% | 1.7 / 10 uK |
+| 10^6, 4 x 4 | adaptive (fast until 1e-2, then slow) | 2.47 s | 1.2e-3 | 17% | 1.4 / 10 uK |
+| 10^6, 3 x 4 | fast | 1.45 s | 8.1e-4 | 17% | 1.7 / 10 uK |
+
+Every atom moves at most once (refills come straight from a reservoir row), so no atom gains more than one move's
+heating. Up to 10^5 sites, the slow, cold steps reach the loss-limited floor. At 10^6 sites the refill load is
+too high for slow steps: switching to them after assembly brings back the latency-limited floor of 1.2e-3. Fast
+steps are therefore needed in steady state too, at a cost of at most 10 uK per refilled atom. The 3 x 4 um lattice
+at 10^6 sites carries 33% more refills per block position and rises to 8e-4. A larger block (more engines) or
+intermediate steps (about 2 uK per move at 200 us lane steps, from the quantum check) would restore 2.5e-4.
+
 ## Verification notes
 
 | value | location | type | pointer |
@@ -204,3 +267,6 @@ for assembly).
 | continuous lattice array > 1,000 atoms | Sec. 3 | SEARCH SUMMARY | Gyger et al., arXiv:2402.04994 (abstract not read) |
 | eta 0.3, hold 0.1 mK, load 1 mK, w0 0.85 um, eps_img, p_move, T_img, t_reload | Sec. 3, 6 | CHOICE | stated assumptions |
 | refractive NA 0.5 objective fields | Sec. 2 | RECALLED | verify |
+| anisotropic and corridor transport | Sec. 9 | SIM | results/m18_aniso.json (3,000 atoms; review) |
+| tweezer and lattice power | Sec. 9 | DERIVED | results/m22_lattice.json (interference gain 8 / 16, -20% uniformity, eta 0.3, cavity buildup CHOICE) |
+| mixed timing and heating | Sec. 9 | SIM | results/m23_mixed.json (review) |

@@ -1,0 +1,290 @@
+{
+ "name": "m23_mixed",
+ "script": "scripts/m23_steady.py",
+ "git": "9b06ae2",
+ "notes": "3 um along the rows x 4 um across (anisotropic lattice), lanes 2 um from the rows (m18_aniso).",
+ "inputs": {
+  "block": [
+   32,
+   4
+  ],
+  "tau_s": 3000,
+  "f_load": 0.85,
+  "layout": "3:1 computation:reservoir rows",
+  "row_spacing_um": 4.0,
+  "heat_per_move_uK": {
+   "slow": 0.3,
+   "fast": 10.0
+  },
+  "adaptive": "fast steps while the imaged defect fraction > 1e-2, slow after"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "N": 100000.0,
+    "f": 0.85,
+    "mode": "adaptive",
+    "pitch_x": 4.0,
+    "t_end": 12.0,
+    "rows": 421,
+    "cols": 317,
+    "comp_sites": 100172,
+    "seg_sites": 46,
+    "density_comp_per_um2": 0.04691211401425178,
+    "t_1e-2_s": 0.12,
+    "t_1e-3_s": 0.12,
+    "steady_defect_fraction": 0.0002477880901991432,
+    "heat": {
+     "mean_uK": 1.4782819747924805,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.16231678581412995
+    },
+    "fills_total": 16494
+   },
+   {
+    "N": 100000.0,
+    "f": 0.85,
+    "mode": "fast",
+    "pitch_x": 4.0,
+    "t_end": 12.0,
+    "rows": 421,
+    "cols": 317,
+    "comp_sites": 100172,
+    "seg_sites": 46,
+    "density_comp_per_um2": 0.04691211401425178,
+    "t_1e-2_s": 0.12,
+    "t_1e-3_s": 0.12,
+    "steady_defect_fraction": 0.00024350973468491343,
+    "heat": {
+     "mean_uK": 1.6224365234375,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.1622436550250604
+    },
+    "fills_total": 16487
+   },
+   {
+    "N": 100000.0,
+    "f": 0.85,
+    "mode": "slow",
+    "pitch_x": 4.0,
+    "t_end": 12.0,
+    "rows": 421,
+    "cols": 317,
+    "comp_sites": 100172,
+    "seg_sites": 46,
+    "density_comp_per_um2": 0.04691211401425178,
+    "t_1e-2_s": 0.3478706741162835,
+    "t_1e-3_s": 0.3478706741162835,
+    "steady_defect_fraction": 0.00025064032720862976,
+    "heat": {
+     "mean_uK": 0.04865147918462753,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.16217160773662717
+    },
+    "fills_total": 16497
+   },
+   {
+    "N": 100000.0,
+    "f": 0.85,
+    "mode": "adaptive",
+    "pitch_x": 3.0,
+    "t_end": 12.0,
+    "rows": 365,
+    "cols": 366,
+    "comp_sites": 100284,
+    "seg_sites": 61,
+    "density_comp_per_um2": 0.06255707762557078,
+    "t_1e-2_s": 0.12,
+    "t_1e-3_s": 0.12,
+    "steady_defect_fraction": 0.00024501843336353327,
+    "heat": {
+     "mean_uK": 1.4784990549087524,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.16177130603899667
+    },
+    "fills_total": 16438
+   },
+   {
+    "N": 100000.0,
+    "f": 0.85,
+    "mode": "fast",
+    "pitch_x": 3.0,
+    "t_end": 12.0,
+    "rows": 365,
+    "cols": 366,
+    "comp_sites": 100284,
+    "seg_sites": 61,
+    "density_comp_per_um2": 0.06255707762557078,
+    "t_1e-2_s": 0.12,
+    "t_1e-3_s": 0.12,
+    "steady_defect_fraction": 0.00024323777614432152,
+    "heat": {
+     "mean_uK": 1.618961215019226,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.1618961184026808
+    },
+    "fills_total": 16478
+   },
+   {
+    "N": 100000.0,
+    "f": 0.85,
+    "mode": "slow",
+    "pitch_x": 3.0,
+    "t_end": 12.0,
+    "rows": 365,
+    "cols": 366,
+    "comp_sites": 100284,
+    "seg_sites": 61,
+    "density_comp_per_um2": 0.06255707762557078,
+    "t_1e-2_s": 0.23089147024602796,
+    "t_1e-3_s": 0.23089147024602796,
+    "steady_defect_fraction": 0.0002521410622403802,
+    "heat": {
+     "mean_uK": 0.04861670732498169,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.16205569074879322
+    },
+    "fills_total": 16471
+   },
+   {
+    "N": 1000000.0,
+    "f": 0.85,
+    "mode": "adaptive",
+    "pitch_x": 4.0,
+    "t_end": 20.0,
+    "rows": 1334,
+    "cols": 1000,
+    "comp_sites": 1001000,
+    "seg_sites": 46,
+    "density_comp_per_um2": 0.04689842578710645,
+    "t_1e-2_s": 1.1184041351253424,
+    "t_1e-3_s": 2.4678687436978293,
+    "steady_defect_fraction": 0.0012204462204462206,
+    "heat": {
+     "mean_uK": 1.409756064414978,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.16970211012413494
+    },
+    "fills_total": 173440
+   },
+   {
+    "N": 1000000.0,
+    "f": 0.85,
+    "mode": "fast",
+    "pitch_x": 4.0,
+    "t_end": 20.0,
+    "rows": 1334,
+    "cols": 1000,
+    "comp_sites": 1001000,
+    "seg_sites": 46,
+    "density_comp_per_um2": 0.04689842578710645,
+    "t_1e-2_s": 1.1184041351253424,
+    "t_1e-3_s": 1.4505124291110076,
+    "steady_defect_fraction": 0.0002461612461612462,
+    "heat": {
+     "mean_uK": 1.7094353437423706,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.1709435357360538
+    },
+    "fills_total": 174880
+   },
+   {
+    "N": 1000000.0,
+    "f": 0.85,
+    "mode": "slow",
+    "pitch_x": 4.0,
+    "t_end": 20.0,
+    "rows": 1334,
+    "cols": 1000,
+    "comp_sites": 1001000,
+    "seg_sites": 46,
+    "density_comp_per_um2": 0.04689842578710645,
+    "t_1e-2_s": 3.397344643360966,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.0011694601694601694,
+    "heat": {
+     "mean_uK": 0.05088486522436142,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.16961621236729044
+    },
+    "fills_total": 173287
+   },
+   {
+    "N": 1000000.0,
+    "f": 0.85,
+    "mode": "adaptive",
+    "pitch_x": 3.0,
+    "t_end": 20.0,
+    "rows": 1155,
+    "cols": 1155,
+    "comp_sites": 1001385,
+    "seg_sites": 61,
+    "density_comp_per_um2": 0.06255411255411256,
+    "t_1e-2_s": 1.0070035001115873,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.0015750407907270654,
+    "heat": {
+     "mean_uK": 1.4309452772140503,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.1695520208813573
+    },
+    "fills_total": 173337
+   },
+   {
+    "N": 1000000.0,
+    "f": 0.85,
+    "mode": "fast",
+    "pitch_x": 3.0,
+    "t_end": 20.0,
+    "rows": 1155,
+    "cols": 1155,
+    "comp_sites": 1001385,
+    "seg_sites": 61,
+    "density_comp_per_um2": 0.06255411255411256,
+    "t_1e-2_s": 1.0070035001115873,
+    "t_1e-3_s": 1.449244543816308,
+    "steady_defect_fraction": 0.0008096933894703983,
+    "heat": {
+     "mean_uK": 1.7003366947174072,
+     "p99_uK": 10.0,
+     "max_uK": 10.0,
+     "moved_fraction": 0.17003366835125014
+    },
+    "fills_total": 174111
+   },
+   {
+    "N": 1000000.0,
+    "f": 0.85,
+    "mode": "slow",
+    "pitch_x": 3.0,
+    "t_end": 20.0,
+    "rows": 1155,
+    "cols": 1155,
+    "comp_sites": 1001385,
+    "seg_sites": 61,
+    "density_comp_per_um2": 0.06255411255411256,
+    "t_1e-2_s": 3.044720127170561,
+    "t_1e-3_s": null,
+    "steady_defect_fraction": 0.0015623546573181326,
+    "heat": {
+     "mean_uK": 0.05078573897480965,
+     "p99_uK": 0.30000001192092896,
+     "max_uK": 0.30000001192092896,
+     "moved_fraction": 0.16928578714620873
+    },
+    "fills_total": 172968
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

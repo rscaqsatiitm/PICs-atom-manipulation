@@ -90,5 +90,54 @@ def main():
     return rows
 
 
+def one_mixed(cfg):
+    N, f, mode, px = cfg["N"], cfg["f"], cfg["mode"], cfg["pitch_x"]
+    B, Bc = LAYOUTS[f]
+    py = 4.0
+    C = int(np.ceil(np.sqrt(N * py / px)))  # roughly square array in micrometres
+    R = int(np.ceil(N / C * B / Bc))
+    seg = int(180.0 // px) + 1
+    slow = Timing(**{**TIMINGS["slow (ramps 200, lanes 400 us)"].__dict__, "pitch": px * 1e-6, "pitch_y": py * 1e-6})
+    fast = Timing(**{**TIMINGS["fast (ramps 50, lanes 100, x 200 us/40 um)"].__dict__, "pitch": px * 1e-6, "pitch_y": py * 1e-6})
+    if mode == "slow":
+        P = Params(tau=3000.0, f_load=f, timing=slow)
+    elif mode == "fast":
+        P = Params(tau=3000.0, f_load=f, timing=fast, heat_slow=10.0)
+    else:  # adaptive: fast while defects > 1e-2, then slow
+        P = Params(tau=3000.0, f_load=f, timing=slow, timing_fast=fast)
+    sim = Sim(Layout(R, C, B, Bc), Block(32, 4, seg), P, seed=3)
+    t_end = cfg["t_end"]
+    t3 = sim.run(t_end, target=1e-3)
+    d = np.array(sim.log)
+    t2 = next((t for t, x in d if x <= 1e-2), None)
+    late = d[d[:, 0] >= t_end - 3.0, 1]
+    return {**cfg, "rows": R, "cols": C, "comp_sites": int(sim.comp.sum()), "seg_sites": seg,
+            "density_comp_per_um2": float(sim.comp.sum() / (R * py * C * px)), "t_1e-2_s": t2, "t_1e-3_s": t3,
+            "steady_defect_fraction": float(late.mean()), "heat": sim.heat_stats(), "fills_total": sim.n_fills}
+
+
+def mixed():
+    cfgs = []
+    for N in (1e5, 1e6):
+        for px in (4.0, 3.0):
+            for mode in ("slow", "fast", "adaptive"):
+                cfgs.append({"N": N, "f": 0.85, "mode": mode, "pitch_x": px, "t_end": 12.0 if N < 1e6 else 20.0})
+    cfgs.sort(key=lambda c: -c["N"])
+    with ProcessPoolExecutor(4) as ex:
+        rows = list(ex.map(one_mixed, cfgs))
+    rows.sort(key=lambda r: (r["N"], -r["pitch_x"], r["mode"]))
+    for r in rows:
+        print(int(r["N"]), r["pitch_x"], r["mode"], "| t1e-2", r["t_1e-2_s"], "t1e-3", r["t_1e-3_s"],
+              "| steady %.2e" % r["steady_defect_fraction"], "| heat", {k: round(v, 2) for k, v in r["heat"].items()},
+              "| density %.4f" % r["density_comp_per_um2"], flush=True)
+    save_result("m23_mixed", script=SCRIPT,
+                inputs={"block": [32, 4], "tau_s": 3000, "f_load": 0.85, "layout": "3:1 computation:reservoir rows",
+                        "row_spacing_um": 4.0, "heat_per_move_uK": {"slow": 0.3, "fast": 10.0},
+                        "adaptive": "fast steps while the imaged defect fraction > 1e-2, slow after"},
+                outputs={"rows": rows},
+                notes="3 um along the rows x 4 um across (anisotropic lattice), lanes 2 um from the rows (m18_aniso).")
+    return rows
+
+
 if __name__ == "__main__":
-    main()
+    {"all": main, "mixed": mixed}[sys.argv[1] if len(sys.argv) > 1 else "all"]()
