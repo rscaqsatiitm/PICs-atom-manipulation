@@ -1,0 +1,688 @@
+{
+ "name": "m4_dynamics",
+ "script": "scripts/m4_switches.py",
+ "git": "4edd7f4",
+ "notes": "Vpi at 894.6 nm is bracketed, not known: lambda scaling of the 795 nm device and linear interpolation to the 1013 nm device (a different design) differ.",
+ "inputs": {
+  "rise_ref": {
+   "value": 2.6e-08,
+   "unit": "s",
+   "kind": "SOURCE",
+   "ref": "Zhao et al., arXiv:2508.09920 (abstract and Sec. 2, read 2026-10-31): 10-90% rise 26 +/- 7 ns"
+  },
+  "Vpi_795": {
+   "value": 74.7,
+   "unit": "V",
+   "kind": "SOURCE",
+   "ref": "Zhao et al., arXiv:2508.09920 (abstract and Sec. 2, read 2026-10-31): single-ended V_pi 74.7 +/- 3.7 V at 795 nm"
+  },
+  "Vpi_1013": {
+   "value": 200.0,
+   "unit": "V",
+   "kind": "SOURCE",
+   "ref": "Zhao et al., arXiv:2508.09920 (abstract and Sec. 2, read 2026-10-31): V_pi 200 V at 1013 nm"
+  },
+  "model": "single mechanical mode, f0 and Q are CHOICE sweep values (not measured)"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 13.049999999999997,
+    "t_to_50dB_ns": 571.23
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 12.81,
+    "t_to_50dB_ns": 560.04
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 12.45,
+    "t_to_50dB_ns": 544.02
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 20.310000000000002,
+    "t_to_50dB_ns": 49.05
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 19.92,
+    "t_to_50dB_ns": 278.31
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 19.349999999999998,
+    "t_to_50dB_ns": 327.06
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 54.660000000000004,
+    "t_to_50dB_ns": 98.7
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 55.589999999999996,
+    "t_to_50dB_ns": 98.39999999999999
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 56.85,
+    "t_to_50dB_ns": 147.9
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 11.900000000000002,
+    "t_to_50dB_ns": 1958.5
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 11.600000000000001,
+    "t_to_50dB_ns": 1920.1000000000001
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 11.300000000000002,
+    "t_to_50dB_ns": 1865.2
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 20.200000000000003,
+    "t_to_50dB_ns": 48.50000000000001
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 19.7,
+    "t_to_50dB_ns": 864.6
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 19.2,
+    "t_to_50dB_ns": 1125.4
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 55.7,
+    "t_to_50dB_ns": 97.9
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 56.50000000000001,
+    "t_to_50dB_ns": 97.5
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 57.699999999999996,
+    "t_to_50dB_ns": 385.1
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 11.700000000000001,
+    "t_to_50dB_ns": 5904.6
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 11.100000000000001,
+    "t_to_50dB_ns": 5788.8
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 10.799999999999999,
+    "t_to_50dB_ns": 5623.2
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 20.099999999999998,
+    "t_to_50dB_ns": 48.300000000000004
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 19.799999999999997,
+    "t_to_50dB_ns": 2577.2999999999997
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 18.900000000000002,
+    "t_to_50dB_ns": 3315.6
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 55.5,
+    "t_to_50dB_ns": 97.8
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 56.699999999999996,
+    "t_to_50dB_ns": 97.5
+   },
+   {
+    "f0_MHz": 10.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 57.900000000000006,
+    "t_to_50dB_ns": 1052.4
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 6.524999999999999,
+    "t_to_50dB_ns": 285.615
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 6.405,
+    "t_to_50dB_ns": 280.02
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 6.225,
+    "t_to_50dB_ns": 272.01
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 10.155000000000001,
+    "t_to_50dB_ns": 24.525
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 9.96,
+    "t_to_50dB_ns": 139.155
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 9.674999999999999,
+    "t_to_50dB_ns": 163.53
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 27.330000000000002,
+    "t_to_50dB_ns": 49.35
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 27.794999999999998,
+    "t_to_50dB_ns": 49.199999999999996
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 28.425,
+    "t_to_50dB_ns": 73.95
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 5.950000000000001,
+    "t_to_50dB_ns": 979.25
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 5.800000000000001,
+    "t_to_50dB_ns": 960.0500000000001
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 5.650000000000001,
+    "t_to_50dB_ns": 932.6
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 10.100000000000001,
+    "t_to_50dB_ns": 24.250000000000004
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 9.85,
+    "t_to_50dB_ns": 432.3
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 9.6,
+    "t_to_50dB_ns": 562.7
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 27.85,
+    "t_to_50dB_ns": 48.95
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 28.250000000000004,
+    "t_to_50dB_ns": 48.75
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 28.849999999999998,
+    "t_to_50dB_ns": 192.55
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 5.8500000000000005,
+    "t_to_50dB_ns": 2952.3
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 5.550000000000001,
+    "t_to_50dB_ns": 2894.4
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 5.3999999999999995,
+    "t_to_50dB_ns": 2811.6
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 10.049999999999999,
+    "t_to_50dB_ns": 24.150000000000002
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 9.899999999999999,
+    "t_to_50dB_ns": 1288.6499999999999
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 9.450000000000001,
+    "t_to_50dB_ns": 1657.8
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 27.75,
+    "t_to_50dB_ns": 48.9
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 28.349999999999998,
+    "t_to_50dB_ns": 48.75
+   },
+   {
+    "f0_MHz": 20.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 28.950000000000003,
+    "t_to_50dB_ns": 526.2
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 3.2599999999999993,
+    "t_to_50dB_ns": 142.81
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 3.1999999999999997,
+    "t_to_50dB_ns": 140.01
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 3.1099999999999994,
+    "t_to_50dB_ns": 136.01
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 5.0699999999999985,
+    "t_to_50dB_ns": 12.259999999999998
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 4.97,
+    "t_to_50dB_ns": 69.57
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 4.829999999999999,
+    "t_to_50dB_ns": 81.76
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 13.67,
+    "t_to_50dB_ns": 24.669999999999998
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 13.899999999999999,
+    "t_to_50dB_ns": 24.599999999999998
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 3,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 14.219999999999999,
+    "t_to_50dB_ns": 36.97
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 2.9750000000000005,
+    "t_to_50dB_ns": 489.625
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 2.9000000000000004,
+    "t_to_50dB_ns": 480.02500000000003
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 2.8250000000000006,
+    "t_to_50dB_ns": 466.3
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 5.050000000000001,
+    "t_to_50dB_ns": 12.125000000000002
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 4.925,
+    "t_to_50dB_ns": 216.15
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 4.8,
+    "t_to_50dB_ns": 281.35
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 13.925,
+    "t_to_50dB_ns": 24.475
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 14.125000000000002,
+    "t_to_50dB_ns": 24.375
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 10,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 14.424999999999999,
+    "t_to_50dB_ns": 96.275
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.0,
+    "rise_ns": 2.9250000000000003,
+    "t_to_50dB_ns": 1476.15
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.02,
+    "rise_ns": 2.7750000000000004,
+    "t_to_50dB_ns": 1447.2
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "none",
+    "f0_error": 0.05,
+    "rise_ns": 2.6999999999999997,
+    "t_to_50dB_ns": 1405.8
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.0,
+    "rise_ns": 5.0249999999999995,
+    "t_to_50dB_ns": 12.075000000000001
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.02,
+    "rise_ns": 4.949999999999999,
+    "t_to_50dB_ns": 644.3249999999999
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "ZV",
+    "f0_error": 0.05,
+    "rise_ns": 4.7250000000000005,
+    "t_to_50dB_ns": 828.9
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.0,
+    "rise_ns": 13.875,
+    "t_to_50dB_ns": 24.45
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.02,
+    "rise_ns": 14.174999999999999,
+    "t_to_50dB_ns": 24.375
+   },
+   {
+    "f0_MHz": 40.0,
+    "Q": 30,
+    "shaper": "ZVD",
+    "f0_error": 0.05,
+    "rise_ns": 14.475000000000001,
+    "t_to_50dB_ns": 263.1
+   }
+  ],
+  "drive": {
+   "Vpi_895_lambda_scaled_V": 84.05864150943397,
+   "Vpi_895_linear_interp_V": 131.94715596330275,
+   "V_noise_rms_for_target_V": {
+    "Vpi=84": 0.1692242079097336,
+    "Vpi=132": 0.2656318559624358
+   }
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

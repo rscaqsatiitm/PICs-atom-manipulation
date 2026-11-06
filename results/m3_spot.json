@@ -1,0 +1,42 @@
+{
+ "name": "m3_spot",
+ "script": "scripts/m3_opa.py",
+ "git": "745f3cc",
+ "notes": "Uniform channel amplitudes give a sinc^2-like profile along the steering axis with ~4-5% first sidelobes; edge apodisation trades spot width for sidelobes.",
+ "inputs": {
+  "N": 64,
+  "pitch_um": 2.0,
+  "NA": {
+   "value": 0.5,
+   "unit": "-",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Table 1: meta-objective NA >= 0.5"
+  },
+  "w0_proposal": {
+   "value": 1.04,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget: 1.04 um waist"
+  }
+ },
+ "outputs": {
+  "uniform": {
+   "x_peak": 0.0,
+   "peak": 0.4862809395296178,
+   "fwhm": 0.9449213730133726,
+   "w_1e2": 0.746644204429876,
+   "sidelobe_rel": 0.047223443953357924,
+   "transmission": 0.5184404663498979
+  },
+  "gauss_edge_1e2": {
+   "x_peak": 0.0,
+   "peak": 0.4545586803677697,
+   "fwhm": 1.09165058023171,
+   "w_1e2": 0.8773408496775488,
+   "sidelobe_rel": 0.008628641813387494,
+   "transmission": 0.5196212133921894
+  },
+  "proposal_gaussian_fwhm_um": 1.2245064234160936
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

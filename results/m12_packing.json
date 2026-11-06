@@ -1,0 +1,103 @@
+{
+ "name": "m12_packing",
+ "script": "scripts/m12_scaling.py",
+ "git": "ece44ce",
+ "notes": "barrier: intensity midway between neighbours relative to the mean tweezer peak.",
+ "inputs": {
+  "design": {
+   "N_ports": 128,
+   "N_arms": 192,
+   "w_emit": 1.2,
+   "p_out": 1.5,
+   "w_port": 1.7,
+   "w_arm": 1.7
+  },
+  "T": "results/m10_T_opt_A.npz (BPM)",
+  "row_um": "+/-60",
+  "phases": "alternating 0, pi/2",
+  "synthesis": "LinearSynth, Gaussian targets FWHM 1.68 um"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "spacing_um": 6.0,
+    "K": 21,
+    "peak_spread": 0.0013609527266916733,
+    "peak_per_tweezer_per_unit_power": 0.25563315064097786,
+    "barrier_max_rel": 0.0004640482198492677,
+    "pos_err_max_nm": 2.275670067795943,
+    "fwhm_mean_um": 1.7169765049848202,
+    "move_others_pos_nm": 1.5751311983365213,
+    "move_others_peak": 0.0010789842013276818,
+    "off_residual": 4.854530251833896e-06,
+    "off_others_peak": 0.0009167748977736423
+   },
+   {
+    "spacing_um": 4.0,
+    "K": 31,
+    "peak_spread": 0.003086686883927028,
+    "peak_per_tweezer_per_unit_power": 0.25613121588140036,
+    "barrier_max_rel": 0.03772245036787436,
+    "pos_err_max_nm": 3.4016537961392146,
+    "fwhm_mean_um": 1.7246419840275689,
+    "move_others_pos_nm": 2.589666434351656,
+    "move_others_peak": 0.0010030517667014571,
+    "off_residual": 9.561706223782938e-06,
+    "off_others_peak": 0.0021875029945799263
+   },
+   {
+    "spacing_um": 3.0,
+    "K": 41,
+    "peak_spread": 0.004257106385839205,
+    "peak_per_tweezer_per_unit_power": 0.25620337355203704,
+    "barrier_max_rel": 0.22200403912863548,
+    "pos_err_max_nm": 4.725815523642041,
+    "fwhm_mean_um": 1.7488730405860846,
+    "move_others_pos_nm": 3.311098091398179,
+    "move_others_peak": 0.0010677322590331162,
+    "off_residual": 0.0008777898120050669,
+    "off_others_peak": 0.002918749876489324
+   },
+   {
+    "spacing_um": 2.5,
+    "K": 49,
+    "peak_spread": 0.009750042614300227,
+    "peak_per_tweezer_per_unit_power": 0.25967459919286745,
+    "barrier_max_rel": 0.4307765695155004,
+    "pos_err_max_nm": 8.666555111666696,
+    "fwhm_mean_um": 1.8402976907051547,
+    "move_others_pos_nm": 10.279247036454997,
+    "move_others_peak": 0.007893291556839266,
+    "off_residual": 0.008747188430864371,
+    "off_others_peak": 0.006495034377617448
+   },
+   {
+    "spacing_um": 2.0,
+    "K": 61,
+    "peak_spread": 0.049194469287729414,
+    "peak_per_tweezer_per_unit_power": 0.2657119032513534,
+    "barrier_max_rel": 0.759190217523067,
+    "pos_err_max_nm": 60.03324769201157,
+    "fwhm_mean_um": 3.0022043401001564,
+    "move_others_pos_nm": 74.22453502711713,
+    "move_others_peak": 0.051497555241218906,
+    "off_residual": 0.07037771115342108,
+    "off_others_peak": 0.0510974328976328
+   },
+   {
+    "spacing_um": 1.75,
+    "K": 69,
+    "peak_spread": 0.11655869286824094,
+    "peak_per_tweezer_per_unit_power": 0.2875338630524407,
+    "barrier_max_rel": 0.8752291147564917,
+    "pos_err_max_nm": 162.24593047358127,
+    "fwhm_mean_um": 4.966022406281002,
+    "move_others_pos_nm": 149.6110308832741,
+    "move_others_peak": 0.0988621899752109,
+    "off_residual": 0.16369692219080442,
+    "off_others_peak": 0.111865086273503
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

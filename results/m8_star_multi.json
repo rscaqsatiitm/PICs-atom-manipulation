@@ -1,0 +1,107 @@
+{
+ "name": "m8_star_multi",
+ "script": "scripts/m8_twenty.py",
+ "git": "8778c95",
+ "notes": "",
+ "inputs": {
+  "relative_port_phases": "uniformly random (unstabilised), 40 draws",
+  "port_powers": "equalised single-port peaks"
+ },
+ "outputs": {
+  "multi": {
+   "1064_N96": [
+    {
+     "k_on": 20,
+     "peak_spread_max": 0.19219591961969845,
+     "peak_spread_median": 0.13249769065306916,
+     "stray_dark_sites_max": 0.0,
+     "stray_dark_sites_median": 0.0
+    },
+    {
+     "k_on": 10,
+     "peak_spread_max": 0.1402266540228688,
+     "peak_spread_median": 0.07533835100869903,
+     "stray_dark_sites_max": 0.012630264973475492,
+     "stray_dark_sites_median": 0.004241770513129982
+    },
+    {
+     "k_on": 5,
+     "peak_spread_max": 0.07219603583641192,
+     "peak_spread_median": 0.03743191369105156,
+     "stray_dark_sites_max": 0.006645120774436018,
+     "stray_dark_sites_median": 0.003206054176907709
+    }
+   ],
+   "1064_N128": [
+    {
+     "k_on": 20,
+     "peak_spread_max": 0.18922871346084333,
+     "peak_spread_median": 0.12963679382832133,
+     "stray_dark_sites_max": 0.0,
+     "stray_dark_sites_median": 0.0
+    },
+    {
+     "k_on": 10,
+     "peak_spread_max": 0.13897369693795983,
+     "peak_spread_median": 0.07324038152562379,
+     "stray_dark_sites_max": 0.01214999906162537,
+     "stray_dark_sites_median": 0.0040788770511837255
+    },
+    {
+     "k_on": 5,
+     "peak_spread_max": 0.07089657953753958,
+     "peak_spread_median": 0.03673780550883825,
+     "stray_dark_sites_max": 0.006310958093342418,
+     "stray_dark_sites_median": 0.003065882170647274
+    }
+   ],
+   "895_N96": [
+    {
+     "k_on": 20,
+     "peak_spread_max": 0.16831970426343384,
+     "peak_spread_median": 0.1308395358767131,
+     "stray_dark_sites_max": 0.0,
+     "stray_dark_sites_median": 0.0
+    },
+    {
+     "k_on": 10,
+     "peak_spread_max": 0.1483259333873985,
+     "peak_spread_median": 0.08086454922131044,
+     "stray_dark_sites_max": 0.00835729312024975,
+     "stray_dark_sites_median": 0.0043328980946140275
+    },
+    {
+     "k_on": 5,
+     "peak_spread_max": 0.06682631768935526,
+     "peak_spread_median": 0.03825536424669566,
+     "stray_dark_sites_max": 0.006752767121772342,
+     "stray_dark_sites_median": 0.0025588481920911345
+    }
+   ],
+   "895_N128": [
+    {
+     "k_on": 20,
+     "peak_spread_max": 0.1560749793375535,
+     "peak_spread_median": 0.1244367635633481,
+     "stray_dark_sites_max": 0.0,
+     "stray_dark_sites_median": 0.0
+    },
+    {
+     "k_on": 10,
+     "peak_spread_max": 0.14165231781775972,
+     "peak_spread_median": 0.07597461234417699,
+     "stray_dark_sites_max": 0.007529565527464826,
+     "stray_dark_sites_median": 0.00380759377482656
+    },
+    {
+     "k_on": 5,
+     "peak_spread_max": 0.06343248615088826,
+     "peak_spread_median": 0.035260663075041165,
+     "stray_dark_sites_max": 0.006077072511200075,
+     "stray_dark_sites_median": 0.002327375724982746
+    }
+   ]
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

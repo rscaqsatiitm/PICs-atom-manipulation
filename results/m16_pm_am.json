@@ -1,0 +1,447 @@
+{
+ "name": "m16_pm_am",
+ "script": "scripts/m16_pm_am.py",
+ "git": "e307c22",
+ "notes": "Multipath and PM-fibre values are the worse of relative phases 0 and pi/2 of the copy.",
+ "inputs": {
+  "record": "2^21 samples at 16 GS/s (131 us), 2-3 realisations",
+  "band": "100-300 kHz",
+  "phase_noise": "Gaussian, 3 rad rms, B = 2 GHz",
+  "nu_trap_Hz": 84000.0,
+  "element_values": "CHOICE ranges; PM-fibre DGD 1.2 ps/m and beta2 20 ps^2/km RECALLED"
+ },
+ "outputs": {
+  "criterion": {
+   "Gamma_max_per_s": 0.1,
+   "S_max_per_Hz": 1.4359578180603426e-12,
+   "S_max_dB_per_Hz": -118.42858317512031
+  },
+  "modulation": {
+   "sigma_rad": 3.0,
+   "B_GHz": 2.0
+  },
+  "check_no_filter": {
+   "S_2nu_per_Hz": 2.5270149240277355e-38,
+   "S_dB_per_Hz": -375.9739219321908,
+   "RIN_rms": 7.343990431492618e-16,
+   "Gamma_per_s": 1.7598113901710335e-27,
+   "meets_0.1_per_s": true
+  },
+  "rows": [
+   {
+    "element": "gain_slope",
+    "case": "0.05 dB/nm",
+    "S_2nu_per_Hz": 1.9108185716639914e-24,
+    "S_dB_per_Hz": -237.1878054636503,
+    "RIN_rms": 5.877869892026165e-05,
+    "Gamma_per_s": 1.3306926900158386e-13,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "gain_slope",
+    "case": "0.5 dB/nm",
+    "S_2nu_per_Hz": 2.4518548243570953e-22,
+    "S_dB_per_Hz": -216.10505248202224,
+    "RIN_rms": 0.0005877868679034008,
+    "Gamma_per_s": 1.7074699503840594e-11,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "gain_slope",
+    "case": "5.0 dB/nm",
+    "S_2nu_per_Hz": 6.205839863195203e-19,
+    "S_dB_per_Hz": -182.0719943523396,
+    "RIN_rms": 0.005877903859265996,
+    "Gamma_per_s": 4.3217424531159993e-08,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "bandpass",
+    "case": "FWHM 100.0 pm, offset 0.0 pm",
+    "S_2nu_per_Hz": 1.0361300966162819e-13,
+    "S_dB_per_Hz": -129.84585711101087,
+    "RIN_rms": 0.010036498194601435,
+    "Gamma_per_s": 0.007215602600470964,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "bandpass",
+    "case": "FWHM 100.0 pm, offset 25.0 pm",
+    "S_2nu_per_Hz": 4.5234244953027245e-14,
+    "S_dB_per_Hz": -133.4453265450105,
+    "RIN_rms": 0.07002021481424707,
+    "Gamma_per_s": 0.0031501095912502904,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "bandpass",
+    "case": "FWHM 30.0 pm, offset 0.0 pm",
+    "S_2nu_per_Hz": 9.990773919780066e-12,
+    "S_dB_per_Hz": -110.00400868523619,
+    "RIN_rms": 0.09634596382226385,
+    "Gamma_per_s": 0.6957567829725921,
+    "meets_0.1_per_s": false
+   },
+   {
+    "element": "bandpass",
+    "case": "FWHM 30.0 pm, offset 7.5 pm",
+    "S_2nu_per_Hz": 5.272409288234089e-12,
+    "S_dB_per_Hz": -112.77990883557804,
+    "RIN_rms": 0.21466124875911843,
+    "Gamma_per_s": 0.367170206667765,
+    "meets_0.1_per_s": false
+   },
+   {
+    "element": "bandpass",
+    "case": "FWHM 1000.0 pm, offset 250.0 pm",
+    "S_2nu_per_Hz": 4.595826298067531e-18,
+    "S_dB_per_Hz": -173.37636394086528,
+    "RIN_rms": 0.007076807447996044,
+    "Gamma_per_s": 3.200530155039974e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.01, tau = 0.01 ns",
+    "S_2nu_per_Hz": 8.893043170852503e-18,
+    "S_dB_per_Hz": -170.5094959941744,
+    "RIN_rms": 9.997495967208609e-05,
+    "Gamma_per_s": 6.193108919358797e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.01, tau = 0.1 ns",
+    "S_2nu_per_Hz": 4.65368638403121e-14,
+    "S_dB_per_Hz": -133.32202887545628,
+    "RIN_rms": 0.007060417841471721,
+    "Gamma_per_s": 0.003240823877624273,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.01, tau = 0.3 ns",
+    "S_2nu_per_Hz": 1.0133517692383752e-13,
+    "S_dB_per_Hz": -129.9423976992111,
+    "RIN_rms": 0.014063862072594423,
+    "Gamma_per_s": 0.007056974491125279,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.01, tau = 1 ns",
+    "S_2nu_per_Hz": 9.616656386005203e-14,
+    "S_dB_per_Hz": -130.1697590150905,
+    "RIN_rms": 0.014144409276392794,
+    "Gamma_per_s": 0.006697032646122678,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.01, tau = 10 ns",
+    "S_2nu_per_Hz": 1.1265473330904754e-13,
+    "S_dB_per_Hz": -129.48250556209882,
+    "RIN_rms": 0.014144578417928691,
+    "Gamma_per_s": 0.007845267590187215,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.01, tau = 50 ns",
+    "S_2nu_per_Hz": 1.0913183944525021e-13,
+    "S_dB_per_Hz": -129.62048524589906,
+    "RIN_rms": 0.014141021964795568,
+    "Gamma_per_s": 0.00759993351285645,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.001, tau = 0.01 ns",
+    "S_2nu_per_Hz": 9.216045034417674e-20,
+    "S_dB_per_Hz": -190.35455411725624,
+    "RIN_rms": 1.017632425019161e-05,
+    "Gamma_per_s": 6.4180471866969515e-09,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.001, tau = 0.1 ns",
+    "S_2nu_per_Hz": 4.772868051990095e-16,
+    "S_dB_per_Hz": -153.21220571727343,
+    "RIN_rms": 0.0007150260737607468,
+    "Gamma_per_s": 3.323821906159591e-05,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.001, tau = 0.3 ns",
+    "S_2nu_per_Hz": 1.015930937153353e-15,
+    "S_dB_per_Hz": -149.9313581432834,
+    "RIN_rms": 0.0014081760227521237,
+    "Gamma_per_s": 7.074935798083875e-05,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.001, tau = 1 ns",
+    "S_2nu_per_Hz": 9.618842475529473e-16,
+    "S_dB_per_Hz": -150.16877187498224,
+    "RIN_rms": 0.0014146029761446135,
+    "Gamma_per_s": 6.698555037307694e-05,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.001, tau = 10 ns",
+    "S_2nu_per_Hz": 1.1267628112552174e-15,
+    "S_dB_per_Hz": -149.4816749531528,
+    "RIN_rms": 0.001414594074554841,
+    "Gamma_per_s": 7.84676817858913e-05,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.001, tau = 50 ns",
+    "S_2nu_per_Hz": 1.0915549727620401e-15,
+    "S_dB_per_Hz": -149.61954387516894,
+    "RIN_rms": 0.001414253628650082,
+    "Gamma_per_s": 7.601581042516183e-05,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.0001, tau = 0.01 ns",
+    "S_2nu_per_Hz": 9.249144834809941e-22,
+    "S_dB_per_Hz": -210.33898419768204,
+    "RIN_rms": 1.0194471458401486e-06,
+    "Gamma_per_s": 6.441097864074771e-11,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.0001, tau = 0.1 ns",
+    "S_2nu_per_Hz": 4.784952135371342e-18,
+    "S_dB_per_Hz": -173.20122402181403,
+    "RIN_rms": 7.159307163301522e-05,
+    "Gamma_per_s": 3.3322372532047923e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.0001, tau = 0.3 ns",
+    "S_2nu_per_Hz": 1.0161712872518548e-17,
+    "S_dB_per_Hz": -169.93033080597,
+    "RIN_rms": 0.0001408342706614106,
+    "Gamma_per_s": 7.076609594455042e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.0001, tau = 1 ns",
+    "S_2nu_per_Hz": 9.618889715259164e-18,
+    "S_dB_per_Hz": -170.16875054611276,
+    "RIN_rms": 0.00014146065788086566,
+    "Gamma_per_s": 6.698587935021748e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.0001, tau = 10 ns",
+    "S_2nu_per_Hz": 1.1267642832783258e-17,
+    "S_dB_per_Hz": -169.48166927945564,
+    "RIN_rms": 0.00014145950951255436,
+    "Gamma_per_s": 7.846778429747554e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "multipath",
+    "case": "R1 = R2 = 0.0001, tau = 50 ns",
+    "S_2nu_per_Hz": 1.0915591830178975e-17,
+    "S_dB_per_Hz": -169.61952712395254,
+    "RIN_rms": 0.00014142561725319548,
+    "Gamma_per_s": 7.601610362707935e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -20.0 dB, L = 1.0 m",
+    "S_2nu_per_Hz": 1.3195370311361566e-19,
+    "S_dB_per_Hz": -188.7957841734812,
+    "RIN_rms": 1.729561204634304e-05,
+    "Gamma_per_s": 9.189246470474707e-09,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -20.0 dB, L = 5.0 m",
+    "S_2nu_per_Hz": 8.230635708375862e-17,
+    "S_dB_per_Hz": -160.84566619954498,
+    "RIN_rms": 0.0003085282657510203,
+    "Gamma_per_s": 5.731808835090719e-06,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -20.0 dB, L = 20.0 m",
+    "S_2nu_per_Hz": 2.042300645708241e-14,
+    "S_dB_per_Hz": -136.8988032534355,
+    "RIN_rms": 0.004760562196872722,
+    "Gamma_per_s": 0.0014222567125731671,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -25.0 dB, L = 1.0 m",
+    "S_2nu_per_Hz": 4.9084982691770745e-20,
+    "S_dB_per_Hz": -193.09051357809253,
+    "RIN_rms": 1.033687802686293e-05,
+    "Gamma_per_s": 3.4182746926419864e-09,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -25.0 dB, L = 5.0 m",
+    "S_2nu_per_Hz": 3.0611931608134805e-17,
+    "S_dB_per_Hz": -165.14109265623614,
+    "RIN_rms": 0.0001878663903944646,
+    "Gamma_per_s": 2.1318127331542837e-06,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -25.0 dB, L = 20.0 m",
+    "S_2nu_per_Hz": 7.57700504725809e-15,
+    "S_dB_per_Hz": -141.20502423454596,
+    "RIN_rms": 0.0028994170206701336,
+    "Gamma_per_s": 0.0005276620909027068,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -30.0 dB, L = 1.0 m",
+    "S_2nu_per_Hz": 1.7057048664167098e-20,
+    "S_dB_per_Hz": -197.6809611148906,
+    "RIN_rms": 6.024414908758233e-06,
+    "Gamma_per_s": 1.1878516520218785e-09,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -30.0 dB, L = 5.0 m",
+    "S_2nu_per_Hz": 1.0636561272555695e-17,
+    "S_dB_per_Hz": -169.73198753782899,
+    "RIN_rms": 0.00011064604943861693,
+    "Gamma_per_s": 7.407293681455983e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "pm_fibre",
+    "case": "PER -30.0 dB, L = 20.0 m",
+    "S_2nu_per_Hz": 2.628548926921161e-15,
+    "S_dB_per_Hz": -145.80283934759646,
+    "RIN_rms": 0.001707654050503614,
+    "Gamma_per_s": 0.00018305195973456533,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "dispersion",
+    "case": "beta2 20 ps^2/km, L = 5.0 m",
+    "S_2nu_per_Hz": 8.071356740497927e-34,
+    "S_dB_per_Hz": -330.9305345717552,
+    "RIN_rms": 4.158670223137083e-06,
+    "Gamma_per_s": 5.62088707549956e-23,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "dispersion",
+    "case": "beta2 20 ps^2/km, L = 100.0 m",
+    "S_2nu_per_Hz": 3.2315450319104935e-31,
+    "S_dB_per_Hz": -304.9058978776112,
+    "RIN_rms": 8.317340863570748e-05,
+    "Gamma_per_s": 2.250445654647145e-20,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "dispersion",
+    "case": "beta2 20 ps^2/km, L = 1000.0 m",
+    "S_2nu_per_Hz": 3.231870648425704e-29,
+    "S_dB_per_Hz": -284.90546029642235,
+    "RIN_rms": 0.0008317352249948279,
+    "Gamma_per_s": 2.2506724137560238e-18,
+    "meets_0.1_per_s": true
+   },
+   {
+    "element": "chain",
+    "case": "0.5 dB/nm tilt; 1 nm ASE filter offset 250 pm; PM fibre PER -20 dB, 5 m; two -30 dB reflections 5 m apart; on-chip etalon (input facet -30 dB, glued emitter facet 2.3%, 190 ps); 5 m dispersion",
+    "S_2nu_per_Hz": 3.523848458392474e-14,
+    "S_dB_per_Hz": -134.529827765083,
+    "RIN_rms": 0.006860436574958436,
+    "Gamma_per_s": 0.0024540055523026467,
+    "meets_0.1_per_s": true
+   }
+  ],
+  "B_dependence_multipath_r0.01": [
+   {
+    "B_GHz": 0.5,
+    "tau_ns": 0.1,
+    "r": 0.01,
+    "S_2nu_per_Hz": 1.113613502761216e-17,
+    "S_dB_per_Hz": -169.53265511803974,
+    "RIN_rms": 0.00413700201310288,
+    "Gamma_per_s": 7.755196488051846e-07,
+    "meets_0.1_per_s": true
+   },
+   {
+    "B_GHz": 0.5,
+    "tau_ns": 1.0,
+    "r": 0.01,
+    "S_2nu_per_Hz": 3.2820547081435663e-13,
+    "S_dB_per_Hz": -124.8385418402429,
+    "RIN_rms": 0.014138363151898425,
+    "Gamma_per_s": 0.02285620557139267,
+    "meets_0.1_per_s": true
+   },
+   {
+    "B_GHz": 2.0,
+    "tau_ns": 0.1,
+    "r": 0.01,
+    "S_2nu_per_Hz": 6.106036166375473e-15,
+    "S_dB_per_Hz": -142.1424062768053,
+    "RIN_rms": 0.01230182559201386,
+    "Gamma_per_s": 0.00042522392298565987,
+    "meets_0.1_per_s": true
+   },
+   {
+    "B_GHz": 2.0,
+    "tau_ns": 1.0,
+    "r": 0.01,
+    "S_2nu_per_Hz": 9.616656386005203e-14,
+    "S_dB_per_Hz": -130.1697590150905,
+    "RIN_rms": 0.014144409276392794,
+    "Gamma_per_s": 0.006697032646122678,
+    "meets_0.1_per_s": true
+   },
+   {
+    "B_GHz": 8.0,
+    "tau_ns": 0.1,
+    "r": 0.01,
+    "S_2nu_per_Hz": 2.0124321061795986e-14,
+    "S_dB_per_Hz": -136.96278762591862,
+    "RIN_rms": 0.014141847241644061,
+    "Gamma_per_s": 0.0014014562829554032,
+    "meets_0.1_per_s": true
+   },
+   {
+    "B_GHz": 8.0,
+    "tau_ns": 1.0,
+    "r": 0.01,
+    "S_2nu_per_Hz": 1.5427458818668438e-14,
+    "S_dB_per_Hz": -138.11705604197252,
+    "RIN_rms": 0.014140779022206723,
+    "Gamma_per_s": 0.0010743671314459278,
+    "meets_0.1_per_s": true
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

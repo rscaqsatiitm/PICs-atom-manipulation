@@ -1,0 +1,120 @@
+# Rearrangement cycles, quantum check of the handoff, and static-array uniformity
+
+Follow-up to `docs/transport3d.md`. Code: `picsim/rearrange.py`, `scripts/m20_rearrange.py` (scheduler),
+`scripts/m19_quantum.py` (quantum check), `scripts/m18_transport3d.py` parts `uniformity` and `slowlane`; results
+`results/m20_rearrange.json`, `m19_quantum.json`, `m18_uniformity.json`, `m18_slowlane.json`. Values are SIM
+and valid in the regime stated. They should be reviewed before they are quoted.
+
+## 1. Result
+
+A 16-chip stack with row select assembles a defect-free 32 x 32 block from a 50 x 45 array loaded at 50% in
+17 ms (mean of 40 loadings; worst 23 ms), using about 8 passes. Every loading succeeded before losses. The average
+atom in the block moves 1.12 times; none moves more than twice. With slower handoff steps (200 us ramps, 400 us
+lane steps), each move heats the atom by 0.2 to 0.3 uK at a moving depth of only 0.3 mK. The quantum and 3D
+classical models agree on this. The finished block is therefore no hotter than about 0.6 uK above its starting
+temperature. Loss sets the outcome: at 1e-3 loss per move, a cycle leaves 1.15 defects on average; at 1e-4,
+0.12. Vacuum loss during the 17 ms adds 0.59 defects for a 30 s lifetime and 0.06 for 300 s. The static array's
+depth uniformity is not a constraint: 20% rms random depth errors cost nothing.
+
+| target (loading) | addressed rows | passes (vertical + horizontal) | cycle time, mean / max | moves per atom, mean / max | defects from moves at 1e-3 / 1e-4 | defects from vacuum at 30 / 300 s |
+|---|---|---|---|---|---|---|
+| 30 x 30 (50%) | 16 | 4.3 + 2 | 13.3 / 17.1 ms | 1.11 / 2 | 1.00 / 0.10 | 0.40 / 0.04 |
+| **32 x 32 (50%)** | **16** | **5.8 + 2** | **17.2 / 23.0 ms** | **1.12 / 2** | **1.15 / 0.12** | **0.59 / 0.06** |
+| 32 x 32 (60%) | 16 | 5.0 + 2 | 14.8 / 17.1 ms | 1.03 / 2 | 1.06 / 0.11 | 0.50 / 0.05 |
+| 36 x 36 (60%) | 16 | 8.3 + 3 | 25.1 / 35.6 ms | 1.07 / 2 | 1.38 / 0.14 | 1.08 / 0.11 |
+| 32 x 32 (50%) | 32 (two stacks) | 5.8 + 1 | 15.5 / 21.3 ms | 1.12 / 2 | 1.15 / 0.12 | 0.53 / 0.05 |
+
+The probability that a 32 x 32 block is defect-free after one cycle is 0.84 at 1e-4 loss per move and a 300 s
+lifetime. Reaching 0.99 in one cycle would need about 5e-6 loss per move and a vacuum lifetime above about an hour;
+a repair round after imaging is the realistic route.
+
+## 2. Scheduler
+
+The hardware sets the rules: (i) a stack addresses 16 consecutive rows at a time; (ii) every tweezer of the stack
+shares the y motion (into the lane 2 um off the row, optionally along mid-column lanes by j rows, and back),
+while each moves independently in x; (iii) tweezers in one row keep their order and so stay at least 4 um apart.
+
+**Vertical balancing.** Each pass chooses a stack position k and a common row shift j that move the most
+surplus atoms into target rows lacking atoms. Arriving atoms go straight to empty target columns where possible.
+Atoms that arrive in a pass are not picked again in the same pass.
+
+**Horizontal compaction.** One pass per group of 16 target rows. Each row's atoms are matched in order to the
+target columns, with extras pushed just outside the block.
+
+A pass takes two ramps, two lane steps, the x moves (min-jerk; 400 us per 40 um, scaled as sqrt(d), at least 200 us),
+the y travel for j rows, and 0.3 ms of scanner settling (CHOICE). This greedy schedule is not optimal. A planner
+that combines balancing and compaction, or shares passes between stack positions, would need fewer passes.
+
+**Sensitivity of the cycle time** (32 x 32, 50%, one stack):
+
+| timing | cycle time |
+|---|---|
+| base (ramps 100 us, lane steps 400 us) | 17.2 ms |
+| low-heating (ramps 200 us, lane steps 400 us) | 18.8 ms |
+| fast lane steps (100 us) | 12.5 ms |
+| all fast (ramps 50, lanes 100, x 200 us per 40 um) | 8.2 ms |
+| scanner settling 1 ms instead of 0.3 ms | 22.7 ms |
+
+Because vacuum loss grows with cycle time, the fast setting halves it (0.28 defects at 30 s). It costs heating:
+about 10 uK per move at 0.3 mK, or 1.2 uK at 0.5 mK (Sec. 3). Hence two regimes: slow and cold at 0.3 mK
+(low power), or fast at 0.5 mK.
+
+## 3. Quantum check of the handoff
+
+A 1D split-step propagation along y (the handoff and lane axis) starts the atom in the ground state of the static
+site. The y profile is the moving tweezer's, taken from the 3D grid, with gravity included. The x move is
+treated separately. Results are compared with classical trajectories from a Wigner sample of the same ground
+state:
+
+| hold / moving | ramp / lane step | energy gain, quantum | ground state kept | energy gain, classical |
+|---|---|---|---|---|
+| 0.1 / 0.3 mK | 100 / 100 us | 9.7 uK | 0.08 | 11.6 uK |
+| 0.1 / 0.3 mK | 100 / 200 us | 2.0 uK | 0.21 | 1.4 uK |
+| 0.1 / 0.3 mK | **200 / 400 us** | **0.12 uK** | **0.98** | 0.94 uK |
+| 0.1 / 0.5 mK | 100 / 100 us | 0.84 uK | 0.84 | 1.53 uK |
+| 0.1 / 0.5 mK | 200 / 400 us | 0.13 uK | 0.99 | 0.87 uK |
+| 0.2 / 0.6 mK | 200 / 400 us | 0.15 uK | 0.99 | 1.72 uK |
+| 0.2 / 1.0 mK | 100 / 100 us | 1.58 uK | 0.66 | 1.58 uK |
+
+(Trap quantum of the static site: 1.4 uK at 0.1 mK, 2.0 uK at 0.2 mK.) The x move adds 0.08 to 0.37 uK in both
+models (ground state kept 0.98 to 0.99). Two findings follow. (i) The lane step, not the x move, sets the heating,
+and it falls steeply with its duration: from 100 to 400 us, the gain at 0.1 / 0.3 mK drops 80-fold. (ii) Above
+about one trap quantum the classical model agrees with the quantum one to within a factor of 2, on the
+pessimistic side. Below it, classical Wigner sampling overstates the heating by a factor of up to 10, as expected
+for zero-point motion. A 3D classical run with the slow steps confirms the delivery: 3,000 of 3,000 atoms, with
+0.16 uK (5 uK atoms, 0.1 / 0.3 mK) and 0.59 uK (10 uK, 0.2 / 0.6 mK) of heating, and no loss of waiting atoms.
+
+## 4. Static-array depth uniformity
+
+2,000 atoms per case, lane transport, three operating points (results/m18_uniformity.json):
+
+| non-uniformity | 5 uK, 0.1 / 0.3 mK | 5 uK, 0.1 / 0.5 mK | 10 uK, 0.2 / 0.6 mK |
+|---|---|---|---|
+| source site deeper by 20 / 40 / 60% | 1.000 / 1.000 / 0.996 | 1.000 / 1.000 / 1.000 | 1.000 / 1.000 / 1.000 |
+| target site shallower, x 0.8 / 0.6 / 0.4 | 1.000 / 0.999 / 0.998 | 1.000 / 1.000 / 1.000 | 1.000 / 1.000 / 0.9995 |
+| random depth errors 5 / 10 / 20% rms (two draws) | 1.000 all | 1.000 all | 1.000 all |
+
+The handoff tolerates the static array's depth errors far beyond what a meta-optic or SLM array would show. The
+energy figures in `m18_uniformity.json` include the adiabatic change between unequal source and target depths
+and should not be read as heating.
+
+## 5. Limits and next steps
+
+The scheduler is greedy and uses one rearrangement cycle without repair. The loss per move is not computed: the
+simulations bound it below about 1e-3 (0 of 3,000 atoms), and 1e-4 is an assumption. The quantum model is 1D per
+axis. Photon scattering by the trapping light (estimated at a few per second at 0.3 to 0.5 mK) and imaging are
+not included; neither are moves of atoms whose heating would make them leave the target sites during later moves.
+
+Next steps: (i) a repair round after imaging, with its own pass count and time; (ii) an optimised schedule
+(passes shared across stack positions); (iii) a 3D quantum or semiclassical check of the axial motion during the
+handoff.
+
+## Verification notes
+
+| value | location | type | pointer |
+|---|---|---|---|
+| passes, times, moves, defect estimates | Sec. 1, 2 | SIM | results/m20_rearrange.json (40 loadings; review) |
+| quantum and Wigner energy gains | Sec. 3 | SIM | results/m19_quantum.json (review) |
+| slow-lane 3D check | Sec. 3 | SIM | results/m18_slowlane.json (3,000 atoms) |
+| uniformity table | Sec. 4 | SIM | results/m18_uniformity.json (2,000 atoms) |
+| per-move loss 1e-3 / 3e-4 / 1e-4, vacuum lifetimes 30 / 300 s, scanner settling 0.3 ms | Sec. 1, 2 | CHOICE | assumptions |

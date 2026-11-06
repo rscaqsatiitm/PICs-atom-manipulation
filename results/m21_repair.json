@@ -1,0 +1,234 @@
+{
+ "name": "m21_repair",
+ "script": "scripts/m21_repair.py",
+ "git": "68bbd07",
+ "notes": "Index 0: after the rearrangement cycle; 1 and 2: after each image-and-repair round. No final verification image.",
+ "inputs": {
+  "array": [
+   50,
+   45
+  ],
+  "target": [
+   32,
+   32
+  ],
+  "S": 16,
+  "loadings": 40,
+  "loss_draws_per_loading": 25,
+  "t_img_s": 0.01,
+  "timing": {
+   "t_ramp": 0.0001,
+   "t_lane": 0.0004,
+   "t_x40": 0.0004,
+   "t_min": 0.0002,
+   "t_reposition": 0.0003,
+   "pitch": 4e-06
+  },
+  "model": "detection precedes imaging-induced loss; repairs move one reservoir atom each"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "p_move": 0.001,
+    "tau_s": 30.0,
+    "eps_img": 0.001,
+    "P_defect_free": [
+     0.141,
+     0.24,
+     0.232
+    ],
+    "defects_mean": [
+     1.804,
+     1.47,
+     1.47
+    ],
+    "repair_passes_mean": [
+     1.294,
+     1.092
+    ],
+    "t_round_ms_mean": [
+     12.996694461427381,
+     12.517377041507684
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 42.70440987888553
+   },
+   {
+    "p_move": 0.001,
+    "tau_s": 30.0,
+    "eps_img": 0.0001,
+    "P_defect_free": [
+     0.141,
+     0.587,
+     0.624
+    ],
+    "defects_mean": [
+     1.804,
+     0.53,
+     0.476
+    ],
+    "repair_passes_mean": [
+     1.294,
+     0.479
+    ],
+    "t_round_ms_mean": [
+     12.996694461427381,
+     11.089665772679801
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 41.27669861005765
+   },
+   {
+    "p_move": 0.001,
+    "tau_s": 300.0,
+    "eps_img": 0.001,
+    "P_defect_free": [
+     0.273,
+     0.349,
+     0.334
+    ],
+    "defects_mean": [
+     1.278,
+     1.041,
+     1.1
+    ],
+    "repair_passes_mean": [
+     0.989,
+     0.846
+    ],
+    "t_round_ms_mean": [
+     12.286832886810014,
+     11.941882000480465
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 41.41905326324094
+   },
+   {
+    "p_move": 0.001,
+    "tau_s": 300.0,
+    "eps_img": 0.0001,
+    "P_defect_free": [
+     0.273,
+     0.866,
+     0.871
+    ],
+    "defects_mean": [
+     1.278,
+     0.144,
+     0.138
+    ],
+    "repair_passes_mean": [
+     0.989,
+     0.14
+    ],
+    "t_round_ms_mean": [
+     12.286832886810014,
+     10.31712647905163
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 39.79429774181211
+   },
+   {
+    "p_move": 0.0001,
+    "tau_s": 30.0,
+    "eps_img": 0.001,
+    "P_defect_free": [
+     0.48,
+     0.247,
+     0.233
+    ],
+    "defects_mean": [
+     0.74,
+     1.425,
+     1.467
+    ],
+    "repair_passes_mean": [
+     0.639,
+     1.066
+    ],
+    "t_round_ms_mean": [
+     11.467238420462486,
+     12.453013640387534
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 41.110590436800486
+   },
+   {
+    "p_move": 0.0001,
+    "tau_s": 30.0,
+    "eps_img": 0.0001,
+    "P_defect_free": [
+     0.48,
+     0.615,
+     0.627
+    ],
+    "defects_mean": [
+     0.74,
+     0.483,
+     0.47
+    ],
+    "repair_passes_mean": [
+     0.639,
+     0.444
+    ],
+    "t_round_ms_mean": [
+     11.467238420462486,
+     11.004931205450879
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 39.66250800186383
+   },
+   {
+    "p_move": 0.0001,
+    "tau_s": 300.0,
+    "eps_img": 0.001,
+    "P_defect_free": [
+     0.843,
+     0.351,
+     0.334
+    ],
+    "defects_mean": [
+     0.169,
+     1.033,
+     1.099
+    ],
+    "repair_passes_mean": [
+     0.161,
+     0.841
+    ],
+    "t_round_ms_mean": [
+     10.367809603565616,
+     11.927848485113355
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 39.48599646462944
+   },
+   {
+    "p_move": 0.0001,
+    "tau_s": 300.0,
+    "eps_img": 0.0001,
+    "P_defect_free": [
+     0.843,
+     0.872,
+     0.872
+    ],
+    "defects_mean": [
+     0.169,
+     0.137,
+     0.137
+    ],
+    "repair_passes_mean": [
+     0.161,
+     0.134
+    ],
+    "t_round_ms_mean": [
+     10.367809603565616,
+     10.301547523663514
+    ],
+    "t_cycle_ms_mean": 17.190338375950464,
+    "t_total_ms_mean": 37.859695503179594
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

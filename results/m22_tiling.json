@@ -1,0 +1,76 @@
+{
+ "name": "m22_tiling",
+ "script": "scripts/m22_megascale.py",
+ "git": "b8afb33",
+ "notes": "Shared slit plane: each engine's slit zone must be followed by an opaque gap that holds its grating lobes, so one block position addresses every other segment.",
+ "inputs": {
+  "engine": "192 emitters at 1.5 um (A = 288 um)",
+  "f1_mm": 3.12,
+  "NA": 0.5,
+  "f_obj_mm": 17.320508075688775
+ },
+ "outputs": {
+  "x_scale_um": 288.0,
+  "reach_half_um": 102.18576,
+  "first_lobe_offset_um": 204.37152,
+  "segment_um": 180.0,
+  "lobe_zone_um": [
+   102.18576,
+   306.55728
+  ],
+  "neighbour_zone_um": [
+   77.81424,
+   282.18576
+  ],
+  "shared_slit": {
+   "f1_mm": 3.12,
+   "slit_zone_mm": 2.2140248000000002,
+   "lobe_zone_mm": [
+    1.1070124000000001,
+    3.3210372
+   ],
+   "engine_pitch_min_mm": 4.4280496000000005,
+   "coverage_per_position": 0.5
+  },
+  "combiner": {
+   "f_c_mm": 187.63883748662838,
+   "pupil_magnification_target": 60.14065304058602,
+   "segment_pitch_at_atoms_um": 408.74304000000006,
+   "checks": [
+    {
+     "engine": 0,
+     "X_mm": 0.0,
+     "pupil_y_spread_mm": 1.3947516924543934e-16,
+     "pupil_magnification": -60.14065304058601,
+     "atom_x_um_of_s0": -0.0,
+     "atom_x_um_of_s0.2": 57.600000000000016
+    },
+    {
+     "engine": 1,
+     "X_mm": 4.4280496000000005,
+     "pupil_y_spread_mm": 0.0,
+     "pupil_magnification": -60.140653040585335,
+     "atom_x_um_of_s0": 408.7430400000018,
+     "atom_x_um_of_s0.2": 466.3430400000018
+    },
+    {
+     "engine": 2,
+     "X_mm": 8.856099200000001,
+     "pupil_y_spread_mm": 0.0,
+     "pupil_magnification": -60.140653040584766,
+     "atom_x_um_of_s0": 817.4860800000037,
+     "atom_x_um_of_s0.2": 875.0860800000037
+    },
+    {
+     "engine": 3,
+     "X_mm": 13.2841488,
+     "pupil_y_spread_mm": 0.0,
+     "pupil_magnification": -60.1406530405859,
+     "atom_x_um_of_s0": 1226.2291200000093,
+     "atom_x_um_of_s0.2": 1283.8291200000094
+    }
+   ]
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

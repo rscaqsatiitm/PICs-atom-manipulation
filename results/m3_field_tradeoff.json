@@ -1,0 +1,195 @@
+{
+ "name": "m3_field_tradeoff",
+ "script": "scripts/m3_opa.py",
+ "git": "745f3cc",
+ "notes": "1D scalar Fourier optics; aplanatic objective (pupil radius F NA). The number of resolvable positions equals N; the range at the atoms is N lambda/(4 NA fill).",
+ "inputs": {
+  "lam": {
+   "value": 1.064435,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Table 2: side-B tweezers at 1064.4350 nm (45S1/2 double magic)"
+  },
+  "NA": {
+   "value": 0.5,
+   "unit": "-",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Table 1: meta-objective NA >= 0.5"
+  },
+  "site_pitch": {
+   "value": 4.0,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 3: 'about five sites at 4 um pitch'"
+  },
+  "field_target": {
+   "value": 100.0,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Table 1: Strehl >= 0.8 over >= +/-100 um"
+  },
+  "pitch_um": 2.0,
+  "usable_criterion": "steered main-lobe peak >= 50% of on-axis peak"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "N": 32,
+    "fill": 1.0,
+    "aperture_um": 64.0,
+    "x_half_range_um": 17.03096,
+    "x_half_usable_50pct_um": 16.4536393220339,
+    "fwhm_x_um": 0.9469608696286448,
+    "w_1e2_x_um": 0.7482297784509502,
+    "sites_in_usable_row": 9,
+    "fraction_of_pm100um": 0.164536393220339,
+    "peak_per_W_rel": 0.48406382650331864,
+    "power_for_equal_depth_rel": 1.0045802080323059
+   },
+   {
+    "N": 32,
+    "fill": 0.75,
+    "aperture_um": 64.0,
+    "x_half_range_um": 22.707946666666665,
+    "x_half_usable_50pct_um": 22.323066214689266,
+    "fwhm_x_um": 1.2585946782208222,
+    "w_1e2_x_um": 0.9942322450625316,
+    "sites_in_usable_row": 11,
+    "fraction_of_pm100um": 0.22323066214689266,
+    "peak_per_W_rel": 0.36571371296323907,
+    "power_for_equal_depth_rel": 1.329676526454172
+   },
+   {
+    "N": 32,
+    "fill": 0.5,
+    "aperture_um": 64.0,
+    "x_half_range_um": 34.06192,
+    "x_half_usable_50pct_um": 34.06192,
+    "fwhm_x_um": 1.886552857609905,
+    "w_1e2_x_um": 1.4905639595658045,
+    "sites_in_usable_row": 17,
+    "fraction_of_pm100um": 0.3406192,
+    "peak_per_W_rel": 0.24399060043477405,
+    "power_for_equal_depth_rel": 1.9930314473717408
+   },
+   {
+    "N": 64,
+    "fill": 1.0,
+    "aperture_um": 128.0,
+    "x_half_range_um": 34.06192,
+    "x_half_usable_50pct_um": 33.4845993220339,
+    "fwhm_x_um": 0.9449213730133733,
+    "w_1e2_x_um": 0.746644204429876,
+    "sites_in_usable_row": 17,
+    "fraction_of_pm100um": 0.33484599322033903,
+    "peak_per_W_rel": 0.4862809395296178,
+    "power_for_equal_depth_rel": 1.0
+   },
+   {
+    "N": 64,
+    "fill": 0.75,
+    "aperture_um": 128.0,
+    "x_half_range_um": 45.41589333333333,
+    "x_half_usable_50pct_um": 44.64613242937853,
+    "fwhm_x_um": 1.257163790613094,
+    "w_1e2_x_um": 0.9933981349090226,
+    "sites_in_usable_row": 23,
+    "fraction_of_pm100um": 0.4464613242937853,
+    "peak_per_W_rel": 0.3662571223643324,
+    "power_for_equal_depth_rel": 1.3277037082323067
+   },
+   {
+    "N": 64,
+    "fill": 0.5,
+    "aperture_um": 128.0,
+    "x_half_range_um": 68.12384,
+    "x_half_usable_50pct_um": 68.12384,
+    "fwhm_x_um": 1.886099887222872,
+    "w_1e2_x_um": 1.4903011619640585,
+    "sites_in_usable_row": 35,
+    "fraction_of_pm100um": 0.6812384,
+    "peak_per_W_rel": 0.2441218083284518,
+    "power_for_equal_depth_rel": 1.991960254838662
+   },
+   {
+    "N": 128,
+    "fill": 1.0,
+    "aperture_um": 256.0,
+    "x_half_range_um": 68.12384,
+    "x_half_usable_50pct_um": 66.9691986440678,
+    "fwhm_x_um": 0.9439376167005378,
+    "w_1e2_x_um": 0.7458702377233515,
+    "sites_in_usable_row": 33,
+    "fraction_of_pm100um": 0.6696919864406781,
+    "peak_per_W_rel": 0.4873913355998513,
+    "power_for_equal_depth_rel": 0.9977217566478344
+   },
+   {
+    "N": 128,
+    "fill": 0.75,
+    "aperture_um": 256.0,
+    "x_half_range_um": 90.83178666666666,
+    "x_half_usable_50pct_um": 89.29226485875706,
+    "fwhm_x_um": 1.2573846062020446,
+    "w_1e2_x_um": 0.9935320552078178,
+    "sites_in_usable_row": 45,
+    "fraction_of_pm100um": 0.8929226485875706,
+    "peak_per_W_rel": 0.3662620117432956,
+    "power_for_equal_depth_rel": 1.3276859841812934
+   },
+   {
+    "N": 128,
+    "fill": 0.5,
+    "aperture_um": 256.0,
+    "x_half_range_um": 136.24768,
+    "x_half_usable_50pct_um": 136.24768,
+    "fwhm_x_um": 1.8859885963463212,
+    "w_1e2_x_um": 1.4902367369469736,
+    "sites_in_usable_row": 69,
+    "fraction_of_pm100um": 1.3624768,
+    "peak_per_W_rel": 0.24418672720833143,
+    "power_for_equal_depth_rel": 1.9914306772076937
+   },
+   {
+    "N": 256,
+    "fill": 1.0,
+    "aperture_um": 512.0,
+    "x_half_range_um": 136.24768,
+    "x_half_usable_50pct_um": 133.9383972881356,
+    "fwhm_x_um": 0.9434545395447584,
+    "w_1e2_x_um": 0.7454877764731807,
+    "sites_in_usable_row": 67,
+    "fraction_of_pm100um": 1.3393839728813561,
+    "peak_per_W_rel": 0.4879506370972161,
+    "power_for_equal_depth_rel": 0.9965781424581569
+   },
+   {
+    "N": 256,
+    "fill": 0.75,
+    "aperture_um": 512.0,
+    "x_half_range_um": 181.66357333333332,
+    "x_half_usable_50pct_um": 178.58452971751413,
+    "fwhm_x_um": 1.2572933158010424,
+    "w_1e2_x_um": 0.9934784098078933,
+    "sites_in_usable_row": 89,
+    "fraction_of_pm100um": 1.7858452971751413,
+    "peak_per_W_rel": 0.3663359758279527,
+    "power_for_equal_depth_rel": 1.327417921296369
+   },
+   {
+    "N": 256,
+    "fill": 0.5,
+    "aperture_um": 512.0,
+    "x_half_range_um": 272.49536,
+    "x_half_usable_50pct_um": 272.49536,
+    "fwhm_x_um": 1.8859610540739302,
+    "w_1e2_x_um": 1.4902207968663155,
+    "sites_in_usable_row": 137,
+    "fraction_of_pm100um": 2.7249536,
+    "peak_per_W_rel": 0.24422093301643763,
+    "power_for_equal_depth_rel": 1.9911517555986407
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

@@ -30,3 +30,13 @@ def test_staircase_matches_time_integration():
 def test_trap_depth():
     # 6.6 mW, w0 = 1.04 um, 1160 a.u. -> ~1.01 mK (DERIVED)
     assert abs(tr.trap_depth_K(6.6e-3, 1.04, 1160) * 1e3 - 1.014) < 0.005
+
+
+def test_position_heating_matches_ohara_example():
+    # O'Hara et al. (arXiv:physics/0003049): Q_dot[nK/s] = 2.8e-4 nu^4 S_x[um^2/Hz] for 6Li
+    from scipy.constants import h, k as kB
+    m_li = 6.015 * 1.66053906660e-27
+    nu, Sx = 4.7e3, 1e-14  # um^2/Hz -> m^2/Hz below
+    q_per_s = tr.heating_rate_position_noise(Sx * 1e-12, nu, mass=m_li)
+    nK_per_s = q_per_s * h * nu / kB * 1e9
+    assert abs(nK_per_s / (2.8e-4 * nu**4 * Sx) - 1) < 0.03

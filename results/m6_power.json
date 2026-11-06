@@ -1,0 +1,157 @@
+{
+ "name": "m6_power",
+ "script": "scripts/m6_power.py",
+ "git": "9c596b3",
+ "notes": "Temperature rise is the steady state of a uniformly absorbing straight guide; the phase is common-mode before the split and differential only through channel-to-channel loss spread.",
+ "inputs": {
+  "P_chip": {
+   "value": 1.4,
+   "unit": "W",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4(ii): ~1.4 W on chip for 21 tweezers"
+  },
+  "dneff_dT": "SIM m1_design_modes 1064_0.4",
+  "thermal": "picsim.heaters with the core as heat source (2D, long guide)",
+  "loss_sweep": "CHOICE 0.05-0.5 dB/cm; absorbed fraction CHOICE 0.3 or 1.0",
+  "facet_limits": "CHOICE 5 and 20 MW/cm^2; CW facet damage threshold of SiN/SiO2 at 1 um [VALUE?] not found in session"
+ },
+ "outputs": {
+  "dT_core_per_W_per_m": 0.40688509552253377,
+  "rows": [
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.05,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 0.4807700244085679,
+    "dT_core_K": 0.19561815730585105,
+    "thermo_phase_rad_per_cm": 0.27231463240024495
+   },
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.05,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 1.60256674802856,
+    "dT_core_K": 0.6520605243528369,
+    "thermo_phase_rad_per_cm": 0.9077154413341498
+   },
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.1,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 0.9560367198559518,
+    "dT_core_K": 0.3889970920816388,
+    "thermo_phase_rad_per_cm": 0.5415121049798749
+   },
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.1,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 3.1867890661865057,
+    "dT_core_K": 1.2966569736054625,
+    "thermo_phase_rad_per_cm": 1.8050403499329162
+   },
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.3,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 2.8033193665263774,
+    "dT_core_K": 1.1406288682292538,
+    "thermo_phase_rad_per_cm": 1.5878379350609808
+   },
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.3,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 9.344397888421257,
+    "dT_core_K": 3.8020962274308463,
+    "thermo_phase_rad_per_cm": 5.2927931168699365
+   },
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.5,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 4.567460598382686,
+    "dT_core_K": 1.8584316418683484,
+    "thermo_phase_rad_per_cm": 2.58707134535116
+   },
+   {
+    "P_W": 1.4,
+    "loss_dB_cm": 0.5,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 15.22486866127562,
+    "dT_core_K": 6.194772139561161,
+    "thermo_phase_rad_per_cm": 8.623571151170534
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.05,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 0.007512031631383874,
+    "dT_core_K": 0.0030565337079039227,
+    "thermo_phase_rad_per_cm": 0.004254916131253827
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.05,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 0.02504010543794625,
+    "dT_core_K": 0.010188445693013077,
+    "thermo_phase_rad_per_cm": 0.014183053770846091
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.1,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 0.014938073747749248,
+    "dT_core_K": 0.006078079563775606,
+    "thermo_phase_rad_per_cm": 0.008461126640310545
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.1,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 0.04979357915916415,
+    "dT_core_K": 0.02026026521258535,
+    "thermo_phase_rad_per_cm": 0.028203755467701815
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.3,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 0.043801865101974646,
+    "dT_core_K": 0.01782232606608209,
+    "thermo_phase_rad_per_cm": 0.024809967735327825
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.3,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 0.14600621700658215,
+    "dT_core_K": 0.05940775355360697,
+    "thermo_phase_rad_per_cm": 0.08269989245109276
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.5,
+    "absorbed_fraction": 0.3,
+    "P_abs_W_per_m": 0.07136657184972947,
+    "dT_core_K": 0.029037994404192944,
+    "thermo_phase_rad_per_cm": 0.040422989771111875
+   },
+   {
+    "P_W": 0.021875,
+    "loss_dB_cm": 0.5,
+    "absorbed_fraction": 1.0,
+    "P_abs_W_per_m": 0.23788857283243156,
+    "dT_core_K": 0.09679331468064314,
+    "thermo_phase_rad_per_cm": 0.1347432992370396
+   }
+  ],
+  "I_guide_MW_cm2_at_1.4W": 419.1465701784296,
+  "kerr_rad_per_cm_at_1.4W": 0.04748965276162978,
+  "facet_MW_cm2_at_1.4W_t0.4": 45.10535616409336,
+  "n_fibres_for_facet_below_5MW_cm2": 10,
+  "n_fibres_for_facet_below_20MW_cm2": 3
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

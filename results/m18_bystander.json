@@ -1,0 +1,184 @@
+{
+ "name": "m18_bystander",
+ "script": "scripts/m18_transport3d.py",
+ "git": "3c35d42",
+ "notes": "'delivered' here means the bystander stayed in its own site.",
+ "inputs": {
+  "move": "loaded tweezer from (0,0) to (12,0) um along a lane at y = 2 um (or on the row)",
+  "bystander": "atom in a static site that is not addressed",
+  "hold_mK": 0.1
+ },
+ "outputs": {
+  "rows": [
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 2.0,
+    "bystander_um": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "label": "Um 0.3: same row, passed at 2 um",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.994,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.006,
+    "E_initial_uK": 27.745700926158033,
+    "E_final_uK": 27.39584844740955,
+    "dE_uK": -0.34985247874848363
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 2.0,
+    "bystander_um": [
+     8.0,
+     4.0,
+     0.0
+    ],
+    "label": "Um 0.3: next row, passed at 2 um",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.9926666666666667,
+    "left_behind": 0.0,
+    "misplaced": 0.0006666666666666666,
+    "lost": 0.006666666666666667,
+    "E_initial_uK": 27.74570092615831,
+    "E_final_uK": 27.35786093155845,
+    "dE_uK": -0.38783999459986274
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 2.0,
+    "bystander_um": [
+     12.0,
+     4.0,
+     0.0
+    ],
+    "label": "Um 0.3: next row, beside the drop site",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.982,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.018,
+    "E_initial_uK": 27.74570092615831,
+    "E_final_uK": 26.917721980684345,
+    "dE_uK": -0.8279789454739671
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.3,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 0.0,
+    "bystander_um": [
+     8.0,
+     4.0,
+     0.0
+    ],
+    "label": "Um 0.3: next row, on-row transport (4 um away)",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.9993333333333333,
+    "left_behind": 0.0,
+    "misplaced": 0.0006666666666666666,
+    "lost": 0.0,
+    "E_initial_uK": 27.74570092615831,
+    "E_final_uK": 27.700301627194573,
+    "dE_uK": -0.045399298963736526
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 2.0,
+    "bystander_um": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "label": "Um 0.5: same row, passed at 2 um",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.988,
+    "left_behind": 0.0,
+    "misplaced": 0.002,
+    "lost": 0.01,
+    "E_initial_uK": 27.745700926158033,
+    "E_final_uK": 27.2791834255003,
+    "dE_uK": -0.4665175006577322
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 2.0,
+    "bystander_um": [
+     8.0,
+     4.0,
+     0.0
+    ],
+    "label": "Um 0.5: next row, passed at 2 um",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.988,
+    "left_behind": 0.0,
+    "misplaced": 0.002,
+    "lost": 0.01,
+    "E_initial_uK": 27.74570092615831,
+    "E_final_uK": 27.241475030998238,
+    "dE_uK": -0.5042258951600712
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 2.0,
+    "bystander_um": [
+     12.0,
+     4.0,
+     0.0
+    ],
+    "label": "Um 0.5: next row, beside the drop site",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.968,
+    "left_behind": 0.0,
+    "misplaced": 0.0,
+    "lost": 0.032,
+    "E_initial_uK": 27.74570092615831,
+    "E_final_uK": 26.61827290703214,
+    "dE_uK": -1.127428019126172
+   },
+   {
+    "Us_mK": 0.1,
+    "Um_mK": 0.5,
+    "t_ramp_us": 100.0,
+    "t_move_us": 400.0,
+    "lane_um": 0.0,
+    "bystander_um": [
+     8.0,
+     4.0,
+     0.0
+    ],
+    "label": "Um 0.5: next row, on-row transport (4 um away)",
+    "initially_unbound_fraction_rejected": 0.0010000000000000009,
+    "delivered": 0.9993333333333333,
+    "left_behind": 0.0,
+    "misplaced": 0.0006666666666666666,
+    "lost": 0.0,
+    "E_initial_uK": 27.74570092615831,
+    "E_final_uK": 27.700301627194573,
+    "dE_uK": -0.045399298963736526
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

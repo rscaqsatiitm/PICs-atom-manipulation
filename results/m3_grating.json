@@ -1,0 +1,131 @@
+{
+ "name": "m3_grating",
+ "script": "scripts/m3_opa.py",
+ "git": "568f2f5",
+ "notes": "2D model of a uniform grating. Directionality oscillates with buried-oxide thickness through the Si-substrate reflection; a bottom reflector or a two-layer grating is needed for > 0.8.",
+ "inputs": {
+  "fdtd": "results/m3_grating_fdtd_raw.json (scripts/m3_grating_fdtd.py, MEEP 1.35, 2D, 40 px/um, Si substrate, 2 um top oxide, duty 0.5, nominal 10 deg)"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "etch_um": 0.05,
+    "t_box_um": 2.0,
+    "period_um": 0.6434798520154891,
+    "theta_air_deg": 9.959782251317069,
+    "alpha_per_um": 0.0017038902992406594,
+    "L_90pct_um": 675.6846652687076,
+    "directionality": 0.5062783983794459,
+    "reflection": 0.000138294807081496,
+    "directionality_min_pm15nm": 0.3640497276822871,
+    "directionality_max_pm15nm": 0.594642463508074,
+    "dtheta_dlambda_deg_per_nm": -0.10322764223826893
+   },
+   {
+    "etch_um": 0.05,
+    "t_box_um": 3.0,
+    "period_um": 0.6434798520154891,
+    "theta_air_deg": 9.959782251317069,
+    "alpha_per_um": 0.0030005582513688957,
+    "L_90pct_um": 383.6927831585298,
+    "directionality": 0.6812714464176823,
+    "reflection": 0.0002128206782895381,
+    "directionality_min_pm15nm": 0.6381498920002175,
+    "directionality_max_pm15nm": 0.6812714464176823,
+    "dtheta_dlambda_deg_per_nm": -0.10322764223826893
+   },
+   {
+    "etch_um": 0.05,
+    "t_box_um": 4.0,
+    "period_um": 0.6434798520154891,
+    "theta_air_deg": 9.921959896518182,
+    "alpha_per_um": 0.002123730502550596,
+    "L_90pct_um": 542.1085891615357,
+    "directionality": 0.5110466817492378,
+    "reflection": 8.66784904931528e-05,
+    "directionality_min_pm15nm": 0.29247136931093715,
+    "directionality_max_pm15nm": 0.6355194363229882,
+    "dtheta_dlambda_deg_per_nm": -0.10321569995670182
+   },
+   {
+    "etch_um": 0.1,
+    "t_box_um": 2.0,
+    "period_um": 0.6503972977970898,
+    "theta_air_deg": 9.613278935408236,
+    "alpha_per_um": 0.01070855536073505,
+    "L_90pct_um": 107.51147168911837,
+    "directionality": 0.6863348741575168,
+    "reflection": 0.0019030563714632631,
+    "directionality_min_pm15nm": 0.5712457241394624,
+    "directionality_max_pm15nm": 0.7376171797657975,
+    "dtheta_dlambda_deg_per_nm": -0.1030191174481177
+   },
+   {
+    "etch_um": 0.1,
+    "t_box_um": 3.0,
+    "period_um": 0.6503972977970898,
+    "theta_air_deg": 9.651041804978119,
+    "alpha_per_um": 0.012825215441284121,
+    "L_90pct_um": 89.76789136742565,
+    "directionality": 0.7153493535930402,
+    "reflection": 0.003348967887350063,
+    "directionality_min_pm15nm": 0.6520129887108987,
+    "directionality_max_pm15nm": 0.7185747568440148,
+    "dtheta_dlambda_deg_per_nm": -0.10303064147047586
+   },
+   {
+    "etch_um": 0.1,
+    "t_box_um": 4.0,
+    "period_um": 0.6503972977970898,
+    "theta_air_deg": 9.613278935408236,
+    "alpha_per_um": 0.007077231130831686,
+    "L_90pct_um": 162.6755612772714,
+    "directionality": 0.41528162786498035,
+    "reflection": 0.0012259844532047648,
+    "directionality_min_pm15nm": 0.35414164526290853,
+    "directionality_max_pm15nm": 0.5811191585938436,
+    "dtheta_dlambda_deg_per_nm": -0.1030191174481177
+   },
+   {
+    "etch_um": 0.2,
+    "t_box_um": 2.0,
+    "period_um": 0.6707273378932628,
+    "theta_air_deg": 8.94262367550408,
+    "alpha_per_um": 0.057073717937813725,
+    "L_90pct_um": 20.17202642644459,
+    "directionality": 0.7590533094441185,
+    "reflection": 0.06271366325513994,
+    "directionality_min_pm15nm": 0.710976819651051,
+    "directionality_max_pm15nm": 0.7834207538286769,
+    "dtheta_dlambda_deg_per_nm": -0.10250336788126475
+   },
+   {
+    "etch_um": 0.2,
+    "t_box_um": 3.0,
+    "period_um": 0.6707273378932628,
+    "theta_air_deg": 8.94262367550408,
+    "alpha_per_um": 0.03807626890434818,
+    "L_90pct_um": 30.236485339180625,
+    "directionality": 0.5987935104203659,
+    "reflection": 0.03683883058592474,
+    "directionality_min_pm15nm": 0.48932356877999916,
+    "directionality_max_pm15nm": 0.6637002162184286,
+    "dtheta_dlambda_deg_per_nm": -0.10250336788126475
+   },
+   {
+    "etch_um": 0.2,
+    "t_box_um": 4.0,
+    "period_um": 0.6707273378932628,
+    "theta_air_deg": 8.754053887515248,
+    "alpha_per_um": 0.03686748822894844,
+    "L_90pct_um": 31.22785418272746,
+    "directionality": 0.4573721357405576,
+    "reflection": 0.049581327719275814,
+    "directionality_min_pm15nm": 0.3413895433904545,
+    "directionality_max_pm15nm": 0.7029066223610332,
+    "dtheta_dlambda_deg_per_nm": -0.10245086443863956
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

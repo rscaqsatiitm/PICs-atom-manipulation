@@ -1,0 +1,200 @@
+{
+ "name": "m7_budget",
+ "script": "scripts/m7_budget.py",
+ "git": "3f89044",
+ "notes": "PSF: scalar Debye, aberration-free; a Strehl of 0.8 adds a halo not included here.",
+ "inputs": {
+  "NA": {
+   "value": 0.5,
+   "unit": "-",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Table 1: meta-objective NA >= 0.5"
+  },
+  "lam_addr": {
+   "value": 0.8946,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97: 895 nm Raman addressing (Cs D1 line, 894.6 nm)"
+  },
+  "site_pitch": {
+   "value": 4.0,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 3: 'about five sites at 4 um pitch'"
+  },
+  "w0": {
+   "value": 1.04,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget: 1.04 um waist"
+  },
+  "alpha": {
+   "value": 1160.0,
+   "unit": "a.u.",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 3 citing Le Kien et al. EPJD 67, 92 (2013)"
+  },
+  "P_tweezer": {
+   "value": 0.0066,
+   "unit": "W",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4(ii): ~6.6 mW per tweezer at the atoms"
+  },
+  "depth": {
+   "value": 0.0012,
+   "unit": "K",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4(ii): transport tweezers ~1.2 mK"
+  },
+  "pos_noise": {
+   "value": 0.01,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget: <= 10 nm rms"
+  },
+  "formulas": {
+   "value": 0,
+   "unit": "-",
+   "kind": "SOURCE",
+   "ref": "heating rates: O'Hara et al., arXiv:physics/0003049 (PRL 82, 4204 (1999)), Gamma = pi^2 nu^2 S_I(2 nu), Q_dot = 4 pi^4 M nu^4 S_x(nu); read 2026-11-01"
+  }
+ },
+ "outputs": {
+  "idle_error_vs_ER": [
+   {
+    "ER_dB": 30,
+    "one_beam_addressed": 0.0024674011002723396,
+    "both_beams_addressed": 2.4674011002723394e-06
+   },
+   {
+    "ER_dB": 40,
+    "one_beam_addressed": 0.00024674011002723397,
+    "both_beams_addressed": 2.4674011002723396e-08
+   },
+   {
+    "ER_dB": 50,
+    "one_beam_addressed": 2.46740110027234e-05,
+    "both_beams_addressed": 2.46740110027234e-10
+   },
+   {
+    "ER_dB": 60,
+    "one_beam_addressed": 2.4674011002723394e-06,
+    "both_beams_addressed": 2.4674011002723395e-12
+   },
+   {
+    "ER_dB": 70,
+    "one_beam_addressed": 2.4674011002723394e-07,
+    "both_beams_addressed": 2.4674011002723392e-14
+   }
+  ],
+  "psf_crosstalk_895": [
+   {
+    "pupil_gauss_trunc": "uniform",
+    "crosstalk_at_neighbour": 0.0010107915406766814,
+    "neighbour_error_one_beam": 0.002494028159611617,
+    "fwhm_um": 0.922
+   },
+   {
+    "pupil_gauss_trunc": 1.5,
+    "crosstalk_at_neighbour": 0.0006998347103165764,
+    "neighbour_error_one_beam": 0.0017267729342438953,
+    "fwhm_um": 0.96
+   },
+   {
+    "pupil_gauss_trunc": 1.0,
+    "crosstalk_at_neighbour": 0.0004086199717544936,
+    "neighbour_error_one_beam": 0.0010082293679002897,
+    "fwhm_um": 1.014
+   },
+   {
+    "pupil_gauss_trunc": 0.85,
+    "crosstalk_at_neighbour": 0.000267595047247133,
+    "neighbour_error_one_beam": 0.0006602643140050054,
+    "fwhm_um": 1.054
+   },
+   {
+    "pupil_gauss_trunc": 0.7,
+    "crosstalk_at_neighbour": 0.00011803106886654644,
+    "neighbour_error_one_beam": 0.0002912299891876371,
+    "fwhm_um": 1.1300000000000001
+   },
+   {
+    "pupil_gauss_trunc": 0.5,
+    "crosstalk_at_neighbour": 5.315249440439319e-06,
+    "neighbour_error_one_beam": 1.3114852317561921e-05,
+    "fwhm_um": 1.3840000000000001
+   }
+  ],
+  "depth_check": {
+   "depth_mK_at_6.6mW": 1.0136654654452921,
+   "power_mW_for_1.2mK": 7.813228594623998,
+   "waist_um_for_1.2mK_at_6.6mW": 0.9558506540535975,
+   "opa_spot_peak_vs_gaussian_w0": 1.2225922326837289
+  },
+  "noise_limits": [
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "heating_quanta_per_s": 1.0,
+    "S_x_limit_m2_per_Hz": 1.0452864584974844e-25,
+    "x_rms_in_10kHz_band_nm": 0.032330890159373654,
+    "RIN_limit_1_per_Hz_for_gamma_1_per_s": 5.763071864969377e-11
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "heating_quanta_per_s": 10.0,
+    "S_x_limit_m2_per_Hz": 1.0452864584974842e-24,
+    "x_rms_in_10kHz_band_nm": 0.102239251684345,
+    "RIN_limit_1_per_Hz_for_gamma_1_per_s": 5.763071864969377e-11
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "heating_quanta_per_s": 100.0,
+    "S_x_limit_m2_per_Hz": 1.0452864584974844e-23,
+    "x_rms_in_10kHz_band_nm": 0.3233089015937366,
+    "RIN_limit_1_per_Hz_for_gamma_1_per_s": 5.763071864969377e-11
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "case": "10 nm rms white over 1 MHz",
+    "S_x_m2_per_Hz": 1e-22,
+    "heating_quanta_per_s": 956.6755523049826
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "heating_quanta_per_s": 1.0,
+    "S_x_limit_m2_per_Hz": 1.3066080731218555e-26,
+    "x_rms_in_10kHz_band_nm": 0.011430695836745264,
+    "RIN_limit_1_per_Hz_for_gamma_1_per_s": 1.4407679662423442e-11
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "heating_quanta_per_s": 10.0,
+    "S_x_limit_m2_per_Hz": 1.3066080731218553e-25,
+    "x_rms_in_10kHz_band_nm": 0.03614703408471925,
+    "RIN_limit_1_per_Hz_for_gamma_1_per_s": 1.4407679662423442e-11
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "heating_quanta_per_s": 100.0,
+    "S_x_limit_m2_per_Hz": 1.3066080731218555e-24,
+    "x_rms_in_10kHz_band_nm": 0.11430695836745267,
+    "RIN_limit_1_per_Hz_for_gamma_1_per_s": 1.4407679662423442e-11
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "case": "10 nm rms white over 1 MHz",
+    "S_x_m2_per_Hz": 1e-22,
+    "heating_quanta_per_s": 7653.404418439861
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

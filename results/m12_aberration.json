@@ -1,0 +1,106 @@
+{
+ "name": "m12_aberration",
+ "script": "scripts/m12_scaling.py",
+ "git": "ece44ce",
+ "notes": "Check against BPM for D1 (N = 128 ports, 192 arms): BPM worst-port residual 0.079 rad rms.",
+ "inputs": {
+  "geometry": "arms on a circle of radius R; ports on a circle of radius R_p through the slab vertex, optionally + c4 x^4 / R^3; exact path lengths; arm weights Gaussian with edge exp(-6)",
+  "ports_used": "central 88%"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "N_ports": 128,
+    "N_arms": 192,
+    "R_mm": 1.3292370130632682,
+    "confocal_rms_max_rad": 0.06964946122215307,
+    "rowland_rp_ratio": 0.5018847656249998,
+    "rowland_rms_max_rad": 0.03289021497931627,
+    "quartic_rp_ratio": 0.29271112591438064,
+    "quartic_c4": -105.98291827018903,
+    "quartic_rms_max_rad": 0.03258450272081697,
+    "strehl_rowland": 0.9989188186567881,
+    "strehl_quartic": 0.9989388136393402
+   },
+   {
+    "N_ports": 192,
+    "N_arms": 288,
+    "R_mm": 1.9938555195949026,
+    "confocal_rms_max_rad": 0.10427524969092969,
+    "rowland_rp_ratio": 0.5018847656249998,
+    "rowland_rms_max_rad": 0.049391324432074474,
+    "quartic_rp_ratio": 0.29223921356771565,
+    "quartic_c4": -107.0049301816035,
+    "quartic_rms_max_rad": 0.048932775269294786,
+    "strehl_rowland": 0.99756347023994,
+    "strehl_quartic": 0.9976084478330338
+   },
+   {
+    "N_ports": 256,
+    "N_arms": 384,
+    "R_mm": 2.6584740261265365,
+    "confocal_rms_max_rad": 0.13890018815607755,
+    "rowland_rp_ratio": 0.5018847656249998,
+    "rowland_rms_max_rad": 0.06589189227751964,
+    "quartic_rp_ratio": 0.2920420507386682,
+    "quartic_c4": -107.46577384566211,
+    "quartic_rms_max_rad": 0.06528047262335089,
+    "strehl_rowland": 0.9956676702655435,
+    "strehl_quartic": 0.995747527371064
+   },
+   {
+    "N_ports": 384,
+    "N_arms": 576,
+    "R_mm": 3.987711039189805,
+    "confocal_rms_max_rad": 0.20814921833032507,
+    "rowland_rp_ratio": 0.5018847656249998,
+    "rowland_rms_max_rad": 0.09889248493935025,
+    "quartic_rp_ratio": 0.2917851219862604,
+    "quartic_c4": -108.0156204373246,
+    "quartic_rms_max_rad": 0.09797548422347335,
+    "strehl_rowland": 0.9902679424058786,
+    "strehl_quartic": 0.9904467297025498
+   },
+   {
+    "N_ports": 512,
+    "N_arms": 768,
+    "R_mm": 5.316948052253073,
+    "confocal_rms_max_rad": 0.2795859178530134,
+    "rowland_rp_ratio": 0.5018847656249998,
+    "rowland_rms_max_rad": 0.1324789320496404,
+    "quartic_rp_ratio": 0.29219270319119783,
+    "quartic_c4": -106.89922234841808,
+    "quartic_rms_max_rad": 0.1312464591514343,
+    "strehl_rowland": 0.9826024484561224,
+    "strehl_quartic": 0.9829218799609684
+   },
+   {
+    "N_ports": 768,
+    "N_arms": 1152,
+    "R_mm": 7.97542207837961,
+    "confocal_rms_max_rad": 0.41808131781120533,
+    "rowland_rp_ratio": 0.5018847656249998,
+    "rowland_rms_max_rad": 0.19847990166727444,
+    "quartic_rp_ratio": 0.2919197258890819,
+    "quartic_c4": -107.58808986095397,
+    "quartic_rms_max_rad": 0.19663620367315054,
+    "strehl_rowland": 0.9613715931228708,
+    "strehl_quartic": 0.9620721832240089
+   },
+   {
+    "N_ports": 1024,
+    "N_arms": 1536,
+    "R_mm": 10.633896104506146,
+    "confocal_rms_max_rad": 0.5587678510469883,
+    "rowland_rp_ratio": 0.5018847656249998,
+    "rowland_rms_max_rad": 0.26506745290470635,
+    "quartic_rp_ratio": 0.29202212536372574,
+    "quartic_c4": -107.276728847723,
+    "quartic_rms_max_rad": 0.26260260334537067,
+    "strehl_rowland": 0.932150725633641,
+    "strehl_quartic": 0.9333638950899972
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

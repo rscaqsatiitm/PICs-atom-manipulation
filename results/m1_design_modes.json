@@ -1,0 +1,177 @@
+{
+ "name": "m1_design_modes",
+ "script": "scripts/m1_platform.py",
+ "git": "uncommitted",
+ "notes": "Kerr phase uses gamma_core x n2 x P/Aeff (upper bound: Aeff from transverse |E|^2). dneff/dT for uniform heating of core and cladding.",
+ "inputs": {
+  "design_widths": {
+   "895_0.2": {
+    "lam": 0.8946,
+    "t": 0.2,
+    "w_TE1_guided_at": 0.7,
+    "w_design": 0.7,
+    "TE1_margin_at_design": 0.013695237533619675,
+    "biref_at_design": 0.08967960096729777
+   },
+   "895_0.3": {
+    "lam": 0.8946,
+    "t": 0.3,
+    "w_TE1_guided_at": 0.6,
+    "w_design": 0.5,
+    "TE1_margin_at_design": null,
+    "biref_at_design": 0.04546099335965015
+   },
+   "895_0.4": {
+    "lam": 0.8946,
+    "t": 0.4,
+    "w_TE1_guided_at": 0.5,
+    "w_design": 0.5,
+    "TE1_margin_at_design": 0.013636080208044188,
+    "biref_at_design": 0.018092071201589954
+   },
+   "1064_0.2": {
+    "lam": 1.064435,
+    "t": 0.2,
+    "w_TE1_guided_at": 0.9,
+    "w_design": 0.9,
+    "TE1_margin_at_design": 0.00692663456040199,
+    "biref_at_design": 0.08897948983564374
+   },
+   "1064_0.3": {
+    "lam": 1.064435,
+    "t": 0.3,
+    "w_TE1_guided_at": 0.7,
+    "w_design": 0.7,
+    "TE1_margin_at_design": 0.0020040404268955037,
+    "biref_at_design": 0.0695096829480728
+   },
+   "1064_0.4": {
+    "lam": 1.064435,
+    "t": 0.4,
+    "w_TE1_guided_at": 0.7,
+    "w_design": 0.6,
+    "TE1_margin_at_design": null,
+    "biref_at_design": 0.03484801316315589
+   }
+  },
+  "n2_SiN": {
+   "value": 2.5e-19,
+   "unit": "m^2/W",
+   "kind": "RECALLED",
+   "ref": "Kerr index of LPCVD Si3N4, approx. 2.4-2.5e-19 m^2/W (Ikeda 2008); verify"
+  },
+  "dndT_SiN": {
+   "value": 2.45e-05,
+   "unit": "1/K",
+   "kind": "SOURCE",
+   "ref": "arXiv:2606.05673, introduction (values at 193 THz; ~7% dispersion to visible), read 2026-10-31"
+  },
+  "dndT_SiO2": {
+   "value": 1e-05,
+   "unit": "1/K",
+   "kind": "SOURCE",
+   "ref": "arXiv:2606.05673, introduction (values at 193 THz; ~7% dispersion to visible), read 2026-10-31"
+  },
+  "P_chip": {
+   "value": 1.4,
+   "unit": "W",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4(ii): ~1.4 W on chip for 21 tweezers"
+  }
+ },
+ "outputs": {
+  "rows": [
+   {
+    "key": "895_0.2",
+    "lam": 0.8946,
+    "t": 0.2,
+    "w": 0.7,
+    "neff": 1.650810001905345,
+    "gamma_core": 0.6156433266125526,
+    "aeff_um2": 0.26280945489670265,
+    "ng": 2.0489186617855126,
+    "dneff_dT": 2.1569429070367184e-05,
+    "I_peak_MW_cm2_at_1.4W": 532.7053399012111,
+    "kerr_phase_rad_per_cm_at_1.4W": 0.05758471339251701,
+    "I_peak_MW_cm2_at_0.066W": 25.113251738199953,
+    "kerr_phase_rad_per_cm_at_0.066W": 0.0027147079170758022
+   },
+   {
+    "key": "895_0.3",
+    "lam": 0.8946,
+    "t": 0.3,
+    "w": 0.5,
+    "neff": 1.6895709677198163,
+    "gamma_core": 0.7299436416381928,
+    "aeff_um2": 0.23197902596657088,
+    "ng": 2.1392418834596327,
+    "dneff_dT": 2.314008161132808e-05,
+    "I_peak_MW_cm2_at_1.4W": 603.5028357269445,
+    "kerr_phase_rad_per_cm_at_1.4W": 0.07734987713215899,
+    "I_peak_MW_cm2_at_0.066W": 28.450847969984526,
+    "kerr_phase_rad_per_cm_at_0.066W": 0.0036464942076589236
+   },
+   {
+    "key": "895_0.4",
+    "lam": 0.8946,
+    "t": 0.4,
+    "w": 0.5,
+    "neff": 1.7450416032454423,
+    "gamma_core": 0.8176598136694191,
+    "aeff_um2": 0.24206257844579204,
+    "ng": 2.1738241975669634,
+    "dneff_dT": 2.4142643271418683e-05,
+    "I_peak_MW_cm2_at_1.4W": 578.3628386465025,
+    "kerr_phase_rad_per_cm_at_1.4W": 0.08303554058241967,
+    "I_peak_MW_cm2_at_0.066W": 27.26567667904941,
+    "kerr_phase_rad_per_cm_at_0.066W": 0.0039145326274569285
+   },
+   {
+    "key": "1064_0.2",
+    "lam": 1.064435,
+    "t": 0.2,
+    "w": 0.9,
+    "neff": 1.6126954884957145,
+    "gamma_core": 0.5315677331921809,
+    "aeff_um2": 0.41996031399469164,
+    "ng": 1.9750310941288256,
+    "dneff_dT": 2.0244541339753397e-05,
+    "I_peak_MW_cm2_at_1.4W": 333.3648331393752,
+    "kerr_phase_rad_per_cm_at_1.4W": 0.026150447523924276,
+    "I_peak_MW_cm2_at_0.066W": 15.715770705141978,
+    "kerr_phase_rad_per_cm_at_0.066W": 0.0012328068118421449
+   },
+   {
+    "key": "1064_0.3",
+    "lam": 1.064435,
+    "t": 0.3,
+    "w": 0.7,
+    "neff": 1.6741667080536853,
+    "gamma_core": 0.6923988525504364,
+    "aeff_um2": 0.34010000861226963,
+    "ng": 2.0947550518725846,
+    "dneff_dT": 2.265490756494515e-05,
+    "I_peak_MW_cm2_at_1.4W": 411.6436238012764,
+    "kerr_phase_rad_per_cm_at_1.4W": 0.04206089047989482,
+    "I_peak_MW_cm2_at_0.066W": 19.406056550631604,
+    "kerr_phase_rad_per_cm_at_0.066W": 0.001982870551195042
+   },
+   {
+    "key": "1064_0.4",
+    "lam": 1.064435,
+    "t": 0.4,
+    "w": 0.6,
+    "neff": 1.7074634625802296,
+    "gamma_core": 0.7677721359235747,
+    "aeff_um2": 0.33401203769937177,
+    "ng": 2.142078498534616,
+    "dneff_dT": 2.358311085350895e-05,
+    "I_peak_MW_cm2_at_1.4W": 419.1465701784296,
+    "kerr_phase_rad_per_cm_at_1.4W": 0.04748965276162978,
+    "I_peak_MW_cm2_at_0.066W": 19.759766879840253,
+    "kerr_phase_rad_per_cm_at_0.066W": 0.0022387979159054043
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

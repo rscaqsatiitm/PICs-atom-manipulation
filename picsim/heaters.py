@@ -39,6 +39,7 @@ class HeaterXS:
     w_trench: float = 4.0
     undercut: float | None = None  # half-width of an air undercut below the BOX (um), depth 10 um
     neighbours: tuple = ()  # x positions of neighbouring waveguides (for crosstalk sampling only)
+    source: str = "heater"  # "heater": metal strip dissipates; "core": optical absorption in the core
 
     def polygons(self):
         y_top = self.t + self.t_top
@@ -100,8 +101,10 @@ def _assemble(xs: HeaterXS):
     K = asm(cond, b, k=b0.interpolate(kap * 1e-6))
     Mm = asm(mass, b, c=b0.interpolate(cap * 1e-18))
     q = b0.zeros()
-    area = xs.w_h * xs.t_h
-    q[mesh.subdomains["heater"]] = 1.0 / area  # 1 W/um per unit length -> W/um^3
+    if xs.source == "core":
+        q[mesh.subdomains["core"]] = 1.0 / (xs.w_core * xs.t)
+    else:
+        q[mesh.subdomains["heater"]] = 1.0 / (xs.w_h * xs.t_h)  # 1 W/um per unit length -> W/um^3
     F = asm(load, b, q=b0.interpolate(q))
     y_bot = -xs.t_box - xs.d_si
     bottom = mesh.facets_satisfying(lambda x: np.isclose(x[1], y_bot))

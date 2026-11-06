@@ -1,0 +1,132 @@
+"""Generalised sliding-window focal-plane OPA (route E) for design optimisation.
+
+N_ports dense input ports (pitch p_port, width w_port at the FPR) feed N_arms arms (pitch p_a, width w_arm at
+the FPR) through a confocal star coupler of radius R = N_arms p_a p_port / lambda_s, so that adjacent ports land
+one resolution cell lambda/(2 NA) apart at the atoms. The arms end in N_arms end-fire emitters at pitch p_out
+whose facet width w_emit sets the element pattern. With N_arms > N_ports (oversampling f = N_ports/N_arms) the
+ports use only the central fraction f of the arms' and emitters' angular range, which reduces scan roll-off.
+The transfer matrix A (ports x arms) comes from the paraxial star-coupler model unless a BPM matrix is given.
+"""
+from __future__ import annotations
+
+import numpy as np
+
+from .. import modes as M
+from .array import OPA, channel_response, spot_metrics
+from .star import StarCoupler
+from .star_rs import StarCouplerRS
+
+_EMITTER_CACHE = {}
+
+
+def prepare_matrix(A, G, x):
+    """Static calibration of a port-to-arm matrix, as done on a device with trims on every arm and port.
+
+    (i) Arm trims: remove the arm-dependent phase seen by the two central ports.
+    (ii) Orientation: port index increasing -> +x at the atoms.
+    (iii) Port trims: remove each port's piston phase, taken at the peak of its own spot, so that adjacent
+         ports in a window add in phase.
+    """
+    c0 = A.shape[0] // 2
+    A = A * np.exp(-1j * np.angle(A[c0 - 1] + A[c0]))[None, :]
+    F = A @ G
+    pk = np.argmax(np.abs(F), axis=1)
+    if x[pk[-A.shape[0] // 8]] < x[pk[A.shape[0] // 8]]:
+        A, F, pk = A[::-1], F[::-1], pk[::-1]
+    piston = np.angle(F[np.arange(A.shape[0]), pk])
+    return A * np.exp(-1j * piston)[:, None]
+
+
+def emitter_profile(lam, width, t=0.4):
+    key = (round(lam, 6), round(width, 4), t)
+    if key not in _EMITTER_CACHE:
+        ms = M.solve(M.XSection(cores=[(0, width)], t=t, x_left=-5 - width / 2, x_right=5 + width / 2), lam,
+                     num_modes=2)
+        te = M.fundamental(ms)
+        x = np.linspace(-4.5 - width / 2, 4.5 + width / 2, 1201)
+        ex = np.abs(M.field_on_grid(te.mode, x, np.array([t / 2]), 0))[0]
+        _EMITTER_CACHE[key] = (x, ex / ex.max())
+    x, ex = _EMITTER_CACHE[key]
+    return lambda xx: np.interp(xx, x, ex, left=0.0, right=0.0)
+
+
+class FocalPlane:
+    def __init__(self, lam=1.064435, NA=0.5, N_ports=128, N_arms=128, p_port=2.0, p_a=2.0, w_port=1.7,
+                 w_arm=1.7, p_out=1.5, w_emit=0.6, t=0.4, A=None, dx_atoms=0.02, model="paraxial", rp_ratio=1.0):
+        self.lam, self.NA = lam, NA
+        self.N_ports, self.N_arms = N_ports, N_arms
+        self.opa = OPA(N=N_arms, pitch=p_out, lam=lam, element=emitter_profile(lam, w_emit, t), NA=NA)
+        n_s = StarCoupler(lam, t, 2, p_a, 100.0, w_port, w_arm).n_s
+        self.R = N_arms * p_a * p_port / (lam / n_s)
+        self.k = np.arange(N_ports) - (N_ports - 1) / 2
+        self.x = np.arange(-1.02 * self.opa.x_range, 1.02 * self.opa.x_range, dx_atoms)
+        self.G = channel_response(self.opa, self.x)
+        if A is None and model == "paraxial":
+            sc = StarCoupler(lam, t, N_arms, p_a, self.R, w_port, w_arm)
+            A = np.array([sc.arm_amplitudes(kk * p_port) for kk in self.k])[::-1]
+        elif A is None:
+            # exact-path model; arm phases calibrated with the two central ports (static arm trims)
+            A = prepare_matrix(StarCouplerRS(lam, t, N_ports, N_arms, p_port, p_a, self.R, w_port, w_arm,
+                                             R_p=rp_ratio * self.R).matrix(), self.G, self.x)
+        else:
+            A = prepare_matrix(A, self.G, self.x)
+        self.A = A
+        self.dx_port = lam / (2 * NA)
+        self.e_pow = float(np.sum(self.opa.element(self.opa.x) ** 2) * self.opa.dx)
+
+    def weights(self, u, sigma, amp=1.0, phase=0.0):
+        w = np.exp(-((self.k - u) ** 2) / (2 * sigma**2))
+        return amp * np.exp(1j * phase) * w / np.sqrt(np.sum(w**2))
+
+    def intensity(self, port_amps):
+        c = port_amps @ self.A
+        return np.abs(c @ self.G) ** 2 / (self.opa.lam * self.opa.x_scale * self.e_pow)
+
+    def peak_near(self, I, x0, win=0.6):
+        m = np.abs(self.x - x0) < win
+        return spot_metrics(self.x[m], I[m])
+
+    def spot(self, u, sigma):
+        I = self.intensity(self.weights(u, sigma))
+        s = spot_metrics(self.x, I)
+        nb = max(np.interp(s["x_peak"] + 4.0, self.x, I), np.interp(s["x_peak"] - 4.0, self.x, I)) / s["peak"]
+        return {**s, "nb4": float(nb), "delivered": float(np.trapezoid(I, self.x))}
+
+    def field_scan(self, sigma, x_half=60.0, n=13):
+        """Peak per unit port power across the field of use (|x| <= x_half)."""
+        us = np.linspace(-x_half / self.dx_port, x_half / self.dx_port, n)
+        return [self.spot(u, sigma) for u in us]
+
+
+class LinearSynth:
+    """Least-squares port synthesis on the full calibrated response M = A G (ports x atom-plane samples).
+
+    Port amplitudes for a target field t(x) minimise |w M - t|^2 + lam |w|^2, i.e. w = t K with
+    K = M^H (M M^H + lam I)^-1, precomputed once (one matrix product per update). The target is a sum of
+    Gaussian spots (amplitude, phase, centre) with the FWHM of the window design and zero field elsewhere, so the
+    solution also suppresses each tweezer's tails at the others. Port coupling, aberrations and roll-off are all
+    inside M, hence compensated.
+    """
+
+    def __init__(self, fp: FocalPlane, fwhm=1.68, lam_rel=1e-4, x_half=72.0, step=0.04):
+        self.fp = fp
+        m = np.abs(fp.x) <= x_half
+        self.xs = fp.x[m][:: max(1, int(round(step / (fp.x[1] - fp.x[0]))))]
+        sel = np.searchsorted(fp.x, self.xs)
+        self.M = (fp.A @ fp.G[:, sel]) / np.sqrt(fp.opa.lam * fp.opa.x_scale * fp.e_pow)
+        MMh = self.M @ self.M.conj().T
+        lam = lam_rel * np.trace(MMh).real / MMh.shape[0]
+        self.K = self.M.conj().T @ np.linalg.inv(MMh + lam * np.eye(MMh.shape[0]))
+        self.wx = fwhm / np.sqrt(2 * np.log(2))  # Gaussian field 1/e radius giving the intensity FWHM
+
+    def target(self, centres, amps=None, phases=None):
+        centres = np.atleast_1d(centres)
+        amps = np.ones(len(centres)) if amps is None else np.asarray(amps)
+        phases = np.zeros(len(centres)) if phases is None else np.asarray(phases)
+        t = np.zeros(len(self.xs), dtype=complex)
+        for c, a, p in zip(centres, amps, phases):
+            t += a * np.exp(1j * p) * np.exp(-((self.xs - c) ** 2) / self.wx**2)
+        return t
+
+    def weights(self, centres, amps=None, phases=None):
+        return self.target(centres, amps, phases) @ self.K

@@ -1,0 +1,43 @@
+{
+ "name": "m9_E_power",
+ "script": "scripts/m9_independent.py",
+ "git": "3597a65",
+ "notes": "Depth equalised over the field by the tunable tree; mean factor from m9_E_independence.",
+ "inputs": {
+  "depth": {
+   "value": 0.0012,
+   "unit": "K",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4(ii): transport tweezers ~1.2 mK"
+  },
+  "alpha": {
+   "value": 1160.0,
+   "unit": "a.u.",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 3 citing Le Kien et al. EPJD 67, 92 (2013)"
+  },
+  "w0_y": {
+   "value": 1.04,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget: 1.04 um waist"
+  },
+  "sigma_ports": 0.9,
+  "meta_objective": "CHOICE 0.7",
+  "tree": "7-stage tunable tree, 3 um 2x2 MMIs (SIM m2_mmi)"
+ },
+ "outputs": {
+  "chip_items_dB": {
+   "facet": -0.36796725952278764,
+   "tree 1x128": -0.39217342883894024,
+   "propagation": -0.3,
+   "meta-objective 0.7": -1.5490195998574319
+  },
+  "centre_fwhm_um": 1.6791424853315575,
+  "P_fibre_per_tweezer_centre_mW": 47.949077905921264,
+  "P_fibre_per_tweezer_field_mean_mW": 64.31815761138944,
+  "P_fibre_per_tweezer_edge_mW": 102.39382196814469,
+  "P_fibre_20_tweezers_W_field_mean": 1.2863631522277887
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

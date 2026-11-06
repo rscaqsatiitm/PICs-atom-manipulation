@@ -1,0 +1,105 @@
+{
+ "name": "m9_routes",
+ "script": "scripts/m9_independent.py",
+ "git": "3597a65",
+ "notes": "",
+ "inputs": {
+  "n_g": {
+   "value": 2.14,
+   "unit": "-",
+   "kind": "SIM",
+   "ref": "m1_design_modes 1064_0.4"
+  },
+  "dneff_dT": {
+   "value": 2.36e-05,
+   "unit": "1/K",
+   "kind": "SIM",
+   "ref": "m1_design_modes 1064_0.4"
+  },
+  "f_objective": {
+   "value": 15.0,
+   "unit": "mm",
+   "kind": "DERIVED",
+   "ref": "focal length taken as the 15 mm working distance (order of magnitude)"
+  },
+  "v_SAW": {
+   "value": 5000.0,
+   "unit": "m/s",
+   "kind": "RECALLED",
+   "ref": "AlN surface-acoustic-wave velocity, order of magnitude; verify for the AlN/SiN/SiO2 stack"
+  },
+  "f_trap": {
+   "value": 84000.0,
+   "unit": "Hz",
+   "kind": "DERIVED",
+   "ref": "radial, 1.2 mK, w0 = 1.04 um (m3_update_rate)"
+  }
+ },
+ "outputs": {
+  "D_dispersive": [
+   {
+    "GHz_per_site": 5,
+    "FSR_THz": 0.1703096,
+    "dL_per_arm_mm": 0.8225604055488346,
+    "longest_arm_extra_mm": 104.465171504702,
+    "total_extra_length_m": 6.685770976300928,
+    "shift_um_per_K": 2.4847904730819192,
+    "tuning_nm_full_field": 0.6436602929449348
+   },
+   {
+    "GHz_per_site": 20,
+    "FSR_THz": 0.6812384,
+    "dL_per_arm_mm": 0.20564010138720865,
+    "longest_arm_extra_mm": 26.1162928761755,
+    "total_extra_length_m": 1.671442744075232,
+    "shift_um_per_K": 0.6211976182704798,
+    "tuning_nm_full_field": 2.574641171779739
+   },
+   {
+    "GHz_per_site": 40,
+    "FSR_THz": 1.3624768,
+    "dL_per_arm_mm": 0.10282005069360432,
+    "longest_arm_extra_mm": 13.05814643808775,
+    "total_extra_length_m": 0.835721372037616,
+    "shift_um_per_K": 0.3105988091352399,
+    "tuning_nm_full_field": 5.149282343559478
+   },
+   {
+    "GHz_per_site": 100,
+    "FSR_THz": 3.406192,
+    "dL_per_arm_mm": 0.04112802027744173,
+    "longest_arm_extra_mm": 5.2232585752351,
+    "total_extra_length_m": 0.3342885488150464,
+    "shift_um_per_K": 0.12423952365409598,
+    "tuning_nm_full_field": 12.873205858898695
+   }
+  ],
+  "D_chromatic_constraint": {
+   "diffractive_focal_shift_um_per_nm": 14.091983070831004,
+   "Rayleigh_um": 3.1922537441203276,
+   "max_detuning_pm_for_1um_focal_shift": 70.96233333333333,
+   "max_detuning_GHz": 18.7763121906614
+  },
+  "G_saw": [
+   {
+    "aperture_mm": 1,
+    "RF_bandwidth_MHz_for_128_spots": 640.0
+   },
+   {
+    "aperture_mm": 2,
+    "RF_bandwidth_MHz_for_128_spots": 320.0
+   },
+   {
+    "aperture_mm": 5,
+    "RF_bandwidth_MHz_for_128_spots": 128.0
+   }
+  ],
+  "T_time_multiplex": {
+   "cycle_rate_MHz_min": 0.84,
+   "pattern_rate_MHz_for_20": 16.8,
+   "slot_ns": 59.523809523809526,
+   "peak_intensity_factor": 20
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

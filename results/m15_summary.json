@@ -1,0 +1,71 @@
+{
+ "name": "m15_summary",
+ "script": "scripts/m15_coherence.py",
+ "git": "9ee2032",
+ "notes": "Criteria used elsewhere: others' depth change < 3e-3 and position < 5 nm when a tweezer moves; position noise budget 10 nm rms (proposal).",
+ "inputs": {
+  "rows": "both sides, separations 4, 8, 12, 16 um",
+  "phase": "rms over drifting relative phases = worst / sqrt(2), pairs in quadrature",
+  "noise_residual": 0.007175074419149918,
+  "apodiser_parallel_rows": "same-polarisation values of the apodised scalar case"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "option": "all chips coherent (no measure)",
+    "active_parts": "",
+    "power_factor": 1.0,
+    "static_depth_rms": 0.022654527884532597,
+    "static_pos_rms_nm": 9.191682558434142,
+    "move_depth_rms": 0.002277233508181143,
+    "move_pos_rms_nm": 5.113563032434693
+   },
+   {
+    "option": "per-chip AOM offsets (incoherent)",
+    "active_parts": "16 AOMs at 2.6-3.4 W",
+    "power_factor": 1.0,
+    "static_depth_rms": 0.0001750137605687285,
+    "static_pos_rms_nm": 0.08899512778729465,
+    "move_depth_rms": 1.836451075433408e-05,
+    "move_pos_rms_nm": 0.052979495139478874
+   },
+   {
+    "option": "common phase noise (3 rad) + fibre delays",
+    "active_parts": "1 EOM on the seed, noise source, <= 5 m extra fibre",
+    "power_factor": 1.0,
+    "static_depth_rms": 0.00016254792350222836,
+    "static_pos_rms_nm": 0.06595100639396727,
+    "move_depth_rms": 1.6339319890981546e-05,
+    "move_pos_rms_nm": 0.03669019530473285
+   },
+   {
+    "option": "alternating polarisation",
+    "active_parts": "none (half-wave plate strips)",
+    "power_factor": 1.0,
+    "static_depth_rms": 0.004146528693536059,
+    "static_pos_rms_nm": 2.5031963993522206,
+    "move_depth_rms": 0.0011326591411727949,
+    "move_pos_rms_nm": 1.5776418989410192
+   },
+   {
+    "option": "y apodiser a=0.65",
+    "active_parts": "none (graded mirror)",
+    "power_factor": 1.8431107976715135,
+    "static_depth_rms": 0.005186560028459778,
+    "static_pos_rms_nm": 4.052968396295608,
+    "move_depth_rms": 0.00099015643325439,
+    "move_pos_rms_nm": 1.8362727545358757
+   },
+   {
+    "option": "polarisation + apodiser a=0.8",
+    "active_parts": "none",
+    "power_factor": 1.5453123391529484,
+    "static_depth_rms": 0.0027787391426802063,
+    "static_pos_rms_nm": 1.7681245172993025,
+    "move_depth_rms": 0.0005732316062939896,
+    "move_pos_rms_nm": 0.7231546984141838
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

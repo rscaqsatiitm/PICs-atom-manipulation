@@ -1,0 +1,2279 @@
+{
+ "name": "m3_update_rate",
+ "script": "scripts/m3_opa.py",
+ "git": "745f3cc",
+ "notes": "Harmonic approximation, radial axis, atom initially in the ground state; the staircase aliases the move spectrum to |f_update - f_trap|.",
+ "inputs": {
+  "w0": {
+   "value": 1.04,
+   "unit": "um",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget: 1.04 um waist"
+  },
+  "alpha_Cs_1064": {
+   "value": 1160.0,
+   "unit": "a.u.",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 3 citing Le Kien et al. EPJD 67, 92 (2013)"
+  },
+  "depth_transport": {
+   "value": 0.0012,
+   "unit": "K",
+   "kind": "USER",
+   "ref": "ANRF/ARG/2026/009937 draft v97, Sec. 4(ii): transport tweezers ~1.2 mK"
+  },
+  "U_static_mK": "CHOICE 0.3 (lower end of proposal range)",
+  "pzt_bw": {
+   "value": 400000.0,
+   "unit": "Hz",
+   "kind": "SOURCE",
+   "ref": "Montifiore et al., arXiv:2601.15695 (abstract, read 2026-10-31): coil MZM 3-dB bandwidth 0.4 MHz"
+  },
+  "trajectory": "minimum-jerk, sample-and-hold at f_update, first-order actuator"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 3201.3874936747775,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3166.592368950895,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 3.312843617912881,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3.2768371028928316,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 5.3506634214252875,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 5.292508324152044,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 5.790777307124664,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 5.727838715952013,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 6.0323197392783126,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 5.966755880446093,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 6.137689399723005,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 6.070980302932389,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 6.164359122538525,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 6.0973601588281605,
+    "n_bar_smooth": 6.173277393282568
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 51222.19989879644,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 50665.47790321432,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 53.00549788660609,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 52.429393646285305,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 85.6106147428046,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 84.6801331864327,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 92.65243691399462,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 91.64541945523222,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 96.517115828453,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 95.46809408713749,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 98.20303039556808,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 97.13568484691822,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 98.6297459606164,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 97.55776254125057,
+    "n_bar_smooth": 98.77243829252109
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 1526.0019503441354,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1509.4161954812753,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 0.07809969311447297,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.07725084599172256,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.09237074327424313,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.09136678747713473,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.09953360811338711,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.09845180082971217,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.10361679506324774,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.10249060858477925,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.10541865200048033,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.10427288156443422,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.10587625234987769,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.10472550836368737,
+    "n_bar_smooth": 0.10602935187374057
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 24416.031205506166,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 24150.659127700404,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 1.2495950898315675,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.236013535867561,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 1.4779318923878901,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.4618685996341556,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 1.5925377298141938,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.5752288132753947,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 1.6578687210119638,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.639849737356468,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 1.6866984320076852,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.6683661050309475,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 1.694020037598043,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.6756081338189979,
+    "n_bar_smooth": 1.6964696299798492
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 20.689811936996087,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 20.464939256546174,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 0.002435012190578581,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0024085466180595533,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.002452187469299236,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0024255352227313992,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.0026356489943248204,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.002607002747762322,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.0027427149787881033,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.002712905057322005,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.002790285213073078,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.002759958261963314,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.0028023900240204003,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.002771931508578765,
+    "n_bar_smooth": 0.0028064370021168884
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 331.0369909919374,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 327.4390281047388,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 0.038960195049257296,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.03853674588895285,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.039234999508787775,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.03880856356370239,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.042170383909197126,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.04171204396419715,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.043883439660609654,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.04340648091715208,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.044644563409169245,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.04415933219141303,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.044838240384326405,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.04435090413726024,
+    "n_bar_smooth": 0.044902992033870215
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 0.6215120098286675,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.6147569425517114,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 1.6419352061884772e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.6240894001432105e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 1.5256177298556187e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.5090361509945232e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 1.637527987032726e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.6197300820117857e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 1.703694794987385e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.6851777385547795e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 1.7332023504468804e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.714364583361614e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 1.7407189032066985e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.721799440484374e-05,
+    "n_bar_smooth": 1.7432204465998893e-05
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 9.94419215725868,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 9.836111080827383,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 0.00026270963299015635,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0002598543040229137,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.00024409883677689899,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.00024144578415912372,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.00026200447792523615,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0002591568131218857,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.0002725911671979816,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.00026962843816876473,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.00027731237607150086,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.00027429833333785826,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.00027851502451307176,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 0.3,
+    "f_trap_kHz": 41.92983078065102,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.00027548791047749986,
+    "n_bar_smooth": 0.0002789152714559823
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 2335.5632960065886,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2237.2308098572735,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 3052.0039006882707,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2923.507648068945,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.15619938622894594,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.14962303952528283,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.16869322999126757,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.1615908642664927,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.19377187319976327,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.18561363999318653,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.20723359012649548,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.1985085882540868,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.21083730400096065,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.2019605776408222,
+    "n_bar_smooth": 0.21205870374748115
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 37369.01273610542,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 35795.692957716376,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 48832.06241101233,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 46776.12236910312,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 2.499190179663135,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2.3939686324045253,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 2.699091679860281,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2.585453828263883,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 3.1003499711962124,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2.9698182398909845,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 3.3157374420239276,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3.1761374120653887,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 3.3733968640153704,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 50.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3.2313692422531552,
+    "n_bar_smooth": 3.3929392599596984
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 37.53497196318821,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 35.95466492676751,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 41.37962387399217,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 39.63744831471255,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.004870024381157162,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.004664985363021463,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.0045269047323432164,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.00433631182584673,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.005133998855908713,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.004917845916593201,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.005485429957576207,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.005254480975697325,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.005580570426146156,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0053456158158075836,
+    "n_bar_smooth": 0.005612874004233777
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 600.5595514110114,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 575.2746388282801,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 662.0739819838748,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 634.1991730354008,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.07792039009851459,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0746397658083434,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.07243047571749146,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.06938098921354768,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.0821439816945394,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.07868553466549122,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.08776687932121931,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0840716956111572,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.08928912681833849,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 100.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.08552985305292134,
+    "n_bar_smooth": 0.08980598406774043
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 1.019320123068537,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.9764044452726336,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 1.243024019657335,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.1906899029133304,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 3.2838704123769544e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3.1456120562907265e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 2.8326135183837333e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2.7133540960255018e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 3.190727976097397e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3.056391126801858e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 3.40738958997477e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3.263930797727776e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 3.466404700893761e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 3.320461239279436e-05,
+    "n_bar_smooth": 3.4864408931997785e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 16.30912196909659,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 15.622471124362137,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 19.88838431451736,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 19.051038446613287,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 0.0005254192659803127,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0005032979290065162,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 0.0004532181629413973,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0004341366553640803,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 0.0005105164761755835,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0004890225802882973,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 0.0005451823343959632,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0005222289276364441,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 0.0005546247521430017,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 200.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.0005312737982847098,
+    "n_bar_smooth": 0.0005578305429119646
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 0.022447067737502744,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.021501995522519402,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 0.026434236424663127,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.025321295408874615,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 1.2644786491159553e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.21124124404845e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 1.1403938079634756e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.0923806547690964e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 1.2899045181232933e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.2355966265841636e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 1.3779289028041434e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.319914985998119e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 1.4018151289556064e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 4.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.3427955481171769e-06,
+    "n_bar_smooth": 1.409879922490745e-06
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "ideal",
+    "n_bar": 0.3591530838000439,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 50.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.34403192836031044,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "ideal",
+    "n_bar": 0.42294778279461004,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 100.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 0.40514072654199385,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "ideal",
+    "n_bar": 2.0231658385855285e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 200.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.93798599047752e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "ideal",
+    "n_bar": 1.824630092741561e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 300.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.7478090476305543e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "ideal",
+    "n_bar": 2.0638472289972692e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 500.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 1.9769546025346618e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "ideal",
+    "n_bar": 2.2046862444866295e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 1000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2.1118639775969903e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "ideal",
+    "n_bar": 2.2429042063289702e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   },
+   {
+    "U_mK": 1.2,
+    "f_trap_kHz": 83.85966156130203,
+    "T_move_us": 400.0,
+    "d_um": 16.0,
+    "f_update_kHz": 2000.0,
+    "actuator": "pzt_0.4MHz",
+    "n_bar": 2.148472876987483e-05,
+    "n_bar_smooth": 2.255807875985192e-05
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

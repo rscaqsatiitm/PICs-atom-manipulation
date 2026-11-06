@@ -1,0 +1,51 @@
+{
+ "name": "m10_bpm_vs_fdtd",
+ "script": "scripts/m10_fpr.py",
+ "git": "ec7489d",
+ "notes": "fidelity = |<T_fdtd|T_bpm>|^2 / (|T_fdtd|^2 |T_bpm|^2): 1 means identical arm amplitude and phase distributions up to a constant.",
+ "inputs": {
+  "bpm": "dx 0.02 um, dz 0.125 um",
+  "fdtd": "MEEP 1.35, 2D, Hz, resolution as listed"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "port": 0,
+    "res": 20,
+    "capture_meep": 0.3771185277908129,
+    "capture_bpm": 0.3713004900867788,
+    "amp_rel_err_rms": 0.034939717525891076,
+    "phase_err_rms_rad": 0.25896412006699465,
+    "fidelity": 0.9325033931234481
+   },
+   {
+    "port": 0,
+    "res": 30,
+    "capture_meep": 0.36894678152013266,
+    "capture_bpm": 0.3713004900867788,
+    "amp_rel_err_rms": 0.03585576042848308,
+    "phase_err_rms_rad": 0.13152890263119874,
+    "fidelity": 0.9806540241597259
+   },
+   {
+    "port": 2,
+    "res": 20,
+    "capture_meep": 0.4838576769483546,
+    "capture_bpm": 0.5096214300257362,
+    "amp_rel_err_rms": 0.03132941181147334,
+    "phase_err_rms_rad": 0.12341531340974689,
+    "fidelity": 0.9845050825808679
+   },
+   {
+    "port": 3,
+    "res": 20,
+    "capture_meep": 0.5203819970643255,
+    "capture_bpm": 0.5405557493692272,
+    "amp_rel_err_rms": 0.023215083183940395,
+    "phase_err_rms_rad": 0.05757194238796408,
+    "fidelity": 0.9965318893479308
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

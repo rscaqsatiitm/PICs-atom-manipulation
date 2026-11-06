@@ -1,0 +1,24 @@
+{
+ "name": "m8_summary",
+ "script": "scripts/m8_twenty.py",
+ "git": "8778c95",
+ "notes": "",
+ "inputs": {},
+ "outputs": {
+  "A_shared_synthesis_1064": {
+   "steering": "independent per tweezer (computed phases)",
+   "on_off": "re-synthesis, PZT settle ~2 us; residual at switched-off site 3.3e-02; kept tweezers change by <= 11.9%",
+   "extinction_limit": "set by synthesis stray (~1e-3 to 1e-2); not adequate for 50 dB gating",
+   "channels": "N = 128 PZT phase shifters",
+   "switches": "none"
+  },
+  "C_star_coupler": {
+   "steering": "common to all lit tweezers (parallel move); site selection by lit ports",
+   "on_off": "per-port MZI: thermo-optic at 1064.4 nm (adiabatic ramps), cascaded AlN at 894.6 nm (ns)",
+   "extinction_limit": "switch ER (>= 50 dB cascaded) and neighbours' optical tails",
+   "channels": "N arm phase shifters + 20 port switches + 31 router MZIs per wavelength",
+   "switches": "20"
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

@@ -85,8 +85,17 @@ class OPA:
         return np.exp(-1j * k * np.outer(s, self.xn)) @ c
 
     def far_field(self, phases):
-        """Far-field amplitude U(s) on self.s (element factor x array factor)."""
-        return self._E_el * self.array_factor(phases)
+        """Far-field amplitude U(s) on self.s (element factor x array factor).
+
+        Only the propagating band |s| < 1 is computed; evanescent components never reach the slit or the
+        atoms, and the emitted power is defined on |s| < 1.
+        """
+        if not hasattr(self, "_prop"):
+            self._prop = np.nonzero(np.abs(self.s) < 1)[0]
+        U = np.zeros_like(self._E_el)
+        idx = self._prop
+        U[idx] = self._E_el[idx] * self.array_factor(phases, self.s[idx])
+        return U
 
     # ----------------------------------------------------------------- relay
     def _powers(self, phases):
@@ -120,26 +129,49 @@ class OPA:
         p_em, u_t, _, _ = self._powers(phases)
         nz = np.nonzero(u_t)[0]
         k = 2 * np.pi / self.lam
-        s_eval = self.x_to_s(x_a)
-        E = np.exp(-1j * k * np.outer(s_eval, self.x[nz])) @ u_t[nz] * self.dx
+        s_eval = np.atleast_1d(self.x_to_s(x_a))
+        E = np.empty(len(s_eval), dtype=complex)
+        for i in range(0, len(s_eval), 128):  # chunked direct transform (memory)
+            E[i:i + 128] = np.exp(-1j * k * np.outer(s_eval[i:i + 128], self.x[nz])) @ u_t[nz] * self.dx
         # int |E|^2 ds = lambda int |u_t|^2 dx and ds = dx_a / x_scale
         return np.abs(E) ** 2 / (self.lam * self.x_scale * p_em)
 
 
-def channel_response(opa: "OPA", x_a):
-    """Complex matrix G (N, M): atom-plane field at x_a from channel n with unit amplitude, through slit and
-    pupil. For channel amplitudes c_n = apod_n exp(i phi_n), the intensity is |c @ G|^2 / (lambda x_scale p_em),
-    identical to OPA.atom_intensity."""
+def channel_pupil(opa: "OPA", dz=0.0, phase_fn=None):
+    """Pupil field of each channel with unit amplitude, after slit and pupil truncation.
+
+    Returns (x, u): pupil-plane positions referred to the chip (um, |x| <= A/(2 fill)) and u (N, len(x)).
+    dz (um) displaces the emitter plane from the plane the relay images onto the pupil (free-space
+    propagation exp(i k dz sqrt(1 - s^2)) applied to the angular spectrum). phase_fn(s, x_n) adds a channel-
+    dependent phase (radians) on the angular spectrum, e.g. the off-axis aberration of the first relay lens.
+    """
     k = 2 * np.pi / opa.lam
     slit = np.abs(opa.s) < opa.s_cut
     pupil = np.abs(opa.x) <= opa.A / (2 * opa.fill)
     nz = np.nonzero(pupil)[0]
-    D = np.exp(-1j * k * np.outer(opa.x[nz], opa.x_to_s(x_a))) * opa.dx  # (nz, M)
-    G = np.empty((opa.N, len(np.atleast_1d(x_a))), dtype=complex)
+    sl = np.nonzero(slit)[0]
+    prop = np.exp(1j * k * dz * np.sqrt(1 - opa.s[sl] ** 2)) if dz else 1.0
+    u = np.empty((opa.N, len(nz)), dtype=complex)  # one FFT at a time: memory
     for n, xn in enumerate(opa.xn):
-        U = np.where(slit, opa._E_el * np.exp(-1j * k * opa.s * xn), 0)
-        u = np.fft.fftshift(np.fft.ifft(np.fft.ifftshift(U))) / opa.dx
-        G[n] = u[nz] @ D
+        U = np.zeros(len(opa.s), dtype=complex)
+        U[sl] = opa._E_el[sl] * np.exp(-1j * k * opa.s[sl] * xn) * prop
+        if phase_fn is not None:
+            U[sl] = U[sl] * np.exp(1j * phase_fn(opa.s[sl], xn))
+        u[n] = np.fft.fftshift(np.fft.ifft(np.fft.ifftshift(U)))[nz] / opa.dx
+    return opa.x[nz], u
+
+
+def channel_response(opa: "OPA", x_a, chunk=2048, dz=0.0, phase_fn=None):
+    """Complex matrix G (N, M): atom-plane field at x_a from channel n with unit amplitude, through slit and
+    pupil. For channel amplitudes c_n = apod_n exp(i phi_n), the intensity is |c @ G|^2 / (lambda x_scale p_em),
+    identical to OPA.atom_intensity. The pupil-to-atom transform is evaluated in chunks of x_a (memory)."""
+    k = 2 * np.pi / opa.lam
+    x_a = np.atleast_1d(x_a)
+    xs, u = channel_pupil(opa, dz, phase_fn)
+    G = np.empty((opa.N, len(x_a)), dtype=complex)
+    for i in range(0, len(x_a), chunk):
+        D = np.exp(-1j * k * np.outer(xs, opa.x_to_s(x_a[i:i + chunk]))) * opa.dx
+        G[:, i:i + chunk] = u @ D
     return G
 
 
