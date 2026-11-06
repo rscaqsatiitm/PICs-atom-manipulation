@@ -31,7 +31,8 @@ class Timing:
     t_x40: float = 400e-6  # time for a 40 um x move (scaled as sqrt(d/40 um), minimum t_min)
     t_min: float = 200e-6
     t_reposition: float = 300e-6  # row-select scanner settling between passes (CHOICE)
-    pitch: float = 4e-6
+    pitch: float = 4e-6  # site pitch along the rows (x)
+    pitch_y: float | None = None  # row spacing (y); None: equal to pitch
 
     def move(self, d):
         if d <= 0:

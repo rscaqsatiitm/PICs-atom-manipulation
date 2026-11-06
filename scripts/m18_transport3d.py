@@ -88,9 +88,12 @@ def trap():
     return _G["trap"]
 
 
-def static_array(depth_mK, dz=0.0, src_factor=1.0, dst_factor=1.0, sigma=0.0, seed=0, d_um=12.0, pitch=PITCH):
+def static_array(depth_mK, dz=0.0, src_factor=1.0, dst_factor=1.0, sigma=0.0, seed=0, d_um=12.0, pitch=PITCH,
+                 rows=None):
+    """Static sites at x pitch `pitch` (15 per row) on rows at y = `rows` (m); default rows at 0 and +/- pitch."""
     xs = np.arange(-2, 13) * pitch
-    sites = np.array([[x, y, dz] for y in (-pitch, 0.0, pitch) for x in xs])
+    rows = (-pitch, 0.0, pitch) if rows is None else rows
+    sites = np.array([[x, y, dz] for y in rows for x in xs])
     fac = np.ones(len(sites))
     if sigma:
         fac = np.clip(1 + sigma * np.random.default_rng(seed).standard_normal(len(sites)), 0.2, None)
@@ -101,7 +104,8 @@ def static_array(depth_mK, dz=0.0, src_factor=1.0, dst_factor=1.0, sigma=0.0, se
 
 def one(p):
     st = static_array(p["Us_mK"], p.get("static_dz_um", 0.0) * 1e-6, p.get("src_factor", 1.0), p.get("dst_factor", 1.0),
-                      p.get("sigma", 0.0), p.get("seed", 0), p.get("d_um", 12.0), p.get("pitch_um", 4.0) * 1e-6)
+                      p.get("sigma", 0.0), p.get("seed", 0), p.get("d_um", 12.0), p.get("pitch_um", 4.0) * 1e-6,
+                      None if p.get("rows_um") is None else tuple(np.array(p["rows_um"]) * 1e-6))
     seq = Sequence(src=np.zeros(3), dst=np.array([p.get("d_um", 12.0) * 1e-6, 0, 0]), depth_move=p["Um_mK"] * 1e-3 * kB,
                    t_ramp=p["t_ramp_us"] * 1e-6, t_move=p["t_move_us"] * 1e-6, lane_dy=p.get("lane_um", 0.0) * 1e-6,
                    f_update=p.get("f_update", 200e3), offset=np.array(p.get("offset_um", [0, 0, 0])) * 1e-6,
@@ -232,6 +236,36 @@ def slowlane():
     return rows
 
 
+# ------------------------------------------------------------------ anisotropic 3 x 4 um lattice and 3 um corridors
+def aniso():
+    layouts = {
+        "3 x 4 um (rows 4 um apart, lane 2 um)": {"pitch_um": 3.0, "rows_um": [-4.0, 0.0, 4.0], "lane_um": 2.0,
+                                                  "by": [[3.0, 0.0, 0.0], [-3.0, 0.0, 0.0], [6.0, 0.0, 0.0], [9.0, 4.0, 0.0]]},
+        "3 um with corridors (rows 6 um apart, lane 3 um)": {"pitch_um": 3.0, "rows_um": [-6.0, 0.0, 6.0], "lane_um": 3.0,
+                                                             "by": [[3.0, 0.0, 0.0], [6.0, 0.0, 0.0], [9.0, 6.0, 0.0]]},
+        "4 x 4 um reference (in-row neighbour)": {"pitch_um": 4.0, "rows_um": [-4.0, 0.0, 4.0], "lane_um": 2.0,
+                                                  "by": [[4.0, 0.0, 0.0]], "d": 12.0},
+    }
+    P = []
+    for name, L in layouts.items():
+        d = L.get("d", 9.0)
+        for T, Us, Um in ((5.0, 0.1, 0.3), (5.0, 0.1, 0.5), (10.0, 0.2, 0.6)):
+            base = {"Us_mK": Us, "Um_mK": Um, "t_ramp_us": 200.0, "t_lane_us": 400.0, "t_move_us": 400.0, "T_uK": T,
+                    "n": 3000, "pitch_um": L["pitch_um"], "rows_um": L["rows_um"], "lane_um": L["lane_um"], "d_um": d}
+            tag = f"{name} | {T} uK, {Us}/{Um} mK: "
+            P.append(dict(base, label=tag + f"transported {d} um"))
+            for b in L["by"]:
+                P.append(dict(base, bystander_um=b, label=tag + f"bystander at {b[:2]}"))
+    rows = pool_map(P)
+    for r in rows:
+        print(r["label"], round(r["delivered"], 4), round(r["lost"], 4), r["dE_uK"], flush=True)
+    save_result("m18_aniso", script=SCRIPT,
+                inputs={"layouts": {k: {kk: vv for kk, vv in v.items()} for k, v in layouts.items()}, "ramps_us": 200,
+                        "lane_steps_us": 400, "move_us": 400, "atoms": 3000},
+                outputs={"rows": rows}, notes="Bystander rows: 'delivered' = stayed in its own site.")
+    return rows
+
+
 # ------------------------------------------------------------------ 3 um pitch (lane 1.5 um)
 def pitch3():
     P = []
@@ -294,6 +328,6 @@ def temp():
 
 
 if __name__ == "__main__":
-    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin", "uniformity", "slowlane", "pitch3"]
+    parts = sys.argv[1:] or ["field", "scan", "tol", "temp", "bystander", "margin", "uniformity", "slowlane", "pitch3", "aniso"]
     for p in parts:
-        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin, "uniformity": uniformity, "slowlane": slowlane, "pitch3": pitch3}[p]()
+        {"field": field, "scan": scan, "tol": tol, "temp": temp, "bystander": bystander, "margin": margin, "uniformity": uniformity, "slowlane": slowlane, "pitch3": pitch3, "aniso": aniso}[p]()

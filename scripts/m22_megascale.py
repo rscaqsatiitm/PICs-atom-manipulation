@@ -93,6 +93,45 @@ def budget():
     return out
 
 
+# ------------------------------------------------------------------ static potential: tweezers vs lattice
+def lattice():
+    """Laser power for the static potential: focused tweezers (one beam per site) against a 2D optical lattice of
+    the same spacing (two orthogonal retro-reflected beams, added incoherently: peak 8 I_b; coherent four-beam: 16).
+    The lattice beams must keep the depth within -20% over the array (tolerance from m18_uniformity): a Gaussian
+    beam of waist w = r_c sqrt(2 / ln(1/0.8)) for corner radius r_c, or a flat-top beam of area 1.2 x the array.
+    Axial confinement of the lattice needs a light sheet (not included; small, see notes)."""
+    from picsim.transport import AU_POL, EPS0, C as C0
+    I_per_K = lambda U: U * 1.380649e-23 * 2 * EPS0 * C0 / (ALPHA_STATIC * AU_POL)  # W/m^2 of peak intensity
+    rows = []
+    for N, (px, py), U in itertools.product((1e4, 1e5, 1e6), ((4.0, 4.0), (3.0, 4.0)), (0.1e-3, 1.0e-3)):
+        n_tot = N / 0.75  # sites incl. a 25% reservoir (85% loading, 3:1 layout of m23)
+        area = n_tot * px * py * 1e-12  # m^2
+        L = np.sqrt(area)
+        I0 = I_per_K(U)
+        tweezer = n_tot * (np.pi * (W0_STATIC * 1e-6) ** 2 / 2) * I0 / ETA_STATIC
+        r_c = L / np.sqrt(2)
+        w = r_c * np.sqrt(2 / np.log(1 / 0.8))
+        out = {"N": N, "pitch_um": [px, py], "U_mK": U * 1e3, "array_side_mm": L * 1e3, "tweezers_W": tweezer}
+        for G, gname in ((8, "incoherent"), (16, "coherent")):
+            out[f"lattice_gauss_{gname}_W"] = np.pi * w**2 / 2 * 2 * I0 / G / ETA_STATIC  # two beams, eta for delivery
+            out[f"lattice_flattop_{gname}_W"] = 1.2 * area * 2 * I0 / G / ETA_STATIC
+        for B in (10, 100):
+            out[f"lattice_gauss_incoherent_cavity{B}_W"] = out["lattice_gauss_incoherent_W"] / B
+        out["gaussian_waist_mm"] = w * 1e3
+        rows.append(out)
+        print({k: (round(v, 2) if isinstance(v, float) else v) for k, v in out.items()}, flush=True)
+    save_result("m22_lattice", script=SCRIPT,
+                inputs={"alpha_au": ALPHA_STATIC, "w0_tweezer_um": W0_STATIC, "eta_delivery": ETA_STATIC,
+                        "reservoir": "25% of sites", "uniformity": "depth >= 0.8 of peak over the array (m18: +/-20% "
+                        "costs nothing)", "interference_gain": {"incoherent (two 1D standing waves)": 8, "coherent four-beam": 16},
+                        "cavity_buildup": [10, 100]},
+                outputs={"rows": rows},
+                notes="Lattice per site ~ 15.4 a^2 I / G (Gaussian, -20% corners) or 1.2 a^2 I / G (flat top), against "
+                      "pi w0^2 I / 2 for a tweezer. A light sheet for axial confinement adds roughly I x (pi/2) w_x w_z, "
+                      "small for w_z of a few um; not included.")
+    return rows
+
+
 # ------------------------------------------------------------------ tiling
 def tiling():
     x_scale = A_EMIT / (2 * NA)  # um at the atoms per unit s
@@ -138,5 +177,5 @@ def tiling():
 
 
 if __name__ == "__main__":
-    for p in sys.argv[1:] or ["budget", "tiling"]:
-        {"budget": budget, "tiling": tiling}[p]()
+    for p in sys.argv[1:] or ["budget", "lattice", "tiling"]:
+        {"budget": budget, "lattice": lattice, "tiling": tiling}[p]()
