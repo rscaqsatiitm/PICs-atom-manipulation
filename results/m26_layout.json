@@ -1,0 +1,327 @@
+{
+ "name": "m26_layout",
+ "script": "scripts/m26_stack_combine.py",
+ "git": "fc0525b",
+ "notes": "worst_row: the row at the far end of the comb (largest z), slot half-aperture a; loss, peak_rel relative to no comb. z_max_rule: (a - f_FAC NA_FAC) D / NA, the distance at which the light the pupil accepts (half-angle NA/D at S) reaches the window edge.",
+ "inputs": {
+  "design": "scripts/m13_stack.design (thin lenses, 25x y telescope, f_a 100 mm)",
+  "z_c_mm": 7.0,
+  "m13_tolerance_peaks": [
+   1.0,
+   0.992,
+   0.969,
+   0.881
+  ],
+  "m13_decentres_um": [
+   0,
+   0.05,
+   0.1,
+   0.2
+  ]
+ },
+ "outputs": {
+  "F_y_mm": 2165.0635094610966,
+  "pupil_radius_mm": 8.660254037844387,
+  "z_c_mm": 7.0,
+  "baseline": {
+   "transmission": 0.9727708724835644,
+   "peak": 0.7177436488804732,
+   "centroid_nm": -1.7175619424458183e-06,
+   "xt_3um": 0.0002853868157093599,
+   "xt_4um": 0.000108638079954738,
+   "xt_8um": 1.5321065555935847e-05,
+   "y_peak_um": -2.5579538487363607e-13
+  },
+  "z_max_rule_mm": {
+   "a 200 um": 10.625,
+   "a 225 um": 16.875,
+   "a 250 um": 23.125
+  },
+  "layouts": [
+   {
+    "rows": 32,
+    "layout": "single stack",
+    "stacks": 1,
+    "chips_per_stack": 32,
+    "chip_pitch_mm": 0.5,
+    "stack_height_mm": 16.0,
+    "pbs": 0,
+    "combs": 0,
+    "field_half_at_f_a_mm": 8.0,
+    "field_angle_at_pupil_mrad": 3.695041722813605,
+    "block_height_at_atoms_um": 128.0,
+    "polarisation_insensitive_objective": false
+   },
+   {
+    "rows": 32,
+    "layout": "2 stacks, PBS",
+    "stacks": 2,
+    "chips_per_stack": 16,
+    "chip_pitch_mm": 0.5,
+    "stack_height_mm": 8.0,
+    "pbs": 1,
+    "combs": 0,
+    "field_half_at_f_a_mm": 8.0,
+    "field_angle_at_pupil_mrad": 3.695041722813605,
+    "block_height_at_atoms_um": 128.0,
+    "polarisation_insensitive_objective": true
+   },
+   {
+    "rows": 32,
+    "layout": "2 stacks, comb",
+    "stacks": 2,
+    "chips_per_stack": 16,
+    "chip_pitch_mm": 1.0,
+    "stack_height_mm": 16.0,
+    "pbs": 0,
+    "combs": 1,
+    "field_half_at_f_a_mm": 8.0,
+    "field_angle_at_pupil_mrad": 3.695041722813605,
+    "block_height_at_atoms_um": 128.0,
+    "polarisation_insensitive_objective": false,
+    "comb_z_range_mm": [
+     7.0,
+     23.0
+    ],
+    "worst_row_a250": {
+     "loss": 0.004475100654508513,
+     "peak_rel": 0.9909015904530398,
+     "xt_4um": 0.00017702739978422475,
+     "xt_3um": 0.00044988845224923265
+    },
+    "worst_row_a225": {
+     "loss": 0.008628046114751875,
+     "peak_rel": 0.985122011140257,
+     "xt_4um": 0.00020336691669809584,
+     "xt_3um": 0.00038666545637425687
+    }
+   },
+   {
+    "rows": 32,
+    "layout": "4 stacks, comb + PBS",
+    "stacks": 4,
+    "chips_per_stack": 8,
+    "chip_pitch_mm": 1.0,
+    "stack_height_mm": 8.0,
+    "pbs": 1,
+    "combs": 2,
+    "field_half_at_f_a_mm": 8.0,
+    "field_angle_at_pupil_mrad": 3.695041722813605,
+    "block_height_at_atoms_um": 128.0,
+    "polarisation_insensitive_objective": true,
+    "comb_z_range_mm": [
+     7.0,
+     15.0
+    ],
+    "worst_row_a250": {
+     "loss": 0.0005398138801714358,
+     "peak_rel": 0.9944019849054865,
+     "xt_4um": 0.00011699812558141883,
+     "xt_3um": 0.00031332810967144156
+    },
+    "worst_row_a225": {
+     "loss": 0.0034989567994192505,
+     "peak_rel": 0.9878154672239975,
+     "xt_4um": 0.0001374377057752365,
+     "xt_3um": 0.0002884942953775107
+    }
+   },
+   {
+    "rows": 48,
+    "layout": "single stack",
+    "stacks": 1,
+    "chips_per_stack": 48,
+    "chip_pitch_mm": 0.5,
+    "stack_height_mm": 24.0,
+    "pbs": 0,
+    "combs": 0,
+    "field_half_at_f_a_mm": 12.0,
+    "field_angle_at_pupil_mrad": 5.542562584220407,
+    "block_height_at_atoms_um": 192.0,
+    "polarisation_insensitive_objective": false
+   },
+   {
+    "rows": 48,
+    "layout": "2 stacks, PBS",
+    "stacks": 2,
+    "chips_per_stack": 24,
+    "chip_pitch_mm": 0.5,
+    "stack_height_mm": 12.0,
+    "pbs": 1,
+    "combs": 0,
+    "field_half_at_f_a_mm": 12.0,
+    "field_angle_at_pupil_mrad": 5.542562584220407,
+    "block_height_at_atoms_um": 192.0,
+    "polarisation_insensitive_objective": true
+   },
+   {
+    "rows": 48,
+    "layout": "2 stacks, comb",
+    "stacks": 2,
+    "chips_per_stack": 24,
+    "chip_pitch_mm": 1.0,
+    "stack_height_mm": 24.0,
+    "pbs": 0,
+    "combs": 1,
+    "field_half_at_f_a_mm": 12.0,
+    "field_angle_at_pupil_mrad": 5.542562584220407,
+    "block_height_at_atoms_um": 192.0,
+    "polarisation_insensitive_objective": false,
+    "comb_z_range_mm": [
+     7.0,
+     31.0
+    ],
+    "worst_row_a250": {
+     "loss": 0.00930734673532474,
+     "peak_rel": 0.9870461068819106,
+     "xt_4um": 0.0002864068155557427,
+     "xt_3um": 0.0007403457489398639
+    },
+    "worst_row_a225": {
+     "loss": 0.016281897797567835,
+     "peak_rel": 0.9812243632970956,
+     "xt_4um": 0.0003267735510522946,
+     "xt_3um": 0.0005686698414459351
+    }
+   },
+   {
+    "rows": 48,
+    "layout": "4 stacks, comb + PBS",
+    "stacks": 4,
+    "chips_per_stack": 12,
+    "chip_pitch_mm": 1.0,
+    "stack_height_mm": 12.0,
+    "pbs": 1,
+    "combs": 2,
+    "field_half_at_f_a_mm": 12.0,
+    "field_angle_at_pupil_mrad": 5.542562584220407,
+    "block_height_at_atoms_um": 192.0,
+    "polarisation_insensitive_objective": true,
+    "comb_z_range_mm": [
+     7.0,
+     19.0
+    ],
+    "worst_row_a250": {
+     "loss": 0.0020560906243475285,
+     "peak_rel": 0.9924254103000023,
+     "xt_4um": 0.00013953573051397823,
+     "xt_3um": 0.00036823948195342473
+    },
+    "worst_row_a225": {
+     "loss": 0.006184348035643605,
+     "peak_rel": 0.9852838434690153,
+     "xt_4um": 0.00016802549030884762,
+     "xt_3um": 0.000326843237403874
+    }
+   },
+   {
+    "rows": 64,
+    "layout": "single stack",
+    "stacks": 1,
+    "chips_per_stack": 64,
+    "chip_pitch_mm": 0.5,
+    "stack_height_mm": 32.0,
+    "pbs": 0,
+    "combs": 0,
+    "field_half_at_f_a_mm": 16.0,
+    "field_angle_at_pupil_mrad": 7.39008344562721,
+    "block_height_at_atoms_um": 256.0,
+    "polarisation_insensitive_objective": false
+   },
+   {
+    "rows": 64,
+    "layout": "2 stacks, PBS",
+    "stacks": 2,
+    "chips_per_stack": 32,
+    "chip_pitch_mm": 0.5,
+    "stack_height_mm": 16.0,
+    "pbs": 1,
+    "combs": 0,
+    "field_half_at_f_a_mm": 16.0,
+    "field_angle_at_pupil_mrad": 7.39008344562721,
+    "block_height_at_atoms_um": 256.0,
+    "polarisation_insensitive_objective": true
+   },
+   {
+    "rows": 64,
+    "layout": "2 stacks, comb",
+    "stacks": 2,
+    "chips_per_stack": 32,
+    "chip_pitch_mm": 1.0,
+    "stack_height_mm": 32.0,
+    "pbs": 0,
+    "combs": 1,
+    "field_half_at_f_a_mm": 16.0,
+    "field_angle_at_pupil_mrad": 7.39008344562721,
+    "block_height_at_atoms_um": 256.0,
+    "polarisation_insensitive_objective": false,
+    "comb_z_range_mm": [
+     7.0,
+     39.0
+    ],
+    "worst_row_a250": {
+     "loss": 0.01296065203382002,
+     "peak_rel": 0.9841950859825488,
+     "xt_4um": 0.00039159787800494055,
+     "xt_3um": 0.0011016648552811623
+    },
+    "worst_row_a225": {
+     "loss": 0.023459144989071867,
+     "peak_rel": 0.9693232326381066,
+     "xt_4um": 0.0005336042361814757,
+     "xt_3um": 0.0009774700473119003
+    }
+   },
+   {
+    "rows": 64,
+    "layout": "4 stacks, comb + PBS",
+    "stacks": 4,
+    "chips_per_stack": 16,
+    "chip_pitch_mm": 1.0,
+    "stack_height_mm": 16.0,
+    "pbs": 1,
+    "combs": 2,
+    "field_half_at_f_a_mm": 16.0,
+    "field_angle_at_pupil_mrad": 7.39008344562721,
+    "block_height_at_atoms_um": 256.0,
+    "polarisation_insensitive_objective": true,
+    "comb_z_range_mm": [
+     7.0,
+     23.0
+    ],
+    "worst_row_a250": {
+     "loss": 0.004475100654508513,
+     "peak_rel": 0.9909015904530398,
+     "xt_4um": 0.00017702739978422475,
+     "xt_3um": 0.00044988845224923265
+    },
+    "worst_row_a225": {
+     "loss": 0.008628046114751875,
+     "peak_rel": 0.985122011140257,
+     "xt_4um": 0.00020336691669809584,
+     "xt_3um": 0.00038666545637425687
+    }
+   }
+  ],
+  "comb_tilt_about_x": {
+   "1% loss": {
+    "pupil_shift_radii": 0.07763975155279501,
+    "comb_tilt_mrad": 0.15527950310559005,
+    "row_shift_nm_at_z_20mm": 49.68944099378882
+   },
+   "3% loss": {
+    "pupil_shift_radii": 0.139751552795031,
+    "comb_tilt_mrad": 0.279503105590062,
+    "row_shift_nm_at_z_20mm": 89.44099378881984
+   }
+  },
+  "row_shift_nm_per_urad_at_z_20mm": 0.32,
+  "path_equality": "45 deg comb along z = z_c + y: stack B (facets in the plane y = -z_c, beams along +y) has the path Z - z_c - y_B = Z to any plane z = Z for every row, equal to stack A's. Moving the comb by dz along z changes B's path by dz (m13 piston: 100 um keeps the peak >= 0.992) and shifts every window by dz in y (tolerance from the a scan)",
+  "io_per_chip": {
+   "fast_actuators_per_engine": 383,
+   "4 engines": 1532,
+   "8 engines": 3064
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

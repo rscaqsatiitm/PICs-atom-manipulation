@@ -11,6 +11,11 @@
 > twice; the time average is about 25% lower (1.8e-4 against 2.4e-4 at the nominal point). Intermediate steps
 > (2 uK per move) reach a time average of 2.2e-4 at 10^6 sites with the 128-engine block if the imaging period is
 > raised from 0.1 to 0.3 s.
+>
+> Follow-up (Sec. 11): stacks combine in space as well as by polarisation. A slotted 45 deg comb mirror in the
+> 184 um gaps between chip beams at the collimator plane interleaves two 16-chip stacks built at 1.0 mm pitch, at a
+> worst-row cost of 0.45% in power and 1.8e-4 crosstalk at 4 um. Two such pairs and a PBS form a 64-row block,
+> so the 64 x 4 block (256 engines on 12 mm chip edges) is buildable.
 
 Follow-up to `docs/scaling_beyond.md`, `docs/transport3d.md`, `docs/rearrangement.md` and `docs/repair.md`. Code:
 `scripts/m22_megascale.py` (budget, tiling), `picsim/megasort.py` and `scripts/m23_steady.py` (assembly and steady
@@ -97,7 +102,7 @@ one block position address every other segment (Sec. 10 supersedes this pitch: t
 3.0 mm, six engines per edge). Two scanner positions cover a row; baffles between the lenslet
 channels are needed against stray lobe light.
 
-**Block.** 32 rows (two polarisation-combined 16-chip stacks) x 4 engines per row = 128 engines, 49,024 fast
+**Block.** 32 rows (two polarisation-combined 16-chip stacks, or comb-interleaved, Sec. 11) x 4 engines per row = 128 engines, 49,024 fast
 actuators. It holds 5,888 simultaneous tweezers, which need 85 W at 0.3 mK if all are lit (at most during
 assembly). In steady state only the few refilling tweezers are lit. A 16 x 1 block (one stack) is too small for
 10^6 sites: it never finishes assembling (Sec. 6).
@@ -342,7 +347,8 @@ attribute this to fewer block positions per sweep (a 180 um segment holds 61 sit
 the 32 x 4 block has 222 positions against 252); we did not isolate this cause.
 
 The block shape is a hardware choice. A 32-row block is two 16-chip stacks combined by polarisation (Sec. 4);
-48 or 64 rows need three or four stacks and a combining method beyond polarisation, which we have not designed.
+48 or 64 rows need three or four stacks and a combining method beyond polarisation (designed in Sec. 11: a
+slotted comb mirror, combined with the PBS for 64 rows).
 32 x 8 needs eight engines per chip edge: at the 3.0 mm pitch allowed above that is a 24 mm edge. At 2.6 mm
 (21 mm edge) the accepted ghost rises to 1.6e-6, just above the 1e-6 criterion. Hence our preferred block for
 10^6 sites is 32 x 8 on a 24 mm chip edge (98,048 fast actuators), with fast steps if the 10 uK per refilled atom
@@ -400,6 +406,98 @@ steps at 0.1 s, with the 128-engine block and at one fifth of the heating per re
 Hence, at 10^6 sites, a slower imaging cadence is an alternative to a larger block. The imaging period should
 match the sweep time of the block rather than be as short as possible.
 
+## 11. Follow-up: combining stacks into blocks of 32 to 64 rows
+
+**Why stacks can be combined in space.** The plane S, formed by the back focal planes of the per-chip
+collimators, is conjugate to the atoms with magnification 1/D (D = 125 at 4 um rows; `docs/stacked_relay.md`,
+Sec. 2). At S, each chip's beam is a stripe of +/- f_FAC NA_FAC = +/-158 um on the 0.5 mm chip pitch, so
+neighbouring beams leave 184 um gaps. A slotted mirror at 45 deg (a "comb") placed in these gaps interleaves two
+stacks built at twice the chip pitch. Stack A passes through the slots; stack B, turned by 90 deg, is reflected
+by the teeth. Each beam then sees a window of half-width a <= 250 um. The comb uses no polarisation, and the
+downstream relay is the same as for a single stack of all the rows. In addition, it doubles the chip pitch to
+1.0 mm, which leaves room for the fibre and electrical access that Sec. 7 of `docs/stacked_relay.md` left open
+(383 fast actuators per engine, 1,532 lines per four-engine chip). Our choice of a 45 deg comb is a compromise
+between two considerations. First, it keeps the optical path of every row of stack B equal to that of stack A:
+with B's facets in the plane y = -z_c, the path to any plane z = Z is Z for all rows. However, the comb then
+spans the combined stack height along z, so rows at the far end meet it farther from S.
+
+**The penalty is set by the light the objective accepts (`results/m26_edge.json`).** We propagate the field of
+one chip in y from the collimator exit (aperture f_FAC before S, sine-condition lens, beta 0.7 um, NA_FAC 0.9)
+to the comb at a distance z from S, apply the window, propagate back to S, and continue to the atoms through
+the pupil (`picsim/opa/stack.RelayY`). Without a comb this reproduces the m13 values (transmission 0.973,
+crosstalk at 4 um 1.09e-4 against 1.06e-4). Single tweezer, hard collimator edge, slot window of half-width a:
+
+| z from S | a = 250 um: loss / peak / crosstalk at 4 um / at 3 um | a = 225 um: loss / peak / crosstalk at 4 um |
+|---|---|---|
+| no comb | 0 / 1 / 1.1e-4 / 2.9e-4 | 0 / 1 / 1.1e-4 |
+| 10 mm | < 1e-3 / 0.998 / 1.0e-4 / 2.8e-4 | 6e-4 / 0.992 / 1.1e-4 |
+| 20 mm | 2.5e-3 / 0.992 / 1.5e-4 / 4.0e-4 | 7.2e-3 / 0.985 / 1.8e-4 |
+| 30 mm | 8.5e-3 / 0.987 / 2.7e-4 / 7.1e-4 | 1.6e-2 / 0.981 / 3.1e-4 |
+| 45 mm | 1.9e-2 / 0.973 / 6.0e-4 / 1.7e-3 | 3.4e-2 / 0.956 / 7.9e-4 |
+| 60 mm | 3.6e-2 / 0.953 / 1.3e-3 / 2.9e-3 | 5.3e-2 / 0.931 / 1.6e-3 |
+
+The hard edge of the collimator is not the problem. Its Fresnel tail spreads into the gap, but it consists of
+directions steeper than the pupil accepts, and clipping it costs nothing. A graded collimator edge
+(raised cosine 0.8-0.9) therefore does not help: it raises the baseline crosstalk to 1.5e-4 and gains no
+distance. (A Fresnel-tail estimate that ignores the pupil predicts 0.7% loss at 10 mm; the simulated loss there
+is below 0.1%.) What matters is the light inside the pupil acceptance, which leaves S at half-angle NA/D = 4 mrad.
+It reaches the window edge at
+
+z_max = (a - f_FAC NA_FAC) D / NA,
+
+which is 23 mm for a = 250 um and 17 mm for a = 225 um. This agrees with the scan: at z = 20 mm and a = 250 um
+the worst row loses 0.25% and the crosstalk at 4 um rises from 1.1e-4 to 1.5e-4, while at 30 mm it reaches
+2.7e-4. A single edge (block combining, rows 0-15 from one stack and 16-31 from the other) behaves similarly. It
+also shifts the boundary row by 1.7 nm at z = 20 mm (a = 250 um) and by 12 nm at a = 200 um, a static offset to
+calibrate. The rows are mutually incoherent (`docs/row_coherence.md`), so this crosstalk adds in intensity. We did
+not recompute the 2D dynamic crosstalk. Since the static value rises by at most a factor 1.8 within z_max, we
+expect the m13 dynamic figure (2.4e-5 in depth for a moving tweezer, 4 um rows) to rise by a similar factor.
+
+**Layouts (`results/m26_layout.json`; first comb point z_c = 7 mm, just beyond the x slit plane at 6.24 mm,
+CHOICE).** The worst row is the one at the far end of the comb:
+
+| rows | layout | chips per stack, pitch | comb z range | worst row (a = 250 um): loss / peak / crosstalk at 4 um | polarisation-insensitive objective |
+|---|---|---|---|---|---|
+| 32 | one stack | 32, 0.5 mm | | (no comb) | no |
+| 32 | 2 stacks, PBS | 16, 0.5 mm | | (no comb) | yes |
+| 32 | **2 stacks, comb** | **16, 1.0 mm** | **7-23 mm** | **0.45% / 0.991 / 1.8e-4** | **no** |
+| 48 | 4 stacks, comb + PBS | 12, 1.0 mm | 7-19 mm | 0.21% / 0.992 / 1.4e-4 | yes |
+| 48 | 2 stacks, comb | 24, 1.0 mm | 7-31 mm | 0.93% / 0.987 / 2.9e-4 | no |
+| 64 | **4 stacks, comb + PBS** | **16, 1.0 mm** | **7-23 mm** | **0.45% / 0.991 / 1.8e-4** | **yes** |
+| 64 | 2 stacks, comb | 32, 1.0 mm | 7-39 mm | 1.3% / 0.984 / 3.9e-4 | no |
+| 64 | 2 stacks, PBS | 32, 0.5 mm | | (no comb) | yes |
+
+With a = 225 um (about what a 50 um tooth plate, t / (2 sqrt 2) = 18 um per edge, and +/-10 um edge
+placement leave) the worst rows of the
+two bold layouts lose 0.86% and reach 2.0e-4. A second comb level (stacks at 2.0 mm, combined pairwise and then
+again) would put the second comb beyond z_max, so we do not use it. The single taller stack (32 or 64 chips at
+0.5 mm) needs no combiner. In first-order optics it only enlarges the y-relay field: +/-8 or +/-16 mm at the
+first telescope lens, and 3.7 or 7.4 mrad at the pupil. Its costs are mechanical: 16 to 32 mm of facets flush to
+about 100 um, and all the I/O at 0.5 mm pitch.
+
+**Tolerances (DERIVED from the m13 conjugations).** A comb tilt theta about x deflects stack B by 2 theta at S.
+This shifts its facet image in the pupil by 2 theta F_y (F_y = 2.17 m). Matching the shift to the m13 decentre
+results gives 1% peak loss at theta = 0.16 mrad and 3% at 0.28 mrad. The same tilt moves B's rows by
+2 theta z / D: 0.32 nm per urad at z = 20 mm, and 50 nm at 0.16 mrad. This static offset alternates between rows
+(A and B rows interleave), so it must be calibrated once against the static array. Keeping the alternating
+pitch error below 3 nm needs a tilt stability of about 10 urad (drift, not alignment). Moving the comb by dz
+along z changes B's path by dz, which tolerates 100 um (m13 chip piston, peak >= 0.992). It also shifts the
+windows by dz in y, which should stay within about +/-10 um (the a scan). Light that misses a tooth leaves at
+90 deg to a dump. Light from stack A that hits the back of a tooth is reflected towards stack B and needs an
+absorbing back face.
+
+Hence the blocks of Sec. 10 can be built as follows. (i) 32 rows: two 16-chip stacks at 1.0 mm pitch and one
+comb. This needs no polarisation optics, and it gives alternate rows from different stacks, so the passive
+orthogonal-polarisation decorrelation of `docs/row_coherence.md` comes for free if the objective accepts it.
+(ii) 64 rows: two such comb pairs, combined by a PBS. Four 16-chip stacks with four engines per chip at 3.0 mm
+pitch (12 mm edge) then form the 64 x 4 block: 256 engines, 98,048 fast actuators. With intermediate steps at
+10^6 sites it reaches a time average of 2.9e-4 on 4 x 4 um and 2.7e-4 on 3 x 4 um (Sec. 10), without the 24 mm
+chip edge that 32 x 8 needs. The worst rows lose 0.9 to 1.5% of their peak depth to the comb (a = 250 / 225 um),
+which is recovered by the per-tweezer power the engines set in any case. The model is 1D in y, with an ideal thin
+collimator and the window of each slot at one distance z; the 45 deg tilt places the two edges of a 0.5 mm slot
+0.25 mm before and after that distance, which changes z by at most 4% at z_c = 7 mm. Tooth-edge roughness,
+scatter from the comb, and a lens design of the larger y-relay field are not included.
+
 ## Verification notes
 
 | value | location | type | pointer |
@@ -425,4 +523,10 @@ match the sweep time of the block rather than be as short as possible.
 | imaging map, rho_image fit, latency d = 25 ms | Sec. 10 | SIM | results/m25_imaging.json, results/m25_imaging_fit.json (one seed per case; review) |
 | T* = (2 eps d tau)^(1/2), Little's-law hole lifetimes, holes per position | Sec. 10 | DERIVED | from the hole-lifetime model and the SIM values |
 | coherent ghost criterion 1e-6 | Sec. 10 | DERIVED | docs/row_coherence.md |
-| combining 48 or 64 rows beyond polarisation; 24 mm chip edge | Sec. 10 | open | not designed |
+| 24 mm chip edge for 32 x 8 | Sec. 10 | open | not designed |
+| comb edge penalty vs distance and window | Sec. 11 | SIM | results/m26_edge.json (1D, thin collimator, both slot edges at one z; review) |
+| z_max = (a - f_FAC NA_FAC) D / NA | Sec. 11 | DERIVED | in-band half-angle NA/D at S |
+| layouts, worst-row penalty, y-relay field | Sec. 11 | SIM/DERIVED | results/m26_layout.json; scripts/m13_stack.design |
+| comb tilt tolerance, row shift per urad | Sec. 11 | DERIVED | m13 decentre tolerance (results/m13_tolerance.json) and conjugations |
+| z_c = 7 mm, tooth plate 50 um, +/-10 um edge placement | Sec. 11 | CHOICE | stated assumptions |
+| comb fabrication, edge quality, scatter; mount stability ~10 urad | Sec. 11 | open | [REF?] |
