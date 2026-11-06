@@ -37,6 +37,8 @@ beam-propagation design and optimisation of that engine, and
 | 21 Repair | `scripts/m21_repair.py` | stochastic losses, image-and-repair rounds, scheduler pass-selection modes; `docs/repair.md` |
 | 22 Megascale budget | `scripts/m22_megascale.py` | 1e4-1e6 sites at 3-4 um: field, zones, static power, engine blocks, x-tiling optics, loss rates; `docs/megascale.md` |
 | 23 Steady state | `picsim/megasort.py`, `scripts/m23_steady.py` | assembly and steady-state refilling of 1e4-1e6 sites with engine blocks, reservoir bands and losses; `docs/megascale.md` |
+| 24 Tiling wave optics | `scripts/m24_tiling_wave.py` | ghost light from one engine in its neighbour's slit zone (shared slit plane): wave propagation through the lenslet with pupil acceptance, ray trace through neighbouring lenslets, engine-pitch scan; `docs/megascale.md` |
+| 25 Imaging cadence | `scripts/m25_imaging.py` | steady-state defect fraction (at image, before image, time average) against imaging period, loss per image, imaging time and vacuum lifetime at 1e5 and 1e6 sites; `docs/megascale.md` |
 
 ## Layout
 

@@ -43,3 +43,15 @@ def test_last_block_is_full_height():
     b = Block(32, 1, 45)
     ks = sorted({k for k, _ in b.positions(1155, 90)})
     assert ks[-1] == 1155 - 32 and all(k + 32 <= 1155 for k in ks)
+
+
+def test_time_average_between_pre_and_post_image():
+    from picsim.megasort import Layout, Params, Sim
+    P = Params(tau=300.0, eps_img=1e-3, T_img=0.1, f_load=0.85)
+    sim = Sim(Layout(80, 92, 4, 3), Block(16, 1, 46), P, seed=1)
+    sim.run(3.0)
+    d = np.array(sim.log)
+    late = d[d[:, 0] >= 1.5]
+    m = sim.mean_defect(1.5)
+    assert late[:, 2].mean() <= late[:, 1].mean()  # the image itself removes atoms
+    assert 0.5 * late[:, 2].mean() <= m <= 1.5 * late[:, 1].mean()

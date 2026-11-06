@@ -36,8 +36,9 @@ def one(cfg):
     t_end = cfg["t_end"]
     sim.run(t_end)
     d = np.array(sim.log)
-    late = d[d[:, 0] >= t_end / 2, 1]
-    return {**cfg, "steady_defect_fraction": float(late.mean()), "steady_std": float(late.std()),
+    late = d[d[:, 0] >= t_end / 2]
+    return {**cfg, "steady_defect_fraction": float(late[:, 1].mean()), "steady_std": float(late[:, 1].std()),
+            "pre_image_defect_fraction": float(late[:, 2].mean()), "mean_defect_fraction": sim.mean_defect(t_end / 2),
             "fills_per_s": float(sim.n_fills / t_end), "comp_sites": int(sim.comp.sum())}
 
 
@@ -67,7 +68,8 @@ def main():
            "max_rel_error": float(rel.max())}
     for r in sorted(rows, key=lambda r: (r["N"], r["timing"], r["t_img"], r["eps"], r["tau"], r["T_img"])):
         print(int(r["N"]), r["timing"][:4], "t_img", r["t_img"], "eps %.0e tau %5.0f T %.2f" % (r["eps"], r["tau"], r["T_img"]),
-              "| rho %.2e" % r["steady_defect_fraction"], "| fills/s %.0f" % r["fills_per_s"], flush=True)
+              "| rho %.2e pre %.2e mean %.2e" % (r["steady_defect_fraction"], r["pre_image_defect_fraction"],
+                                                 r["mean_defect_fraction"]), "| fills/s %.0f" % r["fills_per_s"], flush=True)
     print("fit", fit, flush=True)
     f, ax = fig(1, 1, h=3.0)
     for eps in (1e-5, 1e-4, 1e-3):

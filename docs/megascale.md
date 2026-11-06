@@ -251,6 +251,53 @@ too high for slow steps: switching to them after assembly brings back the latenc
 steps are therefore needed in steady state too, at a cost of at most 10 uK per refilled atom. The 3 x 4 um lattice
 at 10^6 sites carries 33% more refills per block position and rises to 8e-4. A larger block (more engines) or
 intermediate steps (about 2 uK per move at 200 us lane steps, from the quantum check) would restore 2.5e-4.
+(Correction, Sec. 10: the 8.1e-4 on 3 x 4 um was an edge artefact of the block placement, not latency.)
+
+## 10. Follow-up: tiling wave optics, remedies at 10^6 sites, imaging cadence
+
+**Engines tiled along x: wave optics (`results/m24_tiling_wave.json`).** Sec. 4 required opaque gaps as wide as
+the slit zones, from a first-order lobe argument, and hence an engine pitch Pe >= 4.4 mm. We now propagate the
+emitter near field of one engine (D1, LinearSynth tweezer at x_a = 0, 60 and 90 um, i.e. up to the segment edge)
+over f1 = 3.12 mm to its lenslet (clear aperture = fill x Pe), apply an ideal lens phase, propagate over f1 to the
+shared slit plane Sigma and measure the intensity in the neighbouring engine's slit zone. Sigma is conjugate to the
+atoms, so this is the ghost a neighbour segment sees. We keep only directions inside the pupil acceptance
+A/(2 f1), since steeper light misses the objective; an exact ray trace through the neighbouring lenslets (all
+angles that miss the engine's own lenslet) checks the same question geometrically.
+
+| engine pitch Pe | worst ghost peak / tweezer peak (accepted; raw) | ghost power / own slit power | accepted rays through neighbouring lenslets |
+|---|---|---|---|
+| 8.0 mm | 4.5e-13 ; 1.7e-9 | 2.6e-13 | none |
+| 4.43 mm | 3.6e-10 ; 2.5e-7 | 1.4e-10 | none |
+| 3.5 mm | 1.7e-8 ; 3.1e-6 | 1.0e-8 | none |
+| 3.0 mm | 1.7e-7 ; 7.7e-6 | 6.3e-8 | none |
+| 2.6 mm | 1.6e-6 ; 1.3e-5 | 7.5e-7 | none |
+| 2.4 mm | 6.7e-5 ; 5.6e-5 | 7.2e-5 | none |
+
+(Worst case over x_a = 0, 60, 90 um at fill 1; it is the segment-edge tweezer, x_a = 90 um, except at 3.5 mm, where
+x_a = 60 um is marginally worse. A lenslet fill of 0.8 at
+4.43 mm raises the accepted ghost to 2e-9.) The first-order lobes are not the limit: the lenslet aperture and the
+pupil acceptance remove them, and no accepted ray reaches another slit zone at any pitch scanned. What sets the
+pitch is the lenslet aperture needed to pass the engine's own slit zone, 2 f1 tan(asin s_cut) = 2.37 mm. Below
+2.6 mm the lenslet clips the own beam and its diffraction tail enters the neighbour zone. At Pe = 3.0 mm the
+accepted ghost is below 2e-7 of a tweezer peak, under the coherent criterion of 1e-6 (`docs/row_coherence.md`).
+Hence six engines fit on an 18 mm chip edge instead of four. Two scanner positions per row are still needed:
+the segment pitch at the atoms, Pe f_obj / f_c = 0.092 Pe = 277 um at Pe = 3.0 mm (m22 combiner, f_c 188 mm,
+f_obj 17.3 mm), exceeds the 180 um segment, so one block position addresses every other segment. The model is 1D (x only), uses an ideal thin lens
+and no surface scatter; baffles between lenslet channels remain the defence against scattered light, which this
+calculation does not include.
+
+**Intermediate steps on 3 x 4 um (`results/m18_midlane.json`, 3,000 atoms per case).** Ramps 100 us, lane steps
+200 us, 300 us moves along the lane, transport over 9 um:
+
+| hold / moving depth (atom temperature) | transported | heating per move | bystanders at 3 um, 6 um, next row (lost / displaced) |
+|---|---|---|---|
+| 0.1 / 0.3 mK (5 uK) | 3000/3000 | 3.0 uK | 0 / 0 / 0 |
+| 0.2 / 0.6 mK (10 uK) | 3000/3000 | 0.8 uK | 0 / 0 / 0 |
+
+Hence intermediate steps are clean on the dense lattice, at 1 to 3 uK per move. We use 2 uK per move below
+(the quantum check gave a similar figure).
+
+REMEDY_PLACEHOLDER
 
 ## Verification notes
 

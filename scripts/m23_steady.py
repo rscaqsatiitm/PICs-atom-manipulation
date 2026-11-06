@@ -159,9 +159,11 @@ def one_remedy(cfg):
     t_end = 20.0
     t3 = sim.run(t_end, target=1e-3)
     d = np.array(sim.log)
-    late = d[d[:, 0] >= t_end - 3.0, 1]
+    late = d[d[:, 0] >= t_end - 3.0]
     return {**cfg, "engines": S * Mx, "fast_actuators": 383 * S * Mx, "positions": len(sim.positions),
-            "t_1e-3_s": t3, "steady_defect_fraction": float(late.mean()), "heat": sim.heat_stats()}
+            "t_1e-3_s": t3, "steady_defect_fraction": float(late[:, 1].mean()),
+            "pre_image_defect_fraction": float(late[:, 2].mean()), "mean_defect_fraction": sim.mean_defect(t_end - 3.0),
+            "heat": sim.heat_stats()}
 
 
 def remedy(pitches=(3.0, 4.0)):
@@ -171,7 +173,8 @@ def remedy(pitches=(3.0, 4.0)):
         rows = list(ex.map(one_remedy, cfgs))
     for r in rows:
         print(r["pitch_x"], r["block"], r["timing"], "| engines", r["engines"], "| t1e-3", r["t_1e-3_s"],
-              "| steady %.2e" % r["steady_defect_fraction"], "| heat max", r["heat"]["max_uK"], flush=True)
+              "| at image %.2e pre %.2e mean %.2e" % (r["steady_defect_fraction"], r["pre_image_defect_fraction"],
+                                                      r["mean_defect_fraction"]), "| heat max", r["heat"]["max_uK"], flush=True)
     save_result("m23_remedy" if len(pitches) > 1 else "m23_remedy_3um", script=SCRIPT,
                 inputs={"N": 1e6, "f_load": 0.85, "tau_s": 3000, "row_spacing_um": 4.0,
                         "timings": {k: {"kwargs": v[0], "heat_uK": v[1]} for k, v in REMEDY_TIMINGS.items()},
