@@ -6,7 +6,7 @@ This chapter reports the Phase-A simulations of the individual SiN elements name
 
 The waveguide platform is stoichiometric LPCVD Si$_3$N$_4$, 400~nm thick (the CoE-CPPICS limit), with 200 and 300~nm films as foundry alternatives, clad in SiO$_2$. Material dispersion is taken from Luke et al.~\cite{LUKE} and Malitson~\cite{MAL}, and the thermo-optic coefficients ($2.45\times10^{-5}$~/K for Si$_3$N$_4$, $1\times10^{-5}$~/K for SiO$_2$) from~\cite{TRC}. The working wavelengths are 894.6~nm (Raman addressing on the Cs D1 line) and 1064.4~nm (transport tweezers).
 
-Each element is modelled with the cheapest method that captures its physics: (i) vector FEM mode solving (femwell 0.1.12, second-order N\'ed\'elec elements) for straight, bent, coupled and leaky guides; (ii) effective-index reduction with guided-mode eigenmode expansion for MMIs; (iii) scalar overlap with Gaussian fibre modes for edge couplers; (iv) 2D FDTD (MEEP 1.35, 40~px/\textmu m) for grating antennas, with the Si substrate included; (v) $2\times2$ transfer matrices with Monte Carlo sampling for switches; (vi) 2D thermal FEM for heaters; (vii) 1D scalar Fourier optics for the OPA (emitter near field, Fourier-plane slit, aplanatic objective); and (viii) an exact harmonic-oscillator result for transport heating. The mode, slab, MZI, OPA and transport models are checked against analytic limits or published examples (16 unit tests); the FDTD closes its energy balance to better than 0.5\%, and the heater result changes by 1.4\% when the domain is doubled.
+Each element is modelled with the cheapest method that captures its physics: (i) vector FEM mode solving (femwell 0.1.12, second-order N\'ed\'elec elements) for straight, bent, coupled and leaky guides; (ii) effective-index reduction with guided-mode eigenmode expansion for MMIs; (iii) scalar overlap with Gaussian fibre modes for edge couplers; (iv) 2D FDTD (MEEP 1.35, 40~px/\textmu m) for grating antennas, with the Si substrate included; (v) $2\times2$ transfer matrices with Monte Carlo sampling for switches; (vi) 2D thermal FEM for heaters; (vii) 1D scalar Fourier optics for the OPA (emitter near field, Fourier-plane slit, aplanatic objective); and (viii) an exact harmonic-oscillator result for transport heating. The mode, slab, MZI, OPA and transport models are checked against analytic limits or published examples (16 unit tests); the FDTD closes its energy balance to within 3\% at the centre wavelength (7\% across the band), and the heater result changes by 1.4\% when the domain is doubled.
 
 The principal limits are as follows. The MMI and grating models are 2D. Edge-coupler numbers are mode overlaps without Fresnel or taper conversion loss. The OPA model is scalar and 1D along the steering axis, with an aberration-free objective. Sidewall scattering loss and fabrication roughness are not modelled. The AlN actuator is a single mechanical mode with assumed resonance frequency and quality factor. Every simulated value below is valid only within the regime simulated; the provenance of each input (proposal value, source, derived, design choice or recalled) is listed in Appendix~\ref{app:params}.
 
@@ -15,7 +15,7 @@ The principal limits are as follows. The MMI and grating models are 2D. Edge-cou
 We choose the design width as the widest width on a 0.1~\textmu m grid for which (i) the TE1 mode is cut off or lies within 0.015 of the cladding index, and (ii) the TE0/TM0 effective-index splitting is at least 0.015. The second condition matters on the thick film: at 894.6~nm a $0.4\times0.4$~\textmu m$^2$ guide is polarisation-degenerate (TE0 = TM0 = 1.693), which would couple the polarisations in bends. Hence we use 0.5~\textmu m there. Table~\ref{tab:platform-modes} lists the resulting designs.
 
 \begin{table}[htbp]\centering\small
-\caption{Single-mode design guides (simulated, vector FEM). Here, $n_\mathrm{eff}$ and $n_g$ are the effective and group indices of TE0, $\mathrm{d}n_\mathrm{eff}/\mathrm{d}T$ is for uniform heating of core and cladding, and $R$ is the bend radius for less than 0.01~dB per $90^\circ$ bend.}
+\caption{Single-mode design guides (simulated, vector FEM). Here, $n_\mathrm{eff}$ and $n_g$ are the effective and group indices of TE0, $\mathrm{d}n_\mathrm{eff}/\mathrm{d}T$ is for uniform heating of core and cladding, and $R$ is the smallest swept bend radius with less than 0.01~dB per $90^\circ$ bend (20~\textmu m was the smallest swept, hence $\le$20).}
 \label{tab:platform-modes}
 \begin{tabular}{ccccccc}
 \toprule
@@ -24,13 +24,13 @@ film & $\lambda$ & width & $n_\mathrm{eff}$ & $n_g$ & $\mathrm{d}n_\mathrm{eff}/
 \midrule
 400 & 1064.4 & 0.6 & 1.708 & 2.14 & 2.36 & 8 / 10 \\
 400 & 894.6 & 0.5 & 1.745 & 2.17 & 2.41 & 6 / 6 \\
-200 & 1064.4 & 0.9 & 1.613 & 1.98 & 2.02 & 20 / 60 \\
-200 & 894.6 & 0.7 & 1.651 & 2.05 & 2.16 & 20 / 30 \\
+200 & 1064.4 & 0.9 & 1.613 & 1.98 & 2.02 & $\le$20 / 60 \\
+200 & 894.6 & 0.7 & 1.651 & 2.05 & 2.16 & $\le$20 / 30 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Substrate leakage on the 400~nm film is below $10^{-5}$~dB/cm for a buried oxide of 2~\textmu m or more at both wavelengths. On the 200~nm film at 1064.4~nm the oxide must be at least 3~\textmu m (TE leakage $7\times10^{-8}$~dB/cm); at 2~\textmu m, TM leaks 0.33~dB/cm. The coupling length of two 1064.4~nm guides on the 400~nm film is 1.8~mm at 1.6~\textmu m pitch and 29~mm at 2.1~\textmu m pitch, which sets how closely routing guides can run in parallel. At 1.4~W in one guide the peak in-guide intensity is 420~MW/cm$^2$ and the Kerr phase 0.05~rad/cm (with a Kerr index of $2.5\times10^{-19}$~m$^2$/W, recalled, to be verified).
+Substrate leakage on the 400~nm film is below $10^{-5}$~dB/cm for TE with a buried oxide of 2~\textmu m or more at both wavelengths; TM at 1064.4~nm leaks $7\times10^{-5}$~dB/cm at 2~\textmu m, and 3~\textmu m keeps both polarisations below $10^{-5}$~dB/cm. On the 200~nm film at 1064.4~nm the oxide must be at least 3~\textmu m (TE leakage $7\times10^{-8}$~dB/cm); at 2~\textmu m, TM leaks 0.33~dB/cm. The coupling length of two 1064.4~nm guides on the 400~nm film is 1.8~mm at 1.6~\textmu m pitch and 29~mm at 2.1~\textmu m pitch, which sets how closely routing guides can run in parallel. At 1.4~W in one guide the peak in-guide intensity is 420~MW/cm$^2$ and the Kerr phase 0.05~rad/cm (with a Kerr index of $2.5\times10^{-19}$~m$^2$/W, recalled, to be verified).
 
 The thick film confines both polarisations well. On 400~nm film the TM bend loss is only about ten times the TE loss at the same radius, hence bends cannot strip TM light. On 200~nm film at 1064.4~nm, in contrast, a 20~\textmu m bend radiates 1.5~dB per $90^\circ$ of TM against $5\times10^{-4}$~dB of TE, which makes a compact TM filter possible; at 894.6~nm the same film gives only 0.03~dB per $90^\circ$ of TM. This matters for the switch extinction (Sec.~\ref{sec:platform-switch}).
 
@@ -82,7 +82,7 @@ Two families of phase shifter serve different time scales. Thermo-optic shifters
 \paragraph{Range and resolution.} The atom-plane field is a scaled copy of the slit-filtered OPA far field. The number of resolvable positions along the steering axis equals the channel number $N$, so the range at the atoms is $N\lambda/(4\,\mathrm{NA}\,F)$. Here, NA is the objective numerical aperture and $F$ the pupil fill. Table~\ref{tab:platform-field} gives the consequences at NA 0.5 and 1064.4~nm. At full fill, 64 channels steer over $\pm33$~\textmu m (17 sites at 4~\textmu m pitch), not $\pm100$~\textmu m, and cannot place more than about 15 tweezers on one row. More than 20 simultaneous tweezers on one row need 128 channels; at 0.75 fill they cover $\pm89$~\textmu m at 1.33 times the power per tweezer. Uniform channel amplitudes give 4.7\% first sidelobes along the steering axis; a Gaussian channel apodisation ($1/e^2$ at the aperture edge) lowers them to 0.9\% at a FWHM of 1.09~\textmu m. Section~\ref{sec:engine} builds on this count.
 
 \begin{table}[htbp]\centering\small
-\caption{Simulated steering field of the OPA (1D scalar Fourier optics, NA 0.5, 1064.4~nm). Here, the half-range is the usable one, in which the steered peak keeps at least half its on-axis value; ``sites'' is the number of 4~\textmu m sites on one row within it; and ``power'' is the relative power for equal depth.}
+\caption{Simulated steering field of the OPA (1D scalar Fourier optics, NA 0.5, 1064.4~nm). Here, the half-range is the usable one, in which the steered peak keeps at least half its on-axis value and sits within 0.1~\textmu m of its target; ``sites'' is the number of 4~\textmu m sites on one row within it; and ``power'' is the relative power for equal depth.}
 \label{tab:platform-field}
 \begin{tabular}{cccccc}
 \toprule
@@ -90,7 +90,7 @@ $N$ & fill $F$ & half-range (\textmu m) & sites & FWHM along $x$ (\textmu m) & p
 \midrule
 32 & 1.0 & 16 & 9 & 0.95 & 1.00 \\
 64 & 1.0 & 33 & 17 & 0.95 & 1.00 \\
-64 & 0.5 & 68 & 35 & 1.89 & 1.99 \\
+64 & 0.5 & 67 & 33 & 1.89 & 1.99 \\
 128 & 1.0 & 67 & 33 & 0.94 & 1.00 \\
 128 & 0.75 & 89 & 45 & 1.26 & 1.33 \\
 256 & 1.0 & 134 & 67 & 0.94 & 1.00 \\
@@ -112,7 +112,7 @@ $N$ & fill $F$ & half-range (\textmu m) & sites & FWHM along $x$ (\textmu m) & p
 \label{fig:platform-update}
 \end{figure}
 
-\paragraph{Loss budget.} For an end-fire OPA with $N = 128$, 21 tweezers and 2~\textmu m pitch, the chain from fibre to atoms is: edge coupler $-0.37$~dB, MMI tree $-0.27$~dB, propagation over 1~cm at 0.3~dB/cm (assumed) $-0.30$~dB, emitters with slit, pupil and synthesis $-3.43$~dB, and meta-objective transmission 0.7 (assumed) $-1.55$~dB, in total $-5.9$~dB. The grating case adds $-1.2$~dB of directionality ($-7.1$~dB for the best grating emitters). At 1.5~\textmu m pitch the slit term improves by about 1~dB. Against the ${\sim}10$~dB assumed in the proposal, the per-tweezer on-chip power falls from 66~mW to about 26~mW. This estimate excludes sidewall scattering.
+\paragraph{Loss budget.} For an end-fire OPA with $N = 128$, 21 tweezers and 2~\textmu m pitch, the chain from fibre to atoms is: edge coupler $-0.37$~dB, 7-stage MMI tree $-0.31$~dB, propagation over 1~cm at 0.3~dB/cm (assumed) $-0.30$~dB, emitters with slit, pupil and synthesis $-3.43$~dB, and meta-objective transmission 0.7 (assumed) $-1.55$~dB, in total $-5.95$~dB. The grating case adds $-1.2$~dB of directionality ($-7.15$~dB for the best grating emitters). At 1.5~\textmu m pitch the slit term improves by about 1~dB. Against the ${\sim}10$~dB assumed in the proposal, the per-tweezer on-chip power falls from 66~mW to about 26~mW. This estimate excludes sidewall scattering.
 
 \subsection{Phase-A error budget}\label{sec:platform-budget}
 

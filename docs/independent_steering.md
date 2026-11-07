@@ -6,8 +6,11 @@ simulated, and must be reviewed before they enter the proposal.
 
 > Follow-up: the star coupler has since been designed by beam propagation and optimised
 > (`docs/fpr_design.md`). The optimised design (192 arms, Rowland-type port arc, 1.2 um emitter facets,
-> least-squares port synthesis) needs about 43 mW per 1.2 mK tweezer (0.86 W for 20) and keeps the
-> independence figures below. The numbers in this note are for the first, paraxial design.
+> least-squares port synthesis) needs about 43 mW per 1.2 mK tweezer (0.86 W for 20; about 57 mW per tweezer once
+> the facet loss and the glued collimator of `docs/collimator.md` are included). Its independence figures are
+> somewhat weaker than those below: when one tweezer moves, the others shift by up to 3.5 nm (1.5 nm here). The
+> numbers in this note are for the first, paraxial design; with this window synthesis its 20 tweezers also carry a
+> static position error of up to 13 nm, which least-squares synthesis lowers to 7 to 8 nm.
 
 ## 1. Result
 
@@ -27,8 +30,8 @@ calibrated):
 | static peak spread of the 20 (depth equalised by the tree) | 1.4% |
 | two tweezers in phase quadrature at 2.5 um: pull / peak change | 3.5 nm / 0.16% |
 | spot FWHM along the row | 1.66 um |
-| fibre power per tweezer at 1.2 mK: centre / field mean / field edge | 48 / 64 / 102 mW |
-| 20 tweezers spread over the field | 1.3 W |
+| fibre power per tweezer at 1.2 mK: centre / field mean / field edge | 48 / 61 / 91 mW |
+| 20 tweezers spread over the field | 1.2 W |
 
 The cost is in actuators and their accuracy: 127 fast tunable splitters and 128 port phase shifters per chip,
 and 10 nm position noise needs per-port amplitude and phase errors of about 1% and 10 mrad rms (Sec. 4).
@@ -109,8 +112,10 @@ ratio of the powers of its two subtrees), so an FPGA can compute them in real ti
 
 **Power.** Facet -0.37 dB, 7-stage tree -0.39 dB, propagation -0.3 dB (assumed), meta-objective 0.7
 (assumed), and the simulated FPR, arms, emitters, slit and pupil. A 1.2 mK tweezer needs 48 mW at the fibre at
-the field centre and 102 mW at the edge; equalising depth over the field costs a mean factor of 1.34, so 20
-tweezers spread over +/-60 um need about 1.3 W. Restricting operation to +/-40 um lowers the mean factor.
+the field centre and 91 mW at the edge (60 um); equalising depth over the field costs a mean factor of 1.27, so 20
+tweezers spread over +/-60 um need about 1.2 W. (Corrected: the field mean and edge were first evaluated in units of
+ports instead of micrometres, i.e. over +/-63.9 um, and relative to the brightest window position instead of the
+centre; they read 64 and 102 mW.) Restricting operation to +/-40 um lowers the mean factor.
 
 **On/off.** A tweezer is ramped on or off by scaling its window through the tree (adiabatic, >= 100 us), with
 the residual set by the tree extinction; the simulated residual with the window removed is 8.9e-6.

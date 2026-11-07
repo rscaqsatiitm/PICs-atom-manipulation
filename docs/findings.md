@@ -42,7 +42,7 @@ above the 1e-3 budget. A Gaussian pupil fill truncated at 0.7 of the pupil radiu
 1 MHz, a 1.2 mK tweezer heats at about 7,700 quanta/s (about 0.8 quanta per 100 us move, against a depth of
 about 300 quanta). Heating below 10 quanta/s needs S_x(84 kHz) <= 1.3e-25 m^2/Hz.
 
-The end-to-end loss of the end-fire OPA from fibre to atoms, for 21 tweezers at N = 128, is 5.9 dB (7.1 dB
+The end-to-end loss of the end-fire OPA from fibre to atoms, for 21 tweezers at N = 128, is 6.0 dB (7.1 dB
 for the best grating emitters), against the ~10 dB assumed in the proposal; the per-tweezer on-chip power
 falls from 66 mW to about 26 mW. This estimate excludes sidewall scattering and assumes a meta-objective
 transmission of 0.7.
@@ -62,7 +62,7 @@ with the Si substrate included; 2x2 transfer matrices with Monte Carlo for switc
 heaters; 1D scalar Fourier optics for the OPA (emitter near field, Fourier-plane slit, aplanatic
 objective); and an exact harmonic-oscillator result for transport heating. The mode, slab, MZI, OPA and
 transport models are checked against analytic limits or published examples (`tests/`, 16 tests); the FDTD
-closes its energy balance to better than 0.5%, and the heater result changes by 1.4% when the domain is
+closes its energy balance to within 3% at the centre wavelength (7% across the band), and the heater result changes by 1.4% when the domain is
 doubled.
 
 The principal limits are as follows. The MMI and grating models are 2D. Edge-coupler numbers are mode
@@ -81,11 +81,14 @@ bends. Hence we use 0.5 um there.
 |---|---|---|---|---|---|---|
 | 400 nm | 1064.4 | 0.6 | 1.708 | 2.14 | 2.36e-5 | 8 / 10 |
 | 400 nm | 894.6 | 0.5 | 1.745 | 2.17 | 2.41e-5 | 6 / 6 |
-| 200 nm | 1064.4 | 0.9 | 1.613 | 1.98 | 2.02e-5 | 20 / 60 |
-| 200 nm | 894.6 | 0.7 | 1.651 | 2.05 | 2.16e-5 | 20 / 30 |
+| 200 nm | 1064.4 | 0.9 | 1.613 | 1.98 | 2.02e-5 | <= 20 / 60 |
+| 200 nm | 894.6 | 0.7 | 1.651 | 2.05 | 2.16e-5 | <= 20 / 30 |
+
+(R is the smallest radius of the swept set that meets the criterion; 20 um was the smallest radius swept, hence
+"<= 20". Between swept radii the true minimum is smaller, e.g. about 50 um for 200 nm TM at 1064.4 nm.)
 
 Substrate leakage on 400 nm film is below 1e-5 dB/cm for a buried oxide of 2 um or more at both
-wavelengths; on 200 nm film at 1064.4 nm the oxide must be at least 3 um (TE 7e-8 dB/cm; at 2 um, TM leaks
+wavelengths for TE (TM at 1064.4 nm leaks 7e-5 dB/cm at 2 um; 3 um keeps both polarisations below 1e-5 dB/cm); on 200 nm film at 1064.4 nm the oxide must be at least 3 um (TE 7e-8 dB/cm; at 2 um, TM leaks
 0.33 dB/cm). The coupling length of two 1064.4 nm guides on 400 nm film is 1.8 mm at 1.6 um pitch and
 29 mm at 2.1 um pitch. At 1.4 W the Kerr phase is 0.05 rad/cm and the peak in-guide intensity
 420 MW/cm^2.
@@ -160,12 +163,14 @@ update period.
 |---|---|---|---|---|---|
 | 32 | 1.0 | 16 | 9 | 0.95 | 1.00 |
 | 64 | 1.0 | 33 | 17 | 0.95 | 1.00 |
-| 64 | 0.5 | 68 | 35 | 1.89 | 1.99 |
+| 64 | 0.5 | 67 | 33 | 1.89 | 1.99 |
 | 128 | 1.0 | 67 | 33 | 0.94 | 1.00 |
 | 128 | 0.75 | 89 | 45 | 1.26 | 1.33 |
 | 256 | 1.0 | 134 | 67 | 0.94 | 1.00 |
 
-"Usable" means the steered peak keeps at least half its on-axis value. Uniform channel amplitudes give 4.7%
+"Usable" means the steered peak keeps at least half its on-axis value and sits within 0.1 um of its target.
+(Corrected: the first criterion alone counted half-clipped, displaced spots at fill 0.5, e.g. 68 um and 35 sites for
+N = 64.) Uniform channel amplitudes give 4.7%
 first sidelobes along x; a Gaussian channel apodisation (1/e^2 at the aperture edge) lowers them to 0.9% at
 a FWHM of 1.09 um.
 
@@ -206,9 +211,9 @@ sigma sqrt(12/N) lambda/(4 pi NA) (Monte Carlo agrees to 2%). Hence 10 nm needs 
 N = 64 (0.10 rad at 32, 0.19 rad at 128); 8-bit phase resolution (7 mrad) is sufficient, and a PZT
 hysteresis error must stay below about 4% of the applied phase at N = 64.
 
-**Loss budget (end-fire, N = 128, K = 21, 2 um pitch).** Edge coupler -0.37 dB, MMI tree -0.27 dB,
+**Loss budget (end-fire, N = 128, K = 21, 2 um pitch).** Edge coupler -0.37 dB, 7-stage MMI tree -0.31 dB (corrected from a 6-stage tree),
 propagation 1 cm at 0.3 dB/cm (assumed) -0.30 dB, emitters with slit, pupil and synthesis -3.43 dB,
-meta-objective transmission 0.7 (assumed) -1.55 dB: total -5.9 dB. The grating case adds -1.2 dB of
+meta-objective transmission 0.7 (assumed) -1.55 dB: total -5.95 dB. The grating case adds -1.2 dB of
 directionality. At 1.5 um pitch the slit term improves by about 1 dB.
 
 ## 7. Error-budget links and power handling (Modules 6 and 7)
@@ -235,7 +240,7 @@ field (+/-33 um at N = 64, +/-68 um at N = 128, F = 1) separately from the +/-10
 10 dB as the conservative value but note the modelled one.
 (iv) Sec. 4 error budget: replace "position noise <= 10 nm rms" by a spectral density at the trap frequency,
 S_x(nu_trap) <= 1.3e-25 m^2/Hz for < 10 quanta/s at 1.2 mK, and add the 894.6 nm pupil apodisation needed
-for neighbour crosstalk <= 1e-4.
+for neighbour crosstalk of about 1.2e-4 (Gaussian fill truncated at 0.7 of the pupil radius).
 (v) Sec. 4(ii): 6.6 mW gives 1.0 mK for w0 = 1.04 um; quote 7.8 mW or the OPA spot.
 (vi) Phase C: specify cascaded MZIs (or trimmed single MZIs with <= 3 mrad phase accuracy), an output
 polariser of >= 30 dB on the 894.6 nm path, and shaped (ZVD) drive for <= 100 ns settling.
@@ -278,7 +283,7 @@ Kerr index 2.5e-19 m^2/W; thermal conductivities and heat capacities; Cs mass.
 | 49%, 89%, P = 1.00, 88 dB | Sec. 1(iii), 5 | SIM | results/m4_extinction.json (review) |
 | 1.0e-3, 1.2e-4 neighbour intensity; 2.5e-3, 2.9e-4 error | Sec. 1(iv) | SIM | results/m7_budget.json (review) |
 | 7,700 quanta/s; 1.3e-25 m^2/Hz | Sec. 1(v), 8(iv) | DERIVED | [OHARA] formula, results/m7_budget.json |
-| -5.9 dB, -7.1 dB, 26 mW | Sec. 1, 6 | SIM | results/m3_loss_budget.json (review) |
+| -5.95 dB, -7.15 dB, 26 mW | Sec. 1, 6 | SIM | results/m3_loss_budget.json (review) |
 | design widths, n_eff, n_g, dn/dT, bend radii | Sec. 3 | SIM | results/m1_*.json (review) |
 | -0.37 to -1.1 dB overlap, 45 MW/cm^2 | Sec. 4 | SIM | results/m2_couplers.json (review) |
 | 0.044 dB per MMI, 0.27 dB tree, 0.0024/0.0034 spread | Sec. 4 | SIM | results/m2_mmi.json (review) |

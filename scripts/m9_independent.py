@@ -122,6 +122,19 @@ def calibrated(fp: FocalPlaneOPA, sigma, step=0.125):
     return u_for, amp_for
 
 
+def power_factors(cal, x_half=60.0):
+    """Laser power needed to keep the depth equal over |x| <= x_half, relative to a tweezer at the centre.
+
+    cal = (u_for, amp_for): u_for maps a position x (um) to the window centre u (ports), and amp_for(u)^2 is the
+    power factor relative to the brightest window position. Returns (field mean, worse edge), both relative to x = 0.
+    """
+    u_for, amp_for = cal
+    c = amp_for(u_for(0.0)) ** 2
+    xs = np.arange(-x_half, x_half + 0.5, 1.0)
+    f = np.array([amp_for(u_for(x)) ** 2 / c for x in xs])
+    return float(f.mean()), float(max(f[0], f[-1]))
+
+
 def independence(fp: FocalPlaneOPA, sigma=0.9, seed=0, cal=None):
     rng = np.random.default_rng(seed)
     u_for, amp_for = cal if cal is not None else calibrated(fp, sigma)
@@ -283,9 +296,7 @@ if __name__ == "__main__":
         cal = calibrated(fp, 0.9)
         ind = independence(fp, cal=cal)
         # power cost of equalising depth across the field: mean of 1/peak relative to the centre
-        us = np.arange(-60, 61, 1.0)
-        ind["power_factor_mean_over_field"] = float(np.mean([cal[1](u) ** 2 for u in us]))
-        ind["power_factor_edge"] = float(cal[1](60.0) ** 2)
+        ind["power_factor_mean_over_field"], ind["power_factor_edge"] = power_factors(cal)
         print(json.dumps({k: v for k, v in ind.items() if k != "positions_um"}, indent=0, default=float), flush=True)
         noise = amplitude_noise(fp)
         print("noise", noise, flush=True)

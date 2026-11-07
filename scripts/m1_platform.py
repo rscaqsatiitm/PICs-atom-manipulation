@@ -179,7 +179,7 @@ def bend_loss(design, straight):
         ax[0, j].set_title(f"lambda = {LAMS[lk]*1e3:.1f} nm")
         ax[0, j].legend(fontsize=5)
     ax[0, 0].set_ylabel("radiation loss (dB / 90 deg)")
-    # minimum radius for < 0.01 dB / 90 deg, by interpolation in log space
+    # smallest swept radius with < 0.01 dB / 90 deg (no interpolation: an upper bound when it is the first radius swept)
     rmin = {}
     for key in design:
         for pol in ("TE", "TM"):

@@ -1,7 +1,7 @@
 {
  "name": "m3_loss_budget",
  "script": "scripts/m3_opa.py",
- "git": "745f3cc",
+ "git": "2303752",
  "notes": "Per-tweezer share of the emitted power for K = 21 at N = 128, 2 um pitch. The 6.6 mW per tweezer target uses the proposal's w0 = 1.04 um; the OPA spot differs (see m3_spot).",
  "inputs": {
   "P_tweezer_atoms": {
@@ -20,23 +20,23 @@
  "outputs": {
   "endfire_items_dB": {
    "fibre-to-chip edge coupler (SIM, m2)": -0.36796725952278764,
-   "6-stage MMI tree excess (SIM, m2)": -0.26526464405462286,
+   "7-stage MMI tree excess, 1x128 (SIM, m2)": -0.3094754180637267,
    "propagation 1 cm at 0.3 dB/cm (CHOICE)": -0.3,
    "emitters + slit + pupil + K=21 synthesis, end-fire (SIM)": -3.4251341874296197,
    "meta-objective transmission 0.7 (CHOICE, Table 1 analogue)": -1.5490195998574319
   },
-  "endfire_total_dB": -5.907385690864462,
+  "endfire_total_dB": -5.951596464873566,
   "proposal_assumption_dB": -10.0,
-  "per_tweezer_on_chip_mW_needed_endfire": 25.72068345887436,
+  "per_tweezer_on_chip_mW_needed_endfire": 25.98385487993429,
   "grating_items_dB": {
    "fibre-to-chip edge coupler (SIM, m2)": -0.36796725952278764,
-   "6-stage MMI tree excess (SIM, m2)": -0.26526464405462286,
+   "7-stage MMI tree excess, 1x128 (SIM, m2)": -0.3094754180637267,
    "propagation 1 cm at 0.3 dB/cm (CHOICE)": -0.3,
    "emitters + slit + pupil + K=21 synthesis, end-fire (SIM)": -3.4251341874296197,
    "meta-objective transmission 0.7 (CHOICE, Table 1 analogue)": -1.5490195998574319,
    "grating directionality (SIM, m3 FDTD)": -1.1972772188528993
   },
-  "grating_total_dB": -7.104662909717361
+  "grating_total_dB": -7.148873683726465
  },
  "outputs_kind": "SIM (review before submission)"
 }

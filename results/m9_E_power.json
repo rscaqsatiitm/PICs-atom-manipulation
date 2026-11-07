@@ -1,7 +1,7 @@
 {
  "name": "m9_E_power",
  "script": "scripts/m9_independent.py",
- "git": "3597a65",
+ "git": "2303752",
  "notes": "Depth equalised over the field by the tunable tree; mean factor from m9_E_independence.",
  "inputs": {
   "depth": {
@@ -33,11 +33,11 @@
    "propagation": -0.3,
    "meta-objective 0.7": -1.5490195998574319
   },
-  "centre_fwhm_um": 1.6791424853315575,
-  "P_fibre_per_tweezer_centre_mW": 47.949077905921264,
-  "P_fibre_per_tweezer_field_mean_mW": 64.31815761138944,
-  "P_fibre_per_tweezer_edge_mW": 102.39382196814469,
-  "P_fibre_20_tweezers_W_field_mean": 1.2863631522277887
+  "centre_fwhm_um": 1.6791424853315577,
+  "P_fibre_per_tweezer_centre_mW": 47.949077905921214,
+  "P_fibre_per_tweezer_field_mean_mW": 60.735980273938026,
+  "P_fibre_per_tweezer_edge_mW": 91.4677911468474,
+  "P_fibre_20_tweezers_W_field_mean": 1.2147196054787606
  },
  "outputs_kind": "SIM (review before submission)"
 }

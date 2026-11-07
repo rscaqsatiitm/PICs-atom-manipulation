@@ -53,8 +53,10 @@ lengths degrades the dense-port value by 10% and is kept as a bound.
 
 **Propagation.** 2D wide-angle (Pade 1,1) Crank-Nicolson BPM with the TM-type lateral operator that matches
 the chip TE mode; all ports propagated together. Unit tests: power conserved to 1e-3 over 300 um; phase index
-error < 3e-4; half a coupling length transfers half the power. Grid: dx = 0.04 um, dz = 0.125 um (capture
-within 0.5% and arm-field fidelity >= 0.992 against dz = 0.0625 um).
+error < 3e-4; half a coupling length transfers half the power. Grid: dx = 0.04 um, dz = 0.125 um. Halving the
+step from 0.25 to 0.125 um changes the captured power by up to 4.9% (arm-field fidelity 0.990,
+`results/m10_bpm_small.json`); a run at 0.0625 um is not in the results, so convergence in dz is not demonstrated
+below 0.125 um. (Corrected: an earlier version cited a 0.0625 um comparison that does not exist.)
 
 **Against 2D FDTD.** On a reduced 8-port, 8-arm coupler with the same angular range, MEEP (resolution
 20/um) and the BPM agree with arm-field fidelity 0.997 (centre port), 0.985 (middle) and 0.93 (edge port), and
@@ -111,7 +113,7 @@ trims in route E, so this costs area and slow heaters, not fast actuators. 192 a
 256 add 7% for 64 more trims and a 1.8 mm slab.
 
 **Wider emitter facets** narrow the element pattern and raise the relay transmission at the centre from 0.64
-(0.6 um) to 0.84 (1.2 um at 1.5 um pitch). At 0.5 um gaps the transmission saturates near 0.74 to 0.76 for any
+(0.6 um) to 0.84 (1.2 um at 1.5 um pitch). At 0.5 um gaps the transmission saturates near 0.73 to 0.76 for any
 pitch from 1.5 to 2.2 um, so the 0.3 um gap of the 1.2 um facet is what buys the last 10%. Its coupling length
 is 227 um, which limits the wide facet section to about 15 um.
 
