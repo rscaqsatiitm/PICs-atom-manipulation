@@ -1,7 +1,7 @@
 {
  "name": "m15_summary",
  "script": "scripts/m15_coherence.py",
- "git": "9ee2032",
+ "git": "b5303be",
  "notes": "Criteria used elsewhere: others' depth change < 3e-3 and position < 5 nm when a tweezer moves; position noise budget 10 nm rms (proposal).",
  "inputs": {
   "rows": "both sides, separations 4, 8, 12, 16 um",
@@ -33,10 +33,10 @@
     "option": "common phase noise (3 rad) + fibre delays",
     "active_parts": "1 EOM on the seed, noise source, <= 5 m extra fibre",
     "power_factor": 1.0,
-    "static_depth_rms": 0.00016254792350222836,
-    "static_pos_rms_nm": 0.06595100639396727,
-    "move_depth_rms": 1.6339319890981546e-05,
-    "move_pos_rms_nm": 0.03669019530473285
+    "static_depth_rms": 0.0004022685460257408,
+    "static_pos_rms_nm": 0.17476640342550112,
+    "move_depth_rms": 4.00505108600078e-05,
+    "move_pos_rms_nm": 0.10339922919632016
    },
    {
     "option": "alternating polarisation",

@@ -24,7 +24,7 @@ synthesis):
 | edge (60 um) / centre peak | 0.52 | 0.70 |
 | laser power per 1.2 mK tweezer, field mean (fibre) | ~65 mW | ~43 mW |
 | 20 tweezers over +/-60 um | ~1.3 W | ~0.86 W |
-| residual arm-phase aberration, worst port | up to 1.3 rad pk-pk | <= 0.08 rad rms |
+| residual arm-phase aberration, worst port | 0.90 rad pk-pk (0.22 rad rms) | <= 0.08 rad rms |
 | others' change when one of 20 moves by up to 4 um | <= 3.5 nm, <= 0.12% | <= 3.5 nm, <= 0.11% |
 | residual at a switched-off site | 1.3e-6 | 1.6e-6 |
 | static peak spread of 20 tweezers | 0.56% | 0.52% |
@@ -53,8 +53,10 @@ lengths degrades the dense-port value by 10% and is kept as a bound.
 
 **Propagation.** 2D wide-angle (Pade 1,1) Crank-Nicolson BPM with the TM-type lateral operator that matches
 the chip TE mode; all ports propagated together. Unit tests: power conserved to 1e-3 over 300 um; phase index
-error < 3e-4; half a coupling length transfers half the power. Grid: dx = 0.04 um, dz = 0.125 um (capture
-within 0.5% and arm-field fidelity >= 0.992 against dz = 0.0625 um).
+error < 3e-4; half a coupling length transfers half the power. Grid: dx = 0.04 um, dz = 0.125 um. Halving the
+step from 0.25 to 0.125 um changes the captured power by up to 4.9% (arm-field fidelity 0.990,
+`results/m10_bpm_small.json`); a run at 0.0625 um is not in the results, so convergence in dz is not demonstrated
+below 0.125 um. (Corrected: an earlier version cited a 0.0625 um comparison that does not exist.)
 
 **Against 2D FDTD.** On a reduced 8-port, 8-arm coupler with the same angular range, MEEP (resolution
 20/um) and the BPM agree with arm-field fidelity 0.997 (centre port), 0.985 (middle) and 0.93 (edge port), and
@@ -71,8 +73,10 @@ matters). On the optimised design the BPM and the exact-path model give the same
 ## 3. What the beam propagation found
 
 (i) **Aberration of the confocal coupler.** With ports on an arc of radius R, each off-axis port's arm phases
-deviate from a straight line by up to 1.3 rad pk-pk at the edge port (0.43 rad half-way out), confirmed by exact
-path lengths. Arm trims cannot remove it because it depends on the port. Placing the ports on an arc of radius
+deviate from a straight line by up to 0.90 rad pk-pk (0.22 rad rms) at the edge port in the beam propagation
+(0.41 rad pk-pk half-way out); exact path lengths, which ignore the arms' finite acceptance, give 1.3 rad at the
+edge. (Corrected: an earlier evaluation unwrapped the raw arm phases, which fails for the edge ports, whose slope is
+close to -pi per arm; `m10_fpr_full_A.json` now holds the corrected metrics.) Arm trims cannot remove it because it depends on the port. Placing the ports on an arc of radius
 0.555 R (close to the Rowland circle) halves it over the field of use; with 192 arms the worst residual is
 0.08 rad rms. The Rowland-type arc gives each port a different piston phase, which the static port trims of
 route E remove (without them, adjacent ports in a window do not add in phase).
@@ -109,7 +113,7 @@ trims in route E, so this costs area and slow heaters, not fast actuators. 192 a
 256 add 7% for 64 more trims and a 1.8 mm slab.
 
 **Wider emitter facets** narrow the element pattern and raise the relay transmission at the centre from 0.64
-(0.6 um) to 0.84 (1.2 um at 1.5 um pitch). At 0.5 um gaps the transmission saturates near 0.74 to 0.76 for any
+(0.6 um) to 0.84 (1.2 um at 1.5 um pitch). At 0.5 um gaps the transmission saturates near 0.73 to 0.76 for any
 pitch from 1.5 to 2.2 um, so the 0.3 um gap of the 1.2 um facet is what buys the last 10%. Its coupling length
 is 227 um, which limits the wide facet section to about 15 um.
 

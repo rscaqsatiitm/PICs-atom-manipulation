@@ -57,6 +57,10 @@ def test_effective_index_matches_vector_snell():
         assert abs(n2 * d2[0] - sx) < 1e-12  # k_x conserved
         p = n2 * d2[1:] / np.hypot(*(n2 * d2[1:]))
         assert abs(p[0] - r2.dy[0]) < 1e-9 and abs(p[1] - r2.dz[0]) < 1e-9
+        # optical path to the surface: the 3D phase k0 n1 L minus the k_x x part equals the projected k0 e1 L_yz
+        L_yz = np.hypot(r1.y[0], r1.z[0])  # projected path from the source at the origin
+        L3 = L_yz / np.sqrt(1 - dx**2)
+        assert abs((n1 * L3 - sx * L3 * dx) - r1.opl[0]) < 1e-9
 
 
 def test_skew_zero_reproduces_lensmap():

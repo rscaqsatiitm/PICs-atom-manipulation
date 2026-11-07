@@ -61,9 +61,11 @@ def budget():
         block = {}
         for S, Mx in ((16, 1), (16, 4), (32, 4)):
             tw = S * Mx * seg_sites
-            pos = int(np.ceil(n_side / S) * np.ceil(n_side / (seg_sites * Mx)))
-            if Mx > 1:
-                pos *= 2  # shared slit plane: every other segment per position (tiling part)
+            # block positions as the steady-state simulator places them (picsim.megasort.Block): computation rows plus
+            # reservoir rows of the m23 band layouts; with Mx > 1 a position addresses every other segment
+            from picsim.megasort import Block
+            rows_total = int(np.ceil(n_side * (4 / 3 if f_load > 0.6 else 3)))  # 3:1 at 85%, 1:2 at 50% (m23 layouts)
+            pos = len(Block(S, Mx, seg_sites).positions(rows_total, n_side))
             block[f"{S} rows x {Mx} segments"] = {"engines": S * Mx, "fast_actuators": 383 * S * Mx,
                                                   "simultaneous_tweezers": tw, "laser_W_0.3mK": tw * p_tw,
                                                   "field_positions": pos}

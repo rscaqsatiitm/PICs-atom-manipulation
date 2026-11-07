@@ -251,6 +251,48 @@ def apod_sweep():
     return rows
 
 
+def all_lit_phases(n_trials=50, seed=0):
+    """Static position error of the 20 spots with all ports lit (depth-equalised), for equal and for random
+    relative port phases. A spot is displaced by the tails of the other ports' fields, so the error depends on the
+    relative port phases, which are not stabilised in the star-coupler design."""
+    from picsim.opa.array import spot_metrics
+    out = {}
+    for case in ("1064", "895"):
+        cfg = FINAL[case]
+        _, ctx = design(case, 128, edge=cfg["edge"], w_in=cfg["w_in"])
+        lam, sc, opa, d, A, x, G, e_pow = ctx
+        pk = np.array([spot_metrics(x, np.abs(A[j] @ G) ** 2)["peak"] for j in range(K)])
+        amp = np.sqrt(pk.max() / pk)
+
+        def errs(ph):
+            I = np.abs((amp * np.exp(1j * ph)) @ A @ G) ** 2
+            e = []
+            for t in TARGETS:
+                win = np.abs(x - t) < 0.6
+                e.append(spot_metrics(x[win], I[win])["x_peak"] - t)
+            return np.array(e) * 1e3
+
+        single = []
+        for j, t in enumerate(TARGETS):
+            I = np.abs(A[j] @ G) ** 2
+            win = np.abs(x - t) < 0.6
+            single.append(spot_metrics(x[win], I[win])["x_peak"] - t)
+        rng = np.random.default_rng(seed)
+        rand = np.array([errs(rng.uniform(0, 2 * np.pi, K)) for _ in range(n_trials)])
+        out[case] = {"single_port_max_nm": float(np.max(np.abs(single)) * 1e3),
+                     "all_lit_equal_phases_max_nm": float(np.max(np.abs(errs(np.zeros(K))))),
+                     "all_lit_random_phases_max_nm": float(np.max(np.abs(rand))),
+                     "all_lit_random_phases_rms_nm": float(np.sqrt(np.mean(rand**2))),
+                     "all_lit_random_phases_outer_rms_nm": float(np.sqrt(np.mean(rand[:, [0, -1]] ** 2))),
+                     "all_lit_random_phases_inner_max_nm": float(np.max(np.abs(rand[:, 2:-2])))}
+        print(case, out[case], flush=True)
+    save_result("m8_all_lit", script=SCRIPT,
+                inputs={"design": "FINAL (128 arms, e^-6 envelope)", "trials": n_trials, "seed": seed,
+                        "window": "+/-0.6 um around each target"},
+                outputs=out)
+    return out
+
+
 def summary(designs, multis, steers, rs, pw):
     tab = {
         "A_shared_synthesis_1064": {
@@ -271,6 +313,8 @@ def summary(designs, multis, steers, rs, pw):
 
 if __name__ == "__main__":
     parts = sys.argv[1:] or ["design", "resynth"]
+    if "alllit" in parts:
+        all_lit_phases()
     designs, multis, steers = {}, {}, {}
     if "design" in parts:
         for case in ("1064", "895"):

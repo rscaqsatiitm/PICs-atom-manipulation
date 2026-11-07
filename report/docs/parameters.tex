@@ -8,7 +8,7 @@ choice), RECALLED (not verified; check before use). Simulation outputs
 are SIM and must be reviewed before submission.
 
 {\footnotesize
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.241\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.082\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.095\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.323\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.259\dimexpr(\linewidth-10\tabcolsep)\relax}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.231\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.083\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.096\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.328\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.262\dimexpr(\linewidth-10\tabcolsep)\relax}@{}}
 \toprule\noalign{}
 value & unit & type & pointer & used in \\
 \midrule\noalign{}
@@ -54,7 +54,8 @@ verify & m5\_heaters \\
 verify & m5\_heaters \\
 0.0023748698871815 & - & SIM & SIM m2\_mmi (895 nm, 4 um 2x2) &
 m4\_extinction \\
-0.010466565944314093 & - & SIM & SIM m2\_mmi (895 nm, 4 um 2x2) &
+0.5 & - & SIM & SIM m2\_mmi (895 nm, 4 um 2x2) & m4\_extinction \\
+0.48980642380292205 & - & SIM & SIM m2\_mmi (895 nm, 4 um 2x2) &
 m4\_extinction \\
 2.14 & - & SIM & m1\_design\_modes 1064\_0.4 & m9\_routes \\
 2.36e-05 & 1/K & SIM & m1\_design\_modes 1064\_0.4 & m9\_routes \\
@@ -157,14 +158,16 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   \texttt{results/m10\_fpr\_full\_A.json}: T saved in
   m10\_T\_full\_.npz. Arm phases calibrated with the two central ports;
   the residual is the rms deviation of each port\textquotesingle s arm
-  phases from a straight line (aberration).
+  phases from a straight line (aberration). Phase metrics recomput
 \item
   \texttt{results/m10\_fpr\_opt\_A.json}: T saved in m10\_T\_opt\_A.npz.
   Arm phases calibrated with the two central ports; the residual is the
   rms deviation of each port\textquotesingle s arm phases from a
-  straight line (aberration).
+  straight line (aberration). Phase metrics recomputed fr
 \item
   \texttt{results/m10\_meep\_port0\_res20.json}:
+\item
+  \texttt{results/m10\_meep\_port0\_res30.json}:
 \item
   \texttt{results/m10\_meep\_port2\_res20.json}:
 \item
@@ -185,6 +188,128 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   \texttt{results/m11\_stage1.json}:
 \item
   \texttt{results/m11\_stage2.json}:
+\item
+  \texttt{results/m12\_aberration.json}: Check against BPM for D1 (N =
+  128 ports, 192 arms): BPM worst-port residual 0.079 rad rms.
+\item
+  \texttt{results/m12\_packing.json}: barrier: intensity midway between
+  neighbours relative to the mean tweezer peak.
+\item
+  \texttt{results/m12\_table.json}: Power assumes the D1 efficiency
+  holds at larger N (oversampling and facets unchanged); aberration from
+  m12\_aberration.
+\item
+  \texttt{results/m13\_crosstalk.json}:
+\item
+  \texttt{results/m13\_design.json}: Thin cylindrical lenses, first
+  order. f\_obj from the pupil radius WD tan(asin NA) = f\_obj NA.
+\item
+  \texttt{results/m13\_facet.json}: Far field from the x-integrated Ex
+  facet profile (Kirchhoff), power density \textbar A\textbar\^{}2
+  cos(theta).
+\item
+  \texttt{results/m13\_fill.json}:
+\item
+  \texttt{results/m13\_power.json}: factor\_vs\_assumption multiplies
+  the laser power per tweezer estimated earlier (43 mW at 1.2 mK).
+\item
+  \texttt{results/m13\_tolerance.json}: peak\_rel: 2D peak at the
+  nominal atom plane relative to no error; y\_nm: row (y) position
+  shift; eps: worst intensity within +/-0.5 um of 3, 4, 6 um from the
+  row, relative to the peak.
+\item
+  \texttt{results/m14\_designs.json}: 2D ray trace (picsim/raytrace.py),
+  s-polarised Fresnel, no coatings.
+\item
+  \texttt{results/m14\_facet\_meep\_air.json}:
+\item
+  \texttt{results/m14\_facet\_meep\_glass.json}:
+\item
+  \texttt{results/m14\_form.json}: Wavefront from sag errors to first
+  order: dOPL = (n\_in dz\_in - n\_out dz\_out) dsag per surface.
+\item
+  \texttt{results/m14\_plan.json}:
+\item
+  \texttt{results/m14\_scan.json}:
+\item
+  \texttt{results/m14\_tolerance.json}: exact\_check: residual between
+  exactly traced optical-path change and the first-order model used in
+  the wave model (waves rms, peak-to-valley), over \textbar s\textbar{}
+  \textless= 0.9.
+\item
+  \texttt{results/m14\_wave.json}: 1D y line. peak\_rel\_ideal: peak per
+  unit guided power relative to the ideal sine-condition lens in air,
+  beta 0.7 (power per tweezer scales as its inverse).
+\item
+  \texttt{results/m14\_xlens.json}: Off-axis wavefront of the first x
+  lens applied to each emitter\textquotesingle s angular spectrum; the
+  second lens and the objective are ideal. Recalibrated: least-squares
+  synthesis on the perturbed response.
+\item
+  \texttt{results/m15\_apod.json}: 1D y line; peak\_rel is per unit
+  guided power relative to the reference (power per tweezer scales as
+  its inverse).
+\item
+  \texttt{results/m15\_coherent.json}: With alternating polarisation,
+  rows 4 and 12 um apart are orthogonal, 8 and 16 um parallel.
+\item
+  \texttt{results/m15\_prbs.json}: Residual coherence multiplies the
+  coherent crosstalk terms of m15\_coherent. Delays from 2 to 15 bits
+  (integer, or arbitrary in steps of 0.37 bit). Cross-term low-frequency
+  density in units of 1/B.
+\item
+  \texttt{results/m15\_summary.json}: Criteria used elsewhere:
+  others\textquotesingle{} depth change \textless{} 3e-3 and position
+  \textless{} 5 nm when a tweezer moves; position noise budget 10 nm rms
+  (proposal).
+\item
+  \texttt{results/m16\_pm\_am.json}: Multipath and PM-fibre values are
+  the worse of relative phases 0 and pi/2 of the copy.
+\item
+  \texttt{results/m17\_moves.json}: 1D model: transverse and axial
+  motion and their anharmonic coupling are not included.
+\item
+  \texttt{results/m17\_table.json}: DERIVED. Row select moves all rows
+  of a stack rigidly in y; atoms wait in the static array between
+  passes.
+\item
+  \texttt{results/m18\_aniso.json}: Bystander rows:
+  \textquotesingle delivered\textquotesingle{} = stayed in its own site.
+\item
+  \texttt{results/m18\_bystander.json}:
+  \textquotesingle delivered\textquotesingle{} here means the bystander
+  stayed in its own site.
+\item
+  \texttt{results/m18\_field.json}: Grid stored in results/m18\_trap.npz
+  (normalised intensity, peak at the origin).
+\item
+  \texttt{results/m18\_margin.json}: Bystander rows:
+  \textquotesingle delivered\textquotesingle{} = stayed in its own site.
+\item
+  \texttt{results/m18\_midlane.json}: Bystander rows:
+  \textquotesingle delivered\textquotesingle{} = stayed in its own site.
+\item
+  \texttt{results/m18\_pitch3.json}: Bystander rows:
+  \textquotesingle delivered\textquotesingle{} = stayed in its own site.
+\item
+  \texttt{results/m18\_scan.json}: delivered: bound in the target static
+  trap after the moving trap is off; dE: mean energy above the static
+  trap bottom, final minus initial.
+\item
+  \texttt{results/m18\_slowlane.json}:
+\item
+  \texttt{results/m18\_temp.json}:
+\item
+  \texttt{results/m18\_tol.json}:
+\item
+  \texttt{results/m18\_uniformity.json}:
+\item
+  \texttt{results/m19\_axial.json}: P\_bound\_states\_used: weight in
+  the 200 lowest static states (projection completeness).
+\item
+  \texttt{results/m19\_quantum.json}: E\_gain: mean energy above the
+  final ground state. 1D only: axial motion and the coupling between
+  axes are not included.
 \item
   \texttt{results/m1\_bend\_loss.json}: Values below \textasciitilde1e-6
   dB/90 are at the numerical floor. Mode-mismatch loss at straight-bend
@@ -207,12 +332,84 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   index, and TE0-TM0 splitting \textgreater= birefringence\_min (a
   square 400 x 400 nm guide at 895 nm is polarisation-de
 \item
+  \texttt{results/m20\_rearrange.json}: One rearrangement cycle, no
+  repair round. P\_defect\_free includes per-move loss and vacuum loss
+  during the cycle, not imaging or scattering.
+\item
+  \texttt{results/m21\_modes.json}: Lower bound on balancing passes
+  about 4 (Sec. 2 of docs/repair.md); compaction 2.
+\item
+  \texttt{results/m21\_repair.json}: Index 0: after the rearrangement
+  cycle; 1 and 2: after each image-and-repair round. No final
+  verification image.
+\item
+  \texttt{results/m22\_budget.json}: Static powers include the reservoir
+  sites (total sites = N / (1 - r)).
+\item
+  \texttt{results/m22\_lattice.json}: Lattice per site \textasciitilde{}
+  15.4 a\^{}2 I / G (Gaussian, -20\% corners) or 1.2 a\^{}2 I / G (flat
+  top), against pi w0\^{}2 I / 2 for a tweezer. A light sheet for axial
+  confinement adds roughly I x (pi/2) w\_x w\_z, small
+\item
+  \texttt{results/m22\_tiling.json}: Shared slit plane: each
+  engine\textquotesingle s slit zone must be followed by an opaque gap
+  that holds its grating lobes, so one block position addresses every
+  other segment.
+\item
+  \texttt{results/m23\_mixed.json}: 3 um along the rows x 4 um across
+  (anisotropic lattice), lanes 2 um from the rows (m18\_aniso).
+\item
+  \texttt{results/m23\_remedy.json}:
+\item
+  \texttt{results/m23\_steady.json}: Single large-field objective
+  assumed (all sites reachable by the block). Zones behave as
+  independent smaller arrays.
+\item
+  \texttt{results/m24\_tiling\_wave.json}: peak\_ratio\_*: largest
+  intensity in a neighbour\textquotesingle s slit zone relative to the
+  tweezer spot peak in Sigma (Sigma is conjugate to the atoms);
+  \textquotesingle accepted\textquotesingle{} keeps only directions
+  within the pupil acceptance A/
+\item
+  \texttt{results/m25\_imaging.json}:
+\item
+  \texttt{results/m25\_imaging\_fit.json}:
+\item
+  \texttt{results/m26\_edge.json}: loss and peak\_rel relative to the
+  same chip without a comb (aperture at the FAC exit); xt\_*: largest
+  atom-plane intensity within +/-0.5 um of that distance, relative to
+  the peak (1D, single tweezer, a
+\item
+  \texttt{results/m26\_layout.json}: worst\_row: the row at the far end
+  of the comb (largest z), slot half-aperture a; loss, peak\_rel
+  relative to no comb. z\_max\_rule: (a - f\_FAC NA\_FAC) D / NA, the
+  distance at which the light the pupil ac
+\item
+  \texttt{results/m26\_lens.json}:
+\item
+  \texttt{results/m26\_skew.json}: peak\_rel\_ideal: y-line peak
+  relative to an ideal sine-condition collimator with the same facet
+  spectrum and sx. dz\_equiv: facet focus error (in the source medium)
+  whose first-order wavefront best matc
+\item
+  \texttt{results/m26\_skew\_offset.json}:
+\item
+  \texttt{results/m26\_twod.json}: slot: both chips windowed by
+  \textbar y\textbar{} \textless{} a at the same z (interleaving comb);
+  edge: chip m windowed by y \textless{} a, chip m+1 by the mirror image
+  (block combining boundary). Roll and straightness use the local win
+\item
   \texttt{results/m2\_couplers.json}: Excludes Fresnel loss
   (index-matched or AR-coated facet assumed) and taper conversion loss.
 \item
   \texttt{results/m2\_mmi.json}: 2D effective-index model; excess loss
   from unguided content only (no sidewall scattering, no
   back-reflection). Absolute loss should be confirmed by 3D EME/FDTD.
+\item
+  \texttt{results/m2\_tip\_convergence.json}: Fibre overlap of the tip
+  mode versus the closed computational window. The main sweep
+  (m2\_couplers) uses a 7 um window; near cutoff that clips the mode
+  tail.
 \item
   \texttt{results/m3\_field\_tradeoff.json}: 1D scalar Fourier optics;
   aplanatic objective (pupil radius F NA). The number of resolvable
@@ -278,6 +475,8 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
 \item
   \texttt{results/m7\_budget.json}: PSF: scalar Debye, aberration-free;
   a Strehl of 0.8 adds a halo not included here.
+\item
+  \texttt{results/m8\_all\_lit.json}:
 \item
   \texttt{results/m8\_apod.json}: Stronger apodisation narrows the port
   far field (smaller FPR radius and port pitch), widens the spot and

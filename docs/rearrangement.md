@@ -10,8 +10,8 @@ and valid in the regime stated. They should be reviewed before they are quoted.
 A 16-chip stack with row select assembles a defect-free 32 x 32 block from a 50 x 45 array loaded at 50% in
 17 ms (mean of 40 loadings; worst 23 ms), using about 8 passes. Every loading succeeded before losses. The average
 atom in the block moves 1.12 times; none moves more than twice. With slower handoff steps (200 us ramps, 400 us
-lane steps), each move heats the atom by 0.2 to 0.3 uK at a moving depth of only 0.3 mK. The quantum and 3D
-classical models agree on this. The finished block is therefore no hotter than about 0.6 uK above its starting
+lane steps), each move heats the atom by 0.2 to 0.3 uK at a moving depth of only 0.3 mK (1D quantum, handoff plus x move). The
+3D classical run gives 0.16 uK; the two models agree to within a factor of 2. The finished block is therefore no hotter than about 0.6 uK above its starting
 temperature. Loss sets the outcome: at 1e-3 loss per move, a cycle leaves 1.15 defects on average; at 1e-4,
 0.12. Vacuum loss during the 17 ms adds 0.59 defects for a 30 s lifetime and 0.06 for 300 s. The static array's
 depth uniformity is not a constraint: 20% rms random depth errors cost nothing.
@@ -79,9 +79,9 @@ state:
 (Trap quantum of the static site: 1.4 uK at 0.1 mK, 2.0 uK at 0.2 mK.) The x move adds 0.08 to 0.37 uK in both
 models (ground state kept 0.98 to 0.99). Two findings follow. (i) The lane step, not the x move, sets the heating,
 and it falls steeply with its duration: from 100 to 400 us, the gain at 0.1 / 0.3 mK drops 80-fold. (ii) Above
-about one trap quantum the classical model agrees with the quantum one to within a factor of 2, on the
-pessimistic side. Below it, classical Wigner sampling overstates the heating by a factor of up to 10, as expected
-for zero-point motion. A 3D classical run with the slow steps confirms the delivery: 3,000 of 3,000 atoms, with
+about one trap quantum the classical model agrees with the quantum one to within a factor of 2, in either
+direction (at 100 / 200 us it gives 1.4 against 2.0 uK). Below it, classical Wigner sampling overstates the heating,
+by a factor of up to about 12, as expected for zero-point motion. A 3D classical run with the slow steps confirms the delivery: 3,000 of 3,000 atoms, with
 0.16 uK (5 uK atoms, 0.1 / 0.3 mK) and 0.59 uK (10 uK, 0.2 / 0.6 mK) of heating, and no loss of waiting atoms.
 
 ## 4. Static-array depth uniformity

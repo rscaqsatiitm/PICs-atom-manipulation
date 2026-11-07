@@ -282,7 +282,9 @@ def xlens():
     ls = LinearSynth(fp)
     f1 = 3120.0
     s_cut = fp.opa.s_cut
-    lenses = {"aplanat SiO2": C.aplanat(N_SIO2, f1, 1500.0, 1500.0, s_max=0.4),
+    # r0 2.0 mm: the ray construction then covers |s| <= 0.42 on axis and up to 0.36 at the 144 um field edge, beyond
+    # the slit edge s_cut = 0.355 (r0 1.5 mm stopped at 0.33, so rays near the slit edge were missing)
+    lenses = {"aplanat SiO2": C.aplanat(N_SIO2, f1, 2000.0, 1500.0, s_max=0.5),
               "plano-asphere SiO2": C.plano_asphere(N_SIO2, f1, 1500.0, s_max=0.45)}
     out = {"f1_um": f1, "s_cut": s_cut}
     xt = np.array([-60.0, -30.0, 0.0, 30.0, 60.0])
@@ -296,10 +298,12 @@ def xlens():
         sg = np.linspace(-0.4, 0.4, 801)
         th = np.arcsin(sg)
         r0, _ = rt.trace(0.0, 0.0, th, d.surfaces, d.indices, zb)
-        xs_tab = np.linspace(0, 150.0, 7)
-        Wtab = []
+        xs_tab = np.array([0.0, 25.0, 50.0, 75.0, 100.0, 125.0, 144.0])  # 144 um: edge of the 288 um emitter row
+        Wtab, cover = [], []
         for x0 in xs_tab:
             r1, _ = rt.trace(x0, 0.0, th, d.surfaces, d.indices, zb)
+            okc = np.isfinite(r1.y)
+            cover.append([float(sg[okc].min()), float(sg[okc].max())])
             # plane-wave component s_eff = (exit angle of the bundle) ~ position at the back focal plane / f
             s_eff = r1.y / f1
             ok = np.isfinite(s_eff)
@@ -310,7 +314,7 @@ def xlens():
             Wtab.append(np.interp(sg, s_eff[ok], W))
         Wtab = np.array(Wtab)  # (x0, s) in um
         m = np.abs(sg) <= s_cut
-        rms_edge = float(np.sqrt(np.mean((Wtab[-2][m] - np.polyval(np.polyfit(sg[m], Wtab[-2][m], 1), sg[m])) ** 2)) / LAM)
+        rms_edge = float(np.sqrt(np.mean((Wtab[-1][m] - np.polyval(np.polyfit(sg[m], Wtab[-1][m], 1), sg[m])) ** 2)) / LAM)
 
         def phase_fn(s, xn, Wtab=Wtab):
             ax_ = abs(xn)
@@ -334,6 +338,7 @@ def xlens():
         oth = [fp2.peak_near(Im, x) for i, x in enumerate(xt) if i != 2]
         obc = [b for i, b in enumerate(bc) if i != 2]
         out[name] = {"back_focal_z_um": zb, "W_rms_waves_field_144um_after_tilt": rms_edge,
+                     "launch_s_covered_by_field": dict(zip([f"{x:g}" for x in xs_tab], cover)),
                      "W_pv_um_by_field": [float(np.ptp(Wt[m])) for Wt in Wtab], "field_um": xs_tab.tolist(),
                      "uncalibrated_peak_rel": [u["peak"] / b["peak"] for u, b in zip(bu, b0)],
                      "uncalibrated_pos_nm": [(u["x_peak"] - x) * 1e3 for u, x in zip(bu, xt)],
@@ -344,7 +349,7 @@ def xlens():
                      "geometry": d.geometry(0.36)}
         print(name, json.dumps(out[name], default=float)[:900], flush=True)
     save_result("m14_xlens", script=SCRIPT,
-                inputs={"f1_um": f1, "aplanat": "SiO2, r0 1.5 mm, T 1.5 mm", "plano_asphere": "SiO2, wd 1.5 mm",
+                inputs={"f1_um": f1, "aplanat": "SiO2, r0 2.0 mm, T 1.5 mm", "plano_asphere": "SiO2, wd 1.5 mm",
                         "tweezers": xt.tolist(), "design": D1},
                 outputs=out,
                 notes="Off-axis wavefront of the first x lens applied to each emitter's angular spectrum; the second "
@@ -374,7 +379,12 @@ def plan():
     facet = json.loads((RESULTS / "m6_power.json").read_text())["outputs"]["facet_MW_cm2_at_1.4W_t0.4"]
     p_fibre_max = 1.4 * 20.0 / facet  # W per input facet at 20 MW/cm^2 (CHOICE limit, m6), lensed-fibre tip
     m2 = json.loads((RESULTS / "m2_couplers.json").read_text())["outputs"]
-    hi = [r for r in m2["rows"] if r["lam"] == "1064" and r["t"] == 0.4 and r["w_tip"] == 0.1][0]
+    hi = dict([r for r in m2["rows"] if r["lam"] == "1064" and r["t"] == 0.4 and r["w_tip"] == 0.1][0])
+    hi_db = m2["best"]["1064_0.4_HI1060_6.2"]["dB"]
+    conv = RESULTS / "m2_tip_convergence.json"
+    if conv.exists():  # the 7 um window of the m2 sweep clips the 100 nm tip mode; use the converged window
+        last = json.loads(conv.read_text())["outputs"]["1064_0.4_0.1"][-1]
+        hi["aeff_um2"], hi_db = last["aeff_um2"], last["dB_mfd_6.2"]
     p_fibre_hi = 20e6 * hi["aeff_um2"] * 1e-8  # HI1060-matched tip (w_tip 0.1 um), same 20 MW/cm^2
     rows = []
     for per_row, depth in ((45, 1.2e-3), (60, 1.2e-3), (45, 0.5e-3), (60, 0.5e-3)):
@@ -386,7 +396,7 @@ def plan():
     offs = 80e6 + 1.13e6 * np.arange(16)  # e.g. one acousto-optic shifter per chip feed (CHOICE)
     diffs = np.abs(offs[:, None] - offs[None, :])[np.triu_indices(16, 1)]
     out = {"facet_fdtd_correction": corr, "per_design": per, "P_tweezer_adopted_W": p_tw, "P_fibre_max_W": p_fibre_max,
-           "P_fibre_max_HI1060_tip_W": p_fibre_hi, "HI1060_tip_coupling_dB": m2["best"]["1064_0.4_HI1060_6.2"]["dB"],
+           "P_fibre_max_HI1060_tip_W": p_fibre_hi, "HI1060_tip_coupling_dB": hi_db, "HI1060_tip_aeff_um2": hi["aeff_um2"],
            "rows": rows, "offsets_MHz": (offs / 1e6).tolist(), "min_pair_difference_MHz": float(diffs.min() / 1e6),
            "max_pair_difference_MHz": float(diffs.max() / 1e6), "2nu_trap_kHz": 2 * 84.0}
     print(json.dumps(out, indent=1), flush=True)

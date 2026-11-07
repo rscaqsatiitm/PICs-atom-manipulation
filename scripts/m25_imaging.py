@@ -31,7 +31,8 @@ def one(cfg):
     C = int(np.ceil(np.sqrt(N)))
     R = int(np.ceil(N / C * B / Bc))
     tm = Timing(**(FAST if cfg["timing"] == "fast" else MID))
-    P = Params(tau=cfg["tau"], eps_img=cfg["eps"], t_img=cfg["t_img"], T_img=cfg["T_img"], f_load=0.85, timing=tm)
+    P = Params(tau=cfg["tau"], eps_img=cfg["eps"], t_img=cfg["t_img"], T_img=cfg["T_img"], f_load=0.85, timing=tm,
+               p_move=4e-3 if cfg["timing"] == "fast" else 1e-4)  # fast-step loss per move from m18_scan
     sim = Sim(Layout(R, C, B, Bc), Block(32, 4, 46), P, seed=6)
     t_end = cfg["t_end"]
     sim.run(t_end)
@@ -82,7 +83,7 @@ def main():
     ax[0, 0].legend(fontsize=6)
     save_result("m25_imaging", script=SCRIPT, fig=f,
                 inputs={"layout": "4 x 4 um, 3:1 computation:reservoir rows", "block": [32, 4], "f_load": 0.85,
-                        "timings": {"intermediate": MID, "fast": FAST}, "p_move": 1e-4, "t_reload_s": 1.0},
+                        "timings": {"intermediate": MID, "fast": FAST}, "p_move": "1e-4; 4e-3 for fast steps (m18_scan)", "t_reload_s": 1.0},
                 outputs={"rows": rows, "fit_1e5": fit})
     return rows
 

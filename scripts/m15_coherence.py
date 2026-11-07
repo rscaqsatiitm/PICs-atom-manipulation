@@ -341,7 +341,10 @@ def summary():
 
     add("all chips coherent (no measure)", pairs(same, "coherent"))
     add("per-chip AOM offsets (incoherent)", pairs(same, "incoherent"), coherent=False, active="16 AOMs at 2.6-3.4 W")
-    add("common phase noise (3 rad) + fibre delays", pairs(same, "coherent"), scale=resid,
+    # residual coherence r scales only the interference part: incoherent + r (worst-phase coherent - incoherent)
+    inc, coh = pairs(same, "incoherent"), pairs(same, "coherent")
+    mixed = [{k: abs(i[k] + resid * (c[k] - i[k])) for k in i} for i, c in zip(inc, coh)]
+    add("common phase noise (3 rad) + fibre delays", mixed, coherent=False,
         active="1 EOM on the seed, noise source, <= 5 m extra fibre")
     add("alternating polarisation", pairs(None, "coherent", {"4.0": alt, "8.0": same, "12.0": alt, "16.0": same}),
         active="none (half-wave plate strips)")

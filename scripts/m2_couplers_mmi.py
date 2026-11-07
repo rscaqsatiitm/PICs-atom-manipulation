@@ -183,6 +183,21 @@ def mmi():
 
 if __name__ == "__main__":
     parts = sys.argv[1:] or ["couplers", "mmi"]
+    if "tipconv" in parts:
+        # window convergence of the tips that set the large-mode-field optima (sequential: memory and time grow fast)
+        cases = [("1064", 0.4, 0.1), ("1064", 0.4, 0.125), ("1064", 0.4, 0.15), ("895", 0.4, 0.1), ("895", 0.4, 0.125),
+                 ("895", 0.4, 0.15)]
+        conv = {}
+        for lk, t, w in cases:
+            mf = list(MFDS[lk].values())
+            conv[f"{lk}_{t}_{w}"] = cp.window_convergence(w, t, LAMS[lk], mf)
+            print(lk, t, w, conv[f"{lk}_{t}_{w}"], flush=True)
+            save_result("m2_tip_convergence", script=SCRIPT,
+                        inputs={"fibres_mfd_um": MFDS, "windows_um": [7, 11, 15, 20],
+                                "mesh": "res_max 0.5 um below 12 um window, 1 um above"},
+                        outputs=conv,
+                        notes="Fibre overlap of the tip mode versus the closed computational window. The main sweep "
+                              "(m2_couplers) uses a 7 um window; near cutoff that clips the mode tail.")
     if "couplers" in parts:
         o = couplers()
         for k, v in o["best"].items():

@@ -1,8 +1,9 @@
 # Repair rounds, scheduler variants and the axial handoff
 
-> Follow-up (`docs/megascale.md`): scaling to 1e4, 1e5 and 1e6 sites. A 32 x 4 engine block assembles 1e6 sites
-> in 1.5 s and holds them at the loss-limited floor rho ~ 1.5-1.8 (eps_img + T_img/tau); static trapping power,
-> the objective's field and the 3 um lane distance are the walls.
+> Follow-up (`docs/megascale.md`): scaling to 1e4, 1e5 and 1e6 sites. A 32 x 4 engine block with fast steps
+> assembles 1e6 sites in 1.1 s and holds them at the loss-limited floor (2.4e-4 just after each image, 1.8 to 2.0e-4
+> time-averaged); static trapping power and the objective's field are the walls, and the cylindrical collimator
+> limits each engine to the central half of its segment (`docs/megascale.md` Sec. 12).
 
 Follow-up to `docs/rearrangement.md`. Code: `picsim/rearrange.py` (`repair`, `cycle_with_repair`,
 selection modes), `scripts/m21_repair.py`, `scripts/m19_quantum.py axial`; results `results/m21_*.json`,
@@ -40,7 +41,9 @@ chip. The chip's contribution is 1.1 moves per atom and 17 ms per cycle.
 
 ## 2. Scheduler variants
 
-Balancing-pass selection on 40 loadings (32 x 32, 50%, one stack):
+Balancing-pass selection on 40 loadings (32 x 32, 50%, one stack). These loadings are drawn with one seed per
+loading; `docs/rearrangement.md` draws its 40 loadings from a single generator, which gives 7.8 passes and 17.2 /
+23.0 ms for the greedy mode. Both are correct for their loadings:
 
 | mode | passes (all) | cycle time, mean / max |
 |---|---|---|
@@ -51,7 +54,7 @@ Balancing-pass selection on 40 loadings (32 x 32, 50%, one stack):
 The three modes agree to within 1%. The balancing stage has a floor of about four passes, set by the geometry.
 In one pass the 16-row window can hold at most 9 non-target rows above or below the 32-row target band, so it can
 feed at most 9 target rows. Feeding all 32 therefore takes at least four passes, plus two compaction passes. The
-greedy schedule (5.8 + 2) is within about 30% of that floor. Further gains would come from shorter passes, not
+greedy schedule (5.8 + 2 on the loadings of `docs/rearrangement.md`) is within about 30% of that floor. Further gains would come from shorter passes, not
 fewer: ramps, lane steps and scanner settling make up 1.3 of the 2.2 ms per pass.
 
 ## 3. Axial motion during the handoff
@@ -68,7 +71,8 @@ parameter is the axial offset dz between the 1075 nm and 1064 nm foci (results/m
 | 0.1 / 0.5 mK | 100 / 100 us | 0.02 uK | 6.4 uK | 31.0 uK | 28.3 uK |
 | 0.1 / 0.5 mK | 200 / 400 us | < 0.01 uK | **0.22 uK** | 1.8 uK | 4.4 uK |
 
-(Quantum energy gain; the classical Wigner values agree to within 20% above 1 uK and are pessimistic below.)
+(Quantum energy gain; the classical Wigner values agree to within 35% above 1 uK, on either side, and overstate the
+gain below.)
 With the foci coincident, the axial motion is not excited: the change of axial trap frequency during the
 handoff is adiabatic. A focus offset displaces the axial equilibrium twice per move, and that is what heats.
 With the slow handoff, keeping the heating per move below the lateral 0.12 to 0.15 uK of `docs/rearrangement.md`

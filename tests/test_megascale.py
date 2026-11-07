@@ -31,12 +31,34 @@ def test_lenslet_array_and_common_lens_overlap_in_pupil():
 
 
 def test_heating_is_one_move_per_refill():
+    """Heat bookkeeping: every refilled atom carries exactly one move and exactly one move's heating."""
     L = Layout(60, 45, 3, 1)
     P = Params(tau=1e12, eps_img=0.0, p_move=0.0, f_load=0.5, t_reload=1e9, heat_slow=0.3)
     s = Sim(L, Block(12, 1, 45), P, seed=5)
     s.run(2.0)
-    st = s.heat_stats()
-    assert st["max_uK"] <= 0.3 + 1e-6 and 0 < st["moved_fraction"] < 1
+    moved = s.comp & s.occ & (s.moves > 0)
+    assert moved.any()
+    assert np.all(s.moves[moved] == 1)
+    assert np.allclose(s.heat[moved], 0.3)
+    assert np.all(s.heat[s.comp & s.occ & (s.moves == 0)] == 0)
+
+
+def test_visit_order_is_a_round_robin():
+    """Block positions are visited in order, without skipping any (regression: the cursor used to jump)."""
+    L = Layout(96, 90, 3, 1)
+    P = Params(tau=1e12, eps_img=0.0, p_move=0.0, f_load=0.5, t_reload=1e9)
+    s = Sim(L, Block(12, 1, 15), P, seed=1)
+    order = []
+
+    def fake_visit(k, gs):
+        order.append(s.positions.index((k, gs)))
+        return 1e-5, 1
+
+    s.visit = fake_visit
+    s.run(0.05)
+    n = len(s.positions)
+    assert len(order) > 2 * n
+    assert all((b - a) % n == 1 for a, b in zip(order, order[1:]))
 
 
 def test_last_block_is_full_height():
@@ -58,10 +80,11 @@ def test_time_average_between_pre_and_post_image():
 
 
 def test_time_average_vacuum_only():
-    """No repair (no reservoir), no imaging loss: the mean over one long idle period is T/(2 tau)."""
+    """No repair (no reservoir) and no imaging loss: over one idle period T the mean defect fraction is
+    1 - (tau/T)(1 - exp(-T/tau)) (0.0484 for T = 1 s, tau = 10 s); the trapezoid rule gives 0.0476."""
     from picsim.megasort import Layout, Params, Sim
     P = Params(tau=10.0, eps_img=0.0, p_move=0.0, T_img=1.0, t_img=0.0, f_load=1.0, t_reload=1e9)
     sim = Sim(Layout(200, 200, 1, 1), Block(10, 1, 50), P, seed=3)
     sim.run(1.0 + 1e-9)
-    m = sim.mean_defect(0.0)
-    assert abs(m - (1 - np.exp(-0.5 / 10.0))) < 0.01
+    exact = 1 - 10.0 * (1 - np.exp(-0.1))
+    assert abs(sim.mean_defect(0.0) - exact) < 0.003

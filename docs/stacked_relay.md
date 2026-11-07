@@ -66,8 +66,9 @@ First-order layout (thin cylindrical lenses; ABCD matrices of both axes checked 
 
 At 4 um, the long effective focal length is realised as a 25x demagnifying y telescope (f = 100 mm and 4 mm)
 followed by an 86.6 mm Fourier lens. The x relay is a 4f pair (3.12 mm and 187.7 mm), with the Fourier slit
-6.2 mm from the facets. Both pupils coincide 382 mm from the facets. The Lagrange invariant matches on both
-sides (stack half-height 4 mm x collimated NA 0.0022 = atom half-field 30 um x 0.5 x fill). The collimated
+6.2 mm from the facets. Both pupils coincide 382 mm from the facets. The Lagrange invariant is the same on
+both sides (stack half-height 4 mm x collimated NA 0.0022 = atom half-field 30 um x 0.5 x fill); this holds by
+construction of the layout, so it is a consistency check, not an independent test. The collimated
 beams (158 um half-height) fit within the 250 um half-pitch, also at 3 um row pitch (210 um).
 
 ## 3. The facet sets the y optics
@@ -110,7 +111,7 @@ The two sources balance near beta = 0.7 um, which we adopt. Raising the collimat
 crosstalk at 4 um to 7.4e-5. A graded (raised-cosine) collimator edge removes source (ii), but it costs 7 to 8%
 of the light and reaches only 9.4e-5 at 4 um (beta = 0.8 um). None of these options gets below about 5e-5 at
 4 um. That is adequate for mutually incoherent rows (Sec. 5) but not for coherent ones. At beta = 0.7 um the y
-spot (1.31 um FWHM) is smaller than the Gaussian assumed so far (w0 = 1.04 um, 1.22 um FWHM). Together with
+spot (1.31 um FWHM) is wider than the Gaussian assumed so far (w0 = 1.04 um, 1.22 um FWHM). Together with
 the 2.7% cross-axis loss and the 3% loss to the circular pupil, the power per tweezer rises by a factor 1.10,
 the same at the field centre and edge.
 
@@ -144,7 +145,8 @@ tweezers within one row stay coherent, as route E requires.
 
 Follow-up (`docs/row_coherence.md`): the chips need not run at different frequencies. Any randomisation of
 their relative phase much faster than the trap period suffices. One phase modulator on the common seed, driven
-with Gaussian noise, plus different fibre delays per chip does this as well as 16 frequency shifters.
+with Gaussian noise, plus different fibre delays per chip does this nearly as well as 16 frequency shifters (within a
+factor of 2, far inside the criteria).
 Alternating polarisation is a passive partial alternative.
 
 ## 6. Alignment tolerances

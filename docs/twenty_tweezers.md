@@ -22,7 +22,7 @@ ports placed on a row of 4 um sites:
 | intensity at the 4 um neighbour / peak | 1.0e-6 | 3.5e-6 (neighbour error 8.5e-6) |
 | peak spread, all 20 lit, random port phases | <= 0.73% | <= 0.89% |
 | stray at unlit sites (10 of 20 lit) | <= 1.2e-5 | <= 2.1e-5 |
-| static position error of a spot | <= 6 nm | <= 5 nm |
+| static position error of a spot: one port lit / all 20 lit, random port phases (rms, max) | <= 6 nm / 16, 42 nm | <= 5 nm / 8, 20 nm |
 | switch per port | one trimmed thermo-optic MZI | two cascaded AlN MZIs |
 | extinction needed | >= 31 dB (1 uK residual at 1.2 mK) | >= 50 dB (idle error 2.5e-5) |
 | fibre power | 33-43 mW per tweezer at 1.2 mK; 0.74 W for 20 | <= 0.14 mW per site; 2.4 mW for 20 |
@@ -114,11 +114,16 @@ All lit tweezers move by the displacement set by a linear phase ramp across the 
 |---|---|---|
 | 4 um | 25 nm (1064.4), 5 nm (894.6) | -2.5% / +2.3% |
 | 8 um | 25 nm, 5 nm | -5.1% / +4.3% |
-| 16 um | 25 nm, 6 nm | -10.7% / +7.8% |
+| 16 um | 25 nm, 5 nm | -10.7% / +7.8% |
 | 24 um | 26 nm (1064.4 only) | -16.7% / +10.3% |
 
-The position error is a static offset of the outer spots, caused by the element-factor slope across them; it
-changes by less than 2 nm over a 24 um sweep and is calibrated out. The peak change follows the emitter
+With all 20 lit and equal port phases, the position error sits at the outer spots and changes by less than 2 nm
+over a 24 um sweep. Its cause is not the element factor (one port lit alone is off by at most 6 nm) but the tails of
+the other ports' fields, so it depends on the relative port phases (`results/m8_all_lit.json`): with random
+relative phases every spot moves, by 16 nm rms and up to 42 nm at 1064.4 nm (8 nm rms, 20 nm at 894.6 nm), over 50
+draws. The relative port phases therefore have to be stabilised, or the error calibrated for each phase state; an
+unstabilised star coupler exceeds the 10 nm position budget at 1064.4 nm. (Corrected: an earlier version
+attributed the error to the element-factor slope and treated it as fixed.) The peak change follows the emitter
 element factor and can be pre-compensated through the port powers. At 894.6 nm the outer spots leave the
 +/-57 um field beyond a 19 um shift; subsets of the row can move farther.
 
@@ -135,7 +140,7 @@ suffices; >= 31 dB keeps the residual below 1 uK at 1.2 mK, which a trimmed sing
 errors up to 10 mrad (5th percentile 38 dB, `m4_extinction`; computed at 894.6 nm, to be repeated at
 1064.4 nm). At 894.6 nm the switch gates Raman pulses. The proposal's 50 dB gives an idle-qubit error of
 2.5e-5; the switch leak equals the 3.5e-6 optical tail of a lit neighbour at 54.6 dB. Two cascaded AlN MZIs
-give a 5th percentile of 66 to 88 dB, so the switch is not the limit; ZVD-shaped drive reaches -50 dB within
+give a 5th percentile of 88 dB, so the switch is not the limit; ZVD-shaped drive reaches -50 dB within
 49 ns for a 2% error in the actuator resonance (`m4_dynamics`, with an assumed resonance).
 
 ## 7. Power

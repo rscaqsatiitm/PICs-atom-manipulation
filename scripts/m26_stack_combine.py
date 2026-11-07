@@ -181,8 +181,10 @@ def edge():
     I_exit = np.abs(cy.U_exit) ** 2
     edge_rel = float(I_exit[np.argmin(np.abs(cy.y - 0.99 * F_FAC * NA_FAC))] / I_exit.max())
     P_tot = float(I_exit.sum() * DY)
+    # far-shadow Fresnel tail of a straight edge: intensity I_e lambda L / (4 pi^2 x^2) at distance x into the
+    # shadow, i.e. a power I_e lambda L / (4 pi^2 g) per edge beyond g; two edges
     analytic = {f"z {z:g} mm, a {a:g} um": 2 * edge_rel * I_exit.max() * LAM * (z * 1e3 + F_FAC) /
-                (2 * np.pi**2 * (a - F_FAC * NA_FAC)) / P_tot
+                (4 * np.pi**2 * (a - F_FAC * NA_FAC)) / P_tot
                 for z in (10.0, 30.0, 60.0) for a in (200.0, 250.0)}
     f, ax = fig(1, 2, h=3.0)
     for a, ls in ((200.0, "--"), (250.0, "-")):
@@ -296,7 +298,7 @@ def twod():
     f1 = 3120.0
     A = fp.opa.A
     X_half_4eng = 1.5 * 3000.0 + f1 * fp.opa.s_cut
-    geo = {"f1_um": f1, "emitter_aperture_um": A, "sigma_from_S_mm": (2 * f1 - F_FAC) * 1e-3,
+    geo = {"f1_um": f1, "emitter_aperture_um": A, "sigma_from_S_mm": (2 * f1 - 2 * F_FAC) * 1e-3,  # thin lenses
            "tweezer_half_footprint_um_at_17mm_beyond_sigma": 17e3 * (A / 2) / f1,
            "X_half_span_4_engines_um": X_half_4eng,
            "roll_mrad_for_10um": 10.0 / X_half_4eng * 1e3,
@@ -519,7 +521,11 @@ def skew_offset():
     return out
 
 
-Z_C = 7.0  # mm, nearest comb point from S: beyond the x slit plane (2 f1 = 6.24 mm from the facets), CHOICE
+def z_c_real():
+    """Nearest comb point from S (mm): 0.5 mm (CHOICE) beyond the x slit plane of the traced x lens and collimator."""
+    d = fac_adopted()
+    sig, _, _ = _sigma_from_facet_um(d)
+    return (sig - C.back_focal_plane(d)) * 1e-3 + 0.5
 
 
 def z_max_rule(a):
@@ -529,6 +535,7 @@ def z_max_rule(a):
 
 def layout():
     """First-order layouts (DERIVED) for 32 / 48 / 64 rows at 4 um, and the worst-row comb penalty (SIM)."""
+    Z_C = z_c_real()
     F_y = design(DELTA, 16)["F_y_mm"]
     pupil_r = F_OBJ * NA  # mm
     cy = CombY()

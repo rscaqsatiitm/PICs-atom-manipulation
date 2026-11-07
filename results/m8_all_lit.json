@@ -1,0 +1,31 @@
+{
+ "name": "m8_all_lit",
+ "script": "scripts/m8_twenty.py",
+ "git": "2303752",
+ "notes": "",
+ "inputs": {
+  "design": "FINAL (128 arms, e^-6 envelope)",
+  "trials": 50,
+  "seed": 0,
+  "window": "+/-0.6 um around each target"
+ },
+ "outputs": {
+  "1064": {
+   "single_port_max_nm": 6.036892010683914,
+   "all_lit_equal_phases_max_nm": 24.27727675010516,
+   "all_lit_random_phases_max_nm": 41.88354750414547,
+   "all_lit_random_phases_rms_nm": 16.406289296696453,
+   "all_lit_random_phases_outer_rms_nm": 12.881597257835454,
+   "all_lit_random_phases_inner_max_nm": 41.88354750414547
+  },
+  "895": {
+   "single_port_max_nm": 4.7192953108989855,
+   "all_lit_equal_phases_max_nm": 4.9160351548600545,
+   "all_lit_random_phases_max_nm": 20.12261198687071,
+   "all_lit_random_phases_rms_nm": 8.30743334930094,
+   "all_lit_random_phases_outer_rms_nm": 7.01826455075452,
+   "all_lit_random_phases_inner_max_nm": 20.12261198687071
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

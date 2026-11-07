@@ -1,6 +1,6 @@
 # Fast-axis collimator, facet loss, relay lens and the power plan
 
-> Follow-up (`docs/megascale.md`, Sec. 12): this module and `docs/collimator.md` treat the y axis for light with
+> Follow-up (`docs/megascale.md`, Sec. 12): this module and `docs/stacked_relay.md` treat the y axis for light with
 > no x component (s_x = 0). A tweezer at x_a is made of light with s_x = x_a / 288 um, and the cylindrical collimator
 > then acts with effective indices sqrt(n^2 - s_x^2). The adopted collimator defocuses the facet by -99 s_x^2 um. The
 > y figures below therefore hold near the row centre: the peak falls to 0.97 at x_a = 30 um and 0.48 at 60 um.
@@ -33,15 +33,15 @@ facet loss omitted). With an ideal lens in air it would be 61 mW.
 | length (facet to last vertex) / clear height | 395 um / +/-158 um |
 | largest incidence angle on any surface | 25 deg |
 | peak per guided power vs ideal lens in air | 1.10 (2D check: 1.107) |
-| row crosstalk at 4 um | 8e-5 |
-| decentre / focus for <= 3% loss | +/-0.1 um / +/-1 um |
+| row crosstalk at 4 um (1D line; 2D single tweezer 1.7e-4) | 8.4e-5 |
+| decentre / focus for <= 3% loss (1D line; in 2D: 0.988 / 0.953 at 0.5 / 1 um focus, 0.968 at 0.1 um decentre) | +/-0.1 um / +/-1 um |
 | surface form error for <= 2% loss | <= 20 nm rms |
 | laser power per 1.2 mK tweezer | 57 mW |
 
 The decentre tolerance (+/-0.1 um) does not depend on the lens design. It is set by the small vertical mode of
 the facet. The first x lens of the relay, by contrast, needs no special accuracy, because calibration absorbs
 its static aberration (Sec. 6). One HI1060-matched input fibre per chip carries the 2.6 to 3.4 W a row needs, at
-8 to 11 MW/cm^2 (Sec. 8).
+7 to 9 MW/cm^2 (Sec. 8).
 
 ## 2. Why NA 0.9 at 175 um is hard
 
@@ -99,7 +99,7 @@ relative to the ideal lens in air at beta = 0.7 um, with AR-coated lens surfaces
 | design | beta | peak | y FWHM | crosstalk at 3 / 4 um |
 |---|---|---|---|---|
 | ideal, air | 0.7 um | 1.00 | 1.31 um | 2.8e-4 / 1.1e-4 |
-| **Weierstrass + aplanat** | 0.7 um | **1.10** | 1.35 um | 4.0e-4 / 8.0e-5 |
+| **Weierstrass + aplanat** | 0.7 um | **1.10** | 1.35 um | 4.0e-4 / 8.4e-5 |
 | ellipse, printed | 0.9 um | 1.03 | 1.35 um | 6.6e-4 / 1.8e-4 |
 | ellipse, printed | 0.7 um | 1.22 | 1.13 um | 2.1e-3 / 1.0e-3 |
 | plano-asphere n = 1.8 | 0.7 um | 1.03 | 1.27 um | 4.0e-4 / 1.7e-4 |
@@ -134,12 +134,15 @@ scales as n_m cos theta): about +/-1 um for 3%. (iii) The ellipse has one surfac
 The x relay's first lens (f = 3.12 mm, NA 0.355 through the slit) sees the whole emitter row, +/-144 um, so it
 works off axis. We traced two fused-silica designs from 7 emitter heights. Each off-axis wavefront was applied
 to each emitter's angular spectrum in the D1 model (BPM matrix), and tweezers at 0, +/-30 and +/-60 um were
-evaluated before and after least-squares recalibration:
+evaluated before and after least-squares recalibration. (Corrected: the first aplanat, with r0 = 1.5 mm, covered
+only |s| <= 0.33, short of the slit edge 0.355, and the wavefronts were quoted at the 125 um field point; the
+aplanat now uses r0 = 2.0 mm, which covers the slit at every field point, and both lenses are evaluated at
+144 um. Its back focal distance is 6.76 mm.)
 
 | lens | wavefront at 144 um field (tilt removed) | edge tweezer, uncalibrated: peak / shift | after recalibration: peak per power / shift | moving tweezer, others' change |
 |---|---|---|---|---|
-| aplanat (sine condition) | 0.15 waves rms | 0.960 / 164 nm | 1.001 / <= 1.5 nm | 4e-4 / < 1 nm |
-| plano-asphere (no sine condition) | 0.60 waves rms | 0.672 / 590 nm | 0.964 / <= 0.5 nm | 4e-4 / 0.7 nm |
+| aplanat (sine condition), r0 2.0 mm | 0.12 waves rms | 0.983 / 21 nm | 0.998 / <= 1.3 nm | 4e-4 / < 1 nm |
+| plano-asphere (no sine condition) | 0.76 waves rms | 0.672 / 590 nm | 0.964 / <= 0.5 nm | 4e-4 / 0.7 nm |
 
 The static aberration of the x relay is a fixed linear transformation of the chip's response. The
 least-squares synthesis, which already works on the measured response matrix, removes it. Hence the x relay
@@ -181,8 +184,8 @@ Laser power per 1.2 mK tweezer, field mean, per unit guided power (FDTD-scaled f
 
 | tweezers per row | depth | power per chip | 16 chips | input fibres per chip: lensed tip / HI1060-matched tip |
 |---|---|---|---|---|
-| 45 (4 um) | 1.2 mK | 2.6 W | 41 W | 5 / 1 (8 MW/cm^2) |
-| 60 (3 um) | 1.2 mK | 3.4 W | 55 W | 6 / 1 (11 MW/cm^2) |
+| 45 (4 um) | 1.2 mK | 2.6 W | 41 W | 5 / 1 (7 MW/cm^2) |
+| 60 (3 um) | 1.2 mK | 3.4 W | 55 W | 6 / 1 (9 MW/cm^2) |
 | 45 | 0.5 mK | 1.1 W | 17 W | 2 / 1 |
 | 60 | 0.5 mK | 1.4 W | 23 W | 3 / 1 |
 
@@ -190,7 +193,10 @@ Laser power per 1.2 mK tweezer, field mean, per unit guided power (FDTD-scaled f
 20 MW/cm^2 cap (CHOICE; no damage threshold was found) allows 0.62 W per fibre and 5 to 6 fibres per chip. Several
 inputs would split the 128 ports into sub-trees whose relative optical phases drift with their fibres, and a
 tweezer window straddling a sub-tree boundary would then fluctuate. The HI1060-matched taper of module 2 (tip
-0.1 um, -0.48 dB, 0.11 dB worse than the lensed tip) has a 30.6 um^2 mode and carries 6.1 W at the same cap.
+0.1 um, -0.87 dB, 0.50 dB worse than the lensed tip) has a 37 um^2 mode and carries 7.4 W at the same cap. (Corrected:
+the 7 um computational window of the coupler sweep clipped this near-cutoff mode, which decays over 4.8 um; with the
+clipped window the figures read -0.48 dB, 30.6 um^2 and 6.1 W; the converged values are from
+`results/m2_tip_convergence.json`.)
 Hence one fibre per chip is possible and preferred. Its 0.1 um tip width is at the assumed minimum feature
 size.
 

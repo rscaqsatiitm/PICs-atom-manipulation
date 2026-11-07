@@ -1,8 +1,9 @@
 # Scaling beyond one row of about 40 tweezers
 
-> Follow-up (`docs/megascale.md`): scaling to 1e4, 1e5 and 1e6 sites. A 32 x 4 engine block assembles 1e6 sites
-> in 1.5 s and holds them at the loss-limited floor rho ~ 1.5-1.8 (eps_img + T_img/tau); static trapping power,
-> the objective's field and the 3 um lane distance are the walls.
+> Follow-up (`docs/megascale.md`): scaling to 1e4, 1e5 and 1e6 sites. A 32 x 4 engine block with fast steps
+> assembles 1e6 sites in 1.1 s and holds them at the loss-limited floor (2.4e-4 just after each image, 1.8 to 2.0e-4
+> time-averaged); static trapping power and the objective's field are the walls, and the cylindrical collimator
+> limits each engine to the central half of its segment (`docs/megascale.md` Sec. 12).
 
 > Follow-up (`docs/transport3d.md`): the 3D simulation with handoff refines lever 1. The moving trap must be at
 > least three times the static hold depth, the hold about 20 kT, and moves must run along lanes between the rows.
@@ -19,7 +20,7 @@ The 41 tweezers per row of design D1 are at 3 um spacing. On the 4 um site latti
 useful over the same +/-60 um. In general the useful number per row is the row length divided by the site
 pitch, so it cannot be raised by packing tweezers more densely. Hence scaling means longer rows and more rows.
 
-The per-tweezer costs do not fall with scale: 8.7 fast actuators and about 57 mW at 1.2 mK per simultaneous
+The per-tweezer costs do not fall with scale: 8.5 fast actuators and about 57 mW at 1.2 mK per simultaneous
 tweezer. Two levers nevertheless remove most of the penalty.
 
 (i) **Shallower transport.** Moves of three sites (12 um) in 200 us survive at 0.2 mK with the 200 kHz update

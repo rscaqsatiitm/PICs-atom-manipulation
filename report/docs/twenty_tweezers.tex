@@ -29,7 +29,7 @@ the arms moves all lit tweezers together. On simulated designs, with the
 20 ports placed on a row of 4 um sites:
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.355\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.372\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.273\dimexpr(\linewidth-6\tabcolsep)\relax}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.435\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.326\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.239\dimexpr(\linewidth-6\tabcolsep)\relax}@{}}
 \toprule\noalign{}
 & 1064.4 nm (transport tweezers) & 894.6 nm (addressing beams) \\
 \midrule\noalign{}
@@ -43,7 +43,9 @@ peak spread, all 20 lit, random port phases & \textless= 0.73\% &
 \textless= 0.89\% \\
 stray at unlit sites (10 of 20 lit) & \textless= 1.2e-5 & \textless=
 2.1e-5 \\
-static position error of a spot & \textless= 6 nm & \textless= 5 nm \\
+static position error of a spot: one port lit / all 20 lit, random port
+phases (rms, max) & \textless= 6 nm / 16, 42 nm & \textless= 5 nm / 8,
+20 nm \\
 switch per port & one trimmed thermo-optic MZI & two cascaded AlN
 MZIs \\
 extinction needed & \textgreater= 31 dB (1 uK residual at 1.2 mK) &
@@ -189,17 +191,25 @@ max) \\
 \endlastfoot
 4 um & 25 nm (1064.4), 5 nm (894.6) & -2.5\% / +2.3\% \\
 8 um & 25 nm, 5 nm & -5.1\% / +4.3\% \\
-16 um & 25 nm, 6 nm & -10.7\% / +7.8\% \\
+16 um & 25 nm, 5 nm & -10.7\% / +7.8\% \\
 24 um & 26 nm (1064.4 only) & -16.7\% / +10.3\% \\
 \end{longtable}
 }
 
-The position error is a static offset of the outer spots, caused by the
-element-factor slope across them; it changes by less than 2 nm over a 24
-um sweep and is calibrated out. The peak change follows the emitter
-element factor and can be pre-compensated through the port powers. At
-894.6 nm the outer spots leave the +/-57 um field beyond a 19 um shift;
-subsets of the row can move farther.
+With all 20 lit and equal port phases, the position error sits at the
+outer spots and changes by less than 2 nm over a 24 um sweep. Its cause
+is not the element factor (one port lit alone is off by at most 6 nm)
+but the tails of the other ports\textquotesingle{} fields, so it depends
+on the relative port phases (\texttt{results/m8\_all\_lit.json}): with
+random relative phases every spot moves, by 16 nm rms and up to 42 nm at
+1064.4 nm (8 nm rms, 20 nm at 894.6 nm), over 50 draws. The relative
+port phases therefore have to be stabilised, or the error calibrated for
+each phase state; an unstabilised star coupler exceeds the 10 nm
+position budget at 1064.4 nm. (Corrected: an earlier version attributed
+the error to the element-factor slope and treated it as fixed.) The peak
+change follows the emitter element factor and can be pre-compensated
+through the port powers. At 894.6 nm the outer spots leave the +/-57 um
+field beyond a 19 um shift; subsets of the row can move farther.
 
 Because the collective move is one linear ramp, its fast part needs a
 single waveform: the 128 arm shifters take fixed gains n = 0 ... 127
@@ -221,10 +231,10 @@ trimmed single MZI exceeds at phase errors up to 10 mrad (5th percentile
 1064.4 nm). At 894.6 nm the switch gates Raman pulses. The
 proposal\textquotesingle s 50 dB gives an idle-qubit error of 2.5e-5;
 the switch leak equals the 3.5e-6 optical tail of a lit neighbour at
-54.6 dB. Two cascaded AlN MZIs give a 5th percentile of 66 to 88 dB, so
-the switch is not the limit; ZVD-shaped drive reaches -50 dB within 49
-ns for a 2\% error in the actuator resonance (\texttt{m4\_dynamics},
-with an assumed resonance).
+54.6 dB. Two cascaded AlN MZIs give a 5th percentile of 88 dB, so the
+switch is not the limit; ZVD-shaped drive reaches -50 dB within 49 ns
+for a 2\% error in the actuator resonance (\texttt{m4\_dynamics}, with
+an assumed resonance).
 
 \hypertarget{7-power}{%
 \section{Power}\label{twenty_tweezers-7-power}}

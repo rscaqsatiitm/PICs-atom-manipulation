@@ -63,14 +63,16 @@ def field_tradeoff(elem):
             ph = o.steer_phases(0.0)
             xa = np.linspace(-3, 3, 1201)
             sm = spot_metrics(xa, o.atom_intensity(ph, xa))
-            # usable range: main lobe keeps >= 50% of its on-axis peak (slit clipping + element factor roll-off)
+            # usable range: main lobe keeps >= 50% of its on-axis peak (slit clipping + element factor roll-off) and
+            # sits within 0.1 um of its target (a spot half cut by the slit can keep half its peak but shifts inwards)
             s_try = np.linspace(0, o.s_cut, 60)
             pk0 = sm["peak"]
             usable = 0.0
             for s0 in s_try:
                 x0 = s0 * o.x_scale
-                xx = np.linspace(x0 - 2, x0 + 2, 161)
-                if o.atom_intensity(o.steer_phases(s0), xx).max() >= 0.5 * pk0:
+                xx = np.linspace(x0 - 2, x0 + 2, 401)
+                st = spot_metrics(xx, o.atom_intensity(o.steer_phases(s0), xx))
+                if st["peak"] >= 0.5 * pk0 and abs(st["x_peak"] - x0) <= 0.1:
                     usable = x0
             # power per tweezer for equal peak depth scales with 1/(peak intensity per W) along x
             rows.append({"N": N, "fill": fill, "aperture_um": o.A, "x_half_range_um": o.x_range,
@@ -340,7 +342,7 @@ def loss_budget(pe, mbs, grating):
     eff_mb_slit = eff_mb  # eff_spots already includes slit and pupil
     items = {
         "fibre-to-chip edge coupler (SIM, m2)": facet,
-        "6-stage MMI tree excess (SIM, m2)": 6 * (-abs(mmi_ex)),
+        "7-stage MMI tree excess, 1x128 (SIM, m2)": 7 * (-abs(mmi_ex)),
         "propagation 1 cm at 0.3 dB/cm (CHOICE)": -0.3,
         "emitters + slit + pupil + K=21 synthesis, end-fire (SIM)": 10 * np.log10(eff_mb_slit),
         "meta-objective transmission 0.7 (CHOICE, Table 1 analogue)": 10 * np.log10(0.7),
