@@ -23,6 +23,10 @@ SCRIPT = "scripts/m23_steady.py"
 LAYOUTS = {0.5: (3, 1), 0.85: (4, 3)}  # loading -> band period, computation rows per band
 TIMINGS = {"slow (ramps 200, lanes 400 us)": Timing(t_ramp=200e-6, t_lane=400e-6),
            "fast (ramps 50, lanes 100, x 200 us/40 um)": Timing(t_ramp=50e-6, t_lane=100e-6, t_x40=200e-6, t_min=100e-6)}
+# loss per move: fast steps (50 us ramps, 100 us lane steps, 0.1 / 0.3 mK, 2 um lane) lose 4.0e-3 and 5.3e-3 of 1,500
+# atoms in m18_scan (SIM); the slower timings delivered 3000/3000 (< 1e-3 at 95%), for which 1e-4 is assumed (CHOICE)
+P_MOVE_FAST = 4e-3
+P_MOVE = 1e-4
 
 
 def one(cfg):
@@ -33,7 +37,9 @@ def one(cfg):
     seg = int(180.0 // pitch) + 1
     tm = TIMINGS[tname]
     tm = Timing(**{**tm.__dict__, "pitch": pitch * 1e-6})
-    sim = Sim(Layout(R, C, B, Bc), Block(S, Mx, seg), Params(tau=tau, f_load=f, timing=tm), seed=cfg.get("seed", 1))
+    pm = P_MOVE_FAST if tname.startswith("fast") else P_MOVE
+    sim = Sim(Layout(R, C, B, Bc), Block(S, Mx, seg), Params(tau=tau, f_load=f, timing=tm, p_move=pm),
+              seed=cfg.get("seed", 1))
     t_end = cfg.get("t_end", 12.0)
     t3 = sim.run(t_end, target=1e-3)
     d = np.array(sim.log)
@@ -81,7 +87,7 @@ def main():
     ax[0, 0].legend(fontsize=6)
     save_result("m23_steady", script=SCRIPT, fig=f,
                 inputs={"layouts": {str(k): {"band_period": v[0], "comp_rows_per_band": v[1]} for k, v in LAYOUTS.items()},
-                        "params": {"eps_img": 1e-4, "p_move": 1e-4, "t_img_s": 0.01, "T_img_s": 0.1,
+                        "params": {"eps_img": 1e-4, "p_move": "1e-4; 4e-3 for fast steps (m18_scan)", "t_img_s": 0.01, "T_img_s": 0.1,
                                    "t_reload_s": 1.0, "max_passes_per_visit": 4},
                         "timings": {k: v.__dict__ for k, v in TIMINGS.items()}, "segment_um": 180.0},
                 outputs={"rows": rows},
@@ -102,9 +108,9 @@ def one_mixed(cfg):
     if mode == "slow":
         P = Params(tau=3000.0, f_load=f, timing=slow)
     elif mode == "fast":
-        P = Params(tau=3000.0, f_load=f, timing=fast, heat_slow=10.0)
+        P = Params(tau=3000.0, f_load=f, timing=fast, heat_slow=10.0, p_move=P_MOVE_FAST)
     else:  # adaptive: fast while defects > 1e-2, then slow
-        P = Params(tau=3000.0, f_load=f, timing=slow, timing_fast=fast)
+        P = Params(tau=3000.0, f_load=f, timing=slow, timing_fast=fast, p_move_fast=P_MOVE_FAST)
     sim = Sim(Layout(R, C, B, Bc), Block(32, 4, seg), P, seed=3)
     t_end = cfg["t_end"]
     t3 = sim.run(t_end, target=1e-3)
@@ -155,7 +161,9 @@ def one_remedy(cfg):
     seg = int(180.0 // px) + 1
     kw, heat = REMEDY_TIMINGS[tname]
     tm = Timing(**kw, pitch=px * 1e-6, pitch_y=py * 1e-6)
-    sim = Sim(Layout(R, C, B, Bc), Block(S, Mx, seg), Params(tau=3000.0, f_load=f, timing=tm, heat_slow=heat), seed=4)
+    pm = P_MOVE_FAST if tname == "fast" else P_MOVE
+    sim = Sim(Layout(R, C, B, Bc), Block(S, Mx, seg), Params(tau=3000.0, f_load=f, timing=tm, heat_slow=heat, p_move=pm),
+              seed=4)
     t_end = 20.0
     t3 = sim.run(t_end, target=1e-3)
     d = np.array(sim.log)

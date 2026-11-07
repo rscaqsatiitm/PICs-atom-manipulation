@@ -12,7 +12,8 @@ same segment; one move per refilled hole. Only holes and reservoir atoms seen in
 
 Losses: vacuum (lifetime tau, every atom, Poisson-sampled per interval), imaging (eps per atom per image, after
 detection), per move (p_move). Reservoir rows are refreshed every t_reload to loading fraction f (an external
-supply; its feasibility is a separate question). Time per pass from picsim.rearrange.Timing.
+supply; its feasibility is a separate question). Freshly loaded reservoir atoms are taken as known at once (the
+reservoir is assumed imaged as part of the reload). Time per pass from picsim.rearrange.Timing.
 """
 from __future__ import annotations
 
@@ -76,6 +77,7 @@ class Params:
     switch_defect: float = 1e-2
     heat_slow: float = 0.3  # uK per move with `timing` (m19 quantum, m18 slow-lane 3D)
     heat_fast: float = 10.0  # uK per move with `timing_fast` (m18 classical 3D, 100 us steps, 0.3 mK)
+    p_move_fast: float | None = None  # loss per move with `timing_fast`; None: p_move
 
 
 class Sim:
@@ -151,12 +153,13 @@ class Sim:
     # ------------------------------------------------------------------ one visit
     def _timing(self):
         if self.P.timing_fast is not None and (not self.log or self.log[-1][1] > self.P.switch_defect):
-            return self.P.timing_fast, self.P.heat_fast
-        return self.P.timing, self.P.heat_slow
+            p = self.P.p_move if self.P.p_move_fast is None else self.P.p_move_fast
+            return self.P.timing_fast, self.P.heat_fast, p
+        return self.P.timing, self.P.heat_slow, self.P.p_move
 
     def visit(self, k, gs):
         S, seg = self.Bk.S, self.Bk.seg
-        tm, h_move = self._timing()
+        tm, h_move, p_move = self._timing()
         py = tm.pitch if tm.pitch_y is None else tm.pitch_y
         rows = np.arange(k, min(k + S, self.L.R))
         cols = np.concatenate([np.arange(g * seg, min((g + 1) * seg, self.L.C)) for g in gs])
@@ -200,7 +203,7 @@ class Sim:
                         if self.occ[r_src, a_]:
                             self.occ[r_src, a_] = False
                             self.consumed += 1
-                            if self.rng.random() > self.P.p_move:
+                            if self.rng.random() > p_move:
                                 self.occ[r_dst, b_] = True
                                 self.moves[r_dst, b_] = self.moves[r_src, a_] + 1
                                 self.heat[r_dst, b_] = self.heat[r_src, a_] + h_move
@@ -225,10 +228,12 @@ class Sim:
                 self._next_reload += self.P.t_reload
             work = False
             n_pos = len(self.positions)
+            start = self._cursor  # one sweep in order from where the last one stopped (no position skipped)
             for step in range(n_pos):
                 if self.t >= self._next_img:
                     break
-                k, gs = self.positions[(self._cursor + step) % n_pos]
+                idx = (start + step) % n_pos
+                k, gs = self.positions[idx]
                 rows = slice(k, k + self.Bk.S)
                 cols = np.concatenate([np.arange(g * self.Bk.seg, min((g + 1) * self.Bk.seg, self.L.C)) for g in gs])
                 if not self.known_holes[rows][:, cols].any() or not self.known_res[rows][:, cols].any():
@@ -238,7 +243,7 @@ class Sim:
                     work = True
                     self._advance(dt)
                     self.n_visits = getattr(self, "n_visits", 0) + 1
-                    self._cursor = (self._cursor + step + 1) % n_pos
+                    self._cursor = (idx + 1) % n_pos
             if not work:  # idle until the next image
                 self._advance(max(self._next_img - self.t, 1e-4))
         return t_reach
