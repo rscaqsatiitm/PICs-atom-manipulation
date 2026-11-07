@@ -362,7 +362,8 @@ Table~\ref{tab:rows-tol} lists the per-chip errors; none moves the row in $y$ by
 collimator decentre is the tightest, $\pm0.1$~\textmu m for 3\% loss. A decentre $\delta$ shifts the facet image
 in the pupil by $\delta/\beta$ of its radius, so the tolerance is a property of the facet, not of the lens: the
 ray-traced designs all give $\pm0.1$~\textmu m (adopted collimator: 0.973 at 0.1~\textmu m). Focus is looser for
-the glued design, about $\pm1$~\textmu m for 3\%, because the facet radiates into glass. The wavefront
+the glued design, about $\pm1$~\textmu m for 3\% in the 1D line model, because the facet radiates into glass; the 2D
+model with the circular pupil is stricter (peak 0.988 at 0.5~\textmu m and 0.953 at 1~\textmu m, and 0.968 at 0.1~\textmu m decentre). The wavefront
 requirement is about 0.03 waves rms for $\le3\%$ loss; for the adopted collimator, the $n=1.8$ surfaces need a form
 error of at most 20~nm rms for $\le2\%$ loss. A chip piston of 300~\textmu m shifts tweezers in $x$ by up to 6.8~nm, so facets must be
 flush to about 100~\textmu m; stair-step stacking for wire bonds is excluded, and fibre and electrical access
@@ -390,7 +391,7 @@ one input fibre per chip is a compromise between facet intensity and phase stabi
 taper has a 3.1~\textmu m$^2$ mode, so a 20~MW/cm$^2$ cap (a design choice; no damage threshold was found) allows
 0.62~W per fibre and would need 5 to 6 fibres per chip. However, several inputs split the 128 ports into
 sub-trees whose relative phases drift with their fibres, and a tweezer window straddling a boundary would
-fluctuate. The HI1060-matched taper ($-0.48$~dB, 0.11~dB worse) has a 30.6~\textmu m$^2$ mode and carries 6.1~W at
+fluctuate. The HI1060-matched taper with a 100~nm tip ($-0.87$~dB, 0.50~dB worse) has a 37~\textmu m$^2$ mode and carries 7.4~W at
 the same cap, at the price of a 0.1~\textmu m tip at the assumed minimum feature size. With 16 rows the stack
 offers 720 (4~\textmu m) to 960 (3~\textmu m) independent tweezers and needs 41 to 55~W of single-frequency
 1064.4~nm light at 1.2~mK, or 17 to 23~W at 0.5~mK; the availability of 40 to 55~W is open [VALUE?]. Power scales
@@ -405,8 +406,8 @@ chip at a facet cap of 20~MW/cm$^2$. Derived.}
 \toprule
 tweezers per row & depth & per chip & 16 chips & lensed-tip fibres & HI1060-matched fibres \\
 \midrule
-45 (4~\textmu m) & 1.2~mK & 2.6~W & 41~W & 5 & 1 (8~MW/cm$^2$) \\
-60 (3~\textmu m) & 1.2~mK & 3.4~W & 55~W & 6 & 1 (11~MW/cm$^2$) \\
+45 (4~\textmu m) & 1.2~mK & 2.6~W & 41~W & 5 & 1 (7~MW/cm$^2$) \\
+60 (3~\textmu m) & 1.2~mK & 3.4~W & 55~W & 6 & 1 (9~MW/cm$^2$) \\
 45 & 0.5~mK & 1.1~W & 17~W & 2 & 1 \\
 60 & 0.5~mK & 1.4~W & 23~W & 3 & 1 \\
 \bottomrule

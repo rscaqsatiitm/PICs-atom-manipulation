@@ -379,7 +379,12 @@ def plan():
     facet = json.loads((RESULTS / "m6_power.json").read_text())["outputs"]["facet_MW_cm2_at_1.4W_t0.4"]
     p_fibre_max = 1.4 * 20.0 / facet  # W per input facet at 20 MW/cm^2 (CHOICE limit, m6), lensed-fibre tip
     m2 = json.loads((RESULTS / "m2_couplers.json").read_text())["outputs"]
-    hi = [r for r in m2["rows"] if r["lam"] == "1064" and r["t"] == 0.4 and r["w_tip"] == 0.1][0]
+    hi = dict([r for r in m2["rows"] if r["lam"] == "1064" and r["t"] == 0.4 and r["w_tip"] == 0.1][0])
+    hi_db = m2["best"]["1064_0.4_HI1060_6.2"]["dB"]
+    conv = RESULTS / "m2_tip_convergence.json"
+    if conv.exists():  # the 7 um window of the m2 sweep clips the 100 nm tip mode; use the converged window
+        last = json.loads(conv.read_text())["outputs"]["1064_0.4_0.1"][-1]
+        hi["aeff_um2"], hi_db = last["aeff_um2"], last["dB_mfd_6.2"]
     p_fibre_hi = 20e6 * hi["aeff_um2"] * 1e-8  # HI1060-matched tip (w_tip 0.1 um), same 20 MW/cm^2
     rows = []
     for per_row, depth in ((45, 1.2e-3), (60, 1.2e-3), (45, 0.5e-3), (60, 0.5e-3)):
@@ -391,7 +396,7 @@ def plan():
     offs = 80e6 + 1.13e6 * np.arange(16)  # e.g. one acousto-optic shifter per chip feed (CHOICE)
     diffs = np.abs(offs[:, None] - offs[None, :])[np.triu_indices(16, 1)]
     out = {"facet_fdtd_correction": corr, "per_design": per, "P_tweezer_adopted_W": p_tw, "P_fibre_max_W": p_fibre_max,
-           "P_fibre_max_HI1060_tip_W": p_fibre_hi, "HI1060_tip_coupling_dB": m2["best"]["1064_0.4_HI1060_6.2"]["dB"],
+           "P_fibre_max_HI1060_tip_W": p_fibre_hi, "HI1060_tip_coupling_dB": hi_db, "HI1060_tip_aeff_um2": hi["aeff_um2"],
            "rows": rows, "offsets_MHz": (offs / 1e6).tolist(), "min_pair_difference_MHz": float(diffs.min() / 1e6),
            "max_pair_difference_MHz": float(diffs.max() / 1e6), "2nu_trap_kHz": 2 * 84.0}
     print(json.dumps(out, indent=1), flush=True)

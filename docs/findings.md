@@ -101,9 +101,12 @@ strip TM light. On 200 nm film at 1064.4 nm a 20 um bend radiates 1.5 dB per 90 
 ## 4. Edge couplers and splitters (Module 2)
 
 Inverse tapers on 400 nm film reach a mode overlap of -0.37 dB with a 2.5 um lensed fibre at 1064.4 nm
-(150 nm tip, +/-0.6 um lateral tolerance at -1 dB) and -0.48 dB with HI1060 (100 nm tip, +/-1.55 um). At
-894.6 nm the best values are -0.46 dB (lensed) and -1.1 dB (PM780). Several optima lie at the narrowest tip
-swept (100 nm), so narrower tips may do better if lithography allows. These overlaps exclude Fresnel and
+(150 nm tip, +/-0.6 um lateral tolerance at -1 dB) and -0.68 dB with HI1060 (125 nm tip). At 894.6 nm the best
+values are -0.46 dB (lensed) and -1.1 dB (PM780), both at the narrowest tip swept (100 nm), so narrower tips may do
+better if lithography allows. (Corrected: near cutoff the 100 nm tip mode at 1064.4 nm decays over 4.8 um, and the
+7 um computational window of the sweep clipped it; with a converged window it gives -0.87 dB with HI1060, not
+-0.48 dB, so the HI1060 optimum moves to the 125 nm tip, `results/m2_tip_convergence.json`. The other optima change
+by less than 0.04 dB; the lateral tolerances were computed with the 7 um window.) These overlaps exclude Fresnel and
 taper conversion loss and are therefore lower bounds on the 1 to 2 dB per facet of the proposal. At 1.4 W
 through one 400 nm facet the intensity is 45 MW/cm^2; three input fibres keep it below 20 MW/cm^2. We
 did not find a CW facet-damage threshold for SiN at 1 um in this session.

@@ -1,7 +1,7 @@
 {
  "name": "m14_plan",
  "script": "scripts/m14_collimator.py",
- "git": "b066493",
+ "git": "acb2f47",
  "notes": "",
  "inputs": {
   "P_m13": "m13_power (47 mW at 1.2 mK, facet transmission 1)",
@@ -38,8 +38,9 @@
   },
   "P_tweezer_adopted_W": 0.05742916196378767,
   "P_fibre_max_W": 0.620768848341114,
-  "P_fibre_max_HI1060_tip_W": 6.117595700969303,
-  "HI1060_tip_coupling_dB": -0.48148793815154145,
+  "P_fibre_max_HI1060_tip_W": 7.398369030452334,
+  "HI1060_tip_coupling_dB": -0.8716612058405457,
+  "HI1060_tip_aeff_um2": 36.99184515226167,
   "rows": [
    {
     "tweezers_per_row": 45,
@@ -47,7 +48,7 @@
     "P_chip_W": 2.584312288370445,
     "fibres_per_chip_lensed_tip": 5,
     "fibres_per_chip_HI1060_tip": 1,
-    "facet_MW_cm2_HI1060_tip": 8.448784178271124,
+    "facet_MW_cm2_HI1060_tip": 6.986167566752049,
     "P_16_chips_W": 41.34899661392712
    },
    {
@@ -56,7 +57,7 @@
     "P_chip_W": 3.44574971782726,
     "fibres_per_chip_lensed_tip": 6,
     "fibres_per_chip_HI1060_tip": 1,
-    "facet_MW_cm2_HI1060_tip": 11.265045571028168,
+    "facet_MW_cm2_HI1060_tip": 9.314890089002732,
     "P_16_chips_W": 55.13199548523616
    },
    {
@@ -65,7 +66,7 @@
     "P_chip_W": 1.0767967868210189,
     "fibres_per_chip_lensed_tip": 2,
     "fibres_per_chip_HI1060_tip": 1,
-    "facet_MW_cm2_HI1060_tip": 3.5203267409463024,
+    "facet_MW_cm2_HI1060_tip": 2.910903152813354,
     "P_16_chips_W": 17.228748589136302
    },
    {
@@ -74,7 +75,7 @@
     "P_chip_W": 1.435729049094692,
     "fibres_per_chip_lensed_tip": 3,
     "fibres_per_chip_HI1060_tip": 1,
-    "facet_MW_cm2_HI1060_tip": 4.6937689879284035,
+    "facet_MW_cm2_HI1060_tip": 3.8812042037511394,
     "P_16_chips_W": 22.97166478551507
    }
   ],

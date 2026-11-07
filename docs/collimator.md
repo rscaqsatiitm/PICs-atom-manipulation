@@ -41,7 +41,7 @@ facet loss omitted). With an ideal lens in air it would be 61 mW.
 The decentre tolerance (+/-0.1 um) does not depend on the lens design. It is set by the small vertical mode of
 the facet. The first x lens of the relay, by contrast, needs no special accuracy, because calibration absorbs
 its static aberration (Sec. 6). One HI1060-matched input fibre per chip carries the 2.6 to 3.4 W a row needs, at
-8 to 11 MW/cm^2 (Sec. 8).
+7 to 9 MW/cm^2 (Sec. 8).
 
 ## 2. Why NA 0.9 at 175 um is hard
 
@@ -184,8 +184,8 @@ Laser power per 1.2 mK tweezer, field mean, per unit guided power (FDTD-scaled f
 
 | tweezers per row | depth | power per chip | 16 chips | input fibres per chip: lensed tip / HI1060-matched tip |
 |---|---|---|---|---|
-| 45 (4 um) | 1.2 mK | 2.6 W | 41 W | 5 / 1 (8 MW/cm^2) |
-| 60 (3 um) | 1.2 mK | 3.4 W | 55 W | 6 / 1 (11 MW/cm^2) |
+| 45 (4 um) | 1.2 mK | 2.6 W | 41 W | 5 / 1 (7 MW/cm^2) |
+| 60 (3 um) | 1.2 mK | 3.4 W | 55 W | 6 / 1 (9 MW/cm^2) |
 | 45 | 0.5 mK | 1.1 W | 17 W | 2 / 1 |
 | 60 | 0.5 mK | 1.4 W | 23 W | 3 / 1 |
 
@@ -193,7 +193,10 @@ Laser power per 1.2 mK tweezer, field mean, per unit guided power (FDTD-scaled f
 20 MW/cm^2 cap (CHOICE; no damage threshold was found) allows 0.62 W per fibre and 5 to 6 fibres per chip. Several
 inputs would split the 128 ports into sub-trees whose relative optical phases drift with their fibres, and a
 tweezer window straddling a sub-tree boundary would then fluctuate. The HI1060-matched taper of module 2 (tip
-0.1 um, -0.48 dB, 0.11 dB worse than the lensed tip) has a 30.6 um^2 mode and carries 6.1 W at the same cap.
+0.1 um, -0.87 dB, 0.50 dB worse than the lensed tip) has a 37 um^2 mode and carries 7.4 W at the same cap. (Corrected:
+the 7 um computational window of the coupler sweep clipped this near-cutoff mode, which decays over 4.8 um; with the
+clipped window the figures read -0.48 dB, 30.6 um^2 and 6.1 W; the converged values are from
+`results/m2_tip_convergence.json`.)
 Hence one fibre per chip is possible and preferred. Its 0.1 um tip width is at the assumed minimum feature
 size.
 
