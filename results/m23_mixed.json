@@ -1,7 +1,7 @@
 {
  "name": "m23_mixed",
  "script": "scripts/m23_steady.py",
- "git": "9b06ae2",
+ "git": "3fe1148",
  "notes": "3 um along the rows x 4 um across (anisotropic lattice), lanes 2 um from the rows (m18_aniso).",
  "inputs": {
   "block": [
@@ -33,14 +33,14 @@
     "density_comp_per_um2": 0.04691211401425178,
     "t_1e-2_s": 0.12,
     "t_1e-3_s": 0.12,
-    "steady_defect_fraction": 0.0002477880901991432,
+    "steady_defect_fraction": 0.00024279667543254175,
     "heat": {
-     "mean_uK": 1.4782819747924805,
+     "mean_uK": 1.4727106094360352,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.16231678581412995
+     "moved_fraction": 0.16266834386574422
     },
-    "fills_total": 16494
+    "fills_total": 16524
    },
    {
     "N": 100000.0,
@@ -55,14 +55,14 @@
     "density_comp_per_um2": 0.04691211401425178,
     "t_1e-2_s": 0.12,
     "t_1e-3_s": 0.12,
-    "steady_defect_fraction": 0.00024350973468491343,
+    "steady_defect_fraction": 0.00022639631262799412,
     "heat": {
-     "mean_uK": 1.6224365234375,
+     "mean_uK": 1.6198434829711914,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.1622436550250604
+     "moved_fraction": 0.16198434567309614
     },
-    "fills_total": 16487
+    "fills_total": 16437
    },
    {
     "N": 100000.0,
@@ -75,16 +75,16 @@
     "comp_sites": 100172,
     "seg_sites": 46,
     "density_comp_per_um2": 0.04691211401425178,
-    "t_1e-2_s": 0.3478706741162835,
-    "t_1e-3_s": 0.3478706741162835,
-    "steady_defect_fraction": 0.00025064032720862976,
+    "t_1e-2_s": 0.23763116131021178,
+    "t_1e-3_s": 0.23763116131021178,
+    "steady_defect_fraction": 0.0002274659015065516,
     "heat": {
-     "mean_uK": 0.04865147918462753,
+     "mean_uK": 0.048560820519924164,
      "p99_uK": 0.30000001192092896,
      "max_uK": 0.30000001192092896,
-     "moved_fraction": 0.16217160773662717
+     "moved_fraction": 0.16186939028164654
     },
-    "fills_total": 16497
+    "fills_total": 16447
    },
    {
     "N": 100000.0,
@@ -99,14 +99,14 @@
     "density_comp_per_um2": 0.06255707762557078,
     "t_1e-2_s": 0.12,
     "t_1e-3_s": 0.12,
-    "steady_defect_fraction": 0.00024501843336353327,
+    "steady_defect_fraction": 0.00022721186117141606,
     "heat": {
-     "mean_uK": 1.4784990549087524,
+     "mean_uK": 1.470571756362915,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.16177130603899667
+     "moved_fraction": 0.16175165302031494
     },
-    "fills_total": 16438
+    "fills_total": 16446
    },
    {
     "N": 100000.0,
@@ -121,14 +121,14 @@
     "density_comp_per_um2": 0.06255707762557078,
     "t_1e-2_s": 0.12,
     "t_1e-3_s": 0.12,
-    "steady_defect_fraction": 0.00024323777614432152,
+    "steady_defect_fraction": 0.0002286363869467854,
     "heat": {
-     "mean_uK": 1.618961215019226,
+     "mean_uK": 1.6158242225646973,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.1618961184026808
+     "moved_fraction": 0.16158241670572515
     },
-    "fills_total": 16478
+    "fills_total": 16419
    },
    {
     "N": 100000.0,
@@ -141,16 +141,16 @@
     "comp_sites": 100284,
     "seg_sites": 61,
     "density_comp_per_um2": 0.06255707762557078,
-    "t_1e-2_s": 0.23089147024602796,
-    "t_1e-3_s": 0.23089147024602796,
-    "steady_defect_fraction": 0.0002521410622403802,
+    "t_1e-2_s": 0.23601715741571488,
+    "t_1e-3_s": 0.23601715741571488,
+    "steady_defect_fraction": 0.00023896419881821342,
     "heat": {
-     "mean_uK": 0.04861670732498169,
+     "mean_uK": 0.0485454685986042,
      "p99_uK": 0.30000001192092896,
      "max_uK": 0.30000001192092896,
-     "moved_fraction": 0.16205569074879322
+     "moved_fraction": 0.1618182362151327
     },
-    "fills_total": 16471
+    "fills_total": 16441
    },
    {
     "N": 1000000.0,
@@ -163,16 +163,16 @@
     "comp_sites": 1001000,
     "seg_sites": 46,
     "density_comp_per_um2": 0.04689842578710645,
-    "t_1e-2_s": 1.1184041351253424,
-    "t_1e-3_s": 2.4678687436978293,
-    "steady_defect_fraction": 0.0012204462204462206,
+    "t_1e-2_s": 0.7846451037558453,
+    "t_1e-3_s": 2.129068779021373,
+    "steady_defect_fraction": 0.0009027639027639028,
     "heat": {
-     "mean_uK": 1.409756064414978,
+     "mean_uK": 1.4698742628097534,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.16970211012413494
+     "moved_fraction": 0.1697696506768511
     },
-    "fills_total": 173440
+    "fills_total": 173687
    },
    {
     "N": 1000000.0,
@@ -185,16 +185,16 @@
     "comp_sites": 1001000,
     "seg_sites": 46,
     "density_comp_per_um2": 0.04689842578710645,
-    "t_1e-2_s": 1.1184041351253424,
-    "t_1e-3_s": 1.4505124291110076,
-    "steady_defect_fraction": 0.0002461612461612462,
+    "t_1e-2_s": 0.7846451037558453,
+    "t_1e-3_s": 1.0072524441637072,
+    "steady_defect_fraction": 0.00024068524068524068,
     "heat": {
-     "mean_uK": 1.7094353437423706,
+     "mean_uK": 1.7090587615966797,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.1709435357360538
+     "moved_fraction": 0.17090587547646763
     },
-    "fills_total": 174880
+    "fills_total": 174871
    },
    {
     "N": 1000000.0,
@@ -207,16 +207,16 @@
     "comp_sites": 1001000,
     "seg_sites": 46,
     "density_comp_per_um2": 0.04689842578710645,
-    "t_1e-2_s": 3.397344643360966,
-    "t_1e-3_s": null,
-    "steady_defect_fraction": 0.0011694601694601694,
+    "t_1e-2_s": 1.8674772126354953,
+    "t_1e-3_s": 3.325434659071158,
+    "steady_defect_fraction": 0.0008924408924408923,
     "heat": {
-     "mean_uK": 0.05088486522436142,
+     "mean_uK": 0.050953250378370285,
      "p99_uK": 0.30000001192092896,
      "max_uK": 0.30000001192092896,
-     "moved_fraction": 0.16961621236729044
+     "moved_fraction": 0.16984416462198973
     },
-    "fills_total": 173287
+    "fills_total": 173572
    },
    {
     "N": 1000000.0,
@@ -229,16 +229,16 @@
     "comp_sites": 1001385,
     "seg_sites": 61,
     "density_comp_per_um2": 0.06255411255411256,
-    "t_1e-2_s": 1.0070035001115873,
-    "t_1e-3_s": null,
-    "steady_defect_fraction": 0.0015750407907270654,
+    "t_1e-2_s": 0.6762941192325745,
+    "t_1e-3_s": 1.5790334260551173,
+    "steady_defect_fraction": 0.0008074372549574394,
     "heat": {
-     "mean_uK": 1.4309452772140503,
+     "mean_uK": 1.465659737586975,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.1695520208813573
+     "moved_fraction": 0.1702398535416421
     },
-    "fills_total": 173337
+    "fills_total": 174287
    },
    {
     "N": 1000000.0,
@@ -251,16 +251,16 @@
     "comp_sites": 1001385,
     "seg_sites": 61,
     "density_comp_per_um2": 0.06255411255411256,
-    "t_1e-2_s": 1.0070035001115873,
-    "t_1e-3_s": 1.449244543816308,
-    "steady_defect_fraction": 0.0008096933894703983,
+    "t_1e-2_s": 0.6762941192325745,
+    "t_1e-3_s": 0.7882090657102893,
+    "steady_defect_fraction": 0.00023855848538662842,
     "heat": {
-     "mean_uK": 1.7003366947174072,
+     "mean_uK": 1.7064183950424194,
      "p99_uK": 10.0,
      "max_uK": 10.0,
-     "moved_fraction": 0.17003366835125014
+     "moved_fraction": 0.1706418444851711
     },
-    "fills_total": 174111
+    "fills_total": 174811
    },
    {
     "N": 1000000.0,
@@ -273,16 +273,16 @@
     "comp_sites": 1001385,
     "seg_sites": 61,
     "density_comp_per_um2": 0.06255411255411256,
-    "t_1e-2_s": 3.044720127170561,
-    "t_1e-3_s": null,
-    "steady_defect_fraction": 0.0015623546573181326,
+    "t_1e-2_s": 1.631237041798081,
+    "t_1e-3_s": 2.3074348926924393,
+    "steady_defect_fraction": 0.0007885005193732606,
     "heat": {
-     "mean_uK": 0.05078573897480965,
+     "mean_uK": 0.05100737139582634,
      "p99_uK": 0.30000001192092896,
      "max_uK": 0.30000001192092896,
-     "moved_fraction": 0.16928578714620873
+     "moved_fraction": 0.17002456216786613
     },
-    "fills_total": 172968
+    "fills_total": 173866
    }
   ]
  },

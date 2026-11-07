@@ -1,8 +1,9 @@
 # Repair rounds, scheduler variants and the axial handoff
 
-> Follow-up (`docs/megascale.md`): scaling to 1e4, 1e5 and 1e6 sites. A 32 x 4 engine block assembles 1e6 sites
-> in 1.5 s and holds them at the loss-limited floor rho ~ 1.4-1.8 (eps_img + T_img/tau, sampled just after each image; see `docs/megascale.md` Sec. 10); static trapping power,
-> the objective's field and the 3 um lane distance are the walls.
+> Follow-up (`docs/megascale.md`): scaling to 1e4, 1e5 and 1e6 sites. A 32 x 4 engine block with fast steps
+> assembles 1e6 sites in 1.1 s and holds them at the loss-limited floor (2.4e-4 just after each image, 1.8 to 2.0e-4
+> time-averaged); static trapping power and the objective's field are the walls, and the cylindrical collimator
+> limits each engine to the central half of its segment (`docs/megascale.md` Sec. 12).
 
 Follow-up to `docs/rearrangement.md`. Code: `picsim/rearrange.py` (`repair`, `cycle_with_repair`,
 selection modes), `scripts/m21_repair.py`, `scripts/m19_quantum.py axial`; results `results/m21_*.json`,

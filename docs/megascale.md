@@ -33,15 +33,17 @@ CHOICE as marked, and valid in the regime stated. They should be reviewed before
 ## 1. Result
 
 At 4 um pitch the transport side scales to 10^6 sites. One engine block of 32 rows x 4 engines (two 16-chip
-stacks, 128 engines) assembles 10^6 sites from 85% loading in 1.1 s to 1e-2 defects and 1.5 s to 1e-3, with fast
-handoff steps. It then holds the array at 2.3e-4 defects per site in steady state. Smaller arrays reach the same
-floor faster: 10^4 sites in 0.1 to 0.3 s, 10^5 sites in 0.2 to 0.6 s. The steady-state floor is not set by the
+stacks, 128 engines) assembles 10^6 sites from 85% loading in 0.8 s to 1e-2 defects and 1.1 s to 1e-3, with fast
+handoff steps. It then holds the array at 2.4e-4 defects per site in steady state (sampled just after each image;
+1.8 to 2.0e-4 time-averaged, Sec. 10). Smaller arrays reach the same floor faster: 10^4 and 10^5 sites in 0.1 to
+0.5 s with the same block. (Corrected: these figures were first computed with a simulator that skipped block
+positions, Sec. 10, and read 1.1 s, 1.5 s and 2.3e-4.) The steady-state floor is not set by the
 transport. It follows the loss rates and the imaging cadence,
 
     rho ~ (1.4 to 1.8) x (eps_img + T_img / tau),
 
 where eps_img is the loss per image, T_img the imaging period and tau the vacuum lifetime. With eps_img = 1e-4,
-T_img = 0.1 s and tau = 3000 s this gives 2.3e-4, at every array size.
+T_img = 0.1 s and tau = 3000 s this gives 2.4e-4, at every array size.
 
 Three walls come before the transport does:
 
@@ -63,8 +65,8 @@ pulls 55 to 99% of them out, so 3 um needs empty corridor rows, and these cost m
 | zones of +/-250 um (objectives) | 2 | 13 | 127 |
 | static power at the atoms, 0.1 mK hold / 1 mK (85% loading, incl. reservoir) | 5.3 / 53 W | 53 / 530 W | 0.53 / 5.3 kW |
 | engine block (32 x 4): field positions | 10 | 28 | 252 |
-| assembly to 1e-3 (85% loading, 32 x 4) | 1.1 s (reload-limited) | 0.12 to 0.35 s | 1.5 s (fast steps) |
-| steady-state defects, tau 3000 / 300 s | 2.3e-4 / 6.0e-4 | 2.3e-4 / 6.0e-4 | 2.3e-4 (fast) / 6.0e-3 (slow, 300 s) |
+| assembly to 1e-3 (85% loading, 32 x 4) | 0.12 s | 0.12 to 0.24 s | 1.1 s (fast steps) |
+| steady-state defects at image, tau 3000 / 300 s | 1.8e-4 / 5.7e-4 | 2.5e-4 / 5.8e-4 | 2.4e-4 (fast) / 3.8e-3 (slow, 300 s) |
 | refills needed per second (tau 3000 s, eps 1e-4 at 10 Hz) | 13 | 134 | 1,335 |
 
 ## 2. Optics: one large field or many zones
@@ -146,26 +148,29 @@ At 4 um pitch:
 
 | sites | loading | block | timing | to 1e-2 | to 1e-3 | steady state, tau 3000 / 300 s |
 |---|---|---|---|---|---|---|
-| 10^4 | 50% | 16 x 1 / 32 x 4 | slow | 0.34 / 0.12 s | same | 3.2e-4 / 5.8e-4 (16 x 1) |
-| 10^4 | 85% | 32 x 4 | slow | 0.12 s | 1.11 s | 2.3e-4 / 6.0e-4 |
-| 10^5 | 50% | 16 x 1 / 32 x 4 | slow | 2.0-2.7 / 0.45-0.57 s | 2.0-3.0 / 0.45-0.57 s | 2.3e-4 / 6.0e-4 |
-| 10^5 | 85% | 32 x 4 | slow / fast | 0.23 / 0.12 s | 0.34 / 0.12 s | 2.3e-4 / 6.0e-4 |
-| 10^6 | 50% | 32 x 4 | slow | 4.5 s (tau 3000) | not in 20 s | 1.1e-3 / 5.5e-3 |
-| 10^6 | 85% | 32 x 4 | slow | 3.6 s | not in 20 s | 1.2e-3 / 6.0e-3 |
-| 10^6 | 85% | 32 x 4 | **fast** | **1.1 s** | **1.5 s** | **2.3e-4** (tau 3000) |
-| 10^6 | 50% / 85% | 16 x 1 | slow | never | never | 3-13% |
+| 10^4 | 50% | 16 x 1 / 32 x 4 | slow | 0.34 / 0.12 s | same | 2.7e-4 / 5.6e-4 (16 x 1) |
+| 10^4 | 85% | 32 x 4 | slow | 0.12 s | 0.12 s | 1.8e-4 / 5.7e-4 |
+| 10^5 | 50% | 16 x 1 / 32 x 4 | slow | 1.8 / 0.46 s | 1.8-2.8 / 0.46 s | 2.3e-4 / 6.0e-4 (16 x 1) |
+| 10^5 | 85% | 32 x 4 | slow / fast | 0.24 / 0.12 s | 0.24 / 0.12 s | 2.5e-4 / 5.8e-4 |
+| 10^6 | 50% | 32 x 4 | slow | 2.2 s | 2.8 s (tau 3000; not reached at 300 s) | 8.6e-4 / 3.2e-3 |
+| 10^6 | 85% | 32 x 4 | slow | 1.9 s | 3.1 s (tau 3000; not reached at 300 s) | 9.3e-4 / 3.8e-3 |
+| 10^6 | 85% | 32 x 4 | **fast** | **0.79 s** | **1.1 s** | **2.4e-4** (tau 3000) |
+| 10^6 | 50% / 85% | 16 x 1 | slow | 14 s (tau 3000) | never | 0.7-2.9% |
+
+(Steady state sampled just after each image, as in all tables up to Sec. 9; the time average is about 25% lower,
+Sec. 10. Corrected for the cursor fix of Sec. 10.)
 
 (Slow: 200 us ramps, 400 us lane steps, 0.2 to 0.3 uK per move. Fast: 50 us ramps, 100 us lane steps, 200 us per
 40 um, about 1 to 10 uK per move from `docs/rearrangement.md`.)
 
 Three findings:
 
-(i) **Up to 10^5 sites, the floor is set by losses.** It is the same for every block and timing:
-2.3e-4 (tau 3000 s) and 6e-4 (tau 300 s).
+(i) **Up to 10^5 sites, the floor is set by losses.** It is nearly the same for every block and timing:
+1.7 to 2.7e-4 (tau 3000 s) and 5.6 to 6.1e-4 (tau 300 s), the spread being run-to-run noise.
 
 (ii) **At 10^6, latency matters.** With slow steps, a sweep of 252 block positions takes longer than the imaging
-period. New holes then wait several sweeps, and the floor rises five-fold. Fast steps restore the
-loss-limited floor; they cost heating (about 1 to 10 uK per move, but each atom moves once).
+period. New holes then wait several sweeps, and the floor rises about four-fold (8.6 to 9.3e-4). Fast steps
+restore the loss-limited floor; they cost heating (about 1 to 10 uK per move, but each atom moves once).
 
 (iii) **Each refill is one move**, from a nearby reservoir row into the hole, so heating does not accumulate.
 
@@ -190,7 +195,7 @@ margin of 20.
 |---|---|---|---|---|
 | 10^4 | field +/-0.28 mm (or 2 zones) | static power 50 W at 1 mK | losses: 2-6e-4 floor | 1 stack is enough; < 0.4 s assembly |
 | 10^5 | field +/-0.9 mm or 13 zones | static power 0.5 kW at 1 mK | losses | 32 x 4 block: 0.1-0.6 s assembly |
-| 10^6 | static power 5 kW at 1 mK | field +/-2.8 mm (SBP 1.4e7) | vacuum and imaging loss (rho >= 2e-4 now); supply 1.3k atoms/s | 32 x 4 block with fast steps; 1.5 s assembly |
+| 10^6 | static power 5 kW at 1 mK | field +/-2.8 mm (SBP 1.4e7) | vacuum and imaging loss (rho >= 2e-4 now); supply 1.3k atoms/s | 32 x 4 block with fast steps; 1.1 s assembly |
 
 **Recommendations.**
 - **10^4:** one large-field objective or two zones, one 16-chip stack, 4 um pitch.
@@ -256,22 +261,23 @@ smaller zone.
 **Step timing in steady state, with heating per atom (`results/m23_mixed.json`, 32 x 4 block, 85% loading,
 tau 3000 s).** Heating per move: 0.3 uK with slow steps and 10 uK with fast steps (Sec. 6).
 
-| sites, pitch | timing | to 1e-3 | steady-state defects | atoms moved | heating: mean / max |
+| sites, pitch | timing | to 1e-3 | steady-state defects (at image) | atoms moved | heating: mean / max |
 |---|---|---|---|---|---|
-| 10^5, 4 x 4 | slow | 0.35 s | 2.5e-4 | 16% | 0.05 / 0.3 uK |
-| 10^5, 3 x 4 | slow | 0.23 s | 2.5e-4 | 16% | 0.05 / 0.3 uK |
-| 10^6, 4 x 4 | slow | not in 20 s | 1.2e-3 | 17% | 0.05 / 0.3 uK |
-| 10^6, 4 x 4 | fast | 1.45 s | 2.5e-4 | 17% | 1.7 / 10 uK |
-| 10^6, 4 x 4 | adaptive (fast until 1e-2, then slow) | 2.47 s | 1.2e-3 | 17% | 1.4 / 10 uK |
-| 10^6, 3 x 4 | fast | 1.45 s | 8.1e-4 | 17% | 1.7 / 10 uK |
+| 10^5, 4 x 4 | slow | 0.24 s | 2.3e-4 | 16% | 0.05 / 0.3 uK |
+| 10^5, 3 x 4 | slow | 0.24 s | 2.4e-4 | 16% | 0.05 / 0.3 uK |
+| 10^6, 4 x 4 | slow | 3.3 s | 8.9e-4 | 17% | 0.05 / 0.3 uK |
+| 10^6, 4 x 4 | fast | 1.0 s | 2.4e-4 | 17% | 1.7 / 10 uK |
+| 10^6, 4 x 4 | adaptive (fast until 1e-2, then slow) | 2.1 s | 9.0e-4 | 17% | 1.5 / 10 uK |
+| 10^6, 3 x 4 | fast | 0.79 s | 2.4e-4 | 17% | 1.7 / 10 uK |
+| 10^6, 3 x 4 | slow | 2.3 s | 7.9e-4 | 17% | 0.05 / 0.3 uK |
 
 Every atom moves at most once (refills come straight from a reservoir row), so no atom gains more than one move's
 heating. Up to 10^5 sites, the slow, cold steps reach the loss-limited floor. At 10^6 sites the refill load is
-too high for slow steps: switching to them after assembly brings back the latency-limited floor of 1.2e-3. Fast
-steps are therefore needed in steady state too, at a cost of at most 10 uK per refilled atom. The 3 x 4 um lattice
-at 10^6 sites carries 33% more refills per block position and rises to 8e-4. A larger block (more engines) or
-intermediate steps (about 2 uK per move at 200 us lane steps, from the quantum check) would restore 2.5e-4.
-(Correction, Sec. 10: the 8.1e-4 on 3 x 4 um was an edge artefact of the block placement, not latency.)
+too high for slow steps: they hold 8e-4 to 9e-4, and switching to them after assembly brings that floor back. Fast
+steps reach the loss floor (2.4e-4) at a cost of at most 10 uK per refilled atom; a larger block or intermediate
+steps (Sec. 10) close most of the gap at lower heating. The 3 x 4 um lattice behaves as 4 x 4 um. (Corrected: this
+table was first computed with a simulator that skipped block positions and with an edge artefact of the block
+placement, which gave "not in 20 s" and 1.2e-3 for slow steps and 8.1e-4 for 3 x 4 um; see Sec. 10.)
 
 ## 10. Follow-up: tiling wave optics, remedies at 10^6 sites, imaging cadence
 
@@ -333,25 +339,30 @@ the first image to 1e-3 (at image):
 
 | block (engines) | pitch along rows | fast | intermediate | slow |
 |---|---|---|---|---|
-| 32 x 4 (128) | 4 um | 2.5e-4 / 2.0e-4, 1.67 s | 5.3e-4 / 4.8e-4, 3.14 s | 1.2e-3 / 1.1e-3, not in 20 s |
-| 32 x 8 (256) | 4 um | 2.4e-4 / 1.8e-4, 1.01 s | 3.9e-4 / 3.4e-4, 1.58 s | 8.5e-4 / 8.0e-4, 4.18 s |
-| 48 x 4 (192) | 4 um | 2.3e-4 / 1.8e-4, 1.01 s | 4.1e-4 / 3.6e-4, 2.25 s | 8.7e-4 / 8.2e-4, 3.06 s |
-| 64 x 4 (256) | 4 um | 2.4e-4 / 1.8e-4, 0.90 s | 3.4e-4 / 2.9e-4, 1.47 s | 6.6e-4 / 6.1e-4, 2.72 s |
-| 32 x 4 (128) | 3 um | 2.4e-4 / 1.9e-4, 1.34 s | 4.3e-4 / 3.8e-4, 2.35 s | 1.1e-3 / 1.0e-3, 6.77 s |
-| 32 x 8 (256) | 3 um | 2.4e-4 / 1.8e-4, 0.79 s | 3.0e-4 / 2.5e-4, 1.46 s | 6.4e-4 / 5.9e-4, 4.40 s |
-| 48 x 4 (192) | 3 um | 2.4e-4 / 1.8e-4, 0.79 s | 3.7e-4 / 3.2e-4, 1.91 s | 7.5e-4 / 7.0e-4, 4.29 s |
-| 64 x 4 (256) | 3 um | 2.4e-4 / 1.8e-4, 0.68 s | 3.2e-4 / 2.7e-4, 1.46 s | 5.8e-4 / 5.3e-4, 2.39 s |
+| 32 x 4 (128) | 4 um | 2.5e-4 / 2.0e-4, 1.01 s | 4.6e-4 / 4.1e-4, 1.25 s | 9.1e-4 / 8.6e-4, 3.56 s |
+| 32 x 8 (256) | 4 um | 2.4e-4 / 1.8e-4, 0.68 s | 3.4e-4 / 2.9e-4, 0.92 s | 6.4e-4 / 5.9e-4, 1.39 s |
+| 48 x 4 (192) | 4 um | 2.5e-4 / 1.9e-4, 0.68 s | 3.6e-4 / 3.1e-4, 0.92 s | 6.7e-4 / 6.2e-4, 1.40 s |
+| 64 x 4 (256) | 4 um | 2.4e-4 / 1.8e-4, 0.45 s | 3.2e-4 / 2.7e-4, 0.69 s | 5.5e-4 / 4.9e-4, 1.05 s |
+| 32 x 4 (128) | 3 um | 2.4e-4 / 1.9e-4, 0.79 s | 4.1e-4 / 3.6e-4, 1.14 s | 7.9e-4 / 7.4e-4, 2.31 s |
+| 32 x 8 (256) | 3 um | 2.4e-4 / 1.8e-4, 0.56 s | 3.0e-4 / 2.5e-4, 0.80 s | 5.0e-4 / 4.5e-4, 1.17 s |
+| 48 x 4 (192) | 3 um | 2.4e-4 / 1.8e-4, 0.56 s | 3.5e-4 / 2.9e-4, 0.80 s | 5.9e-4 / 5.3e-4, 1.17 s |
+| 64 x 4 (256) | 3 um | 2.4e-4 / 1.8e-4, 0.46 s | 2.9e-4 / 2.4e-4, 0.58 s | 4.9e-4 / 4.4e-4, 0.94 s |
+
+(Corrected: an earlier version of the simulator advanced its round-robin cursor wrongly and skipped block
+positions after every visit, which inflated all assembly times and the slow-step floors at 10^6 sites; fast steps
+now also carry the 4e-3 loss per move that m18 finds for 50 us ramps.)
 
 Four results follow. First, the 8.1e-4 reported in Sec. 9 for 3 x 4 um was an artefact. The last row of block
 positions ended short of the array edge, and the holes in rows below it had no reservoir row in any block that
 reached them (563 of 716 remaining holes sat there). `Block.positions` now places the last block flush with the
 edge, and 3 x 4 um holds 2.4e-4 with the 32 x 4 block and fast steps, as 4 x 4 um does. Second, fast steps reach
-the loss floor with any block from 128 engines; more engines only shorten assembly (1.67 to 0.90 s at 4 um).
-Third, intermediate steps (2 uK per move) come within a factor of 1.4 to 1.9 of that floor with 256 engines (time
-average 2.5e-4 to 3.4e-4) but not with 128. Fourth, slow steps (0.3 uK) do not reach the floor with any block
-tried; their best is 5.3e-4. The 3 um rows do slightly better than 4 um rows with the slower timings. We
-attribute this to fewer block positions per sweep (a 180 um segment holds 61 sites at 3 um against 46 at 4 um, so
-the 32 x 4 block has 222 positions against 252); we did not isolate this cause.
+the loss floor (time average 1.8 to 2.0e-4) with any block from 128 engines; more engines only shorten assembly
+(1.01 to 0.45 s at 4 um). Third, intermediate steps (2 uK per move) come within a factor of 1.3 to 1.6 of that floor
+with 256 engines (time average 2.4e-4 to 2.9e-4) and a factor of 2 to 2.3 with 128. Fourth, slow steps (0.3 uK)
+reach 1e-3 within 1 to 3.6 s with every block, but hold 4.4e-4 to 8.6e-4, a factor of 2.4 to 4.8 above the floor.
+The 3 um rows do slightly better than 4 um rows with the slower timings. We attribute this to fewer block positions
+per sweep (a 180 um segment holds 61 sites at 3 um against 46 at 4 um, so the 32 x 4 block has 222 positions
+against 252); we did not isolate this cause.
 
 The block shape is a hardware choice. A 32-row block is two 16-chip stacks combined by polarisation (Sec. 4);
 48 or 64 rows need three or four stacks and a combining method beyond polarisation (designed in Sec. 11: a
@@ -369,13 +380,13 @@ Selected time-averaged defect fractions at 10^5 sites:
 
 | eps_img, tau | T_img 0.03 s | 0.1 s | 0.3 s | 1 s |
 |---|---|---|---|---|
-| 1e-5, 3000 s | 2.0e-5 | 3.1e-5 | 6.7e-5 | 1.8e-4 |
-| 1e-4, 300 s | 2.9e-4 | 4.1e-4 | 7.8e-4 | 1.9e-3 |
-| 1e-4, 3000 s | 1.6e-4 | 1.3e-4 | 1.8e-4 | 3.1e-4 |
-| 1e-4, 30000 s | 1.4e-4 | 1.2e-4 | 1.2e-4 | 1.5e-4 |
-| 1e-3, 3000 s | 3.1e-3 | 1.4e-3 | 1.2e-3 | 1.3e-3 |
+| 1e-5, 3000 s | 2.2e-5 | 3.2e-5 | 7.0e-5 | 1.9e-4 |
+| 1e-4, 300 s | 2.9e-4 | 4.0e-4 | 7.6e-4 | 2.0e-3 |
+| 1e-4, 3000 s | 1.5e-4 | 1.4e-4 | 1.8e-4 | 2.3e-4 |
+| 1e-4, 30000 s | 1.3e-4 | 1.2e-4 | 0.9e-4 | 1.4e-4 |
+| 1e-3, 3000 s | 2.4e-3 | 1.4e-3 | 1.2e-3 | 1.2e-3 |
 
-The values at image fit rho_image = 2.42 eps_img + 0.96 (T_img + t_img)/tau (median error 12%, worst 33%), close
+The values at image fit rho_image = 2.24 eps_img + 0.98 (T_img + t_img)/tau (median error 10%, worst 40%), close
 to the 2 eps_img + (T_img + t_img)/tau expected from the double counting. This replaces the rule
 rho ~ 1.4-1.8 (eps_img + T_img/tau) of Sec. 1 and 6, which was fitted to at-image values over a narrower range.
 The time average follows a hole-lifetime model. An imaging loss is unseen for one period T = T_img + t_img and
@@ -383,15 +394,15 @@ is then repaired after a mean delay d; a vacuum loss waits T/2 on average for th
 
 rho_mean = eps_img (T + d)/T + (T/2 + d)/tau.
 
-One delay, d = 25 ms, fits all 40 points at 10^5 sites with a median error of 10% (d = 0 underestimates by a
-median 16%). The worst point (61%) is eps_img = 1e-3 at T_img = 30 ms, where the repair saturates (below).
+One delay, d = 22 ms, fits all 40 points at 10^5 sites with a median error of 9% (d = 0 underestimates by a
+median 16%). The worst point (41%) is eps_img = 1e-3 at T_img = 30 ms, where the repair saturates (below).
 Minimising rho_mean over T gives the optimum imaging period, T* = (2 eps_img d tau)^(1/2) when d << T. For
-d = 25 ms and tau = 3000 s this is 40 ms, 0.12 s and 0.39 s for eps_img = 1e-5, 1e-4 and 1e-3, in agreement with
-the minima of the scan (0.03, 0.1 and 0.3 s). At the optimum, rho_mean ~ eps_img + (2 eps_img d / tau)^(1/2) + d/tau:
-for eps_img = 1e-4 and tau = 3000 s that is 1.5e-4 (simulated 1.3e-4 at T_img = 0.1 s). Hence the loss per image dominates the floor
+d = 22 ms and tau = 3000 s this is 36 ms, 0.11 s and 0.36 s for eps_img = 1e-5, 1e-4 and 1e-3, in agreement with
+the minima of the scan (0.03 s, 0.1 s, and a flat minimum between 0.3 and 1 s). At the optimum, rho_mean ~ eps_img + (2 eps_img d / tau)^(1/2) + d/tau:
+for eps_img = 1e-4 and tau = 3000 s that is 1.5e-4 (simulated 1.4e-4 at T_img = 0.1 s). Hence the loss per image dominates the floor
 once tau exceeds a few thousand seconds. Lowering eps_img, not imaging more often, is the lever. The imaging time
 matters only through the dead time at short periods: at T_img = 30 ms, t_img = 3 / 10 / 20 ms gives
-1.35 / 1.55 / 1.70e-4.
+1.28 / 1.48 / 1.66e-4.
 
 At 10^6 sites the delay is not a constant, because the block needs a sweep over all its positions to reach a hole
 (252 positions for a 32 x 4 block on 4 x 4 um; a one-pass visit takes 0.9 to 1.0 ms with fast steps and 1.35 to
@@ -400,15 +411,15 @@ tau = 3000 s:
 
 | timing (32 x 4 block) | T_img 0.03 s | 0.1 s | 0.3 s |
 |---|---|---|---|
-| fast | 1.2e-3 | 1.8e-4 | 2.0e-4 |
-| intermediate | 2.3e-3 | 4.9e-4 | 2.2e-4 |
+| fast | 8.7e-4 | 1.9e-4 | 2.0e-4 |
+| intermediate | 1.5e-3 | 4.1e-4 | 2.2e-4 |
 
 At T_img = 30 ms both timings saturate: the loss rate, eps_img / T + 1/tau = 2.8e-3 per site per second, needs
 2,800 fills/s. At rho = 2e-4 a block position holds about 0.8 holes (2e-4 x 10^6 / 252), so a sweep of 252 visits
 (0.25 to 0.4 s) refills only about 200 atoms, and the imaging dead time takes 25% of the time. The holes
 therefore pile up until each visit has enough work. By Little's law, the mean
-hole lifetime is rho_mean / (eps_img / T + 1/tau): 0.15 s for fast steps at T_img = 0.1 s, and 0.40 and 0.34 s
-for intermediate steps at 0.1 and 0.3 s. Intermediate steps at T_img = 0.3 s reach 2.2e-4, within 20% of fast
+hole lifetime is rho_mean / (eps_img / T + 1/tau): 0.15 s for fast steps at T_img = 0.1 s, and 0.33 s
+for intermediate steps at both 0.1 and 0.3 s. Intermediate steps at T_img = 0.3 s reach 2.2e-4, within 15% of fast
 steps at 0.1 s, with the 128-engine block and at one fifth of the heating per refilled atom (2 against 10 uK).
 Hence, at 10^6 sites, a slower imaging cadence is an alternative to a larger block. The imaging period should
 match the sweep time of the block rather than be as short as possible.
@@ -493,8 +504,8 @@ crosstalk at 4 um stays at 1.4 to 1.6e-4. A roll therefore mainly makes the dept
 for a +/-10 um change of a, which a 1.8 mrad roll gives over +/-5.6 mm. The engines set each tweezer's power in any
 case, so this is a calibration, not a limit. The same holds for edge straightness of +/-10 um over 12 mm.
 
-**Layouts (`results/m26_layout.json`; first comb point z_c = 7 mm, just beyond the x slit plane at 6.24 mm,
-CHOICE).** The worst row is the one at the far end of the comb:
+**Layouts (`results/m26_layout.json`; first comb point z_c = 7.0 mm, 0.5 mm (CHOICE) beyond
+the x slit plane of the traced x lens and collimator, Sec. 12).** The worst row is the one at the far end of the comb:
 
 | rows | layout | chips per stack, pitch | comb z range | worst row (a = 250 um): loss / peak / crosstalk at 4 um | polarisation-insensitive objective |
 |---|---|---|---|---|---|
@@ -531,7 +542,7 @@ comb. This needs no polarisation optics, and it gives alternate rows from differ
 orthogonal-polarisation decorrelation of `docs/row_coherence.md` comes for free if the objective accepts it.
 (ii) 64 rows: two such comb pairs, combined by a PBS. Four 16-chip stacks with four engines per chip at 3.0 mm
 pitch (12 mm edge) then form the 64 x 4 block: 256 engines, 98,048 fast actuators. With intermediate steps at
-10^6 sites it reaches a time average of 2.9e-4 on 4 x 4 um and 2.7e-4 on 3 x 4 um (Sec. 10), without the 24 mm
+10^6 sites it reaches a time average of 2.7e-4 on 4 x 4 um and 2.4e-4 on 3 x 4 um (Sec. 10), without the 24 mm
 chip edge that 32 x 8 needs. The worst rows lose 0.9 to 1.5% of their peak depth to the comb (a = 250 / 225 um),
 which is recovered by the per-tweezer power the engines set in any case. The edge scan is 1D in y and the 2D check uses the
 same windowed pupil; both assume an ideal thin collimator and the window of each slot at one distance z; the 45 deg tilt places the two edges of a 0.5 mm slot
@@ -551,23 +562,24 @@ stacked relay.
 and amplitude per ray) at a plane 60 um beyond the last vertex. S lies at the traced back focal plane,
 0.44 mm from the facet. Without a comb this reproduces the m14 wave model: crosstalk 8.0e-5 at 4 um against 8.4e-5,
 and 3.8e-4 against 4.0e-4 at 3 um. The real geometry also moves the comb. The traced x lens of m14 puts the x slit
-plane 7.37 mm from the facet, the collimator glass adds 0.15 mm in x (t (1 - 1/n) per section), and we keep
-0.5 mm of clearance. The comb therefore starts 7.6 mm from S, and the far row of a 32-row comb sits at 23.6 mm.
+plane 6.76 mm from the facet, the collimator glass adds 0.15 mm in x (t (1 - 1/n) per section), and we keep
+0.5 mm of clearance. The comb therefore starts 7.0 mm from S, and the far row of a 32-row comb sits at 23.0 mm.
+(Corrected: an earlier x-lens design did not cover the slit edge; with it the slit plane was 7.37 mm from the facet
+and the far row at 23.6 mm.)
 Slot window a = 250 um (225 um in brackets):
 
 | z from S | real collimator: loss / peak / crosstalk at 4 um | thin collimator (Sec. 11) |
 |---|---|---|
 | 15 mm | 5e-4 / 0.994 / 7.6e-5 (3.4e-3 / 0.986 / 7.5e-5) | 5e-4 / 0.994 / 1.2e-4 |
 | 20 mm | 2.6e-3 / 0.991 / 9.2e-5 (7.6e-3 / 0.985 / 9.7e-5) | 2.5e-3 / 0.992 / 1.5e-4 |
-| 23.6 mm (far row) | 5.2e-3 / 0.991 / 1.1e-4 (9.6e-3 / 0.985 / 1.2e-4) | 4.7e-3 / 0.991 / 1.8e-4 |
+| 23.0 mm (far row) | 5.0e-3 / 0.991 / 1.1e-4 (9.3e-3 / 0.986 / 1.2e-4) | 4.5e-3 / 0.991 / 1.8e-4 |
 | 30 mm | 9.0e-3 / 0.988 / 1.9e-4 (1.7e-2 / 0.983 / 2.0e-4) | 8.5e-3 / 0.987 / 2.7e-4 |
 
 The immersed facet puts more light near the edge of the beam at S, but loss and peak follow the thin-lens values
 within 12%, and the crosstalk is lower. The rule z_max = (a - f_FAC NA_FAC) D / NA therefore still holds. In 2D at
-the far row (z = 23.6 mm, a = 250 um), the full-row crosstalk at 4 um is 1.6e-4 (1.75e-4 without the comb). A
-moving tweezer changes the next row by 2.8e-5 in depth at 4 um (1.2e-5 without the comb) and by 7.0e-5 at 3 um
-(3.6e-5). Hence the comb conclusions of Sec. 11 hold for the real collimator, at the slightly larger distances of
-the real geometry.
+the far row (z = 23.0 mm, a = 250 um), the full-row crosstalk at 4 um is 1.6e-4 (1.75e-4 without the comb). A
+moving tweezer changes the next row by 2.8e-5 in depth at 4 um (1.2e-5 without the comb) and by 6.9e-5 at 3 um
+(3.6e-5). Hence the comb conclusions of Sec. 11 hold for the real collimator in the real geometry.
 
 **Light that leaves the chip at an angle along x.** A tweezer at x_a along the row is formed by light that leaves
 the emitters with x direction sine s_x = x_a / x_scale (x_scale = 288 um for D1). That is up to 0.31 at the end
