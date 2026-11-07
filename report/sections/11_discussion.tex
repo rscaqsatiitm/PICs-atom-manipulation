@@ -1,0 +1,74 @@
+\section{Discussion and conclusions}\label{sec:discussion}
+
+\subsection{What was shown}\label{sec:discussion-shown}
+
+Within the models used, the study establishes five points. (i) The passive SiN elements meet the proposal's
+targets on the 400~nm film, and two targets need restating: the steering update rate should be $\geq 200$~kHz
+for moves at 1.2~mK, and position noise must be specified as a spectral density at the trap frequency rather
+than as an rms value (\cref{sec:platform}). (ii) Independent motion of about 20 tweezers along a row, the
+integrated equivalent of the acousto-optic deflector, is possible with a sliding-window focal-plane OPA. In
+its optimised form (design D1: 128 ports, 192 arms and emitters at 1.5~\textmu m pitch), a 1.2~mK tweezer needs
+about 57~mW once the facet loss and the glued collimator are included (\cref{sec:engine,sec:rows}). (iii) Rows of
+such engines can be stacked and relayed onto a 4~\textmu m lattice. The rows do not need one frequency shifter
+per chip: common phase noise on the seed (about 3~rad rms, 1 to 2~GHz) with different fibre delays makes them
+mutually incoherent. Its conversion to intensity noise stays 16~dB inside the heating criterion if no filter
+narrower than about 100~pm and no pair of reflections with $R_1R_2>1.7\times10^{-3}$ lies in the path
+(\cref{sec:rows}). (iv) Transport with handoff in three dimensions delivers 3,000 of 3,000 simulated atoms when
+the moves run along lanes between rows, the moving depth is at least three times the hold depth, and the
+hold depth is about $20\,k_BT$. With 200~\textmu s ramps and 400~\textmu s lane steps the heating per handoff
+falls to 0.12 to 0.16~\textmu K at a moving depth of only 0.3~mK, and the axial registration of the two foci
+must be held to $\pm0.5$~\textmu m (\cref{sec:transport}). (v) At $10^6$ sites, a block of 128 engines with fast
+steps holds a time-averaged defect fraction of $1.8\times10^{-4}$ to $2.0\times10^{-4}$, set by vacuum and
+imaging losses rather than by the repair. Slower steps reach a similar floor if the imaging period is raised
+to match the sweep time of the block (\cref{sec:megascale}).
+
+\subsection{What is model-dependent}\label{sec:discussion-model}
+
+Several results rest on models whose limits matter. The x response of the engine comes from a 2D beam
+propagation calibrated to an effective index, and the facet transmission from a 2D FDTD. The y axis of the
+relay is scalar, with ideal relay lenses downstream of the collimator. The transport model is classical in
+three dimensions, checked quantum mechanically in one dimension per axis. The steady-state simulator draws
+losses at assumed rates (vacuum lifetime, loss per image and per move) from a single random seed per case.
+
+The most consequential model dependence was found last. Every y-axis result before \cref{sec:combine} assumed
+light without an x component. A tweezer at $x_a$ is formed by light with x direction sine $s_x = x_a/x_\mathrm{scale}$.
+The cylindrical collimator, which conserves $k_x$, then acts with effective indices $\sqrt{n^2-s_x^2}$ and
+defocuses the facet by about $-99\,s_x^2$~\textmu m. This keeps the earlier y figures valid near the row centre
+only. With the best common focus offset a row is usable over $|x_a|\leq 45$~\textmu m, half of the
+180~\textmu m segment. The transport, power and crosstalk numbers for tweezers in the outer half of a segment
+are therefore optimistic until the collimator is redesigned.
+
+In addition, four inconsistencies between documents remain and are stated as found rather than resolved:
+(i) the slow-step heating per move appears as 0.12 to 0.16~\textmu K per handoff, 0.2 to 0.3~\textmu K per move
+including the x move, and 0.3~\textmu K in the steady-state input, and the 3D classical run that includes the x
+move gives 0.16~\textmu K, below the quantum sum; (ii) the pass count and cycle time of the greedy scheduler differ
+slightly between the rearrangement and repair studies for the same case (5.8 plus 2 passes and 17.2/23.0~ms
+against 8.05 passes and 17.8/23.1~ms), which points to different scheduler versions; (iii) the heating of the
+fast steps was computed with 100~\textmu s ramps, while the shortest cycle time quoted assumes 50~\textmu s
+ramps; (iv) the defect fractions quoted before the steady-state follow-up are sampled just after an image and
+count imaging losses twice, so they exceed the time average by about 25\% at the nominal point. Smaller differences
+come from separate runs or versions of the same model and are reported as given in the chapters: the steering
+half-range at 128 channels (67 or 68~\textmu m), the shift of the other tweezers when one moves (1.5~nm in the
+paraxial engine, up to 3.5~nm in D1), the time to reach $10^{-3}$ defects at $10^6$ sites with fast steps (1.45 to
+1.67~s), its time-averaged floor (1.8 to $2.0\times10^{-4}$, different seeds and run lengths), and the sites per
+180~\textmu m segment (45 or 46 at 4~\textmu m, depending on whether the segment edge is counted).
+
+\subsection{What is extrapolated}\label{sec:discussion-extrap}
+
+The large-array chapters extrapolate in three respects. (i) The optics for $10^6$ sites assume a corrected field
+of about $\pm2.8$~mm at NA 0.5, which we did not design. (ii) The static potential for $10^6$ sites needs of the
+order of kilowatts of laser power, from tweezers or from a cavity lattice, which we priced but did not
+design. (iii) The comb that combines four 16-chip stacks into a 64-row block, and the reflective collimator that
+would restore full segments, exist only as first-order concepts with wave-optics checks of their key
+penalties.
+
+\subsection{Conclusions}\label{sec:discussion-concl}
+
+We have shown, in simulation, that SiN circuits can steer independent transport tweezers along rows of a
+4~\textmu m lattice, that stacked rows can be made independent without per-chip frequency shifters, and that
+handoff transport is clean and cold with slow steps and lanes between rows. The main limitation is the
+cylindrical collimator, which in its present refractive form serves only the central half of each engine's
+segment. The next step is the design of a collimator insensitive to the x angle, for example all-reflective
+in one medium, followed by measurements on fabricated D1 engines of the quantities the models assume: phase
+accuracy and update rate of the actuators, facet transmission, and the intensity noise of the decorrelated
+laser chain.

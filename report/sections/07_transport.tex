@@ -1,0 +1,155 @@
+\section{Transport and handoff in three dimensions}\label{sec:transport}
+
+This chapter tests whether a moving tweezer of the adopted design can lift an atom out of a static trap, carry it across the array and hand it to an empty static trap without losing it, heating it, or disturbing the atoms it passes. With the moving-trap field computed through the real optical chain and a static array of Gaussian traps, a 12 or 40~\textmu m move delivers 3,000 of 3,000 simulated atoms (loss $<10^{-3}$ at 95\% confidence) under three conditions: (i) the move runs along a lane between the rows, not along a row; (ii) the moving depth is at least three times the static hold depth; (iii) the hold depth is about $20\,k_BT$. Here, $k_BT$ is the thermal energy of the atoms. With slow handoff steps (200~\textmu s ramps, 400~\textmu s lane steps) the heating per move falls to 0.12 to 0.16~\textmu K at a moving depth of only 0.3~mK, in both a one-dimensional quantum and a three-dimensional classical model, so the shallow, low-power operating point is also the low-heating point. The one tight alignment is the axial registration of the 1064.4 and 1075~nm foci. A lattice with 3~\textmu m pitch along the rows and 4~\textmu m between rows transports as cleanly as the $4\times4$~\textmu m lattice.
+
+These results revise two earlier estimates. The one-dimensional transport model of the scaling study, which left out the handoff, the static array and the third dimension, gave a minimum moving depth of 0.2~mK; once handoff and waiting atoms are included this is too optimistic. The first three-dimensional operating points, with 100~\textmu s steps, heated the atom by 1 to 10~\textmu K per move; the slower steps of Sec.~\ref{sec:transport-timing} remove most of this heating.
+
+\subsection{Model}\label{sec:transport-model}
+
+The moving trap is the intensity of one tweezer of design D1 (beam-propagation response, least-squares synthesis), passed through the Weierstrass and aplanat collimator and the circular NA 0.5 pupil, and computed by scalar focusing with defocus on a grid of $7\times6\times20$~\textmu m. Its full widths at half maximum are 1.73~\textmu m along the row ($x$), 1.37~\textmu m across it ($y$) and 9.8~\textmu m along the axis ($z$); at 1~mK its trap frequencies are 54, 67 and 22~kHz. We hold its shape fixed while it moves and sample its position and depth at 200~kHz. The static array consists of Gaussian beams at 1075~nm with a waist of 0.85~\textmu m (our choice) and a Rayleigh range of 2.1~\textmu m, at 4~\textmu m pitch, in three rows of 15 sites. All sites share one global hold depth, since a fixed meta-optic array cannot switch single sites. The two wavelengths add incoherently.
+
+The atoms are classical Cs atoms, integrated by velocity Verlet with 0.25~\textmu s steps and gravity along $y$, with 1,500 to 3,000 atoms per case. Each starts in a thermal distribution sampled in the harmonic approximation and truncated to atoms bound in the real Gaussian site. The sequence is: ramp the moving trap up on the source site ($\sin^2$, 100~\textmu s); step 2~\textmu m in $y$ into the lane (100~\textmu s); move in $x$ with a minimum-jerk profile; step back to the row (100~\textmu s); ramp down on the target site (100~\textmu s); hold for 100~\textmu s. An atom counts as delivered if it is bound in the target static trap after the moving trap is off. The lane lies halfway between rows 4~\textmu m apart, which puts it as far as possible from the waiting atoms on both sides.
+
+\subsection{Lanes between the rows}\label{sec:transport-lanes}
+
+A tweezer that moves along its own row passes over empty static sites. The total potential then develops a dip that travels with the moving trap and kicks the atom. Losses depend strongly on the move time, with resonances where the transit time over one site matches the trap period (Table~\ref{tab:transport-row}). At most settings 45 to 95\% of the atoms are lost. Only a moving trap five times deeper than the static traps, moving slowly (400~\textmu s), recovers 99.1 to 99.7\%, and then at 14 to 24~\textmu K of heating.
+
+\begin{table}[htbp]\centering\small
+\caption{Fraction of atoms delivered when the 12~\textmu m move runs along the row, over empty static sites, for two move times (simulated, classical, 1,500 atoms per case).}
+\label{tab:transport-row}
+\begin{tabular}{lll}
+\toprule
+hold / moving depth & move in 200~\textmu s & move in 400~\textmu s \\
+\midrule
+0.1 / 0.3~mK & 5 to 7\% & 54 to 57\% \\
+0.1 / 0.5~mK & 42 to 48\% & 99.1 to 99.7\% (heating 14~\textmu K) \\
+0.2 / 0.5~mK & 11\% & 99.3 to 99.6\% (heating 24~\textmu K) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Along a lane 2~\textmu m off the row, reached with the row-select $y$ tilt, the static traps have fallen to $1.6\times10^{-5}$ of their depth and transport is clean. The lane costs one shared $y$ tilt per pass (100~\textmu s each way), which the row-select mirror already provides. Because the tilt is shared, all tweezers of a stack enter and leave the lanes together; this is the main constraint the scheduler of Sec.~\ref{sec:rearrange} must respect.
+
+\subsection{Depth ratio, hold depth and temperature}\label{sec:transport-depth}
+
+The ratio of moving to hold depth decides whether the handoff completes. At a ratio of 1.5, 5\% of the atoms stay behind in the source site; at 2, 3 to 5\% are lost; at 3, 99.5 to 99.9\% are delivered with about 10~\textmu K of heating per move; at 5, 99.6 to 100\% are delivered with 1 to 2.6~\textmu K (all with 100~\textmu s steps).
+
+The hold depth is set by the atoms that wait next to a lane. They feel the out-of-focus light of the passing tweezer, which at 1.5 to 2.5~\textmu m from its axis and a few micrometres from focus is 6 to 15\% of its peak intensity. At a hold depth of $10\,k_BT$, 1 to 2\% of these waiting atoms are lost from the hot tail of the distribution; at $20\,k_BT$, none of 3,000. Table~\ref{tab:transport-op} lists the resulting operating points. The required depth is set by the atom temperature, not by the move: about $60\,k_BT$ for the moving trap, or $100\,k_BT$ for low heating with fast steps. Cooling the atoms from 10 to 5~\textmu K therefore halves the laser power.
+
+\begin{table}[htbp]\centering\small
+\caption{Operating points for a 12~\textmu m move in 400~\textmu s along a 2~\textmu m lane, with 100~\textmu s ramps and lane steps and 200~kHz updates (simulated, classical, 3,000 atoms). Power per tweezer is derived by scaling 57~mW at 1.2~mK with depth; the second number is for 720 tweezers.}
+\label{tab:transport-op}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llllll}
+\toprule
+atoms & hold / moving & delivered & heating per move & waiting lost & power, 1 / 720 tweezers \\
+\midrule
+5~\textmu K & 0.1 / 0.3~mK & 3000/3000 & 9.9~\textmu K & 0/3000 & 14~mW / 10~W \\
+5~\textmu K & 0.1 / 0.5~mK & 3000/3000 & 1.8~\textmu K & $\le$2/3000 & 24~mW / 17~W \\
+10~\textmu K & 0.2 / 0.6~mK & 3000/3000 & 10.0~\textmu K & 0/3000 & 29~mW / 21~W \\
+10~\textmu K & 0.2 / 1.0~mK & 3000/3000 & 0.9~\textmu K & $\le$3/3000 & 48~mW / 34~W \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Step timing and heating per move}\label{sec:transport-timing}
+
+The classical model is not reliable when the energy gain is near one trap quantum (about 1 to 3~\textmu K here). We therefore check the handoff with a one-dimensional split-step propagation along $y$, the handoff and lane axis. The atom starts in the ground state of the static site; the $y$ profile of the moving tweezer is taken from the three-dimensional grid, and gravity is included. The $x$ move is treated separately. We compare with classical trajectories from a Wigner sample of the same ground state (Table~\ref{tab:transport-quantum}).
+
+\begin{table}[htbp]\centering\small
+\caption{Energy gain per handoff along $y$ (source ramp, lane step out and back, target ramp) from 1D split-step propagation, the fraction of atoms left in the ground state, and the classical gain from a Wigner sample of the same initial state (simulated). The trap quantum of the static site is 1.4~\textmu K at 0.1~mK and 2.0~\textmu K at 0.2~mK.}
+\label{tab:transport-quantum}
+\begin{tabular}{lllll}
+\toprule
+hold / moving & ramp / lane step & gain, quantum & ground state kept & gain, classical \\
+\midrule
+0.1 / 0.3~mK & 100 / 100~\textmu s & 9.7~\textmu K & 0.08 & 11.6~\textmu K \\
+0.1 / 0.3~mK & 100 / 200~\textmu s & 2.0~\textmu K & 0.21 & 1.4~\textmu K \\
+0.1 / 0.3~mK & 200 / 400~\textmu s & 0.12~\textmu K & 0.98 & 0.94~\textmu K \\
+0.1 / 0.5~mK & 100 / 100~\textmu s & 0.84~\textmu K & 0.84 & 1.53~\textmu K \\
+0.1 / 0.5~mK & 200 / 400~\textmu s & 0.13~\textmu K & 0.99 & 0.87~\textmu K \\
+0.2 / 0.6~mK & 200 / 400~\textmu s & 0.15~\textmu K & 0.99 & 1.72~\textmu K \\
+0.2 / 1.0~mK & 100 / 100~\textmu s & 1.58~\textmu K & 0.66 & 1.58~\textmu K \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The $x$ move adds 0.08 to 0.37~\textmu K in both models, with 0.98 to 0.99 of the ground state kept. Two findings follow. First, the lane step, not the $x$ move, sets the heating, and the heating falls steeply with the step duration: from 100 to 400~\textmu s the gain at 0.1/0.3~mK drops 80-fold. Second, above about one trap quantum the classical model agrees with the quantum one to within a factor of 2, on the pessimistic side; below it, Wigner sampling overstates the heating by up to a factor of 10, as expected for zero-point motion. A three-dimensional classical run with the slow steps confirms delivery of 3,000 of 3,000 atoms, with 0.16~\textmu K of heating for 5~\textmu K atoms at 0.1/0.3~mK and 0.59~\textmu K for 10~\textmu K atoms at 0.2/0.6~mK, and no loss of waiting atoms.
+
+Hence three step timings are available, and the choice between them is a trade between heating and cycle time (Sec.~\ref{sec:rearrange}). The slow steps (200~\textmu s ramps, 400~\textmu s lane steps) heat by 0.12 to 0.16~\textmu K per handoff at 0.3~mK, or 0.2 to 0.3~\textmu K per move once the $x$ move is included. The intermediate steps (100~\textmu s ramps, 200~\textmu s lane steps) heat by about 2~\textmu K per move. The fast steps (100~\textmu s lane steps) heat by about 10~\textmu K at a moving depth of 0.3~mK, or 1.2~\textmu K at 0.5~mK. The slow, cold regime needs the least laser power; the fast regime at 0.5~mK shortens the cycle at the cost of 24 instead of 14~mW per tweezer (Table~\ref{tab:transport-op}).
+
+\subsection{Alignment and depth tolerances}\label{sec:transport-tol}
+
+Table~\ref{tab:transport-tol} lists the fraction delivered under misalignments and timing changes. Three points follow. (i) Axial registration of the two foci is the one tight alignment, to about $\pm1$~\textmu m for delivery. A diffractive objective shifts focus by about 170~\textmu m between 1064.4 and 1075~nm (16~\textmu m/nm, derived), so the two paths must be focused independently before they are combined, and then held. (ii) Lateral registration is loose: 0.4~\textmu m costs nothing, so the 16~nm row-placement budget of the stacked relay is not a constraint for transport. (iii) Speed is not limiting in this regime: 40~\textmu m in 400~\textmu s is as safe as 12~\textmu m.
+
+\begin{table}[htbp]\centering\small
+\caption{Tolerances of the handoff: fraction of 10~\textmu K atoms delivered at a hold depth of 0.1~mK, 12~\textmu m in 400~\textmu s along the lane, 100~\textmu s steps, unless the row states otherwise (simulated, classical).}
+\label{tab:transport-tol}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llll}
+\toprule
+parameter & values & moving 0.3~mK & moving 0.5~mK \\
+\midrule
+nominal & & 0.9993 & 0.9993 \\
+axial focus offset & 0.5 / 1 / 2 / 4~\textmu m & 0.998 / 0.995 / 0.939 / 0.455 & 0.995 / 0.997 / 0.957 / 0.902 \\
+lateral offset, $y$ & 0.1 / 0.2 / 0.4~\textmu m & 1.000 / 0.998 / 0.999 & 1.000 / 1.000 / 0.998 \\
+lateral offset, $x$ & 0.1 / 0.2 / 0.4~\textmu m & 0.998 / 1.000 / 0.998 & 1.000 / 1.000 / 0.999 \\
+ramp time & 25 / 200~\textmu s & 0.994 / 0.998 & 0.993 / 1.000 \\
+move & 40~\textmu m in 400 / 800~\textmu s & 0.998 / 0.998 & 0.998 / 1.000 \\
+updates & smooth, not 200~kHz & 0.999 & 0.999 \\
+gravity & off & 0.999 & 0.999 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Delivery is not the tightest criterion for the axial offset; heating is. We propagate the axial motion in one dimension from the ground state of the static site (axial trap quantum 0.40~\textmu K at 0.1~mK), with the static depth following the lateral separation of the moving-trap centre and the moving trap's axial profile taken from the three-dimensional grid. Here, $\delta z$ is the axial offset between the 1075 and 1064~nm foci. With coincident foci the axial motion is not excited, because the change of axial trap frequency during the handoff is adiabatic. A focus offset displaces the axial equilibrium twice per move, and that is what heats (Table~\ref{tab:transport-axial}). With the slow steps, keeping the axial heating below the lateral 0.12 to 0.15~\textmu K needs $|\delta z|\le0.5$~\textmu m; 1~\textmu m costs about 2~\textmu K per move and 2~\textmu m costs 4 to 8~\textmu K. This tightens the $\pm1$~\textmu m delivery tolerance into a heating tolerance of $\pm0.5$~\textmu m, or 0.3\% of the chromatic focal offset. A slow stage on the last $y$ and $x$ lenses of the relay, calibrated on the atoms, would provide the adjustment; an active focus lock between the two paths is the corresponding hardware requirement.
+
+\begin{table}[htbp]\centering\small
+\caption{Axial energy gain per move versus the axial focus offset $\delta z$ (1D split-step propagation; the classical Wigner values agree to within 20\% above 1~\textmu K and are pessimistic below).}
+\label{tab:transport-axial}
+\begin{tabular}{llllll}
+\toprule
+hold / moving & ramp / lane step & $\delta z=0$ & 0.5~\textmu m & 1~\textmu m & 2~\textmu m \\
+\midrule
+0.1 / 0.3~mK & 100 / 100~\textmu s & 0.06~\textmu K & 4.1~\textmu K & 16.6~\textmu K & 40.7~\textmu K \\
+0.1 / 0.3~mK & 200 / 400~\textmu s & $<0.01$~\textmu K & 0.19~\textmu K & 2.0~\textmu K & 8.3~\textmu K \\
+0.1 / 0.5~mK & 100 / 100~\textmu s & 0.02~\textmu K & 6.4~\textmu K & 31.0~\textmu K & 28.3~\textmu K \\
+0.1 / 0.5~mK & 200 / 400~\textmu s & $<0.01$~\textmu K & 0.22~\textmu K & 1.8~\textmu K & 4.4~\textmu K \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The depth uniformity of the static array, in contrast, is not a constraint. With lane transport, 2,000 atoms per case and the three operating points 5~\textmu K at 0.1/0.3~mK, 5~\textmu K at 0.1/0.5~mK and 10~\textmu K at 0.2/0.6~mK, a source site deeper by 20, 40 or 60\% still delivers at least 0.996, a target site shallower by a factor 0.8, 0.6 or 0.4 at least 0.998, and random depth errors of 5, 10 or 20\% rms deliver 1.000 in all cases. This is far beyond the errors a meta-optic or SLM array would show.
+
+\subsection{Denser lattices: 3~\textmu m pitch}\label{sec:transport-pitch}
+
+At 3~\textmu m pitch in both directions, the lane between rows is only 1.5~\textmu m from the waiting atoms. The moving tweezer, 1.37~\textmu m wide across the row and with strong out-of-focus light, then captures them (Table~\ref{tab:transport-pitch}, upper part; slow steps, 3,000 atoms). The transported atom is always delivered, but at 0.1/0.3~mK only 0.335 of the waiting atoms in the same row stay and 0.584 are lost. A square 3~\textmu m lattice would therefore need empty corridor rows, which cost most of the density gain: a repeating layout of computation row, corridor and reservoir row gives (1/3)/9~\textmu m$^{-2}$ = 0.037~\textmu m$^{-2}$ computation sites, only about 20\% above 0.031~\textmu m$^{-2}$ at 4~\textmu m with a 1:1 reservoir layout.
+
+However, only the closest approach to the waiting atoms matters, and that is set by the lane, not by the pitch along the row. A $3\times4$~\textmu m lattice (3~\textmu m along the rows, rows 4~\textmu m apart, lane 2~\textmu m) therefore transports as cleanly as $4\times4$~\textmu m (Table~\ref{tab:transport-pitch}, lower part). It has 33\% more sites per area: 0.063 against 0.047 computation sites per \textmu m$^2$ with a 3:1 reservoir layout. This supersedes the earlier conclusion that 3~\textmu m pitch needs corridors; that conclusion holds only for a 3~\textmu m row spacing. Corridor rows 6~\textmu m apart with a 3~\textmu m lane are also safe (3000/3000 delivered, 0.3 to 1.5~\textmu K, no waiting atom lost at all three operating points), but less dense.
+
+\begin{table}[htbp]\centering\small
+\caption{Transport at 3~\textmu m pitch (simulated, classical, 3,000 atoms per case, 200~\textmu s ramps and 400~\textmu s lane steps). Upper part: square 3~\textmu m lattice with a 1.5~\textmu m lane; fraction of waiting atoms that stay in the same row next to the lane and in the next row beside the drop. Lower part: $3\times4$~\textmu m lattice with a 2~\textmu m lane; waiting atoms lost among the in-row neighbour at 3~\textmu m, the atoms passed by the lane and the next row beside the drop, out of 3,000.}
+\label{tab:transport-pitch}
+\begin{tabular}{llll}
+\toprule
+hold / moving (atoms) & delivered & heating & waiting atoms \\
+\midrule
+\multicolumn{4}{l}{\textit{square 3~\textmu m lattice, lane 1.5~\textmu m: fraction that stays, same row / next row}} \\
+0.1 / 0.3~mK & 1.000 & & 0.335 / 0.149 (0.584 / 0.851 lost) \\
+0.1 / 0.5~mK & 1.000 & & 0.001 / 0.006 \\
+0.2 / 0.6~mK & 1.000 & & 0.225 / 0.117 \\
+0.2 / 1.0~mK & 1.000 & & 0.014 / 0.012 \\
+\midrule
+\multicolumn{4}{l}{\textit{$3\times4$~\textmu m lattice, lane 2~\textmu m: number lost, in-row neighbour / passed by lane / next row}} \\
+0.1 / 0.3~mK (5~\textmu K) & 3000/3000 & 0.16~\textmu K & 0 / 0 / 0 \\
+0.1 / 0.5~mK (5~\textmu K) & 3000/3000 & 0.05~\textmu K & 0 / 0 / 3 of 3000 \\
+0.2 / 0.6~mK (10~\textmu K) & 3000/3000 & 0.59~\textmu K & 0 / 0 / 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The intermediate steps are also clean on the dense lattice. With 100~\textmu s ramps, 200~\textmu s lane steps and 300~\textmu s moves over 9~\textmu m along the lane, 3,000 of 3,000 atoms are delivered with 3.0~\textmu K of heating per move at 0.1/0.3~mK (5~\textmu K atoms) and 0.8~\textmu K at 0.2/0.6~mK (10~\textmu K atoms), and no bystander at 3~\textmu m, at 6~\textmu m or in the next row is lost or displaced. This is consistent with the 2.0~\textmu K of the quantum check (Table~\ref{tab:transport-quantum}), and we use 2~\textmu K per move for this timing in the steady-state analysis of Sec.~\ref{sec:megascale}.
+
+\subsection{Limits}\label{sec:transport-limits}
+
+The three-dimensional model is classical, and the quantum check is one-dimensional per axis, with the atom assumed to sit at the moving-trap centre laterally for the axial check. Light-assisted processes, photon scattering by the trapping light (a few photons per second at 0.3 to 0.5~mK, estimated from the far-detuned rate, not simulated) and the vector light shift are not included. The moving trap's shape is assumed invariant along the row; least-squares synthesis keeps it within 0.1\%, but the traced collimator of the later design study defocuses tweezers away from the row centre, which this model does not include. Neighbouring tweezers in the same row (independent tweezers 4~\textmu m away) are not included, and the static traps are ideal Gaussian beams. The loss per move is not computed: 0 of 3,000 atoms bounds it below about $10^{-3}$, and smaller values used in Sec.~\ref{sec:rearrange} are assumptions.

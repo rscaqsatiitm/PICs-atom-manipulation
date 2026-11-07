@@ -1,0 +1,127 @@
+\section{Reproduction map}\label{app:repro}
+Each module, its script and its main outputs (from \texttt{README.md}). Every script writes \texttt{results/<name>.json} with its inputs (with provenance), outputs and the git revision; \texttt{make test} runs the test suite.
+
+{\footnotesize
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.243\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.385\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.372\dimexpr(\linewidth-6\tabcolsep)\relax}@{}}
+\toprule\noalign{}
+Module & Script & Main outputs \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 Platform & \texttt{scripts/m1\_platform.py} & design widths, n\_eff,
+n\_g, dn/dT, bend loss, substrate leakage, coupling length \\
+2 Couplers, MMI & \texttt{scripts/m2\_couplers\_mmi.py} & taper overlap
+and tolerance; MMI loss, bandwidth, split-ratio statistics \\
+3 OPA & \texttt{scripts/m3\_opa.py},
+\texttt{scripts/m3\_grating\_fdtd.py} & range vs channels, pitch,
+gratings (FDTD), multi-tweezer synthesis, noise, update rate, loss \\
+4 Switches, router & \texttt{scripts/m4\_switches.py} & extinction Monte
+Carlo, polarisation, actuator dynamics, 16-channel router \\
+5 Heaters & \texttt{scripts/m5\_heaters.py} & P\_pi, rise time, thermal
+crosstalk; actuator comparison \\
+6 Power & \texttt{scripts/m6\_power.py} & self-heating, facet intensity,
+Kerr phase \\
+7 Budget & \texttt{scripts/m7\_budget.py} & error-budget links,
+\texttt{docs/parameters.md} \\
+8 Twenty tweezers & \texttt{scripts/m8\_twenty.py} & star-coupler OPA
+with 20 switched ports vs phase synthesis;
+\texttt{docs/twenty\_tweezers.md} \\
+9 Independent steering & \texttt{scripts/m9\_independent.py} &
+sliding-window focal-plane OPA vs AOD-emulation routes;
+\texttt{docs/independent\_steering.md} \\
+10 Star-coupler BPM & \texttt{scripts/m10\_fpr.py},
+\texttt{scripts/m10\_fpr\_meep.py} & calibrated effective index,
+wide-angle BPM of the dense-port coupler, FDTD check, least-squares
+synthesis; \texttt{docs/fpr\_design.md} \\
+11 Geometry optimisation & \texttt{scripts/m11\_optimise.py} &
+oversampling, emitter facet, slab widths, window width \\
+12 Scaling & \texttt{scripts/m12\_scaling.py} & tweezers per row
+(packing), aberration vs size, scaling table;
+\texttt{docs/scaling.md} \\
+13 Stacked relay & \texttt{scripts/m13\_stack.py} & stacked-chip
+anamorphic relay: facet far field, y fill, 2D row crosstalk (coherent /
+incoherent), collimator tolerances, layout;
+\texttt{docs/stacked\_relay.md} \\
+14 Collimator & \texttt{scripts/m14\_collimator.py},
+\texttt{scripts/m14\_facet\_meep.py} & ray-traced fast-axis collimators
+(Weierstrass + aplanat adopted), facet FDTD, tolerances, form errors,
+first x lens vs calibration, power and frequency plan;
+\texttt{docs/collimator.md} \\
+15 Row coherence & \texttt{scripts/m15\_coherence.py} & independent rows
+without per-chip AOMs: common phase-noise modulation with fibre delays,
+alternating polarisation (vector focusing), passive apodiser;
+\texttt{docs/row\_coherence.md} \\
+16 PM-to-AM & \texttt{scripts/m16\_pm\_am.py} & intensity noise from
+filtering the phase-noise-modulated light (gain tilt, band-pass,
+multipath, PM fibre, dispersion, chain); \texttt{docs/pm\_am.md} \\
+17 Scaling II & \texttt{scripts/m17\_scale.py} & transport depth vs move
+time (classical Monte Carlo), row select, configuration table;
+\texttt{docs/scaling\_beyond.md} \\
+18 3D transport & \texttt{scripts/m18\_transport3d.py} & 3D classical
+transport with handoff between the static array and the moving tweezer
+(realistic 3D field), lanes, depth ratios, temperature, bystanders,
+tolerances; \texttt{docs/transport3d.md} \\
+19 Quantum check & \texttt{scripts/m19\_quantum.py} & 1D split-step
+propagation of handoff and move from the ground state, Wigner-classical
+comparison; \texttt{docs/rearrangement.md} \\
+20 Rearrangement & \texttt{picsim/rearrange.py},
+\texttt{scripts/m20\_rearrange.py} & greedy pass scheduler for a stack
+with row select and lanes: passes, cycle time, moves per atom, defects;
+\texttt{docs/rearrangement.md} \\
+21 Repair & \texttt{scripts/m21\_repair.py} & stochastic losses,
+image-and-repair rounds, scheduler pass-selection modes;
+\texttt{docs/repair.md} \\
+22 Megascale budget & \texttt{scripts/m22\_megascale.py} & 1e4-1e6 sites
+at 3-4 um: field, zones, static power, engine blocks, x-tiling optics,
+loss rates; \texttt{docs/megascale.md} \\
+23 Steady state & \texttt{picsim/megasort.py},
+\texttt{scripts/m23\_steady.py} & assembly and steady-state refilling of
+1e4-1e6 sites with engine blocks, reservoir bands and losses;
+\texttt{docs/megascale.md} \\
+24 Tiling wave optics & \texttt{scripts/m24\_tiling\_wave.py} & ghost
+light from one engine in its neighbour\textquotesingle s slit zone
+(shared slit plane): wave propagation through the lenslet with pupil
+acceptance, ray trace through neighbouring lenslets, engine-pitch scan;
+\texttt{docs/megascale.md} \\
+25 Imaging cadence & \texttt{scripts/m25\_imaging.py} & steady-state
+defect fraction (at image, before image, time average) against imaging
+period, loss per image, imaging time and vacuum lifetime at 1e5 and 1e6
+sites; \texttt{docs/megascale.md} \\
+26 Stack combining & \texttt{scripts/m26\_stack\_combine.py} &
+interleaving chip stacks with a slotted 45 deg comb mirror at the
+collimator plane: 1D wave optics of the window vs distance, layouts for
+32-64 rows with PBS, tilt and path tolerances, 2D check; the real
+(traced) collimator, and its detuning for tweezers away from the row
+centre (skew rays, effective indices); \texttt{docs/megascale.md} \\
+path & content & \\
+-\/-\/- & -\/-\/- & \\
+\texttt{picsim/params.py} & every physical input, with provenance (USER,
+SOURCE, DERIVED, SIM, CHOICE, RECALLED) & \\
+\texttt{picsim/materials.py} & Sellmeier models: LPCVD Si3N4 (Luke
+2015), SiO2 (Malitson 1965), AlN & \\
+\texttt{picsim/modes.py} & vector FEM mode solver wrapper (femwell):
+straight, bent, coupled and leaky guides & \\
+\texttt{picsim/slab.py} & analytic and finite-difference slab modes & \\
+\texttt{picsim/couplers.py} & inverse-taper edge couplers (mode overlap
+with Gaussian fibre modes) & \\
+\texttt{picsim/mmi.py} & MMI couplers by effective index + eigenmode
+expansion & \\
+\texttt{picsim/circuits.py} & MZI transfer matrices, Monte Carlo
+extinction, actuator dynamics, routing tree & \\
+\texttt{picsim/heaters.py} & 2D thermal FEM of heaters: P\_pi, rise
+time, crosstalk & \\
+\texttt{picsim/opa/} & OPA near field, Fourier-plane slit, pupil relay,
+multi-tweezer synthesis, phase noise, star coupler & \\
+\texttt{picsim/transport.py} & motional excitation of a moved atom
+(harmonic trap, staircase trajectories) & \\
+\texttt{picsim/budget.py} & error-budget links from optical specs to
+atom metrics & \\
+\texttt{picsim/bpm.py} & 2D wide-angle FD-BPM and the calibrated lateral
+effective-index model & \\
+\texttt{scripts/m*\_*.py} & one script per module; each writes
+\texttt{results/\textless{}name\textgreater{}.json} (+ \texttt{.png})
+& \\
+\texttt{tests/} & unit tests against analytic limits & \\
+\end{longtable}
+}

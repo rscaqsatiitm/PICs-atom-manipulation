@@ -1,5 +1,11 @@
 # Fast-axis collimator, facet loss, relay lens and the power plan
 
+> Follow-up (`docs/megascale.md`, Sec. 12): this module and `docs/collimator.md` treat the y axis for light with
+> no x component (s_x = 0). A tweezer at x_a is made of light with s_x = x_a / 288 um, and the cylindrical collimator
+> then acts with effective indices sqrt(n^2 - s_x^2). The adopted collimator defocuses the facet by -99 s_x^2 um. The
+> y figures below therefore hold near the row centre: the peak falls to 0.97 at x_a = 30 um and 0.48 at 60 um.
+> With the best common focus offset a row is usable over |x_a| <= 45 um.
+
 Follow-up to `docs/stacked_relay.md`, which assumed an ideal collimator (focal length 175 um, NA 0.9, Abbe sine
 condition). Code: `picsim/raytrace.py`, `picsim/opa/collimator.py`, `scripts/m14_collimator.py`,
 `scripts/m14_facet_meep.py` (2D FDTD); results `results/m14_*.json`. Values are SIM or DERIVED, valid in the regime

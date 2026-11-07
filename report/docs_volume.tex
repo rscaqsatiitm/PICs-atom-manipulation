@@ -1,0 +1,31 @@
+\documentclass[10pt,a4paper,oneside]{report}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{amsmath,amssymb}
+\usepackage{longtable,booktabs,array,calc}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\title{SiN photonic circuits for a neutral-atom processor\\[4pt]
+  \large Volume II: the module-by-module record (compiled from \texttt{docs/})}
+\author{Simulation study for proposal ANRF/ARG/2026/009937}
+\date{\today}
+\begin{document}
+\maketitle
+\chapter*{Preface}
+This volume compiles, without rewriting, the fifteen documents in \texttt{docs/} of the repository, in topic
+order. Each was written as its module was completed, and several carry follow-up notes at their start or in
+later sections. Where a follow-up note or a later section revises an earlier statement, the later one applies;
+Volume I (\texttt{report/report.pdf}) gives the current state in one place. Values are labelled in each
+document's verification notes as USER (proposal), SOURCE (read in session), SIM (simulation in the repository),
+DERIVED (calculation shown), CHOICE (stated assumption) or RECALLED (to be verified), and simulated values should
+be reviewed before they are quoted.
+\tableofcontents
+\input{docs/all.tex}
+\end{document}

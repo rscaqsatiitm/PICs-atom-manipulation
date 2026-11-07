@@ -10,6 +10,10 @@ See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-twe
 beam-propagation design and optimisation of that engine, and
 `docs/parameters.md` for the provenance of every input.
 
+**Report.** `report/report.pdf` (Volume I, synthesised report organised by physical question) and
+`report/docs_volume.pdf` (Volume II, the documents of `docs/` compiled without rewriting). Sources in `report/`;
+rebuild with `make report` (needs TeX Live with latexmk, and pandoc).
+
 ## Status (first pass complete)
 
 | Module | Script | Main outputs |
@@ -37,6 +41,9 @@ beam-propagation design and optimisation of that engine, and
 | 21 Repair | `scripts/m21_repair.py` | stochastic losses, image-and-repair rounds, scheduler pass-selection modes; `docs/repair.md` |
 | 22 Megascale budget | `scripts/m22_megascale.py` | 1e4-1e6 sites at 3-4 um: field, zones, static power, engine blocks, x-tiling optics, loss rates; `docs/megascale.md` |
 | 23 Steady state | `picsim/megasort.py`, `scripts/m23_steady.py` | assembly and steady-state refilling of 1e4-1e6 sites with engine blocks, reservoir bands and losses; `docs/megascale.md` |
+| 24 Tiling wave optics | `scripts/m24_tiling_wave.py` | ghost light from one engine in its neighbour's slit zone (shared slit plane): wave propagation through the lenslet with pupil acceptance, ray trace through neighbouring lenslets, engine-pitch scan; `docs/megascale.md` |
+| 25 Imaging cadence | `scripts/m25_imaging.py` | steady-state defect fraction (at image, before image, time average) against imaging period, loss per image, imaging time and vacuum lifetime at 1e5 and 1e6 sites; `docs/megascale.md` |
+| 26 Stack combining | `scripts/m26_stack_combine.py` | interleaving chip stacks with a slotted 45 deg comb mirror at the collimator plane: 1D wave optics of the window vs distance, layouts for 32-64 rows with PBS, tilt and path tolerances, 2D check; the real (traced) collimator, and its detuning for tweezers away from the row centre (skew rays, effective indices); `docs/megascale.md` |
 
 ## Layout
 

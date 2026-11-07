@@ -1,0 +1,42 @@
+\section{Introduction}\label{sec:intro}
+
+A neutral-atom processor holds its qubits in an array of optical tweezers. Loading is stochastic, so the array
+must be sorted after every load and repaired after every loss, and the operations themselves need atoms moved
+between sites. Proposal ANRF/ARG/2026/009937~\cite{proposal} plans to do the steering of the transport
+tweezers, and the switching of the addressing beams, with silicon-nitride (SiN) photonic integrated circuits
+(PICs) instead of acousto-optic deflectors and spatial light modulators. The proposal fixes the working
+points. Transport tweezers at 1064.4~nm (a double-magic wavelength for the Cs $45S_{1/2}$ Rydberg state) and
+addressing at 894.6~nm (the Cs D1 line) are focused by a meta-objective of numerical aperture $\geq 0.5$ onto a
+4~\textmu m lattice. The transport depth is about 1.2~mK, with about 6.6~mW per tweezer at the atoms. The
+targets for the circuits are a steering update rate of $\geq 100$~kHz, switch extinction of $\geq 50$~dB at
+894.6~nm, a position noise of $\leq 10$~nm rms, and a corrected field of $\pm 100$~\textmu m. The waveguide
+platform is the 400~nm stoichiometric LPCVD SiN available to the project.
+
+Whether such circuits can do the job is not obvious, for three reasons. (i) An optical phased array (OPA) steers
+all of its tweezers together. Independent motion of many tweezers along a row, as with the tones of an
+acousto-optic deflector, needs a different engine. (ii) A chip forms one row. Rows of independent engines must be
+stacked and relayed onto a lattice of 4~\textmu m period without the rows disturbing each other. (iii) The
+proposal's array is small, while tweezer arrays of 2,088 and 6,100 sites have been reported
+\cite{pichard2024,manetsch2024}. An architecture built on chips must therefore also be judged at $10^4$ to
+$10^6$ sites. Each question also carries a hard physical limit: the
+handoff of atoms between static and moving traps, heating per move, laser power per tweezer, and losses that
+compete with repair.
+
+In this work, we simulate the PIC elements and the system around them, from waveguide modes to the steady
+state of a $10^6$-site array. The models are scalar or vector wave optics, beam propagation, 2D FDTD, ray
+tracing, classical and quantum transport, and stochastic scheduling of moves and losses. Every number carries
+its provenance. Values from the proposal are marked USER, values from sources read during the work SOURCE,
+simulation outputs SIM, calculations DERIVED, stated assumptions CHOICE, and values recalled but not verified
+RECALLED. All simulated values are valid in the regime simulated and should be reviewed before they enter the
+proposal. The code, results and module-by-module documents are in the repository. Volume~II compiles those
+documents without rewriting, and \cref{app:repro} maps every result to its script.
+
+The report is organised by physical question. \Cref{sec:platform} covers the waveguide platform and the passive
+and active components. \Cref{sec:engine} develops the steering engine for independent tweezers.
+\Cref{sec:rows} stacks engines into rows and treats their mutual independence. \Cref{sec:moretweezers} asks how
+far the tweezer count per engine and per row can grow. \Cref{sec:transport} simulates transport and handoff
+in three dimensions, and \cref{sec:rearrange} schedules rearrangement and repair. \Cref{sec:megascale} scales
+the architecture to $10^4$, $10^5$ and $10^6$ sites. \Cref{sec:combine} combines chip stacks into larger
+blocks and replaces the ideal collimator by the real one, which exposes a limit of the cylindrical collimator
+for tweezers away from the row centre. \Cref{sec:discussion} separates what was shown from what is
+model-dependent, and states the main limitations and next steps.

@@ -1,0 +1,421 @@
+\section{Rows of engines: the stacked-chip relay}\label{sec:rows}
+
+One focal-plane engine steers one row of tweezers along $x$. This section describes how 16 chips are stacked
+and imaged onto the atoms as 16 independent rows, what the collimator in front of each chip must do, and how
+the rows are made mutually incoherent without one frequency shifter per chip.
+
+Sixteen chips of design D1 (128 input ports, 192 emitters, Sec.~\ref{sec:engine}), stacked at 0.5~mm pitch,
+each with its own fast-axis collimator (FAC), are imaged as 16 rows 4~\textmu m apart through the NA~0.5
+objective at 1064.4~nm. With the adopted collimator, a glued Weierstrass block followed by a two-asphere
+aplanat, a 1.2~mK tweezer needs 57~mW. Rows are as independent as the tweezers within a row provided their
+relative optical phase is randomised much faster than the trap period, which one noise-driven phase modulator
+on the common seed plus different fibre delays per chip achieves. The costs are a collimator alignment of
+$\pm0.1$~\textmu m in height, a diffraction-limited collimator at NA~0.9, and two rules on filters and
+reflections in the laser chain. All values are simulated (scalar wave optics; ray tracing and 2D FDTD where
+stated) or derived from those simulations.
+
+\subsection{Anamorphic layout}\label{sec:rows-layout}
+
+In $x$, the relay of Sec.~\ref{sec:engine} images the emitter plane onto the objective pupil, so the atoms see
+the far field of the chip. In $y$, each facet sits in the front focal plane of its own cylindrical collimator.
+The collimators' back focal planes form a plane $S$, which a common $y$ lens group of effective focal length
+$F_y$ Fourier transforms onto the pupil. Thus $S$ is imaged onto the atoms with magnification
+$f_\mathrm{obj}/F_y=1/D$, and chip $m$ lands at $y_m=m\,d_c/D$. Here, $d_c$ is the chip pitch, $D$ the
+demagnification of the stack, and $f_\mathrm{obj}=17.3$~mm the objective focal length (working distance 15~mm).
+At the same time, the pupil is an image of the facet, with magnification 60 in $x$ and 12,400 in $y$. Because
+each chip has its own collimator, the 16 facet images overlap in the pupil and the rows are separated only by
+the tilt $y_m/F_y$; a single common collimator would place the facet images side by side. The free parameter
+of the $y$ design is the pupil radius referred back to the facet, $\beta=\mathrm{NA}\,f_\mathrm{FAC}/D$. Here,
+$f_\mathrm{FAC}$ is the collimator focal length and NA~$=0.5$. The row pitch fixes $D$, and $\beta$ then fixes
+$f_\mathrm{FAC}$ (Table~\ref{tab:rows-layout}).
+
+\begin{table}[htbp]\centering\small
+\caption{First-order layout (thin lenses, ABCD matrices of both axes checked) for 16 chips at 0.5~mm pitch,
+$\beta=0.7$~\textmu m, FAC NA~0.9. Derived. The design point is 4~\textmu m.}
+\label{tab:rows-layout}
+\begin{tabular}{cccccc}
+\toprule
+row pitch & $D$ & $F_y$ & $f_\mathrm{FAC}$ & collimated half-height & facet to pupil \\
+\midrule
+3~\textmu m & 167 & 2.89~m & 233~\textmu m & 210~\textmu m & 439~mm \\
+\textbf{4~\textmu m} & \textbf{125} & \textbf{2.17~m} & \textbf{175~\textmu m} & \textbf{158~\textmu m} & \textbf{382~mm} \\
+5~\textmu m & 100 & 1.73~m & 140~\textmu m & 126~\textmu m & 347~mm \\
+6~\textmu m & 83 & 1.44~m & 117~\textmu m & 105~\textmu m & 324~mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At 4~\textmu m, $F_y$ is realised as a $25\times$ demagnifying $y$ telescope (100~mm and 4~mm) followed by an
+86.6~mm Fourier lens. The $x$ relay is a 4f pair (3.12~mm and 187.7~mm) with its Fourier slit 6.2~mm from the
+facets, and both pupils coincide 382~mm from the facets. The Lagrange invariant matches (stack half-height
+4~mm times collimated NA 0.0022 equals atom half-field 30~\textmu m times 0.5 times the fill), and the
+collimated beams fit within the 250~\textmu m half-pitch. This layout is first order; a lens design of the
+anamorphic relay over its 8~mm field has not been made.
+
+\subsection{Facet mode, pupil fill and crosstalk floor}\label{sec:rows-fill}
+
+\paragraph{Validity of the $y$ results.} All $y$-axis results of this section (pupil fill, collimator, row
+crosstalk, tolerances) were computed for light with no $x$ direction component, $s_x=0$. However, a tweezer at
+$x_a$ along the row is made of light with $s_x=x_a/288$~\textmu m (D1), and the cylindrical collimator then
+acts with effective indices $\sqrt{n^2-s_x^2}$. The adopted collimator therefore defocuses the facet by
+$-99\,s_x^2$~\textmu m. The $y$ figures below hold near the row centre only: the peak falls to 0.97 at
+$x_a=30$~\textmu m and to 0.48 at 60~\textmu m, and with the best common focus offset a row is usable over
+$|x_a|\le45$~\textmu m, shorter than the $\pm60$~\textmu m row of D1. Section~\ref{sec:combine} gives the
+details.
+
+\paragraph{The facet.} The D1 emitter facet ($1.2\times0.4$~\textmu m SiN in oxide) has a vertical mode of
+$1/e^2$ equivalent radius 0.39~\textmu m and radiates into air with a far-field $1/e^2$ half-angle of
+$\sin\theta=0.86$. A collimator of NA~0.8 captures 96\% of this light, one of NA~0.9 captures 98.8\%.
+Thinning the SiN at the facet to 100~nm lowers the far-field NA to 0.51, but it also expands the lateral mode:
+the coupling length of adjacent emitters (0.3~\textmu m gap) falls from 228~\textmu m to 47~\textmu m, which
+leaves no room for an adiabatic taper. We therefore keep the 400~nm facet and accept the alignment tolerances
+it sets, which scale with the vertical mode radius (decentre) and its square (focus).
+
+\paragraph{Pupil fill.} The $y$ profile at the atoms is the facet's far field, clipped by the collimator
+aperture, scaled by $\beta/\mathrm{NA}$ and low-pass filtered by the pupil. Crosstalk between rows has two
+sources: (i) at small $\beta$, the pupil clips the sharply peaked facet image; (ii) at large $\beta$, the hard
+edge of the collimator aperture rings through the pupil. As can be seen from Table~\ref{tab:rows-fill} and
+Fig.~\ref{fig:rows-fill}, the two balance near $\beta=0.7$~\textmu m, which we adopt. A collimator of NA~0.95
+lowers the crosstalk at 4~\textmu m to $7.4\times10^{-5}$; a graded collimator edge costs 7 to 8\% of the light
+and reaches only $9.4\times10^{-5}$. None of these options gets below about $5\times10^{-5}$ at 4~\textmu m,
+which is adequate for mutually incoherent rows but not for coherent ones (Sec.~\ref{sec:rows-crosstalk}). At
+$\beta=0.7$~\textmu m the $y$ spot is 1.31~\textmu m FWHM, against 1.22~\textmu m for the Gaussian cross axis
+assumed before. With the 2.7\% cross-axis loss and a 3\% loss to the circular pupil, the power per tweezer
+rises by a factor 1.10, from the 43~mW of the engine design to 47~mW at 1.2~mK.
+
+\begin{table}[htbp]\centering\small
+\caption{Pupil fill scan, ideal FAC of NA~0.9, single tweezer, 1D in $y$, $s_x=0$. Power relative to a
+Gaussian cross axis of $w_0=1.04$~\textmu m. Simulated.}
+\label{tab:rows-fill}
+\begin{tabular}{cccccc}
+\toprule
+$\beta$ & cross-axis & $y$ FWHM & power vs & \multicolumn{2}{c}{row crosstalk at} \\
+ & transmission & & Gaussian & 3 / 4~\textmu m & 6 / 8~\textmu m \\
+\midrule
+0.5~\textmu m & 0.946 & 1.09~\textmu m & 0.92 & $3.5\times10^{-3}$ / $1.8\times10^{-3}$ & $7.2\times10^{-4}$ / $3.9\times10^{-4}$ \\
+0.6~\textmu m & 0.968 & 1.18~\textmu m & 0.97 & $1.2\times10^{-3}$ / $6.2\times10^{-4}$ & $2.5\times10^{-4}$ / $1.3\times10^{-4}$ \\
+\textbf{0.7~\textmu m} & \textbf{0.973} & \textbf{1.31~\textmu m} & \textbf{1.07} & $\mathbf{2.8\times10^{-4}}$ / $\mathbf{1.1\times10^{-4}}$ & $\mathbf{3.2\times10^{-5}}$ / $\mathbf{1.5\times10^{-5}}$ \\
+0.8~\textmu m & 0.973 & 1.49~\textmu m & 1.22 & $1.1\times10^{-3}$ / $2.6\times10^{-4}$ & $4.9\times10^{-5}$ / $1.9\times10^{-5}$ \\
+1.0~\textmu m & 0.977 & 2.08~\textmu m & 1.65 & $2.1\times10^{-3}$ / $6.4\times10^{-4}$ & $1.9\times10^{-4}$ / $9.3\times10^{-5}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.8\linewidth]{m13_fill.png}
+\caption{Pupil fill and row crosstalk for an ideal FAC (NA~0.9, $D=125$), scalar wave model, 1D in $y$,
+$s_x=0$ (valid near the row centre, Sec.~\ref{sec:combine}). Left: $y$ intensity at the atoms relative to its
+peak for $\beta=0.5$, 0.7 and 1.0~\textmu m. Right: crosstalk at the neighbouring row (3 and 4~\textmu m pitch)
+against the power per tweezer relative to a Gaussian cross axis ($w_0=1.04$~\textmu m), for $\beta$ from 0.5
+to 1.0~\textmu m; the minimum at 1.07 is $\beta=0.7$~\textmu m.}
+\label{fig:rows-fill}
+\end{figure}
+
+\subsection{The adopted collimator and the facet loss}\label{sec:rows-collimator}
+
+The collimator must bend rays from $\sin\theta=0.9$ (64$^\circ$ in air) to the axis within a lens no taller
+than the 0.5~mm chip pitch. Single refracting surfaces fail: a plano-hyperbola collimates only up to
+$\sqrt{1-1/n^2}$ (0.72 in fused silica, 0.83 at $n=1.8$); a plano-asphere reaches NA~0.9 but meets rays at up to
+43$^\circ$ (fused silica) or 64$^\circ$ ($n=1.8$); and an ellipse on a glued block collimates exactly but
+violates the sine condition (the ray at $s=0.9$ exits at 68\% of the aplanatic height). Here, $n$ is the lens
+index and $s=\sin\theta$ at the facet. The Weierstrass construction resolves this. A circular surface of radius
+$R$ on a block glued to the facet, with the facet at $R/n$ from its centre, is aplanatic and lowers the NA by
+$n^2$ (0.9 to 0.43 in fused silica). A two-asphere aplanat of focal length $f_\mathrm{FAC}n^2=368$~\textmu m
+(Wassermann-Wolf construction) then collimates. A scan of 96 combinations (29 reaching NA~0.9) selected
+$R=80$~\textmu m, a 10~\textmu m gap, a 250~\textmu m aplanat and $n=1.8$, with incidence angles of at most
+25$^\circ$. The traced lens is 395~\textmu m long, $\pm158$~\textmu m tall, and meets the sine condition to
+$4\times10^{-5}$ with no residual wavefront error (Table~\ref{tab:rows-designs}).
+
+\paragraph{Facet loss.} The engine model treated the emitter facet as lossless. A 2D FDTD (MEEP, resolution
+40/\textmu m, core index 1.965 chosen to match the 3D mode index 1.7995) shows that the facet reflects 12.8\%
+into the chip and transmits 79.1\% into air, of which 77.2\% of the guided power falls within the collimator
+aperture (Kirchhoff estimate 72.3\%). Into fused silica, as for the glued block, it reflects 2.3\% and transmits
+95.9\%, with 85.2\% within the aperture (Kirchhoff 82.9\%). The emitter facet thus loses about a quarter of the
+light into air, a loss absent from all earlier power figures; gluing the collimator recovers about 10\% and cuts
+the back-reflection sixfold. The FDTD is 2D, with lateral confinement folded into the core index.
+
+\begin{table}[htbp]\centering\small
+\caption{Collimator designs in the wave model (FDTD-scaled facet, AR-coated surfaces, NA~0.5 pupil, $s_x=0$).
+Peak is per unit guided power relative to an ideal lens in air at $\beta=0.7$~\textmu m; power is per 1.2~mK
+tweezer, field mean. Simulated.}
+\label{tab:rows-designs}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+design & sine condition at & $\beta$ & peak & crosstalk at & power \\
+ & $s=0.3$ / 0.6 / 0.9 & (\textmu m) & & 3 / 4~\textmu m ($10^{-4}$) & \\
+\midrule
+ideal lens, air & 1 / 1 / 1 & 0.7 & 1.00 & 2.8 / 1.1 & 61~mW \\
+\textbf{Weierstrass + aplanat} & 1.000 / 1.000 / 1.000 & 0.7 & \textbf{1.10} & 4.0 / 0.80 & \textbf{57~mW} \\
+ellipse, printed & 0.954 / 0.834 / 0.675 & 0.9 & 1.03 & 6.6 / 1.8 & 61~mW \\
+ellipse, printed & 0.954 / 0.834 / 0.675 & 0.7 & 1.22 & 21 / 10 & \\
+plano-asphere $n=1.8$, air & 0.988 / 0.960 / 0.971 & 0.7 & 1.03 & 4.0 / 1.7 & 59~mW \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The aplanatic design reproduces the ideal lens in glass (peak 1.10; a 2D check gives 1.107; $y$ FWHM
+1.35~\textmu m). The ellipse narrows the spot but its distortion raises the crosstalk, and opening its fill to
+$\beta=0.9$~\textmu m costs 15\% in peak. Without AR coatings all designs lose 10 to 30\%. Thus the power per
+1.2~mK tweezer is 57~mW with the adopted collimator, against 47~mW with the facet loss omitted and 61~mW for an
+ideal lens in air. The first $x$ lens of the relay ($f=3.12$~mm, field $\pm144$~\textmu m) needs no such care:
+its static aberration is a fixed linear map of the chip's response, which the least-squares synthesis absorbs.
+After recalibration an aplanat (0.15 waves rms at the field edge) gives an edge-tweezer peak of 1.001 with a
+shift of at most 1.5~nm, and even a lens without the sine condition (0.60 waves rms) loses only 3.6\%. The
+collimator gets no such help, because the $y$ axis has no actuators.
+
+\subsection{Crosstalk between rows}\label{sec:rows-crosstalk}
+
+For the 2D test, chip $m$ forms a full row of 41 tweezers at 3~\textmu m over $\pm60$~\textmu m (alternating
+phases 0 and $\pi/2$), and the neighbouring chip forms 11 tweezers offset by 1.5~\textmu m in $x$ (ideal FAC,
+$s_x=0$). ``Coherent'' means one laser frequency for both chips (worst of eight relative phases);
+``incoherent'' means their relative phase is averaged out (Table~\ref{tab:rows-crosstalk},
+Fig.~\ref{fig:rows-crosstalk}).
+
+\begin{table}[htbp]\centering\small
+\caption{Crosstalk between neighbouring rows in 2D (ideal FAC, $\beta=0.7$~\textmu m, $s_x=0$). Full row:
+intensity of 41 tweezers at the neighbouring row relative to the peak, maximum over $x$. Static: change of a
+neighbouring tweezer's depth / position when the full row is on. Moving: change when one tweezer of row $m$
+moves by 0.25~\textmu m. Simulated.}
+\label{tab:rows-crosstalk}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{cccccc}
+\toprule
+row & full row & \multicolumn{2}{c}{incoherent rows} & \multicolumn{2}{c}{coherent rows} \\
+separation & & static & moving & static & moving \\
+\midrule
+3~\textmu m & $4.3\times10^{-4}$ & $2.0\times10^{-4}$ / 0.13~nm & $6.2\times10^{-5}$ / 0.04~nm & 2.9\% / 18~nm & $6.5\times10^{-3}$ / 5.6~nm \\
+4~\textmu m & $1.8\times10^{-4}$ & $1.7\times10^{-4}$ / 0.002~nm & $2.4\times10^{-5}$ / 0.04~nm & 2.6\% / 11~nm & $2.8\times10^{-3}$ / 4.5~nm \\
+6~\textmu m & $6.3\times10^{-5}$ & $4\times10^{-6}$ / 0.02~nm & $3\times10^{-6}$ / 0.01~nm & 0.41\% / 8.9~nm & $1.7\times10^{-3}$ / 2.1~nm \\
+8~\textmu m & $4.3\times10^{-5}$ & $<10^{-6}$ & $<10^{-6}$ & 0.08\% / 1.8~nm & $1.1\times10^{-3}$ / 1.7~nm \\
+16~\textmu m & $1.3\times10^{-5}$ & $2\times10^{-6}$ & $<10^{-6}$ & 0.27\% / 1.6~nm & $4\times10^{-4}$ / 0.6~nm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.8\linewidth]{m13_crosstalk.png}
+\caption{Light from one chip at the neighbouring rows: 2D scalar model with D1's beam-propagation response in
+$x$ and the facet mode through an ideal NA~0.9 FAC in $y$ ($\beta=0.7$~\textmu m, $s_x=0$, valid near the row
+centre). Left: $\log_{10}$ of the intensity relative to the peak for a full row of 41 tweezers at 3~\textmu m,
+alternating phases 0 and $\pi/2$ ($|x|\le12$~\textmu m shown). Right: maximum over $x$ against $y$, compared
+with a single tweezer. The full row leaves a tail plateau of about $10^{-5}$ out to 16~\textmu m.}
+\label{fig:rows-crosstalk}
+\end{figure}
+
+With incoherent rows, a moving tweezer changes the next row by at most $6\times10^{-5}$ in depth and 0.04~nm in
+position, even at 3~\textmu m pitch, two orders of magnitude below the in-row figures of D1 (0.11\%, 3.5~nm).
+With coherent rows, the crosstalk intensity $\epsilon$ interferes with the neighbour's own field and changes
+its depth by about $2\sqrt{\epsilon}\cos\phi$. Here, $\phi$ is the relative optical phase of the two chip feeds,
+which drifts with temperature and acoustics in the separate fibres. The 2.6\% and 11~nm at 4~\textmu m thus
+become slow, uncontrolled noise, and the tail plateau keeps it present at all simulated distances, so
+alternating two frequencies is not enough. The original plan therefore gave every chip its own frequency, with
+pairwise differences of at least 1~MHz, far above twice the 84~kHz trap frequency: one acousto-optic shifter
+per chip feed at $80+1.13\,m$~MHz ($m=0$ to 15), each handling 2.6 to 3.4~W [VALUE?]. This plan is superseded
+by the scheme below.
+
+\subsection{Decorrelating the rows without frequency shifters}\label{sec:rows-decorrelate}
+
+A frequency offset only serves to randomise $\phi$ faster than the trap period, so that the atom sees the time
+average; a common random phase seen with different delays does the same. If the seed carries a phase
+$\varphi(t)$ and chip $m$ receives it after a delay $\tau_m$, the residual interference between chips $m$ and
+$n$ is the field coherence $|\langle\exp\{i[\varphi(t)-\varphi(t-\tau)]\}\rangle|$ at $\tau=\tau_m-\tau_n$.
+
+Our choice of drive is a compromise between residual coherence and tolerance to real hardware. A binary
+$0/\pi$ m-sequence ($N=1023$) leaves $9.8\times10^{-4}=1/N$ at exact integer delays, but every transition passes
+through $+\pi/2$, so a modulator with a 0.3-bit rise leaves a carrier of 0.12 (coherence $4.1\times10^{-2}$). A
+Zadoff-Chu polyphase code also needs exact delays ($6.2\times10^{-2}$ at non-integer ones). Gaussian phase noise
+of $\sigma=3$~rad rms needs neither: the carrier is $\exp(-\sigma^2/2)$, any delay longer than about three
+correlation times decorrelates, and the ensemble coherence is $\exp(-9)=1.2\times10^{-4}$ (4.2 to
+$7.2\times10^{-3}$ in our 32,768-bit records, their statistical floor). What the atom sees is the low-frequency
+density of the interference term, $0.40/B$, with $B$ the correlation rate. For $2\sqrt{\epsilon}=2.1\times10^{-2}$
+this gives a relative intensity noise $S_I(2\nu_\mathrm{trap})=8.8\times10^{-14}$/Hz at $B=2$~GHz and a
+parametric heating rate $\Gamma=\pi^2\nu^2S_I(2\nu)=6\times10^{-3}$~s$^{-1}$ at $\nu=84$~kHz \cite{OHARA}, an
+energy e-folding time above 2 minutes ($2.4\times10^{-2}$~s$^{-1}$ at $B=0.5$~GHz).
+
+The adopted hardware is one fibre-coupled LiNbO$_3$ phase modulator on the low-power seed, ahead of the 1:16
+split, driven by Gaussian noise of about $1\,V_\pi$ rms (3~rad) over 1 to 2~GHz, and extra fibre of 0, 0.3,
+\ldots, 4.5~m on the 16 chip feeds. Within one chip, path differences of at most about 1~mm (5~ps) cost
+$\sigma^2(\tau/\tau_c)^2/2\approx5\times10^{-4}$ of coherence, so the synthesis sees a coherent source. The
+optical spectrum widens to 1.35~GHz rms (5~pm) at $B=2$~GHz; through the objective's axial chromatic shift
+(16~\textmu m/nm, derived for a diffractive lens) this smears the focus by 0.08~\textmu m rms (peak 0.9998) and
+the position at 60~\textmu m by 0.29~nm rms. The mean light shift at the double-magic wavelength is unchanged to
+first order; the second-order term needs the curvature of the differential polarisability [VALUE?]. A seed
+broadened to about 1~GHz also raises the stimulated-Brillouin threshold of the high-power amplifier and the delivery fibres (3~W each)
+([REF?]; recalled that this is standard practice), and the scheme removes 16 RF drivers and the shifters'
+insertion loss (about 15\% each [VALUE?]). Table~\ref{tab:rows-options} compares the options.
+
+\begin{table}[htbp]\centering\small
+\caption{Perturbation of a tweezer by all other rows within $\pm16$~\textmu m (rms over drifting relative
+phases; 4~\textmu m rows of 41 tweezers; $s_x=0$). In-row criteria: others' depth change $<3\times10^{-3}$ and
+position change $<5$~nm when a tweezer moves; proposal budget 10~nm rms. Simulated (vector focusing for the
+polarisation options) and derived.}
+\label{tab:rows-options}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{Xccc}
+\toprule
+option (added hardware) & power & static: depth / position & tweezer moves 0.25~\textmu m \\
+\midrule
+all chips coherent (none) & 1 & 2.3\% / 9.2~nm & $2.3\times10^{-3}$ / 5.1~nm \\
+per-chip frequency offsets (16 shifters) & 1 + loss & $1.8\times10^{-4}$ / 0.09~nm & $2\times10^{-5}$ / 0.05~nm \\
+\textbf{phase noise + delays (1 modulator, $\le5$~m fibre)} & \textbf{1} & $\mathbf{1.6\times10^{-4}}$ / \textbf{0.07~nm} & $\mathbf{2\times10^{-5}}$ / \textbf{0.04~nm} \\
+alternating $x$/$y$ polarisation (wave-plate strips) & 1 & $4.2\times10^{-3}$ / 2.5~nm & $1.1\times10^{-3}$ / 1.6~nm \\
+$y$ apodiser $a=0.65$ (graded mirror) & 1.84 & $5.2\times10^{-3}$ / 4.1~nm & $1.0\times10^{-3}$ / 1.8~nm \\
+polarisation + apodiser $a=0.8$ & 1.55 & $2.8\times10^{-3}$ / 1.8~nm & $5.7\times10^{-4}$ / 0.7~nm \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Leaving all chips coherent breaks the position budget (9.2~nm rms of slow wander plus 5.1~nm when neighbours
+move). Of the passive options, orthogonal polarisation on alternate chips lowers the nearest-row interference
+by a factor of 26 at NA~0.5 (the residual comes from depolarised high-angle rays, mainly $E_z$). It meets the
+moving-tweezer criteria and the position budget, but rows two apart share a polarisation, and the static depth
+wanders by 0.4\% rms at Hz to kHz rates. It has three further costs: (i) a polarisation-insensitive
+meta-objective; (ii) a vector light shift where the fields overlap, about $2\times10^{-3}\,g_Fm_F$ of the depth
+at 4~\textmu m (from a vector-to-scalar ratio of about $0.09\,g_Fm_F$ per unit ellipticity, recalled, to be
+verified \cite{GRIMM}), i.e.\ up to tens of kHz for stretched states and zero to first order for clock states;
+(iii) only two orthogonal states. A Gaussian $y$ apodiser costs a factor 1.84 in power, widens the spot from
+1.35 to 1.73~\textmu m and still leaves $4.7\times10^{-3}$ of static depth change in 2D. We adopt phase noise
+with fibre delays, and keep alternating polarisation as a free backup that gives an independent factor of
+about 26 on the nearest rows if the modulation fails.
+
+\subsection{Conversion of phase noise to intensity noise}\label{sec:rows-pmam}
+
+Pure phase noise leaves the intensity constant (the simulated control sits at the numerical floor,
+$-376$~dB/Hz). Intensity noise appears only where an element filters the spectrum. We simulated the elements of
+a laser chain one at a time on the modulated field (3~rad rms, $B=2$~GHz; record 131~\textmu s at 16~GS/s). The
+criterion is $\Gamma\le0.1$~s$^{-1}$ at $\nu=84$~kHz, i.e.\ a relative intensity noise (RIN) density at 168~kHz
+of $S\le1.4\times10^{-12}$/Hz ($-118$~dB/Hz). Gain tilt and fibre dispersion respond to the instantaneous
+frequency, whose spectrum vanishes at low frequency, so their RIN lies at GHz: $-216$~dB/Hz at 168~kHz for
+0.5~dB/nm tilt, below $-280$~dB/Hz for dispersion. A delayed copy of amplitude $r$ adds
+$2r\cos[\varphi(t)-\varphi(t-\tau)]$; beyond the correlation time (about 0.3~ns) this is a telegraph-like
+signal of variance $2r^2$ spread over $B$, so $S\approx4r^2\times0.40/B$ (Fig.~\ref{fig:rows-pmam}). A band-pass
+filter narrower than the spectrum acts as a delay distributed over its impulse response, about
+$1/(\pi\,\mathrm{FWHM})=40$~ps for 30~pm. Table~\ref{tab:rows-pmam} lists the elements that matter.
+
+\begin{table}[htbp]\centering\small
+\caption{Phase-to-intensity conversion at 168~kHz $=2\nu_\mathrm{trap}$ for Gaussian phase noise of 3~rad rms,
+$B=2$~GHz (worse of two relative phases for copies). Element parameters are chosen ranges, not component data;
+the PM-fibre group delay of 1.2~ps/m is recalled, to be verified. Simulated.}
+\label{tab:rows-pmam}
+\begin{tabular}{lcc}
+\toprule
+element & RIN at 168~kHz & $\Gamma$ (s$^{-1}$) \\
+\midrule
+band-pass 1~nm FWHM, offset 250~pm (ASE filter) & $-173$~dB/Hz & $<10^{-6}$ \\
+band-pass 100~pm, centred / offset 25~pm & $-130$ / $-133$~dB/Hz & $7\times10^{-3}$ / $3\times10^{-3}$ \\
+band-pass 30~pm, centred / offset 7.5~pm & $\mathbf{-110}$ / $\mathbf{-113}$~dB/Hz & \textbf{0.70} / \textbf{0.37} \\
+two reflections $R_1=R_2=10^{-2}$, delay $\ge0.3$~ns & $-130$~dB/Hz & $7\times10^{-3}$ \\
+two reflections $R_1=R_2=10^{-2}$, delay 0.1 / 0.01~ns & $-133$ / $-171$~dB/Hz & $3\times10^{-3}$ / $10^{-6}$ \\
+two reflections $R_1=R_2=10^{-3}$ or $10^{-4}$, any delay & $\le-149$~dB/Hz & $\le8\times10^{-5}$ \\
+PM fibre, $-20$~dB crosstalk, 5 / 20~m, then TE guide & $-161$ / $-137$~dB/Hz & $6\times10^{-6}$ / $1.4\times10^{-3}$ \\
+representative chain & $-134.5$~dB/Hz & $2.5\times10^{-3}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.75\linewidth]{m16_pm_am.png}
+\caption{RIN density at 168~kHz from one parasitic copy made by two reflections $R_1=R_2$, against its delay,
+for Gaussian phase noise of 3~rad rms at $B=2$~GHz (simulated, record 131~\textmu s at 16~GS/s, worse of two
+relative phases). Dashed: the criterion $\Gamma=0.1$~s$^{-1}$ at $\nu=84$~kHz ($1.4\times10^{-12}$/Hz). Beyond
+about 0.3~ns the density saturates at $\approx4r^2\times0.40/B$, $r^2=R_1R_2$.}
+\label{fig:rows-pmam}
+\end{figure}
+
+Two design rules follow: (i) no filter narrower than about 100~pm (20 times the 1.35~GHz rms width) in the
+light path; (ii) the product of any two reflections below $R_1R_2=1.7\times10^{-3}$ ($r\le0.042$), i.e.\ no pair
+of uncoated glass surfaces in series. A representative chain (0.5~dB/nm tilt, 1~nm ASE filter, 5~m of PM fibre,
+two $-30$~dB connector reflections 5~m apart, an on-chip etalon between a $-30$~dB input facet and the 2.3\%
+glued emitter facet, 5~m of dispersion) gives $-134.5$~dB/Hz and $\Gamma=2.5\times10^{-3}$~s$^{-1}$, 16~dB inside
+the criterion, dominated by the etalon and the connector pair. The choice $B=2$~GHz is a middle value: a higher
+$B$ helps against long-delay copies ($-125$, $-130$, $-138$~dB/Hz at $B=0.5$, 2, 8~GHz for $r=10^{-2}$,
+$\tau=1$~ns) and hurts against short ones. Without modulation the same reflections give a slow offset
+$2r\cos\Phi$ that follows the path phase $\Phi$ (2\% for $r=10^{-2}$); the modulation spreads it over GHz, so the
+phase noise also helps against parasitic etalons provided rule (ii) holds. Amplifier gain dynamics,
+self-phase modulation and Brillouin scattering are not modelled. The prediction to test is a RIN floor below
+$-130$~dB/Hz at 10~kHz to 1~MHz after the amplified chain, with the modulation on and off.
+
+\subsection{Alignment, assembly and drift}\label{sec:rows-align}
+
+\begin{table}[htbp]\centering\small
+\caption{Alignment tolerances of one chip and its FAC (ideal collimator, 2D, single tweezer, $s_x=0$). Peak at
+the nominal atom plane relative to no error; worst crosstalk at the 4~\textmu m neighbour (no error:
+$1.1\times10^{-4}$); FAC errors except the last row. Simulated.}
+\label{tab:rows-tol}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccc}
+\toprule
+error & value & peak & crosstalk ($10^{-4}$) \\
+\midrule
+decentre in $y$ & 0.05 / 0.1 / 0.2 / 0.3~\textmu m & 0.992 / 0.969 / 0.881 / 0.750 & 2 / 4 / 12 / 28 \\
+focus along $z$ & 0.25 / 0.5 / 1 / 2~\textmu m & 0.993 / 0.973 / 0.893 / 0.641 & 3 / 9 / 28 / 43 \\
+roll about $z$ & 0.5 / 1 / 2~mrad & 0.998 / 0.992 / 0.968 & 1 / 1 / 2 \\
+smile (p-v) & 0.1 / 0.2 / 0.4~\textmu m & 0.998 / 0.992 / 0.967 & 1 / 2 / 4 \\
+wavefront, spherical & 0.05 / 0.1 waves rms & 0.942 / 0.783 & 3 / 12 \\
+wavefront, coma & 0.05 / 0.1 waves rms & 0.937 / 0.767 & 5 / 20 \\
+chip piston & 10 / 100 / 300~\textmu m & $\ge0.999$ / $\ge0.992$ / $\ge0.908$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:rows-tol} lists the per-chip errors; none moves the row in $y$ by more than 0.01~nm. The
+collimator decentre is the tightest, $\pm0.1$~\textmu m for 3\% loss. A decentre $\delta$ shifts the facet image
+in the pupil by $\delta/\beta$ of its radius, so the tolerance is a property of the facet, not of the lens: the
+ray-traced designs all give $\pm0.1$~\textmu m (adopted collimator: 0.973 at 0.1~\textmu m). Focus is looser for
+the glued design, about $\pm1$~\textmu m for 3\%, because the facet radiates into glass. The wavefront
+requirement is about 0.03 waves rms for $\le3\%$ loss; for the adopted collimator, the $n=1.8$ surfaces need a form
+error of at most 20~nm rms for $\le2\%$ loss. A chip piston of 300~\textmu m shifts tweezers in $x$ by up to 6.8~nm, so facets must be
+flush to about 100~\textmu m; stair-step stacking for wire bonds is excluded, and fibre and electrical access
+(not addressed here) must come from the chip sides or back.
+
+Row positions follow from the conjugations (derived). A height error of chip plus collimator moves its row by
+$1/D=8$~nm per \textmu m, a chip tilt of 1~mrad about $x$ by 1.4~nm, and a chip piston $\mathrm{d}z$ defocuses
+the row by $\mathrm{d}z/D^2$ (6~nm per 100~\textmu m). A stack built to $\pm2$~\textmu m places rows to
+$\pm16$~nm, a static offset that the static 1075~nm array must match. For a collimator glued to its own facet,
+differential expansion acts only over the lens height, about 0.2~nm/K (CTE of Si $2.6\times10^{-6}$/K and fused
+silica $0.55\times10^{-6}$/K, recalled, to be verified); a monolithic collimator array referenced at the base of
+the 8~mm stack would see 16~nm/K at the top chip. Hence one collimator per chip, or a stack held to $\pm1$~K.
+Thermal expansion of the Si stack moves the outer rows by about 0.2~nm/K at the atoms. The glue line lies along
+$z$, so cure shrinkage mainly changes the focus, but the height must still be held to $\pm0.1$~\textmu m during
+cure [REF?]. The alignment signal is strong: a decentre moves the facet image across the pupil by
+$\delta\times12{,}400$ (0.1~\textmu m becomes 1.2~mm), so a pupil camera with 10~\textmu m pixels resolves 1~nm
+in principle, and we recommend active alignment against it before and during cure. The placement accuracy of
+two-photon-printed collimators [REF?], the achievable wavefront error of NA~0.9 micro-collimators [REF?] and the
+long-term stability of bonded collimators [REF?] still need sources.
+
+\subsection{Power and laser plan}\label{sec:rows-power}
+
+Table~\ref{tab:rows-power} gives the plan for 16 chips of 192 ports (Sec.~\ref{sec:moretweezers}). Our choice of
+one input fibre per chip is a compromise between facet intensity and phase stability. The lensed-fibre inverse
+taper has a 3.1~\textmu m$^2$ mode, so a 20~MW/cm$^2$ cap (a design choice; no damage threshold was found) allows
+0.62~W per fibre and would need 5 to 6 fibres per chip. However, several inputs split the 128 ports into
+sub-trees whose relative phases drift with their fibres, and a tweezer window straddling a boundary would
+fluctuate. The HI1060-matched taper ($-0.48$~dB, 0.11~dB worse) has a 30.6~\textmu m$^2$ mode and carries 6.1~W at
+the same cap, at the price of a 0.1~\textmu m tip at the assumed minimum feature size. With 16 rows the stack
+offers 720 (4~\textmu m) to 960 (3~\textmu m) independent tweezers and needs 41 to 55~W of single-frequency
+1064.4~nm light at 1.2~mK, or 17 to 23~W at 0.5~mK; the availability of 40 to 55~W is open [VALUE?]. Power scales
+linearly with depth, so a lower transport depth is the cheapest lever (Secs.~\ref{sec:moretweezers}
+and~\ref{sec:transport}).
+
+\begin{table}[htbp]\centering\small
+\caption{Laser power for 16 chips with the adopted collimator (57~mW per 1.2~mK tweezer) and input fibres per
+chip at a facet cap of 20~MW/cm$^2$. Derived.}
+\label{tab:rows-power}
+\begin{tabular}{cccccc}
+\toprule
+tweezers per row & depth & per chip & 16 chips & lensed-tip fibres & HI1060-matched fibres \\
+\midrule
+45 (4~\textmu m) & 1.2~mK & 2.6~W & 41~W & 5 & 1 (8~MW/cm$^2$) \\
+60 (3~\textmu m) & 1.2~mK & 3.4~W & 55~W & 6 & 1 (11~MW/cm$^2$) \\
+45 & 0.5~mK & 1.1~W & 17~W & 2 & 1 \\
+60 & 0.5~mK & 1.4~W & 23~W & 3 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The limits are as follows. The relay is modelled with ideal thin cylindrical lenses in scalar optics, without
+the objective's apodisation and polarisation (except in the vector calculation of the polarisation option). The
+collimator trace and the facet FDTD are 2D, the $n=1.8$ glass is a class rather than a catalogue glass, and
+tolerances are evaluated one at a time. All $y$ results assume $s_x=0$ and hold near the row centre only
+(Sec.~\ref{sec:combine}).

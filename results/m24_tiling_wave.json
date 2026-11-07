@@ -1,0 +1,294 @@
+{
+ "name": "m24_tiling_wave",
+ "script": "scripts/m24_tiling_wave.py",
+ "git": "f209721",
+ "notes": "peak_ratio_*: largest intensity in a neighbour's slit zone relative to the tweezer spot peak in Sigma (Sigma is conjugate to the atoms); 'accepted' keeps only directions within the pupil acceptance A/(2 f1). ray_min_distance: closest approach of an accepted ray to another engine's slit zone (inf: no accepted ray through any neighbouring lenslet).",
+ "inputs": {
+  "engine": "D1 (BPM matrix), LinearSynth tweezer at x_a",
+  "f1_um": 3120.0,
+  "s_cut": 0.3548116666666667,
+  "grid_um": 0.25,
+  "lens": "ideal paraxial phase on the lenslet aperture",
+  "fill": "lenslet clear aperture / engine pitch"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "Pe_um": 4430.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.0345086172640154e-11,
+    "peak_ratio_neighbour_accepted": 6.775875189530361e-15,
+    "power_ratio_neighbour_accepted": 4.047131509635695e-15,
+    "own_slit_power_fraction_of_aperture": 0.9999916826897972,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 4430.0,
+    "fill": 0.8,
+    "peak_ratio_neighbour_raw": 1.016149510769049e-11,
+    "peak_ratio_neighbour_accepted": 1.2592861036128602e-15,
+    "power_ratio_neighbour_accepted": 7.617476756779287e-16,
+    "own_slit_power_fraction_of_aperture": 0.9999919591884837,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 5000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.4193376724398994e-12,
+    "peak_ratio_neighbour_accepted": 6.61842844208295e-16,
+    "power_ratio_neighbour_accepted": 4.1075938481111954e-16,
+    "own_slit_power_fraction_of_aperture": 0.9999915002780723,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 6000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 9.11985937933272e-10,
+    "peak_ratio_neighbour_accepted": 3.747590934759873e-13,
+    "power_ratio_neighbour_accepted": 2.318164394602138e-13,
+    "own_slit_power_fraction_of_aperture": 0.9999287583779599,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 8000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.8140299529464317e-13,
+    "peak_ratio_neighbour_accepted": 3.108811301269661e-17,
+    "power_ratio_neighbour_accepted": 3.5423167295748924e-17,
+    "own_slit_power_fraction_of_aperture": 0.8197584762852198,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 3500.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.2259763876178595e-11,
+    "peak_ratio_neighbour_accepted": 1.2446985779185135e-14,
+    "power_ratio_neighbour_accepted": 7.549753171779872e-15,
+    "own_slit_power_fraction_of_aperture": 0.9999919956214142,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 3000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 8.446798973832008e-12,
+    "peak_ratio_neighbour_accepted": 1.4861012177202175e-14,
+    "power_ratio_neighbour_accepted": 9.391365642177356e-15,
+    "own_slit_power_fraction_of_aperture": 0.9999963263396315,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 2600.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.343786827149638e-10,
+    "peak_ratio_neighbour_accepted": 1.0950615961236144e-11,
+    "power_ratio_neighbour_accepted": 8.6082486997557e-12,
+    "own_slit_power_fraction_of_aperture": 0.9999990638966693,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 2400.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.8436407826939058e-10,
+    "peak_ratio_neighbour_accepted": 1.6548749093181555e-10,
+    "power_ratio_neighbour_accepted": 3.5003419914829604e-10,
+    "own_slit_power_fraction_of_aperture": 0.9999997813116146,
+    "tweezer_x_um": 0.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 4430.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 9.33929416442484e-11,
+    "peak_ratio_neighbour_accepted": 8.166030128653165e-14,
+    "power_ratio_neighbour_accepted": 4.907363043789408e-14,
+    "own_slit_power_fraction_of_aperture": 0.7113210640975667,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 4430.0,
+    "fill": 0.8,
+    "peak_ratio_neighbour_raw": 1.4160691468829842e-06,
+    "peak_ratio_neighbour_accepted": 1.5377003648002153e-09,
+    "power_ratio_neighbour_accepted": 9.585407246566325e-10,
+    "own_slit_power_fraction_of_aperture": 0.9376975840944713,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 5000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 3.5780029658581825e-11,
+    "peak_ratio_neighbour_accepted": 1.878780251134999e-14,
+    "power_ratio_neighbour_accepted": 1.1664300869905278e-14,
+    "own_slit_power_fraction_of_aperture": 0.7113209575144535,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 6000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 3.387170045447485e-13,
+    "peak_ratio_neighbour_accepted": 7.46945254688408e-17,
+    "power_ratio_neighbour_accepted": 7.85061947866763e-17,
+    "own_slit_power_fraction_of_aperture": 0.7113208988609209,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 8000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 3.3234159290138195e-13,
+    "peak_ratio_neighbour_accepted": 8.004265819933652e-17,
+    "power_ratio_neighbour_accepted": 7.47571538185948e-17,
+    "own_slit_power_fraction_of_aperture": 0.7113208537797667,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 3500.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 3.070937799770657e-06,
+    "peak_ratio_neighbour_accepted": 1.662793917544894e-08,
+    "power_ratio_neighbour_accepted": 1.002957149352116e-08,
+    "own_slit_power_fraction_of_aperture": 0.9775294128422083,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 3000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 2.0786964382948962e-10,
+    "peak_ratio_neighbour_accepted": 2.7251394403742684e-12,
+    "power_ratio_neighbour_accepted": 1.6905886749630542e-12,
+    "own_slit_power_fraction_of_aperture": 0.9999534341756844,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 2600.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.4568900834579411e-09,
+    "peak_ratio_neighbour_accepted": 1.2429683083113923e-10,
+    "power_ratio_neighbour_accepted": 9.758242312033304e-11,
+    "own_slit_power_fraction_of_aperture": 0.999973402635785,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 2400.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 2.2202481699169662e-08,
+    "peak_ratio_neighbour_accepted": 2.0861210344807355e-08,
+    "power_ratio_neighbour_accepted": 4.076724749978719e-08,
+    "own_slit_power_fraction_of_aperture": 0.9999899933048132,
+    "tweezer_x_um": 60.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 4430.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 2.5271274315034013e-07,
+    "peak_ratio_neighbour_accepted": 3.619787754251269e-10,
+    "power_ratio_neighbour_accepted": 1.3506711438861067e-10,
+    "own_slit_power_fraction_of_aperture": 0.6916448934350107,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 4430.0,
+    "fill": 0.8,
+    "peak_ratio_neighbour_raw": 2.0935089105867222e-06,
+    "peak_ratio_neighbour_accepted": 2.0108544946332747e-09,
+    "power_ratio_neighbour_accepted": 7.770139010332032e-10,
+    "own_slit_power_fraction_of_aperture": 0.7825735991831514,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 5000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 5.7994030415977264e-08,
+    "peak_ratio_neighbour_accepted": 3.65275332734667e-11,
+    "power_ratio_neighbour_accepted": 1.407414751344632e-11,
+    "own_slit_power_fraction_of_aperture": 0.6872947324732406,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 6000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 6.3406562260075345e-09,
+    "peak_ratio_neighbour_accepted": 3.742245226636534e-12,
+    "power_ratio_neighbour_accepted": 1.586791604764647e-12,
+    "own_slit_power_fraction_of_aperture": 0.6846344290632274,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 8000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.6753002278473555e-09,
+    "peak_ratio_neighbour_accepted": 4.457505565004515e-13,
+    "power_ratio_neighbour_accepted": 2.5837909326487194e-13,
+    "own_slit_power_fraction_of_aperture": 0.6824065154938306,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 3500.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 2.0463439806088334e-06,
+    "peak_ratio_neighbour_accepted": 1.5118253935878618e-08,
+    "power_ratio_neighbour_accepted": 5.581956581265735e-09,
+    "own_slit_power_fraction_of_aperture": 0.7937673444362132,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 3000.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 7.703598808623904e-06,
+    "peak_ratio_neighbour_accepted": 1.6587355899308653e-07,
+    "power_ratio_neighbour_accepted": 6.295206311244997e-08,
+    "own_slit_power_fraction_of_aperture": 0.9295245858595401,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 2600.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 1.2588218799239945e-05,
+    "peak_ratio_neighbour_accepted": 1.5691491045312158e-06,
+    "power_ratio_neighbour_accepted": 7.523288220909934e-07,
+    "own_slit_power_fraction_of_aperture": 0.9754613666263765,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   },
+   {
+    "Pe_um": 2400.0,
+    "fill": 1.0,
+    "peak_ratio_neighbour_raw": 5.6438502927034895e-05,
+    "peak_ratio_neighbour_accepted": 6.653007685476389e-05,
+    "power_ratio_neighbour_accepted": 7.227246440840606e-05,
+    "own_slit_power_fraction_of_aperture": 0.9846507313358184,
+    "tweezer_x_um": 90.0,
+    "ray_min_distance_to_other_slit_um": Infinity
+   }
+  ],
+  "limits": {
+   "lenslet_half_aperture_for_slit_um": 1184.0492549248438,
+   "min_engine_pitch_um": 2368.0985098496876,
+   "slit_zone_width_um": 2214.0248
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

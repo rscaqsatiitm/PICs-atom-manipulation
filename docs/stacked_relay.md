@@ -1,5 +1,11 @@
 # Stacked-chip relay: a 2D array of independently steered rows
 
+> Follow-up (`docs/megascale.md`, Sec. 12): this module and `docs/collimator.md` treat the y axis for light with
+> no x component (s_x = 0). A tweezer at x_a is made of light with s_x = x_a / 288 um, and the cylindrical collimator
+> then acts with effective indices sqrt(n^2 - s_x^2). The adopted collimator defocuses the facet by -99 s_x^2 um. The
+> y figures below therefore hold near the row centre: the peak falls to 0.97 at x_a = 30 um and 0.48 at 60 um.
+> With the best common focus offset a row is usable over |x_a| <= 45 um.
+
 Follow-up to `docs/scaling.md`, Sec. 4(v). Code: `picsim/opa/stack.py`, `scripts/m13_stack.py`; results
 `results/m13_*.json` (+ .png); tests `tests/test_stack.py`. Each chip is design D1 (`docs/fpr_design.md`): 128
 input ports, 192 arms and emitters, one row of independently steered tweezers along x. The model is scalar wave

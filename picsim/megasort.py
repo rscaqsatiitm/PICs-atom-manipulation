@@ -45,7 +45,10 @@ class Block:
     def positions(self, R, C):
         nseg = int(np.ceil(C / self.seg))
         pos = []
-        for k in range(0, R, self.S):
+        ks = list(range(0, max(R - self.S, 0) + 1, self.S))
+        if ks[-1] + self.S < R:  # last block flush with the array edge, so it always spans S rows (and a reservoir)
+            ks.append(R - self.S)
+        for k in ks:
             if self.Mx == 1:
                 for g in range(nseg):
                     pos.append((k, (g,)))
@@ -91,7 +94,8 @@ class Sim:
         self.consumed = 0
         self.positions = block.positions(layout.R, layout.C)
         self.seg_of_col = np.arange(layout.C) // block.seg
-        self.log = []  # (t, defect fraction)
+        self.log = []  # (t, defect fraction just after an image, just before it, time integral of the defect fraction)
+        self._integ = 0.0
         self._next_img = 0.0
         self._next_reload = prm.t_reload
         self._cursor = 0  # round-robin position of the block (continues across images)
@@ -106,10 +110,13 @@ class Sim:
             self.occ.flat[self.rng.choice(idx, size=min(k, len(idx)), replace=False)] = False
 
     def _advance(self, dt):
-        self._vacuum(dt)
+        d0 = self.defect_fraction()
+        self._vacuum(dt)  # losses are uniform in time over dt, so the trapezoid rule is exact in expectation
+        self._integ += 0.5 * dt * (d0 + self.defect_fraction())
         self.t += dt
 
     def image(self):
+        pre = self.defect_fraction()
         self.known_holes = self.comp & ~self.occ
         self.known_res = self.res & self.occ
         idx = np.flatnonzero(self.occ)
@@ -117,7 +124,7 @@ class Sim:
         if k:
             self.occ.flat[self.rng.choice(idx, size=k, replace=False)] = False
         self._advance(self.P.t_img)
-        self.log.append((self.t, self.defect_fraction()))
+        self.log.append((self.t, self.defect_fraction(), pre, self._integ))
 
     def reload(self):
         empty = self.res & ~self.occ
@@ -131,6 +138,12 @@ class Sim:
         h = self.heat[self.comp & self.occ]
         return {"mean_uK": float(h.mean()), "p99_uK": float(np.percentile(h, 99)), "max_uK": float(h.max()),
                 "moved_fraction": float((self.moves[self.comp & self.occ] > 0).mean())}
+
+    def mean_defect(self, t0):
+        """Time-averaged defect fraction from the first image at or after t0 to the last image."""
+        d = np.array(self.log)
+        i = np.searchsorted(d[:, 0], t0)
+        return float((d[-1, 3] - d[i, 3]) / max(d[-1, 0] - d[i, 0], 1e-12))
 
     def defect_fraction(self):
         return float((self.comp & ~self.occ).sum() / self.comp.sum())
