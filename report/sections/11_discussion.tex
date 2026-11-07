@@ -16,7 +16,7 @@ narrower than about 100~pm and no pair of reflections with $R_1R_2>1.7\times10^{
 (\cref{sec:rows}). (iv) Transport with handoff in three dimensions delivers 3,000 of 3,000 simulated atoms when
 the moves run along lanes between rows, the moving depth is at least three times the hold depth, and the
 hold depth is about $20\,k_BT$. With 200~\textmu s ramps and 400~\textmu s lane steps the heating per handoff
-falls to 0.12 to 0.16~\textmu K at a moving depth of only 0.3~mK, and the axial registration of the two foci
+falls to 0.12~\textmu K (about 0.3~\textmu K per move including the $x$ move) at a moving depth of only 0.3~mK, and the axial registration of the two foci
 must be held to $\pm0.5$~\textmu m (\cref{sec:transport}). (v) At $10^6$ sites, a block of 128 engines with fast
 steps holds a time-averaged defect fraction of $1.8\times10^{-4}$ to $2.0\times10^{-4}$, set by vacuum and
 imaging losses rather than by the repair. Slower steps reach a similar floor if the imaging period is raised
@@ -38,20 +38,22 @@ only. With the best common focus offset a row is usable over $|x_a|\leq 45$~\tex
 180~\textmu m segment. The transport, power and crosstalk numbers for tweezers in the outer half of a segment
 are therefore optimistic until the collimator is redesigned.
 
-In addition, four inconsistencies between documents remain and are stated as found rather than resolved:
-(i) the slow-step heating per move appears as 0.12 to 0.16~\textmu K per handoff, 0.2 to 0.3~\textmu K per move
-including the x move, and 0.3~\textmu K in the steady-state input, and the 3D classical run that includes the x
-move gives 0.16~\textmu K, below the quantum sum; (ii) the pass count and cycle time of the greedy scheduler differ
-slightly between the rearrangement and repair studies for the same case (5.8 plus 2 passes and 17.2/23.0~ms
-against 8.05 passes and 17.8/23.1~ms), which points to different scheduler versions; (iii) the heating of the
-fast steps was computed with 100~\textmu s ramps, while the shortest cycle time quoted assumes 50~\textmu s
-ramps; (iv) the defect fractions quoted before the steady-state follow-up are sampled just after an image and
-count imaging losses twice, so they exceed the time average by about 25\% at the nominal point. Smaller differences
-come from separate runs or versions of the same model and are reported as given in the chapters: the steering
-half-range at 128 channels (67 or 68~\textmu m), the shift of the other tweezers when one moves (1.5~nm in the
-paraxial engine, up to 3.5~nm in D1), the time to reach $10^{-3}$ defects at $10^6$ sites with fast steps (1.45 to
-1.67~s), its time-averaged floor (1.8 to $2.0\times10^{-4}$, different seeds and run lengths), and the sites per
-180~\textmu m segment (45 or 46 at 4~\textmu m, depending on whether the segment edge is counted).
+In addition, a review of the whole project for errors corrected several earlier results, all reflected in this
+report: (i) the steady-state simulator skipped block positions after each visit, which had inflated every
+assembly time and the slow-step floors at $10^6$ sites; (ii) the phase-noise option for row decorrelation
+scaled away the incoherent part of the crosstalk and looked better than fully incoherent rows; (iii) the
+$2\times2$ MMI design offset of the switches was treated as random spread; (iv) the field-mean laser power of
+the first engine was evaluated in the wrong units; (v) the arm-phase aberration of the first star coupler was
+mis-evaluated by phase unwrapping; (vi) the first $x$ relay lens did not cover the slit edge; and (vii) the
+position error of the 20-port star-coupler engine depends on the relative port phases, which an earlier text
+treated as fixed. Some figures still differ between documents for stated reasons: the heating per slow step is
+0.12~\textmu K per handoff and about 0.3~\textmu K per move including the $x$ move (the 3D classical run gives
+0.16~\textmu K); the greedy scheduler's pass count depends on the set of random loadings (7.8 or 8.05 passes);
+the steering half-range at 128 channels is 67~\textmu m by the usable-range criterion and 68~\textmu m by the
+formula $N\lambda/(4\,\mathrm{NA})$; the other tweezers shift by 1.5~nm in the paraxial engine and up to 3.5~nm in
+D1; and the time-averaged floor at $10^6$ sites with fast steps is 1.8 to $2.0\times10^{-4}$ across runs with
+different seeds. Defect fractions quoted at the image instant count imaging losses twice and exceed the time
+average by about 25\% at the nominal point.
 
 \subsection{What is extrapolated}\label{sec:discussion-extrap}
 

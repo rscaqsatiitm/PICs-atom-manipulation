@@ -41,7 +41,7 @@ def tip_mode_field(w_tip, t, lam, half=None, n=None, decay_lengths=7.0, half_max
         return x, y, E, te
     h = 7.0
     while True:
-        x, y, E, te = _solve_tip(w_tip, t, lam, h, n or int(40 * h) + 1)
+        x, y, E, te = _solve_tip(w_tip, t, lam, h, n or min(int(40 * h), 700) + 1)  # <= 0.1 um grid
         dn2 = te.neff.real**2 - n_clad**2
         if dn2 <= 1e-7:
             te.window_converged = False

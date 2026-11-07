@@ -46,7 +46,7 @@ def _tip_job(args):
 
 def couplers():
     jobs = [(lk, t, w) for lk in LAMS for t in (0.2, 0.4) for w in TIPS]
-    rows = pmap(_tip_job, jobs)
+    rows = pmap(_tip_job, jobs, processes=2)  # large windows near cutoff need more memory per solve
     best = {}
     f, ax = fig(1, 2, h=3.0)
     for j, lk in enumerate(LAMS):

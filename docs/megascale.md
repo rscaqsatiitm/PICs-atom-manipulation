@@ -633,7 +633,7 @@ its own.
 
 (iii) A corrector at the x slit plane, where x encodes s_x. This fails at large s_x. At x_a = 90 um the error acts at
 S like a y lens of 4 mm focal length (2.9 waves at 158 um), so the beam has passed a focus before the slit plane,
-7 mm later.
+6.5 mm later.
 
 (iv) A larger vertical facet mode (lower facet NA). This helps by less than a factor of two, because the optimal
 pupil fill, and with it f_FAC, grows with the mode.
