@@ -15,8 +15,10 @@ at most 0.1 s^-1 at nu = 84 kHz, i.e. a relative intensity noise (RIN) density a
 S <= 1.4e-12/Hz (-118 dB/Hz). A representative chain gives -134.5 dB/Hz (Gamma = 2.5e-3 s^-1), 16 dB inside the
 criterion. The design rules that follow are:
 (i) no filter narrower than about 100 pm (20 times the 1.35 GHz rms modulation width) in the light path;
-(ii) the product of any two reflections in the chain, R1 R2, below 1.7e-3 (amplitude r <= 0.042), i.e. no pair of
-uncoated glass surfaces in series.
+(ii) the product of any two reflections in the chain, R1 R2, below 1.3e-3 (amplitude r <= 0.036). The simulated
+multipath rows set this limit (Gamma = 7.9e-3 s^-1 at R1 R2 = 1e-4, proportional to R1 R2); the analytic estimate
+gave 1.7e-3. An uncoated fused-silica pair (R1 R2 = 1.2e-3) sits at the limit, and any uncoated pair of higher
+index exceeds it, so reflecting surfaces in series should be AR coated.
 
 ## 2. Elements
 

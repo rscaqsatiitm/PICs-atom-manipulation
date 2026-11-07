@@ -139,7 +139,7 @@ the same row independence as frequency offsets. Alternating polarisation costs n
 second, independent factor of about 26 on the nearest rows if the modulation fails or is switched off.
 
 Next step (i) is simulated in `docs/pm_am.md` (filters narrower than about 100 pm and reflection pairs with R1 R2 >
-1.7e-3 must be avoided; a representative chain gives -134.5 dB/Hz). Next steps: (i) measure the delayed self-coherence of the modulated seed after the amplifier (PM-to-AM conversion
+1.3e-3 must be avoided; a representative chain gives -134.5 dB/Hz). Next steps: (i) measure the delayed self-coherence of the modulated seed after the amplifier (PM-to-AM conversion
 by any spectral filtering adds intensity noise at GHz; its density at 2 nu_trap should be checked); (ii) choose
 the noise drive (or a deterministic multi-tone drive with the same autocorrelation); (iii) obtain the second-order
 differential light shift of the 1064.4350 nm double-magic condition over +/-5 pm.

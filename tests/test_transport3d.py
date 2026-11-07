@@ -24,6 +24,7 @@ def test_grid_gradient_matches_analytic():
 
 
 def test_static_hold_keeps_atoms_and_energy():
+    """Static array alone (moving tweezer off): atoms stay in their site and the integrator conserves energy."""
     st = StaticArray(np.array([[0.0, 0.0, 0.0], [4e-6, 0.0, 0.0]]), 0.85e-6, 1.075e-6, 0.2e-3 * kB)
     tr, _ = gaussian_grid()
     seq = Sequence(src=np.zeros(3), dst=np.zeros(3), depth_move=0.0, t_ramp=50e-6, t_move=50e-6, t_hold=50e-6)

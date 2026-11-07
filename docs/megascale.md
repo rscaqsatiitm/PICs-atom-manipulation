@@ -38,7 +38,7 @@ handoff steps. It then holds the array at 2.3e-4 defects per site in steady stat
 floor faster: 10^4 sites in 0.1 to 0.3 s, 10^5 sites in 0.2 to 0.6 s. The steady-state floor is not set by the
 transport. It follows the loss rates and the imaging cadence,
 
-    rho ~ (1.5 to 1.8) x (eps_img + T_img / tau),
+    rho ~ (1.4 to 1.8) x (eps_img + T_img / tau),
 
 where eps_img is the loss per image, T_img the imaging period and tau the vacuum lifetime. With eps_img = 1e-4,
 T_img = 0.1 s and tau = 3000 s this gives 2.3e-4, at every array size.
@@ -94,7 +94,7 @@ arXiv:2402.04994, search summary only).
 
 ## 4. Transport hardware: engines, tiling and blocks
 
-One engine (192 ports, 383 fast actuators) serves a 180 um row segment: 45 sites at 4 um, 60 at 3 um. Engines can
+One engine (192 ports, 383 fast actuators) serves a 180 um row segment: 46 site centres at 4 um (spanning 45 x 4 = 180 um), 61 at 3 um. Engines can
 be tiled in two directions.
 
 **Along y, by stacking chips** (`docs/stacked_relay.md`). One chip per row, with a collimator per chip.
@@ -170,7 +170,7 @@ loss-limited floor; they cost heating (about 1 to 10 uK per move, but each atom 
 (iii) **Each refill is one move**, from a nearby reservoir row into the hole, so heating does not accumulate.
 
 **The floor.** A loss becomes visible only at the next image, and an image itself loses eps_img per atom. Hence
-rho ~ k (eps_img + T_img / tau), with k = 1.5 to 1.8 from the simulations. Imaging more often shortens the
+rho ~ k (eps_img + T_img / tau), with k = 1.4 to 1.8 from the simulations. Imaging more often shortens the
 latency but costs more imaging loss, so the eps_img term is a floor of its own:
 - 1e-3 defects: eps_img + T_img/tau <= 6e-4, met by eps_img = 1e-4 and tau >= 200 s at 10 Hz imaging;
 - 1e-4 defects: eps_img <= 3e-5 and tau >= 3,300 s at 10 Hz.
@@ -377,7 +377,7 @@ Selected time-averaged defect fractions at 10^5 sites:
 
 The values at image fit rho_image = 2.42 eps_img + 0.96 (T_img + t_img)/tau (median error 12%, worst 33%), close
 to the 2 eps_img + (T_img + t_img)/tau expected from the double counting. This replaces the rule
-rho ~ 1.5-1.8 (eps_img + T_img/tau) of Sec. 1 and 6, which was fitted to at-image values over a narrower range.
+rho ~ 1.4-1.8 (eps_img + T_img/tau) of Sec. 1 and 6, which was fitted to at-image values over a narrower range.
 The time average follows a hole-lifetime model. An imaging loss is unseen for one period T = T_img + t_img and
 is then repaired after a mean delay d; a vacuum loss waits T/2 on average for the next image, and then d. Hence
 
@@ -446,7 +446,7 @@ crosstalk at 4 um 1.09e-4 against 1.06e-4). Single tweezer, hard collimator edge
 The hard edge of the collimator is not the problem. Its Fresnel tail spreads into the gap, but it consists of
 directions steeper than the pupil accepts, and clipping it costs nothing. A graded collimator edge
 (raised cosine 0.8-0.9) therefore does not help: it raises the baseline crosstalk to 1.5e-4 and gains no
-distance. (A Fresnel-tail estimate that ignores the pupil predicts 0.7% loss at 10 mm; the simulated loss there
+distance. (A Fresnel-tail estimate that ignores the pupil predicts 0.36% loss at 10 mm; the simulated loss there
 is below 0.1%.) What matters is the light inside the pupil acceptance, which leaves S at half-angle NA/D = 4 mrad.
 It reaches the window edge at
 
@@ -549,7 +549,7 @@ stacked relay.
 
 **The comb with the real collimator.** The exit field is built from the traced lens map (exit height, wavefront
 and amplitude per ray) at a plane 60 um beyond the last vertex. S lies at the traced back focal plane,
-0.44 mm from the facet. Without a comb this reproduces the m14 wave model: crosstalk 8.0e-5 at 4 um against 8.0e-5,
+0.44 mm from the facet. Without a comb this reproduces the m14 wave model: crosstalk 8.0e-5 at 4 um against 8.4e-5,
 and 3.8e-4 against 4.0e-4 at 3 um. The real geometry also moves the comb. The traced x lens of m14 puts the x slit
 plane 7.37 mm from the facet, the collimator glass adds 0.15 mm in x (t (1 - 1/n) per section), and we keep
 0.5 mm of clearance. The comb therefore starts 7.6 mm from S, and the far row of a 32-row comb sits at 23.6 mm.
@@ -636,7 +636,7 @@ The downstream cylindrical lenses of the y relay see x angles below about 0.05 a
 | x-tiling lobe geometry and ABCD | Sec. 4 | DERIVED | results/m22_tiling.json |
 | 3 um pitch transport | Sec. 5 | SIM | results/m18_pitch3.json (3,000 atoms; review) |
 | assembly and steady state | Sec. 1, 6 | SIM | results/m23_steady.json (review) |
-| rho ~ 1.5-1.8 (eps + T_img/tau) | Sec. 1, 6 | SIM/DERIVED | fit to m23 floors (at-image values; superseded by Sec. 10) |
+| rho ~ 1.4-1.8 (eps + T_img/tau) | Sec. 1, 6 | SIM/DERIVED | fit to m23 floors (at-image values; superseded by Sec. 10) |
 | 23 min lifetime, 99.98952% imaging survival, 6,100 atoms | Sec. 6 | SOURCE | Manetsch et al., arXiv:2403.12021, abstract read 2026-11-06 |
 | 30,000 qubits/s, > 3,000 atoms for > 2 h | Sec. 6 | SOURCE | Chiu et al., arXiv:2506.20660, abstract read 2026-11-06 |
 | 2,088 sites at 6 K, 828-atom rearrangement | context | SOURCE | Pichard et al., arXiv:2405.19503, abstract read 2026-11-06 |

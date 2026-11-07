@@ -19,7 +19,7 @@ The 41 tweezers per row of design D1 are at 3 um spacing. On the 4 um site latti
 useful over the same +/-60 um. In general the useful number per row is the row length divided by the site
 pitch, so it cannot be raised by packing tweezers more densely. Hence scaling means longer rows and more rows.
 
-The per-tweezer costs do not fall with scale: 8.7 fast actuators and about 57 mW at 1.2 mK per simultaneous
+The per-tweezer costs do not fall with scale: 8.5 fast actuators and about 57 mW at 1.2 mK per simultaneous
 tweezer. Two levers nevertheless remove most of the penalty.
 
 (i) **Shallower transport.** Moves of three sites (12 um) in 200 us survive at 0.2 mK with the 200 kHz update

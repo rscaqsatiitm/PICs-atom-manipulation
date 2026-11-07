@@ -30,7 +30,8 @@ def _tip_job(args):
     lam = LAMS[lk]
     x, y, E, te = cp.tip_mode_field(w, t, lam)
     wx, wy = cp.mode_size(x, y, E)
-    r = {"lam": lk, "t": t, "w_tip": w, "neff": te.neff.real, "aeff_um2": te.aeff, "mfd_x": wx, "mfd_y": wy}
+    r = {"lam": lk, "t": t, "w_tip": w, "neff": te.neff.real, "aeff_um2": te.aeff, "mfd_x": wx, "mfd_y": wy,
+         "window_half_um": te.window_half_um, "window_converged": bool(te.window_converged)}
     for name, mfd in MFDS[lk].items():
         eta, y0 = cp.best_overlap(x, y, E, mfd / 2)
         r[f"eta_{name}"] = eta
@@ -52,10 +53,10 @@ def couplers():
         for t, ls in ((0.2, "--"), (0.4, "-")):
             r = [x for x in rows if x["lam"] == lk and x["t"] == t]
             for (name, _), c in zip(MFDS[lk].items(), ("C0", "C1", "C2")):
-                eta = np.array([x[f"eta_{name}"] for x in r])
+                eta = np.array([x[f"eta_{name}"] if x["window_converged"] else np.nan for x in r])
                 ax[0, j].plot([x["w_tip"] for x in r], 10 * np.log10(eta), ls + "o", color=c, ms=3,
                               label=f"{name}, t={t*1e3:.0f} nm")
-                k = int(np.argmax(eta))
+                k = int(np.nanargmax(eta))
                 best[f"{lk}_{t}_{name}"] = {"w_tip": r[k]["w_tip"], "dB": float(10 * np.log10(eta[k])),
                                             "tol_1dB_x_um": r[k][f"tol_1dB_x_{name}"]}
         ax[0, j].set_title(f"lambda = {LAMS[lk]*1e3:.1f} nm")

@@ -282,7 +282,9 @@ def xlens():
     ls = LinearSynth(fp)
     f1 = 3120.0
     s_cut = fp.opa.s_cut
-    lenses = {"aplanat SiO2": C.aplanat(N_SIO2, f1, 1500.0, 1500.0, s_max=0.4),
+    # r0 2.0 mm: the ray construction then covers |s| <= 0.42 on axis and up to 0.36 at the 144 um field edge, beyond
+    # the slit edge s_cut = 0.355 (r0 1.5 mm stopped at 0.33, so rays near the slit edge were missing)
+    lenses = {"aplanat SiO2": C.aplanat(N_SIO2, f1, 2000.0, 1500.0, s_max=0.5),
               "plano-asphere SiO2": C.plano_asphere(N_SIO2, f1, 1500.0, s_max=0.45)}
     out = {"f1_um": f1, "s_cut": s_cut}
     xt = np.array([-60.0, -30.0, 0.0, 30.0, 60.0])
@@ -296,10 +298,12 @@ def xlens():
         sg = np.linspace(-0.4, 0.4, 801)
         th = np.arcsin(sg)
         r0, _ = rt.trace(0.0, 0.0, th, d.surfaces, d.indices, zb)
-        xs_tab = np.linspace(0, 150.0, 7)
-        Wtab = []
+        xs_tab = np.array([0.0, 25.0, 50.0, 75.0, 100.0, 125.0, 144.0])  # 144 um: edge of the 288 um emitter row
+        Wtab, cover = [], []
         for x0 in xs_tab:
             r1, _ = rt.trace(x0, 0.0, th, d.surfaces, d.indices, zb)
+            okc = np.isfinite(r1.y)
+            cover.append([float(sg[okc].min()), float(sg[okc].max())])
             # plane-wave component s_eff = (exit angle of the bundle) ~ position at the back focal plane / f
             s_eff = r1.y / f1
             ok = np.isfinite(s_eff)
@@ -310,7 +314,7 @@ def xlens():
             Wtab.append(np.interp(sg, s_eff[ok], W))
         Wtab = np.array(Wtab)  # (x0, s) in um
         m = np.abs(sg) <= s_cut
-        rms_edge = float(np.sqrt(np.mean((Wtab[-2][m] - np.polyval(np.polyfit(sg[m], Wtab[-2][m], 1), sg[m])) ** 2)) / LAM)
+        rms_edge = float(np.sqrt(np.mean((Wtab[-1][m] - np.polyval(np.polyfit(sg[m], Wtab[-1][m], 1), sg[m])) ** 2)) / LAM)
 
         def phase_fn(s, xn, Wtab=Wtab):
             ax_ = abs(xn)
@@ -334,6 +338,7 @@ def xlens():
         oth = [fp2.peak_near(Im, x) for i, x in enumerate(xt) if i != 2]
         obc = [b for i, b in enumerate(bc) if i != 2]
         out[name] = {"back_focal_z_um": zb, "W_rms_waves_field_144um_after_tilt": rms_edge,
+                     "launch_s_covered_by_field": dict(zip([f"{x:g}" for x in xs_tab], cover)),
                      "W_pv_um_by_field": [float(np.ptp(Wt[m])) for Wt in Wtab], "field_um": xs_tab.tolist(),
                      "uncalibrated_peak_rel": [u["peak"] / b["peak"] for u, b in zip(bu, b0)],
                      "uncalibrated_pos_nm": [(u["x_peak"] - x) * 1e3 for u, x in zip(bu, xt)],
@@ -344,7 +349,7 @@ def xlens():
                      "geometry": d.geometry(0.36)}
         print(name, json.dumps(out[name], default=float)[:900], flush=True)
     save_result("m14_xlens", script=SCRIPT,
-                inputs={"f1_um": f1, "aplanat": "SiO2, r0 1.5 mm, T 1.5 mm", "plano_asphere": "SiO2, wd 1.5 mm",
+                inputs={"f1_um": f1, "aplanat": "SiO2, r0 2.0 mm, T 1.5 mm", "plano_asphere": "SiO2, wd 1.5 mm",
                         "tweezers": xt.tolist(), "design": D1},
                 outputs=out,
                 notes="Off-axis wavefront of the first x lens applied to each emitter's angular spectrum; the second "

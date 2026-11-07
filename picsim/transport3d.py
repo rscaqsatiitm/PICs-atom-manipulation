@@ -1,6 +1,6 @@
 """3D classical transport of atoms between a static tweezer array and a moving tweezer, with handoff.
 
-Potential U(r, t) = U_static(r) + U_move(r, t) - m g y. The static array (1075 nm) is a set of Gaussian beams of
+Potential U(r, t) = U_static(r) + U_move(r, t) + m g y (gravity along -y). The static array (1075 nm) is a set of Gaussian beams of
 waist w0 and Rayleigh range z_R at the site positions, all at a common (global) depth. The moving tweezer is a
 tabulated, normalised 3D intensity g(x, y, z) (peak 1), scaled by a time-dependent depth and translated along
 a prescribed trajectory. Both are optical dipole potentials of different wavelengths, so their intensities add

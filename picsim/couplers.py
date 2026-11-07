@@ -13,8 +13,7 @@ import numpy as np
 from . import modes as M
 
 
-def tip_mode_field(w_tip, t, lam, half=7.0, n=281):
-    """|Ex| of the TE0 mode at the tip on a square grid, plus grid vectors and mode data."""
+def _solve_tip(w_tip, t, lam, half, n):
     xs = M.XSection(cores=[(0, w_tip)], t=t, x_left=-half, x_right=half, clad_bottom=half, t_top=half,
                     res_core=min(0.03, w_tip / 3), res_max=0.5)
     ms = M.solve(xs, lam, num_modes=2)
@@ -22,6 +21,40 @@ def tip_mode_field(w_tip, t, lam, half=7.0, n=281):
     x = np.linspace(-half + 0.5, half - 0.5, n)
     y = np.linspace(-half + 0.5 + t / 2, half - 0.5 + t / 2, n)
     E = M.field_on_grid(te.mode, x, y, 0)
+    return x, y, E, te
+
+
+def tip_mode_field(w_tip, t, lam, half=None, n=None, decay_lengths=7.0, half_max=35.0):
+    """|Ex| of the TE0 mode at the tip on a square grid, plus grid vectors and mode data.
+
+    half=None: the closed computational window grows until it extends `decay_lengths` evanescent decay lengths,
+    lambda / (2 pi sqrt(n_eff^2 - n_clad^2)), beyond the core (at most half_max). Near cutoff the mode tail reaches
+    several micrometres, and a fixed 7 um window clipped it (the HI1060 overlap of a 100 nm tip moved from -0.48 to
+    -0.86 dB between 7 and 15 um). te.window_converged is False when half_max was not enough, or the mode is at or
+    below the cladding index (a box mode, not a guided one).
+    """
+    from . import materials as mat
+    n_clad = float(mat.n_sio2(lam))
+    if half is not None:
+        x, y, E, te = _solve_tip(w_tip, t, lam, half, n or 281)
+        te.window_converged = None
+        return x, y, E, te
+    h = 7.0
+    while True:
+        x, y, E, te = _solve_tip(w_tip, t, lam, h, n or int(40 * h) + 1)
+        dn2 = te.neff.real**2 - n_clad**2
+        if dn2 <= 1e-7:
+            te.window_converged = False
+            break
+        need = max(w_tip, t) / 2 + decay_lengths * lam / (2 * np.pi * np.sqrt(dn2))
+        if need <= h:
+            te.window_converged = True
+            break
+        if h >= half_max:
+            te.window_converged = False
+            break
+        h = min(half_max, max(need, 1.4 * h))
+    te.window_half_um = h
     return x, y, E, te
 
 

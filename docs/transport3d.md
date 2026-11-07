@@ -1,7 +1,8 @@
 # 3D transport with handoff between the static array and the moving tweezers
 
 > Follow-up (`docs/rearrangement.md`): slower handoff steps (200 us ramps, 400 us lane steps) cut the heating per
-> move to 0.12 to 0.16 uK at 0.1 / 0.3 mK, confirmed both quantum mechanically and by 3D classical simulation.
+> handoff to 0.12 uK at 0.1 / 0.3 mK (1D quantum, handoff and lane axis); with the x move it is about 0.3 uK per
+> move (quantum, 0.12 + 0.17 uK), and the 3D classical run gives 0.16 uK.
 > The shallow 0.3 mK point is then also the low-heating point. The static array's depth uniformity is not a
 > constraint.
 

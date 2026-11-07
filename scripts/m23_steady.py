@@ -43,7 +43,7 @@ def one(cfg):
     t_end = cfg.get("t_end", 12.0)
     t3 = sim.run(t_end, target=1e-3)
     d = np.array(sim.log)
-    t2 = next((t for t, x in d if x <= 1e-2), None)
+    t2 = next((r[0] for r in d if r[1] <= 1e-2), None)
     late = d[d[:, 0] >= t_end - 3.0, 1]
     # refill rate over the last 3 s from move counts is not logged per time; use fills / (time) after assembly as
     # an upper estimate, and the analytic generation rate N (1/tau + eps/T_img)
@@ -115,7 +115,7 @@ def one_mixed(cfg):
     t_end = cfg["t_end"]
     t3 = sim.run(t_end, target=1e-3)
     d = np.array(sim.log)
-    t2 = next((t for t, x in d if x <= 1e-2), None)
+    t2 = next((r[0] for r in d if r[1] <= 1e-2), None)
     late = d[d[:, 0] >= t_end - 3.0, 1]
     return {**cfg, "rows": R, "cols": C, "comp_sites": int(sim.comp.sum()), "seg_sites": seg,
             "density_comp_per_um2": float(sim.comp.sum() / (R * py * C * px)), "t_1e-2_s": t2, "t_1e-3_s": t3,

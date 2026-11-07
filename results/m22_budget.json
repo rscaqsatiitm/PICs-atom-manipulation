@@ -1,7 +1,7 @@
 {
  "name": "m22_budget",
  "script": "scripts/m22_megascale.py",
- "git": "b8afb33",
+ "git": "78220f7",
  "notes": "Static powers include the reservoir sites (total sites = N / (1 - r)).",
  "inputs": {
   "static": {
@@ -53,21 +53,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 736,
       "laser_W_0.3mK": 10.566965801336933,
-      "field_positions": 21
+      "field_positions": 57
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 2944,
       "laser_W_0.3mK": 42.26786320534773,
-      "field_positions": 14
+      "field_positions": 38
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 5888,
       "laser_W_0.3mK": 84.53572641069546,
-      "field_positions": 8
+      "field_positions": 20
      }
     },
     "vacuum_losses_per_s": {
@@ -111,21 +111,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 736,
       "laser_W_0.3mK": 10.566965801336933,
-      "field_positions": 21
+      "field_positions": 27
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 2944,
       "laser_W_0.3mK": 42.26786320534773,
-      "field_positions": 14
+      "field_positions": 18
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 5888,
       "laser_W_0.3mK": 84.53572641069546,
-      "field_positions": 8
+      "field_positions": 10
      }
     },
     "vacuum_losses_per_s": {
@@ -169,21 +169,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 976,
       "laser_W_0.3mK": 14.012715519164193,
-      "field_positions": 14
+      "field_positions": 38
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 3904,
       "laser_W_0.3mK": 56.05086207665677,
-      "field_positions": 14
+      "field_positions": 38
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 7808,
       "laser_W_0.3mK": 112.10172415331354,
-      "field_positions": 8
+      "field_positions": 20
      }
     },
     "vacuum_losses_per_s": {
@@ -227,21 +227,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 976,
       "laser_W_0.3mK": 14.012715519164193,
-      "field_positions": 14
+      "field_positions": 18
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 3904,
       "laser_W_0.3mK": 56.05086207665677,
-      "field_positions": 14
+      "field_positions": 18
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 7808,
       "laser_W_0.3mK": 112.10172415331354,
-      "field_positions": 8
+      "field_positions": 10
      }
     },
     "vacuum_losses_per_s": {
@@ -285,21 +285,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 736,
       "laser_W_0.3mK": 10.566965801336933,
-      "field_positions": 140
+      "field_positions": 420
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 2944,
       "laser_W_0.3mK": 42.26786320534773,
-      "field_positions": 80
+      "field_positions": 120
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 5888,
       "laser_W_0.3mK": 84.53572641069546,
-      "field_positions": 40
+      "field_positions": 60
      }
     },
     "vacuum_losses_per_s": {
@@ -343,21 +343,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 736,
       "laser_W_0.3mK": 10.566965801336933,
-      "field_positions": 140
+      "field_positions": 189
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 2944,
       "laser_W_0.3mK": 42.26786320534773,
-      "field_positions": 80
+      "field_positions": 54
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 5888,
       "laser_W_0.3mK": 84.53572641069546,
-      "field_positions": 40
+      "field_positions": 28
      }
     },
     "vacuum_losses_per_s": {
@@ -401,21 +401,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 976,
       "laser_W_0.3mK": 14.012715519164193,
-      "field_positions": 120
+      "field_positions": 360
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 3904,
       "laser_W_0.3mK": 56.05086207665677,
-      "field_positions": 80
+      "field_positions": 120
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 7808,
       "laser_W_0.3mK": 112.10172415331354,
-      "field_positions": 40
+      "field_positions": 60
      }
     },
     "vacuum_losses_per_s": {
@@ -459,21 +459,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 976,
       "laser_W_0.3mK": 14.012715519164193,
-      "field_positions": 120
+      "field_positions": 162
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 3904,
       "laser_W_0.3mK": 56.05086207665677,
-      "field_positions": 80
+      "field_positions": 54
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 7808,
       "laser_W_0.3mK": 112.10172415331354,
-      "field_positions": 40
+      "field_positions": 28
      }
     },
     "vacuum_losses_per_s": {
@@ -517,21 +517,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 736,
       "laser_W_0.3mK": 10.566965801336933,
-      "field_positions": 1386
+      "field_positions": 4136
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 2944,
       "laser_W_0.3mK": 42.26786320534773,
-      "field_positions": 756
+      "field_positions": 1128
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 5888,
       "laser_W_0.3mK": 84.53572641069546,
-      "field_positions": 384
+      "field_positions": 564
      }
     },
     "vacuum_losses_per_s": {
@@ -575,21 +575,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 736,
       "laser_W_0.3mK": 10.566965801336933,
-      "field_positions": 1386
+      "field_positions": 1848
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 2944,
       "laser_W_0.3mK": 42.26786320534773,
-      "field_positions": 756
+      "field_positions": 504
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 5888,
       "laser_W_0.3mK": 84.53572641069546,
-      "field_positions": 384
+      "field_positions": 252
      }
     },
     "vacuum_losses_per_s": {
@@ -633,21 +633,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 976,
       "laser_W_0.3mK": 14.012715519164193,
-      "field_positions": 1071
+      "field_positions": 3196
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 3904,
       "laser_W_0.3mK": 56.05086207665677,
-      "field_positions": 630
+      "field_positions": 940
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 7808,
       "laser_W_0.3mK": 112.10172415331354,
-      "field_positions": 320
+      "field_positions": 470
      }
     },
     "vacuum_losses_per_s": {
@@ -691,21 +691,21 @@
       "fast_actuators": 6128,
       "simultaneous_tweezers": 976,
       "laser_W_0.3mK": 14.012715519164193,
-      "field_positions": 1071
+      "field_positions": 1428
      },
      "16 rows x 4 segments": {
       "engines": 64,
       "fast_actuators": 24512,
       "simultaneous_tweezers": 3904,
       "laser_W_0.3mK": 56.05086207665677,
-      "field_positions": 630
+      "field_positions": 420
      },
      "32 rows x 4 segments": {
       "engines": 128,
       "fast_actuators": 49024,
       "simultaneous_tweezers": 7808,
       "laser_W_0.3mK": 112.10172415331354,
-      "field_positions": 320
+      "field_positions": 210
      }
     },
     "vacuum_losses_per_s": {
