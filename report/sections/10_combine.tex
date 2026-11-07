@@ -1,6 +1,6 @@
 \section{Combining stacks and the real collimator}\label{sec:combine}
 
-The engine blocks of Sec.~\ref{sec:megascale-remedies} need 32 to 64 rows, i.e.\ two to four 16-chip stacks of the kind described in Sec.~\ref{sec:rows}. A polarising beam splitter combines two stacks; we show here how to combine stacks in space with a slotted mirror at the collimator plane, and then repeat the analysis with the real, traced collimator. The second step changes little for the combiner, but it exposes a limit of the whole stacked relay: a cylindrical collimator at NA 0.9 defocuses the light of tweezers away from the row centre, so a row is usable over only half of its 180~\textmu m segment. The record is \texttt{docs/megascale.md} (Secs.~11 and 12) and \texttt{scripts/m26\_stack\_combine.py}.
+The engine blocks of Sec.~\ref{sec:megascale-remedies} need 32 to 64 rows, i.e.\ two to four 16-chip stacks of the kind described in Sec.~\ref{sec:rows}. A polarising beam splitter combines two stacks; we show here how to combine stacks in space with a slotted mirror at the collimator plane, and then repeat the analysis with the real, traced collimator. The second step changes little for the combiner, but it exposes a limit of the whole stacked relay: a cylindrical collimator at NA 0.9 defocuses the light of tweezers away from the row centre, so a row is usable over only half of its 180~\textmu m segment. The record is \texttt{docs/\allowbreak megascale.md} (Secs.~11 and 12) and \texttt{scripts/m26\_stack\_combine.py}.
 
 \subsection{A slotted comb at the collimator plane}\label{sec:combine-comb}
 
@@ -10,23 +10,22 @@ Our choice of a 45$^\circ$ comb is a compromise between two considerations. Firs
 
 \subsection{What sets the comb distance}\label{sec:combine-edge}
 
-We propagate the field of one chip in $y$ from the collimator exit (aperture $f_\mathrm{FAC}$ before S, sine-condition lens, pupil fill $\beta=0.7$~\textmu m, $\mathrm{NA}_\mathrm{FAC}=0.9$) to the comb at a distance $z$ from S, apply the window, propagate back to S, and continue to the atoms through the pupil (\texttt{picsim/opa/stack.RelayY}, \texttt{results/m26\_edge.json}). Without a comb this reproduces the earlier stacked-relay values (transmission 0.973, crosstalk at 4~\textmu m $1.09\times10^{-4}$ against $1.06\times10^{-4}$). Table~\ref{tab:combine-edge} and Fig.~\ref{fig:combine-edge} give the penalty for a single tweezer.
+We propagate the field of one chip in $y$ from the collimator exit (aperture $f_\mathrm{FAC}$ before S, sine-condition lens, pupil fill $\beta=0.7$~\textmu m, $\mathrm{NA}_\mathrm{FAC}=0.9$) to the comb at a distance $z$ from S, apply the window, propagate back to S, and continue to the atoms through the pupil (\texttt{picsim/opa/stack.RelayY}, \texttt{results/\allowbreak m26\_edge.json}). Without a comb this reproduces the earlier stacked-relay values (transmission 0.973, crosstalk at 4~\textmu m $1.09\times10^{-4}$ against $1.06\times10^{-4}$). Table~\ref{tab:combine-edge} and Fig.~\ref{fig:combine-edge} give the penalty for a single tweezer.
 
 \begin{table}[htbp]\centering\small
-\caption{Comb penalty versus distance $z$ from S, single tweezer, 1D in $y$, ideal thin collimator with a hard edge, slot window of half-width $a$ (simulated, \texttt{results/m26\_edge.json}). Loss is the power clipped by the comb; peak is relative to no comb; crosstalk is to the neighbouring row.}
+\caption{Comb penalty versus distance $z$ from S, single tweezer, 1D in $y$, ideal thin collimator with a hard edge, slot window of half-width $a$ (simulated, \texttt{results/\allowbreak m26\_edge.json}). Loss is the power clipped by the comb (\%); peak is relative to no comb; crosstalk (xt) to the neighbouring row at 4 and 3~\textmu m, in units of $10^{-4}$.}
 \label{tab:combine-edge}
-\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lccccccc}
 \toprule
  & \multicolumn{4}{c}{$a=250$~\textmu m} & \multicolumn{3}{c}{$a=225$~\textmu m} \\
 $z$ from S & loss & peak & xt 4~\textmu m & xt 3~\textmu m & loss & peak & xt 4~\textmu m \\
 \midrule
-no comb & 0 & 1 & $1.1\times10^{-4}$ & $2.9\times10^{-4}$ & 0 & 1 & $1.1\times10^{-4}$ \\
-10~mm & $<10^{-3}$ & 0.998 & $1.0\times10^{-4}$ & $2.8\times10^{-4}$ & $6\times10^{-4}$ & 0.992 & $1.1\times10^{-4}$ \\
-20~mm & $2.5\times10^{-3}$ & 0.992 & $1.5\times10^{-4}$ & $4.0\times10^{-4}$ & $7.2\times10^{-3}$ & 0.985 & $1.8\times10^{-4}$ \\
-30~mm & $8.5\times10^{-3}$ & 0.987 & $2.7\times10^{-4}$ & $7.1\times10^{-4}$ & $1.6\times10^{-2}$ & 0.981 & $3.1\times10^{-4}$ \\
-45~mm & $1.9\times10^{-2}$ & 0.973 & $6.0\times10^{-4}$ & $1.7\times10^{-3}$ & $3.4\times10^{-2}$ & 0.956 & $7.9\times10^{-4}$ \\
-60~mm & $3.6\times10^{-2}$ & 0.953 & $1.3\times10^{-3}$ & $2.9\times10^{-3}$ & $5.3\times10^{-2}$ & 0.931 & $1.6\times10^{-3}$ \\
+no comb & 0 & 1 & 1.1 & 2.9 & 0 & 1 & 1.1 \\
+10~mm & $<0.1\%$ & 0.998 & 1.0 & 2.8 & 0.06\% & 0.992 & 1.1 \\
+20~mm & 0.25\% & 0.992 & 1.5 & 4.0 & 0.72\% & 0.985 & 1.8 \\
+30~mm & 0.85\% & 0.987 & 2.7 & 7.1 & 1.6\% & 0.981 & 3.1 \\
+45~mm & 1.9\% & 0.973 & 6.0 & 17 & 3.4\% & 0.956 & 7.9 \\
+60~mm & 3.6\% & 0.953 & 13 & 29 & 5.3\% & 0.931 & 16 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -42,52 +41,52 @@ The hard edge of the collimator is not the problem. Its Fresnel tail spreads int
 z_\mathrm{max}=\frac{(a-f_\mathrm{FAC}\mathrm{NA}_\mathrm{FAC})\,D}{\mathrm{NA}},
 \label{eq:zmax}
 \end{equation}
-which is 23~mm for $a=250$~\textmu m and 17~mm for $a=225$~\textmu m. This agrees with the scan: at $z=20$~mm and $a=250$~\textmu m the worst row loses 0.25\% and the crosstalk at 4~\textmu m rises from $1.1\times10^{-4}$ to $1.5\times10^{-4}$, while at 30~mm it reaches $2.7\times10^{-4}$. A single edge, as used for block combining (rows 0 to 15 from one stack and 16 to 31 from the other), behaves similarly. It also shifts the boundary row by 1.7~nm at $z=20$~mm ($a=250$~\textmu m) and by 12~nm at $a=200$~\textmu m, a static offset to calibrate. The rows are mutually incoherent (\texttt{docs/row\_coherence.md}), so this crosstalk adds in intensity.
+which is 23~mm for $a=250$~\textmu m and 17~mm for $a=225$~\textmu m. This agrees with the scan: at $z=20$~mm and $a=250$~\textmu m the worst row loses 0.25\% and the crosstalk at 4~\textmu m rises from $1.1\times10^{-4}$ to $1.5\times10^{-4}$, while at 30~mm it reaches $2.7\times10^{-4}$. A single edge, as used for block combining (rows 0 to 15 from one stack and 16 to 31 from the other), behaves similarly. It also shifts the boundary row by 1.7~nm at $z=20$~mm ($a=250$~\textmu m) and by 12~nm at $a=200$~\textmu m, a static offset to calibrate. The rows are mutually incoherent (\texttt{docs/\allowbreak row\_coherence.md}), so this crosstalk adds in intensity.
 
 \subsection{Layouts for 32 to 64 rows}\label{sec:combine-layouts}
 
-Table~\ref{tab:combine-layout} lists the layouts (\texttt{results/m26\_layout.json}). We place the first comb point at $z_c=7$~mm, just beyond the $x$ slit plane at 6.24~mm (a choice), and the worst row is the one at the far end of the comb. Two 16-chip stacks at 1.0~mm pitch need a comb from 7 to 23~mm, which ends at $z_\mathrm{max}$; their worst row loses 0.45\% of its power, with peak 0.991 and crosstalk $1.8\times10^{-4}$ at 4~\textmu m. Two such pairs, combined by a polarising beam splitter (PBS), give 64 rows at the same penalty. Combining only by comb with longer stacks puts the far rows beyond $z_\mathrm{max}$ (7 to 31~mm for 24-chip stacks, 7 to 39~mm for 32-chip stacks) and costs up to 1.3\% and $3.9\times10^{-4}$. A second comb level (stacks at 2.0~mm, combined pairwise and then again) would put the second comb beyond $z_\mathrm{max}$, so we do not use it. With $a=225$~\textmu m, which is about what a 50~\textmu m tooth plate ($t/(2\sqrt{2})=18$~\textmu m per edge) and $\pm10$~\textmu m edge placement leave, the worst rows of the two preferred layouts lose 0.86\% and reach $2.0\times10^{-4}$.
+Table~\ref{tab:combine-layout} lists the layouts (\texttt{results/\allowbreak m26\_layout.json}). We place the first comb point at $z_c=7$~mm, just beyond the $x$ slit plane at 6.24~mm (a choice), and the worst row is the one at the far end of the comb. Two 16-chip stacks at 1.0~mm pitch need a comb from 7 to 23~mm, which ends at $z_\mathrm{max}$; their worst row loses 0.45\% of its power, with peak 0.991 and crosstalk $1.8\times10^{-4}$ at 4~\textmu m. Two such pairs, combined by a polarising beam splitter (PBS), give 64 rows at the same penalty. Combining only by comb with longer stacks puts the far rows beyond $z_\mathrm{max}$ (7 to 31~mm for 24-chip stacks, 7 to 39~mm for 32-chip stacks) and costs up to 1.3\% and $3.9\times10^{-4}$. A second comb level (stacks at 2.0~mm, combined pairwise and then again) would put the second comb beyond $z_\mathrm{max}$, so we do not use it. With $a=225$~\textmu m, which is about what a 50~\textmu m tooth plate ($t/(2\sqrt{2})=18$~\textmu m per edge) and $\pm10$~\textmu m edge placement leave, the worst rows of the two preferred layouts lose 0.86\% and reach $2.0\times10^{-4}$.
 
 \begin{table}[htbp]\centering\small
-\caption{Layouts for 32 to 64 rows (simulated and derived, \texttt{results/m26\_layout.json}; first comb point at $z_c=7$~mm). Worst row at $a=250$~\textmu m. The last column states whether the objective must accept both polarisations.}
+\caption{Layouts for 32 to 64 rows (simulated and derived, \texttt{results/\allowbreak m26\_layout.json}; first comb point at $z_c=7$~mm). Worst row at $a=250$~\textmu m: power loss, peak and crosstalk at 4~\textmu m (units of $10^{-4}$). The last column states whether the objective must accept both polarisations. Bold: preferred layouts.}
 \label{tab:combine-layout}
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{llllll}
+\begin{tabular}{lllccccc}
 \toprule
- & & chips per & comb & worst row: loss / & pol.-insensitive \\
-rows & layout & stack, pitch & $z$ range & peak / xt 4~\textmu m & objective \\
+ & & chips per & comb & \multicolumn{3}{c}{worst row} & pol.-insensitive \\
+rows & layout & stack, pitch & $z$ range & loss & peak & xt 4~\textmu m & objective \\
 \midrule
-32 & one stack & 32, 0.5~mm & & (no comb) & no \\
-32 & 2 stacks, PBS & 16, 0.5~mm & & (no comb) & yes \\
-32 & \textbf{2 stacks, comb} & \textbf{16, 1.0~mm} & \textbf{7--23~mm} & \textbf{0.45\% / 0.991 / $1.8\times10^{-4}$} & \textbf{no} \\
-48 & 4 stacks, comb + PBS & 12, 1.0~mm & 7--19~mm & 0.21\% / 0.992 / $1.4\times10^{-4}$ & yes \\
-48 & 2 stacks, comb & 24, 1.0~mm & 7--31~mm & 0.93\% / 0.987 / $2.9\times10^{-4}$ & no \\
-64 & \textbf{4 stacks, comb + PBS} & \textbf{16, 1.0~mm} & \textbf{7--23~mm} & \textbf{0.45\% / 0.991 / $1.8\times10^{-4}$} & \textbf{yes} \\
-64 & 2 stacks, comb & 32, 1.0~mm & 7--39~mm & 1.3\% / 0.984 / $3.9\times10^{-4}$ & no \\
-64 & 2 stacks, PBS & 32, 0.5~mm & & (no comb) & yes \\
+32 & one stack & 32, 0.5~mm & & \multicolumn{3}{c}{(no comb)} & no \\
+32 & 2 stacks, PBS & 16, 0.5~mm & & \multicolumn{3}{c}{(no comb)} & yes \\
+32 & \textbf{2 stacks, comb} & \textbf{16, 1.0~mm} & \textbf{7--23~mm} & \textbf{0.45\%} & \textbf{0.991} & \textbf{1.8} & \textbf{no} \\
+48 & 4 stacks, comb + PBS & 12, 1.0~mm & 7--19~mm & 0.21\% & 0.992 & 1.4 & yes \\
+48 & 2 stacks, comb & 24, 1.0~mm & 7--31~mm & 0.93\% & 0.987 & 2.9 & no \\
+64 & \textbf{4 stacks, comb + PBS} & \textbf{16, 1.0~mm} & \textbf{7--23~mm} & \textbf{0.45\%} & \textbf{0.991} & \textbf{1.8} & \textbf{yes} \\
+64 & 2 stacks, comb & 32, 1.0~mm & 7--39~mm & 1.3\% & 0.984 & 3.9 & no \\
+64 & 2 stacks, PBS & 32, 0.5~mm & & \multicolumn{3}{c}{(no comb)} & yes \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 A single taller stack (32 or 64 chips at 0.5~mm) needs no combiner. In first-order optics it only enlarges the $y$-relay field, to $\pm8$ or $\pm16$~mm at the first telescope lens and 3.7 or 7.4~mrad at the pupil. Its costs are mechanical: 16 to 32~mm of facets flush to about 100~\textmu m, and all the input and output lines at 0.5~mm pitch.
 
-\paragraph{2D check.} The 1D model leaves out the circular pupil, which couples $x$ and $y$, and the full rows. We therefore pass the comb-windowed $y$ pupil of both chips through the 2D model of the stacked relay (D1 $x$ response, circular NA 0.5 pupil; \texttt{results/m26\_twod.json}). Chip $m$ forms a full row of 41 tweezers at 3~\textmu m, chip $m+1$ forms 11 tweezers offset by 1.5~\textmu m, and one tweezer of chip $m$ then moves by 0.25~\textmu m. Without a comb this reproduces the earlier 2D values. Table~\ref{tab:combine-2d} shows that 2D does not change the conclusions. At the worst row the full-row crosstalk rises by a factor 1.3, and the effect of a moving tweezer on the next row by a factor 1.55 to 1.65 (to $3.9\times10^{-5}$ in depth at 4~\textmu m, $9.6\times10^{-5}$ at 3~\textmu m). This is still more than an order of magnitude below the in-row figures of D1 (0.11\%, 3.5~nm). Tweezers at $x=0$ and at the row end (60~\textmu m) give the same values to 0.1\%, because the comb acts on $y$ alone and the circular pupil couples the two axes only weakly. The 1D single-tweezer crosstalk ($1.8\times10^{-4}$ at $z=23$~mm) slightly overstated the 2D one ($1.5\times10^{-4}$). The block-combining edge moves the boundary row by 7~nm in 2D (peak position), a static offset to calibrate. With coherent rows the comb would raise the static depth change at 4~\textmu m from 2.6\% to 2.9\%; rows must stay incoherent, as they must without a comb.
+\paragraph{2D check.} The 1D model leaves out the circular pupil, which couples $x$ and $y$, and the full rows. We therefore pass the comb-windowed $y$ pupil of both chips through the 2D model of the stacked relay (D1 $x$ response, circular NA 0.5 pupil; \texttt{results/\allowbreak m26\_twod.json}). Chip $m$ forms a full row of 41 tweezers at 3~\textmu m, chip $m+1$ forms 11 tweezers offset by 1.5~\textmu m, and one tweezer of chip $m$ then moves by 0.25~\textmu m. Without a comb this reproduces the earlier 2D values. Table~\ref{tab:combine-2d} shows that 2D does not change the conclusions. At the worst row the full-row crosstalk rises by a factor 1.3, and the effect of a moving tweezer on the next row by a factor 1.55 to 1.65 (to $3.9\times10^{-5}$ in depth at 4~\textmu m, $9.6\times10^{-5}$ at 3~\textmu m). This is still more than an order of magnitude below the in-row figures of D1 (0.11\%, 3.5~nm). Tweezers at $x=0$ and at the row end (60~\textmu m) give the same values to 0.1\%, because the comb acts on $y$ alone and the circular pupil couples the two axes only weakly. The 1D single-tweezer crosstalk ($1.8\times10^{-4}$ at $z=23$~mm) slightly overstated the 2D one ($1.5\times10^{-4}$). The block-combining edge moves the boundary row by 7~nm in 2D (peak position), a static offset to calibrate. With coherent rows the comb would raise the static depth change at 4~\textmu m from 2.6\% to 2.9\%; rows must stay incoherent, as they must without a comb.
 
 \begin{table}[htbp]\centering\small
-\caption{2D check of the comb (simulated, \texttt{results/m26\_twod.json}; both chips windowed, rows incoherent). Neighbour row at 4~\textmu m, values at 3~\textmu m in brackets. ``Depth'' is the relative change in the neighbour row's trap depth.}
+\caption{2D check of the comb (simulated, \texttt{results/\allowbreak m26\_twod.json}; both chips windowed, rows incoherent). Crosstalk (xt) and the relative change of the neighbour row's trap depth in units of $10^{-4}$; neighbour row at 4~\textmu m, at 3~\textmu m in brackets.}
 \label{tab:combine-2d}
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
- & single tweezer: & full row: & neighbour depth, & neighbour depth, \\
-comb & peak / xt 4~\textmu m & xt 4~\textmu m & static & moving tweezer \\
+ & \multicolumn{2}{c}{single tweezer} & full row & \multicolumn{2}{c}{neighbour depth change} \\
+comb & peak & xt 4~\textmu m & xt 4~\textmu m, max over $x$ & static & moving tweezer \\
 \midrule
-none & 1 / $1.1\times10^{-4}$ & $1.8\times10^{-4}$ & $1.7\times10^{-4}$ ($2.0\times10^{-4}$) & $2.4\times10^{-5}$ ($6.2\times10^{-5}$) \\
-$z$ 15~mm, $a$ 250~\textmu m & 0.995 / $1.1\times10^{-4}$ & $1.8\times10^{-4}$ & $1.8\times10^{-4}$ ($2.2\times10^{-4}$) & $2.9\times10^{-5}$ ($7.4\times10^{-5}$) \\
-$z$ 23~mm, $a$ 250~\textmu m (worst row) & 0.990 / $1.5\times10^{-4}$ & $2.3\times10^{-4}$ & $2.1\times10^{-4}$ ($2.6\times10^{-4}$) & $3.9\times10^{-5}$ ($9.6\times10^{-5}$) \\
-$z$ 23~mm, $a$ 225~\textmu m & 0.982 / $1.6\times10^{-4}$ & $2.4\times10^{-4}$ & $2.2\times10^{-4}$ ($2.2\times10^{-4}$) & $3.9\times10^{-5}$ ($8.0\times10^{-5}$) \\
-$z$ 30~mm, $a$ 250~\textmu m ($>z_\mathrm{max}$) & 0.984 / $2.1\times10^{-4}$ & $2.9\times10^{-4}$ & $2.5\times10^{-4}$ ($3.1\times10^{-4}$) & $5.3\times10^{-5}$ ($1.2\times10^{-4}$) \\
-single edge, 23~mm, 250~\textmu m & 0.995 / $1.3\times10^{-4}$ & $2.0\times10^{-4}$ & $1.9\times10^{-4}$ ($2.2\times10^{-4}$) & $3.4\times10^{-5}$ ($8.4\times10^{-5}$) \\
+none & 1 & 1.1 & 1.8 & 1.7 (2.0) & 0.24 (0.62) \\
+$z$ 15~mm, $a$ 250~\textmu m & 0.995 & 1.1 & 1.8 & 1.8 (2.2) & 0.29 (0.74) \\
+$z$ 23~mm, $a$ 250~\textmu m (worst row) & 0.990 & 1.5 & 2.3 & 2.1 (2.6) & 0.39 (0.96) \\
+$z$ 23~mm, $a$ 225~\textmu m & 0.982 & 1.6 & 2.4 & 2.2 (2.2) & 0.39 (0.80) \\
+$z$ 30~mm, $a$ 250~\textmu m ($>z_\mathrm{max}$) & 0.984 & 2.1 & 2.9 & 2.5 (3.1) & 0.53 (1.2) \\
+single edge, $z$ 23~mm, $a$ 250~\textmu m & 0.995 & 1.3 & 2.0 & 1.9 (2.2) & 0.34 (0.84) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -96,14 +95,14 @@ single edge, 23~mm, 250~\textmu m & 0.995 / $1.3\times10^{-4}$ & $2.0\times10^{-
 
 \paragraph{Comb roll.} A comb edge that is not parallel to $x$ makes the window depend on $x$. Beyond the slit plane the $x$ relay is telecentric, so each tweezer meets the comb at its slit-plane position $X=f_1 s$, and four engines at 3.0~mm pitch span $X=\pm5.6$~mm. One tweezer's footprint at the comb is at most $\pm0.78$~mm (17~mm beyond the slit plane, half-angle $(A/2)/f_1=0.046$). Hence, for a roll of 2~mrad, the edge moves by only 3~\textmu m across one tweezer, against the tens of \textmu m over which the result changes, and we treat each tweezer with its local window $a(X)$. In 2D at $z=23$~mm the peak falls from 0.989 to 0.972 as $a$ goes from 250 to 205~\textmu m (about 0.04\% per \textmu m), while the crosstalk at 4~\textmu m stays at 1.4 to $1.6\times10^{-4}$. A roll therefore mainly makes the depth vary along the row, by about $\pm0.4\%$ for a $\pm10$~\textmu m change of $a$, which a 1.8~mrad roll produces over $\pm5.6$~mm. The engines set each tweezer's power in any case, so this is a calibration, not a limit; the same holds for an edge straightness of $\pm10$~\textmu m over 12~mm.
 
-Thus the blocks of Sec.~\ref{sec:megascale} can be built as follows. (i) For 32 rows, two 16-chip stacks at 1.0~mm pitch and one comb. This needs no polarisation optics, and since alternate rows come from different stacks, the passive orthogonal-polarisation decorrelation of \texttt{docs/row\_coherence.md} comes for free if the objective accepts it. (ii) For 64 rows, two such comb pairs combined by a PBS. Four 16-chip stacks with four engines per chip at 3.0~mm pitch (12~mm edge) then form the 64~$\times$~4 block, with 256 engines and 98,048 fast actuators. With intermediate steps at $10^6$ sites it reaches a time average of $2.9\times10^{-4}$ on 4~$\times$~4~\textmu m and $2.7\times10^{-4}$ on 3~$\times$~4~\textmu m, without the 24~mm chip edge that 32~$\times$~8 needs. The worst rows lose 0.9 to 1.5\% of their peak depth to the comb ($a=250$ / 225~\textmu m), which the per-tweezer power set by the engines recovers. The edge scan is 1D in $y$ and the 2D check uses the same windowed pupil; both take the window of each slot at one distance $z$, whereas the 45$^\circ$ tilt places the two edges of a 0.5~mm slot 0.25~mm before and after that distance, which changes $z$ by at most 4\% at $z_c=7$~mm. Tooth-edge roughness, scatter from the comb and a lens design of the larger $y$-relay field are not included.
+Thus the blocks of Sec.~\ref{sec:megascale} can be built as follows. (i) For 32 rows, two 16-chip stacks at 1.0~mm pitch and one comb. This needs no polarisation optics, and since alternate rows come from different stacks, the passive orthogonal-polarisation decorrelation of \texttt{docs/\allowbreak row\_coherence.md} comes for free if the objective accepts it. (ii) For 64 rows, two such comb pairs combined by a PBS. Four 16-chip stacks with four engines per chip at 3.0~mm pitch (12~mm edge) then form the 64~$\times$~4 block, with 256 engines and 98,048 fast actuators. With intermediate steps at $10^6$ sites it reaches a time average of $2.9\times10^{-4}$ on 4~$\times$~4~\textmu m and $2.7\times10^{-4}$ on 3~$\times$~4~\textmu m, without the 24~mm chip edge that 32~$\times$~8 needs. The worst rows lose 0.9 to 1.5\% of their peak depth to the comb ($a=250$ / 225~\textmu m), which the per-tweezer power set by the engines recovers. The edge scan is 1D in $y$ and the 2D check uses the same windowed pupil; both take the window of each slot at one distance $z$, whereas the 45$^\circ$ tilt places the two edges of a 0.5~mm slot 0.25~mm before and after that distance, which changes $z$ by at most 4\% at $z_c=7$~mm. Tooth-edge roughness, scatter from the comb and a lens design of the larger $y$-relay field are not included.
 
 \subsection{The comb with the real collimator}\label{sec:combine-lens}
 
-The analysis above used an ideal thin collimator in air. The adopted collimator (\texttt{docs/collimator.md}) is a fused-silica Weierstrass block glued to the facet, followed by a 10~\textmu m gap and a 250~\textmu m aplanat of index 1.8. We repeat the comb study with this traced lens (\texttt{results/m26\_lens.json}). The exit field is built from the traced lens map (exit height, wavefront and amplitude per ray) at a plane 60~\textmu m beyond the last vertex, and S lies at the traced back focal plane, 0.44~mm from the facet. Without a comb this reproduces the wave model of the traced collimator: crosstalk $8.0\times10^{-5}$ at 4~\textmu m against $8.0\times10^{-5}$, and $3.8\times10^{-4}$ against $4.0\times10^{-4}$ at 3~\textmu m. The real geometry also moves the comb. The traced $x$ lens puts the $x$ slit plane 7.37~mm from the facet, the collimator glass adds 0.15~mm in $x$ ($t(1-1/n)$ per section), and we keep 0.5~mm of clearance; the comb therefore starts 7.6~mm from S, and the far row of a 32-row comb sits at 23.6~mm.
+The analysis above used an ideal thin collimator in air. The adopted collimator is a fused-silica Weierstrass block glued to the facet, followed by a 10~\textmu m gap and a 250~\textmu m aplanat of index 1.8 (\texttt{docs/\allowbreak collimator.md}). We repeat the comb study with this traced lens (\texttt{results/\allowbreak m26\_lens.json}). The exit field is built from the traced lens map (exit height, wavefront and amplitude per ray) at a plane 60~\textmu m beyond the last vertex, and S lies at the traced back focal plane, 0.44~mm from the facet. Without a comb this reproduces the wave model of the traced collimator: crosstalk $8.0\times10^{-5}$ at 4~\textmu m against $8.0\times10^{-5}$, and $3.8\times10^{-4}$ against $4.0\times10^{-4}$ at 3~\textmu m. The real geometry also moves the comb. The traced $x$ lens puts the $x$ slit plane 7.37~mm from the facet, the collimator glass adds 0.15~mm in $x$ ($t(1-1/n)$ per section), and we keep 0.5~mm of clearance; the comb therefore starts 7.6~mm from S, and the far row of a 32-row comb sits at 23.6~mm.
 
 \begin{table}[htbp]\centering\small
-\caption{Comb penalty with the real (traced) collimator against the ideal thin collimator, slot window $a=250$~\textmu m, 1D (simulated, \texttt{results/m26\_lens.json}). Values for $a=225$~\textmu m are given in the text.}
+\caption{Comb penalty with the real (traced) collimator against the ideal thin collimator, slot window $a=250$~\textmu m, 1D (simulated, \texttt{results/\allowbreak m26\_lens.json}). Values for $a=225$~\textmu m are given in the text.}
 \label{tab:combine-lens}
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccccc}
@@ -121,16 +120,16 @@ $z$ from S & loss & peak & xt 4~\textmu m & loss & peak & xt 4~\textmu m \\
 
 As can be seen from Table~\ref{tab:combine-lens}, the immersed facet puts more light near the edge of the beam at S, but loss and peak follow the thin-lens values within 12\%, and the crosstalk is lower. With $a=225$~\textmu m the real collimator gives loss / peak / crosstalk at 4~\textmu m of $3.4\times10^{-3}$ / 0.986 / $7.5\times10^{-5}$ at 15~mm, $7.6\times10^{-3}$ / 0.985 / $9.7\times10^{-5}$ at 20~mm, $9.6\times10^{-3}$ / 0.985 / $1.2\times10^{-4}$ at the far row and $1.7\times10^{-2}$ / 0.983 / $2.0\times10^{-4}$ at 30~mm. Equation~\eqref{eq:zmax} therefore still holds. In 2D at the far row ($z=23.6$~mm, $a=250$~\textmu m), the full-row crosstalk at 4~\textmu m is $1.6\times10^{-4}$ ($1.75\times10^{-4}$ without the comb). A moving tweezer changes the next row by $2.8\times10^{-5}$ in depth at 4~\textmu m ($1.2\times10^{-5}$ without the comb) and by $7.0\times10^{-5}$ at 3~\textmu m ($3.6\times10^{-5}$). Hence the comb conclusions hold for the real collimator, at the slightly larger distances of the real geometry.
 
-\subsection{Skew rays: light that leaves the chip at an angle along $x$}\label{sec:combine-skew}
+\subsection{Skew rays: light that leaves the chip at an angle along \texorpdfstring{$x$}{x}}\label{sec:combine-skew}
 
 A tweezer at position $x_a$ along the row is formed by light that leaves the emitters with $x$ direction sine $s_x=x_a/x_\mathrm{scale}$. Here, $x_\mathrm{scale}=288$~\textmu m for D1, so $s_x$ reaches 0.31 at the end of a 180~\textmu m segment and 0.355 at the slit edge. The collimator is cylindrical: its surface normals have no $x$ component, so $k_x$ is conserved, and the $y$-$z$ problem is exactly the 2D trace with every index $n$ replaced by the effective index
 \begin{equation}
 n_\mathrm{eff}=\sqrt{n^2-s_x^2}.
 \end{equation}
-A unit test checks this against 3D vector refraction. All earlier $y$ models (the stacked relay, the traced collimator, and the comb study above) used $s_x=0$. For $s_x>0$ the effective index ratios of the lens rise, from 1.45 to 1.50 for the block and from 1.80 to 1.89 for the aplanat at $s_x=0.355$, and the lens is no longer aplanatic for the facet (\texttt{results/m26\_skew.json}). Table~\ref{tab:combine-skew} and Fig.~\ref{fig:combine-skew} give the result.
+A unit test checks this against 3D vector refraction. All earlier $y$ models (the stacked relay, the traced collimator, and the comb study above) used $s_x=0$. For $s_x>0$ the effective index ratios of the lens rise, from 1.45 to 1.50 for the block and from 1.80 to 1.89 for the aplanat at $s_x=0.355$, and the lens is no longer aplanatic for the facet (\texttt{results/\allowbreak m26\_skew.json}). Table~\ref{tab:combine-skew} and Fig.~\ref{fig:combine-skew} give the result.
 
 \begin{table}[htbp]\centering\small
-\caption{Tweezer at $x_a$ with the adopted collimator, relative to an ideal collimator at the same $s_x$ (simulated, \texttt{results/m26\_skew.json}; effective-index trace, downstream relay ideal, comb $a=250$~\textmu m at $z=23.6$~mm). Peak in 1D (2D in brackets), equivalent facet focus error, residual wavefront after refocusing the facet for this tweezer, and crosstalk at 4~\textmu m.}
+\caption{Tweezer at $x_a$ with the adopted collimator, relative to an ideal collimator at the same $s_x$ (simulated, \texttt{results/\allowbreak m26\_skew.json}; effective-index trace, downstream relay ideal, no comb; with the comb at the far row the crosstalk changes by a factor 0.9 to 1.6). Peak in 1D (2D in brackets), equivalent facet focus error, residual wavefront after refocusing the facet for this tweezer, and crosstalk at 4~\textmu m.}
 \label{tab:combine-skew}
 \begin{tabular}{lcccc}
 \toprule
@@ -148,7 +147,7 @@ $x_a$ ($s_x$) & peak & equivalent facet defocus & residual after refocusing & xt
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.8\linewidth]{m26_skew.png}
-\caption{Effect of the $x$ direction sine $s_x=x_a/288$~\textmu m on the adopted cylindrical collimator (glued fused-silica Weierstrass block and 250~\textmu m aplanat of index 1.8, NA 0.9), traced with effective indices $\sqrt{n^2-s_x^2}$, with an ideal downstream relay and the comb ($a=250$~\textmu m) at $z=23.6$~mm; no facet focus offset. Left: peak of a tweezer at $x_a$ relative to an ideal collimator at the same $s_x$, 1D (solid) and 2D with the circular NA 0.5 pupil (dashed). Right: crosstalk at 4~\textmu m to the neighbouring row (1D); grey line at $2\times10^{-4}$ for reference.}
+\caption{Effect of the $x$ direction sine $s_x=x_a/288$~\textmu m on the adopted cylindrical collimator (glued fused-silica Weierstrass block and 250~\textmu m aplanat of index 1.8, NA 0.9), traced with effective indices $\sqrt{n^2-s_x^2}$, with an ideal downstream relay, no comb and no facet focus offset. Left: peak of a tweezer at $x_a$ relative to an ideal collimator at the same $s_x$, 1D (solid) and 2D with the circular NA 0.5 pupil (dashed). Right: crosstalk at 4~\textmu m to the neighbouring row (1D); grey line at $2\times10^{-4}$ for reference.}
 \label{fig:combine-skew}
 \end{figure}
 
@@ -158,7 +157,7 @@ The error is almost purely a focus shift of the facet,
 \end{equation}
 A thin glass lens in air would give $-f(n+1)s_x^2/(2n)=-148\,s_x^2$~\textmu m, the same order. Refocusing the facet for one tweezer restores its peak fully; the residual after refocusing stays below 0.1 waves up to 90~\textmu m. However, all tweezers of a row share the facet and the collimator. The phase error sits at S, which is conjugate to the atoms, so refocusing the atom plane does not help either. In 2D the best atom-plane focus recovers the peak up to $x_a=30$~\textmu m (1.02), but with a 1.5~\textmu m $y$-focus shift, outside the $\pm0.5$~\textmu m axial registration of the transport model (Sec.~\ref{sec:transport}), and not beyond. Beyond about 60~\textmu m the 2D spot breaks up (peak 0.11 at 75~\textmu m), because the $y$ pupil is then filled to its rim and the circular pupil cuts it differently for each $x$ pupil column.
 
-\paragraph{What a common focus offset recovers.} A single facet offset for the whole row, i.e.\ the length of the glued block set at fabrication, trades the centre against the ends (\texttt{results/m26\_skew\_offset.json}, first-order focus phase, 1D). With $\Delta z=-1.25$~\textmu m the peak stays at or above 0.96 out to $|x_a|=45$~\textmu m, and the static crosstalk at 4~\textmu m stays at or below $3.6\times10^{-3}$. That is within the criteria of \texttt{docs/row\_coherence.md} (others' depth change below $3\times10^{-3}$ when a tweezer moves), since for incoherent rows the moving-tweezer effect was about 0.13 of the static crosstalk in the earlier stacked-relay model; we did not recompute it for skewed tweezers. Beyond 50~\textmu m no offset helps: the peak is 0.90 at 50~\textmu m and 0.66 at 60~\textmu m, and no offset brings the worst peak over $|x_a|\leq90$~\textmu m above 0.43.
+\paragraph{What a common focus offset recovers.} A single facet offset for the whole row, i.e.\ the length of the glued block set at fabrication, trades the centre against the ends (\texttt{results/\allowbreak m26\_skew\_offset.json}, first-order focus phase, 1D). With $\Delta z=-1.25$~\textmu m the peak stays at or above 0.96 out to $|x_a|=45$~\textmu m, and the static crosstalk at 4~\textmu m stays at or below $3.6\times10^{-3}$. That is within the criteria of \texttt{docs/\allowbreak row\_coherence.md} (others' depth change below $3\times10^{-3}$ when a tweezer moves), since for incoherent rows the moving-tweezer effect was about 0.13 of the static crosstalk in the earlier stacked-relay model; we did not recompute it for skewed tweezers. Beyond 50~\textmu m no offset helps: the peak is 0.90 at 50~\textmu m and 0.66 at 60~\textmu m, and no offset brings the worst peak over $|x_a|\leq90$~\textmu m above 0.43.
 
 \paragraph{Consequences.} A refractive cylindrical collimator at NA 0.9 serves about half of the 180~\textmu m segment ($|x_a|\leq45$~\textmu m, about 23 sites at 4~\textmu m), not all of it. Every power and crosstalk figure of the stacked relay, of the traced collimator and of the comb study above holds near the row centre and is optimistic for the outer half. For the large arrays of Sec.~\ref{sec:megascale} this doubles the number of engines per row at fixed coverage (90~\textmu m segments instead of 180~\textmu m). The alternative is a collimator that is insensitive to $s_x$. Serving $|x_a|\leq90$~\textmu m within the $\pm0.5$~\textmu m focus tolerance, with the best common offset, needs $|\Delta z/s_x^2|\leq10$~\textmu m, ten times less than now.
 

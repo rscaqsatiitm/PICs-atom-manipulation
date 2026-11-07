@@ -10,6 +10,10 @@ See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-twe
 beam-propagation design and optimisation of that engine, and
 `docs/parameters.md` for the provenance of every input.
 
+**Report.** `report/report.pdf` (Volume I, synthesised report organised by physical question) and
+`report/docs_volume.pdf` (Volume II, the documents of `docs/` compiled without rewriting). Sources in `report/`;
+rebuild with `make report` (needs TeX Live with latexmk, and pandoc).
+
 ## Status (first pass complete)
 
 | Module | Script | Main outputs |

@@ -53,7 +53,7 @@ def fit_table(b: str) -> str:
         cells = r.replace("\n", " ").split(" & ")
         for k, c in enumerate(cells[:n]):
             txt = re.sub(r"\\[a-zA-Z]+\{?|[{}]", "", c).strip()
-            width[k] = max(width[k], min(len(txt), 60), int(1.6 * max((len(w) for w in txt.split()), default=1)))
+            width[k] = max(width[k], min(len(txt), 60), int(2.8 * max((len(w) for w in txt.split()), default=1)))
     size = "\\footnotesize" if n > 5 or sum(width) > 140 else "\\small"
     if sum(width) <= 85:
         return "{" + size + "\n" + b + "\n}"

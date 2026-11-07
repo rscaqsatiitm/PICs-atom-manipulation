@@ -26,3 +26,8 @@ m5:
 	$(PY) scripts/m5_heaters.py
 m7:
 	$(PY) scripts/m7_budget.py
+
+.PHONY: report
+report:
+	cd report && $(PY) build_docs_volume.py && $(PY) make_appendices.py && \
+	latexmk -pdf -interaction=nonstopmode report.tex && latexmk -pdf -interaction=nonstopmode docs_volume.tex
