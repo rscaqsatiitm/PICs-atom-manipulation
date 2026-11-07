@@ -1,7 +1,7 @@
 {
  "name": "m4_router",
  "script": "scripts/m4_switches.py",
- "git": "4edd7f4",
+ "git": "b5303be",
  "notes": "Router leakage is coherent-free (powers add); the output switch extinction multiplies.",
  "inputs": {
   "N_outputs": {
@@ -27,38 +27,39 @@
     "router_leak_max_mean": 5.468454607848618e-06,
     "router_leak_max_p95": 1.3743321168330287e-05,
     "router_leak_sum_mean": 8.8317253855465e-06,
-    "idle_site_total_dB": 114.87493008210612
+    "idle_site_total_dB": 136.50848314864965
    },
    {
     "sigma_phi_rad": 0.01,
     "router_leak_max_mean": 6.075523983328868e-05,
     "router_leak_max_p95": 0.00015264290778347402,
     "router_leak_sum_mean": 9.81240675732212e-05,
-    "idle_site_total_dB": 104.41908073306644
+    "idle_site_total_dB": 126.05263379960995
    },
    {
     "sigma_phi_rad": 0.03,
     "router_leak_max_mean": 0.0005463879582104412,
     "router_leak_max_p95": 0.0013729273694287351,
     "router_leak_sum_mean": 0.0008826841927316361,
-    "idle_site_total_dB": 94.87937141065461
+    "idle_site_total_dB": 116.51292447719811
    },
    {
     "sigma_phi_rad": 0.1,
     "router_leak_max_mean": 0.006019742125479748,
     "router_leak_max_p95": 0.015134279106531574,
     "router_leak_sum_mean": 0.009753427575699558,
-    "idle_site_total_dB": 84.45622964904761
+    "idle_site_total_dB": 106.08978271559113
    }
   ],
   "switch_used": {
    "kappa_case": "fab_plus_design_offset",
-   "sigma_kappa": 0.010466565944314093,
+   "kappa_mean": 0.48980642380292205,
+   "sigma_kappa": 0.0023748698871815,
    "arch": "cascade2",
    "sigma_phi_rad": 0.003,
    "floor": "none",
-   "median_dB": 81.31849260265855,
-   "p5_dB": 66.25584703873484,
+   "median_dB": 100.20718593666444,
+   "p5_dB": 87.88940010527836,
    "P_ge_target": 1.0
   },
   "insertion_items_dB": {

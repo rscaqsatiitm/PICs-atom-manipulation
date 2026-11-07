@@ -144,7 +144,8 @@ tweezers within one row stay coherent, as route E requires.
 
 Follow-up (`docs/row_coherence.md`): the chips need not run at different frequencies. Any randomisation of
 their relative phase much faster than the trap period suffices. One phase modulator on the common seed, driven
-with Gaussian noise, plus different fibre delays per chip does this as well as 16 frequency shifters.
+with Gaussian noise, plus different fibre delays per chip does this nearly as well as 16 frequency shifters (within a
+factor of 2, far inside the criteria).
 Alternating polarisation is a passive partial alternative.
 
 ## 6. Alignment tolerances

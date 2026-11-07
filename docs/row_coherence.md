@@ -7,7 +7,8 @@ should be reviewed before they are quoted.
 
 ## 1. Result
 
-Per-chip frequency offsets are not needed. The same decoupling is obtained with one electro-optic phase
+Per-chip frequency offsets are not needed. Nearly the same decoupling (within a factor of 2 of fully incoherent
+rows, far inside the criteria) is obtained with one electro-optic phase
 modulator on the seed laser, driven with Gaussian noise of about 3 rad rms and 1 to 2 GHz bandwidth, ahead of the
 1:16 split. Each chip's feed is then given a different fibre length, in steps of at least three correlation
 lengths (about 0.3 m at 2 GHz, at most 5 m in total). Within one chip all paths agree to better than a
@@ -24,10 +25,15 @@ pairs in quadrature; 4 um rows, full rows of 41 tweezers):
 |---|---|---|---|---|
 | all chips coherent, no measure | none | 1 | 2.3% / 9.2 nm | 2.3e-3 / 5.1 nm |
 | per-chip AOM offsets | 16 AOMs at 2.6 to 3.4 W | 1 (+ AOM loss) | 1.8e-4 / 0.09 nm | 2e-5 / 0.05 nm |
-| **common phase noise + fibre delays** | **1 EOM on the seed, noise source, <= 5 m fibre** | **1** | **1.6e-4 / 0.07 nm** | **2e-5 / 0.04 nm** |
+| **common phase noise + fibre delays** | **1 EOM on the seed, noise source, <= 5 m fibre** | **1** | **4.0e-4 / 0.17 nm** | **4e-5 / 0.10 nm** |
 | alternating x / y polarisation | half-wave-plate strips (passive) | 1 | 4.2e-3 / 2.5 nm | 1.1e-3 / 1.6 nm |
 | y apodiser a = 0.65 | graded mirror (passive) | 1.84 | 5.2e-3 / 4.1 nm | 1.0e-3 / 1.8 nm |
 | polarisation + apodiser a = 0.8 | passive | 1.55 | 2.8e-3 / 1.8 nm | 5.7e-4 / 0.7 nm |
+
+(Corrected: an earlier version scaled the whole worst-phase change by the residual coherence, which also
+removed the incoherent part and put this option below the fully incoherent one. The residual coherence now scales
+only the interference term. The residual used is the finite-record upper bound of `m15_prbs`; the ensemble value
+is smaller, so this row is an upper bound.)
 
 (Criteria used for the rows within a chip: others' depth change < 3e-3 and position change < 5 nm when a tweezer
 moves; proposal budget 10 nm rms position noise.) Leaving all chips coherent breaks the position budget: 9.2 nm

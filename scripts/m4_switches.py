@@ -35,20 +35,23 @@ def kappa_sigma():
 
 def extinction():
     sk, bias, src = kappa_sigma()
-    # two cases: fabrication spread only (design offset removed by redesign), and spread plus the
-    # 2x2 design offset of the first-pass MMI design treated as additional spread (conservative)
-    cases = {"fab_spread": float(sk), "fab_plus_design_offset": float(np.hypot(sk, bias))}
+    # two cases: fabrication spread only (design offset removed by redesign), and spread about the offset mean of the
+    # first-pass 2x2 design. The offset is systematic (shared by both couplers of an MZI), so it is a shifted mean, not
+    # extra spread: two identical couplers still null exactly. (An earlier version added it in quadrature to the
+    # spread, which made this case needlessly pessimistic.)
+    cases = {"fab_spread": (0.5, float(sk)), "fab_plus_design_offset": (0.5 - float(bias), float(sk))}
     archs = {"single": dict(stages=1, tunable=False), "cascade2": dict(stages=2, tunable=False),
              "single_trimmed": dict(stages=1, tunable=True), "cascade2_trimmed": dict(stages=2, tunable=True)}
     sig_phis = [0.001, 0.003, 0.01, 0.03]
     floors = {"none": 0.0, "-70dB": 1e-7}
     rows = []
-    for case, sk_eff in cases.items():
+    for case, (k_mean, sk_eff) in cases.items():
         for name, kw in archs.items():
             for sp in sig_phis:
                 for fl_name, fl in floors.items():
-                    er = c.mc_extinction(4000, sk_eff, sp, sigma_a=0.005, floor=fl, seed=1, **kw)
-                    rows.append({"kappa_case": case, "sigma_kappa": sk_eff, "arch": name, "sigma_phi_rad": sp,
+                    er = c.mc_extinction(4000, sk_eff, sp, sigma_a=0.005, floor=fl, seed=1, k_mean=k_mean, **kw)
+                    rows.append({"kappa_case": case, "kappa_mean": k_mean, "sigma_kappa": sk_eff, "arch": name,
+                                 "sigma_phi_rad": sp,
                                  "floor": fl_name, "median_dB": float(np.median(er)),
                                  "p5_dB": float(np.percentile(er, 5)), "P_ge_target": float(np.mean(er >= TARGET))})
     f, ax = fig(1, 1, w=5.0, h=3.2)
@@ -58,14 +61,15 @@ def extinction():
                           label=f"{name} (5th percentile)")
         ax[0, 0].semilogx([x["sigma_phi_rad"] for x in r], [x["median_dB"] for x in r], ":", color=col)
     ax[0, 0].axhline(TARGET, color="k", lw=0.8)
-    ax[0, 0].set_title(f"2x2 split spread sigma = {cases['fab_spread']:.4f} (fabrication only)", fontsize=8)
+    ax[0, 0].set_title(f"2x2 split spread sigma = {cases['fab_spread'][1]:.4f} (fabrication only)", fontsize=8)
     ax[0, 0].set_xlabel("phase-setting error rms (rad)")
     ax[0, 0].set_ylabel("extinction (dB)")
     ax[0, 0].legend(fontsize=6)
     # analytic: balanced MZI, phase error only: T_off = sin^2(dphi/2) -> ER = -20 log10(dphi/2)
     phi_req = 2 * 10 ** (-TARGET / 20)
     save_result("m4_extinction", script=SCRIPT, fig=f,
-                inputs={"sigma_kappa": {k: P(v, "-", "SIM", src) for k, v in cases.items()},
+                inputs={"sigma_kappa": {k: P(v[1], "-", "SIM", src) for k, v in cases.items()},
+                        "kappa_mean": {k: P(v[0], "-", "SIM", src) for k, v in cases.items()},
                         "sigma_arm_amplitude": "CHOICE 0.005", "ER_target": prm.ER_TARGET,
                         "floors": floors, "trials": 4000},
                 outputs={"rows": rows, "single_balanced_phase_error_for_target_rad": phi_req},

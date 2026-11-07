@@ -135,6 +135,47 @@ def full_layout(n_ports=128, n_arms=128, rp_ratio=1.0, w_port=1.7, w_arm=1.7):
                      z0=60, R_p=rp_ratio * R)
 
 
+def phase_residuals(Tc):
+    """Per port: linear arm-phase slope and the residual about it (weighted rms and peak-to-valley over the arms
+    carrying 1% or more of the peak power). The slope is found by maximising |sum_n T_n exp(-i a n)| before any
+    unwrapping, so slopes near -pi rad per arm (edge ports) do not wrap."""
+    n = np.arange(Tc.shape[1])
+    a_grid = np.linspace(-np.pi, np.pi, 4001)
+    E = np.exp(-1j * np.outer(a_grid, n))
+    resid, slope, pv = [], [], []
+    for row in Tc:
+        a0 = a_grid[np.argmax(np.abs(E @ row))]
+        ph = np.unwrap(np.angle(row * np.exp(-1j * a0 * n)))
+        w = np.abs(row) ** 2
+        pf = np.polyfit(n, ph, 1, w=np.sqrt(w))
+        r = ph - np.polyval(pf, n)
+        r = r - np.sum(w * r) / np.sum(w)
+        keep = w >= 0.01 * w.max()
+        slope.append(float(a0 + pf[0]))
+        resid.append(float(np.sqrt(np.sum(w * r**2) / np.sum(w))))
+        pv.append(float(np.ptp(r[keep])))
+    return resid, slope, pv
+
+
+def full_metrics(calname="A", tag=None):
+    """Recompute the phase metrics of a saved transfer matrix (results/m10_T_<tag>.npz) without the BPM run."""
+    tag = tag or f"full_{calname}"
+    T = np.load(RESULTS / f"m10_T_{tag}.npz")["T"]
+    rec = json.loads((RESULTS / f"m10_fpr_{tag}.json").read_text())
+    out = rec["outputs"]
+    c0 = T.shape[0] // 2
+    c = np.exp(-1j * np.angle(T[c0 - 1] + T[c0]))
+    resid, slope, pv = phase_residuals(T * c[None, :])
+    out.update({"phase_slope_per_port": float(np.polyfit(np.arange(T.shape[0]), slope, 1)[0]),
+                "phase_residual_rms_rad": resid, "phase_residual_max_rad": float(max(resid)),
+                "phase_residual_pv_rad": pv, "phase_residual_pv_max_rad": float(max(pv)),
+                "strehl_like_min": float(np.exp(-max(resid) ** 2))})
+    save_result(f"m10_fpr_{tag}", script=SCRIPT, inputs=rec["inputs"], outputs=out,
+                notes=rec.get("notes", "") + " Phase metrics recomputed from the saved T (slope found before "
+                      "unwrapping; an earlier np.unwrap of the raw phase failed on the edge ports).")
+    return out
+
+
 def full(calname="A", tag=None, **layout):
     nc, ncl = cal(calname)
     lay = full_layout(**layout)
@@ -147,20 +188,13 @@ def full(calname="A", tag=None, **layout):
     c0 = lay.N_ports // 2
     c = np.exp(-1j * np.angle(T[c0 - 1] + T[c0]))
     Tc = T * c[None, :]
-    resid, slope = [], []
-    n = np.arange(lay.N_arms)
-    for k in range(lay.N_ports):
-        ph = np.unwrap(np.angle(Tc[k]))
-        w = np.abs(Tc[k]) ** 2
-        pf = np.polyfit(n, ph, 1, w=np.sqrt(w))
-        r = ph - np.polyval(pf, n)
-        slope.append(pf[0])
-        resid.append(float(np.sqrt(np.sum(w * r**2) / np.sum(w))))
+    resid, slope, pv = phase_residuals(Tc)
     out = {"calibration": calname, "n_core": nc, "n_clad": ncl, "R_um": lay.R, "runtime_s": time.time() - t0,
            "capture": cap.tolist(), "capture_centre": float(cap[c0 - 1:c0 + 1].mean()),
            "capture_edge": float(cap[[0, -1]].mean()),
            "phase_slope_per_port": float(np.polyfit(np.arange(lay.N_ports), slope, 1)[0]),
            "phase_residual_rms_rad": resid, "phase_residual_max_rad": float(max(resid)),
+           "phase_residual_pv_rad": pv, "phase_residual_pv_max_rad": float(max(pv)),
            "strehl_like_min": float(np.exp(-max(resid) ** 2))}
     save_result(f"m10_fpr_{tag}", script=SCRIPT,
                 inputs={"layout": {"N_ports": lay.N_ports, "N_arms": lay.N_arms, "p_port": 2.0, "p_a": 2.0, "R": lay.R,
@@ -185,9 +219,7 @@ def route(calname="A", tag=None, fp_kwargs=None):
     rows, field = m9.window_study(fp)
     calt = m9.calibrated(fp, 0.9)
     ind = m9.independence(fp, cal=calt)
-    us = np.arange(-60, 61, 1.0)
-    ind["power_factor_mean_over_field"] = float(np.mean([calt[1](u) ** 2 for u in us]))
-    ind["power_factor_edge"] = float(calt[1](60.0) ** 2)
+    ind["power_factor_mean_over_field"], ind["power_factor_edge"] = m9.power_factors(calt)
     noise = m9.amplitude_noise(fp)
     scan = fp.field_scan(0.9, x_half=60.0, n=13)
     pk = np.array([q["peak"] for q in scan])
@@ -276,6 +308,10 @@ if __name__ == "__main__":
         print(json.dumps(route_ls(tag, kw), indent=1, default=float), flush=True)
         sys.exit(0)
     parts = sys.argv[1:] or ["calib", "small", "full", "route"]
+    if "fullmetrics" in parts:
+        o = full_metrics("A")
+        print("rms max", o["phase_residual_max_rad"], "pv max", o["phase_residual_pv_max_rad"],
+              "edge/half-way pv", o["phase_residual_pv_rad"][0], o["phase_residual_pv_rad"][32], flush=True)
     if "calib" in parts:
         print(json.dumps(calib(), indent=1, default=float), flush=True)
     if "small" in parts:

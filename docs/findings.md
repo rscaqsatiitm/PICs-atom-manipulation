@@ -29,7 +29,7 @@ independent motion of each tweezer, as with AOD tones, a sliding-window focal-pl
 
 (iii) **Switch architecture.** A single MZI with the simulated 2x2 MMI spread reaches 50 dB in only 49% of
 devices at 3 mrad phase accuracy. A cascaded pair, as in [ZHAO], reaches >= 50 dB in every trial
-(5th percentile 66 to 88 dB). The binding constraints are then polarisation and free-space crosstalk, not
+(5th percentile 88 dB). The binding constraints are then polarisation and free-space crosstalk, not
 the interferometer.
 
 (iv) **Addressing crosstalk is optical, not on-chip.** With a uniformly filled NA 0.5 pupil, the 894.6 nm
@@ -120,8 +120,10 @@ rather than 0.500; this offset is removable by redesign and is carried separatel
 | single MZI, trimmed input splitter | 55.1 / 48.8 | 0.89 | 44.6 / 38.3 | 0.18 |
 | two cascaded MZIs | 100 / 88 | 1.00 | 92 / 81 | 1.00 |
 
-Arm amplitude imbalance (0.5% rms) is included. With the 0.010 design offset added, a single MZI falls to
-P = 0.15 while the cascade keeps P = 1.00 (5th percentile 66 dB). An incoherent stray-light floor of -70 dB
+Arm amplitude imbalance (0.5% rms) is included. The 0.010 design offset of the first-pass 2x2 does not change
+these figures: it is shared by both couplers of an MZI, and two identical couplers still null exactly (P = 0.49
+and 5th percentile 88 dB with the offset as a shifted mean). (Corrected: an earlier version added the offset to the
+random spread and reported P = 0.15 and 66 dB.) An incoherent stray-light floor of -70 dB
 caps the cascade at 70 dB. A single balanced MZI with a phase error delta has ER = -20 log10(delta/2), so
 50 dB needs delta <= 6.3 mrad; for the AlN half-wave voltage at 894.6 nm, which we bracket between 84 V
 (lambda-scaled from 74.7 V at 795 nm [ZHAO]) and 132 V (interpolated to 200 V at 1013 nm [ZHAO]), the
@@ -140,7 +142,7 @@ f0 known to about 2%. These f0 and Q values are assumptions to be replaced by me
 
 The 16-output router (four stages of thermo-optically tuned MZI splitters) leaks at most 1.4e-3 into the
 worst unaddressed output (95th percentile) for a 30 mrad trim error, so with the cascaded output switch the
-idle-site extinction exceeds 90 dB. Its insertion loss is 5.0 dB, of which 3 dB is the assumed free-space
+idle-site extinction exceeds 110 dB (116 dB at 30 mrad; corrected from > 90 dB, see above). Its insertion loss is 5.0 dB, of which 3 dB is the assumed free-space
 delivery, so 16 sites at 20 uW need about 1 mW at the input.
 
 Thermo-optic shifters with a 2 um wide heater 2 um above the core need 84 mW for pi at 1064.4 nm (68 mW at
@@ -273,7 +275,7 @@ Kerr index 2.5e-19 m^2/W; thermal conductivities and heat capacities; Cs mass.
 | 0.025 and 0.008 quanta at 0.4 mK | Sec. 8(i) | SIM | picsim.transport.n_bar_staircase, run in session (review) |
 | 84 kHz, 42 kHz trap frequencies | Sec. 1(i) | DERIVED | picsim.transport.radial_freq_Hz, w0 = 1.04 um (USER) |
 | +/-33, 67, 89 um ranges; 17, 33, 45 sites | Sec. 1(ii), 6 | SIM | results/m3_field_tradeoff.json (review) |
-| 49%, 89%, P = 1.00, 66-88 dB | Sec. 1(iii), 5 | SIM | results/m4_extinction.json (review) |
+| 49%, 89%, P = 1.00, 88 dB | Sec. 1(iii), 5 | SIM | results/m4_extinction.json (review) |
 | 1.0e-3, 1.2e-4 neighbour intensity; 2.5e-3, 2.9e-4 error | Sec. 1(iv) | SIM | results/m7_budget.json (review) |
 | 7,700 quanta/s; 1.3e-25 m^2/Hz | Sec. 1(v), 8(iv) | DERIVED | [OHARA] formula, results/m7_budget.json |
 | -5.9 dB, -7.1 dB, 26 mW | Sec. 1, 6 | SIM | results/m3_loss_budget.json (review) |
@@ -282,7 +284,7 @@ Kerr index 2.5e-19 m^2/W; thermal conductivities and heat capacities; Cs mass.
 | 0.044 dB per MMI, 0.27 dB tree, 0.0024/0.0034 spread | Sec. 4 | SIM | results/m2_mmi.json (review) |
 | 84-132 V, 0.17-0.27 V rms | Sec. 5 | DERIVED | from [ZHAO] values, results/m4_dynamics.json |
 | 0.98 us, 24 ns, 49 ns, 0.19 us | Sec. 5 | SIM | results/m4_dynamics.json (f0, Q assumed; review) |
-| 1.4e-3 leak, > 90 dB, 5.0 dB, 1 mW | Sec. 5 | SIM | results/m4_router.json (review) |
+| 1.4e-3 leak, > 110 dB, 5.0 dB, 1 mW | Sec. 5 | SIM | results/m4_router.json (review) |
 | 84, 54, 3 mW; 34 us, 1.5 ms; 16%, 2% | Sec. 5 | SIM | results/m5_heaters.json (review) |
 | min pitch 1.30-1.82 um; slit efficiency 0.65/0.52/0.34 | Sec. 6 | SIM | results/m3_pitch_efficiency.json (review) |
 | directionality 0.42-0.76; -0.10 deg/nm; 6% reflection | Sec. 6 | SIM | results/m3_grating.json, m3_grating_fdtd_raw.json (review) |
