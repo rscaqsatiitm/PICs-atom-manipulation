@@ -1,0 +1,54 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,longtable,array,calc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{siunitx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\usepackage[capitalise,noabbrev]{cleveref}
+\graphicspath{{../results/}}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.12}
+\setcounter{tocdepth}{2}
+
+\title{Silicon-nitride photonic circuits for steering optical tweezers\\
+  in a neutral-atom processor: simulation study\\[6pt]
+  \large Volume I: synthesised report}
+\author{Simulation study for proposal ANRF/ARG/2026/009937 (Phase A, Objective 3)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\input{sections/00_abstract.tex}
+
+\tableofcontents
+\clearpage
+
+\input{sections/01_intro.tex}
+\input{sections/03_platform.tex}
+\input{sections/04_engine.tex}
+\input{sections/05_rows.tex}
+\input{sections/06_moretweezers.tex}
+\input{sections/07_transport.tex}
+\input{sections/08_rearrange.tex}
+\input{sections/09_megascale.tex}
+\input{sections/10_combine.tex}
+\input{sections/11_discussion.tex}
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\appendix
+\input{sections/A_params.tex}
+\input{sections/B_repro.tex}
+\input{sections/C_open.tex}
+
+\end{document}

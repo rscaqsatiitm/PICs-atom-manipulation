@@ -1,0 +1,247 @@
+\hypertarget{focal-plane-opa-beam-propagation-design-and-geometry-optimisation}{%
+\chapter{Focal-plane OPA: beam-propagation design and geometry
+optimisation}\label{fpr_design-focal-plane-opa-beam-propagation-design-and-geometry-optimisation}}
+
+\begin{quote}
+Follow-up: the power figures below omit the cross axis and the emitter
+facet loss (about 21\% into air). With both included and a collimator
+glued to the facets, a 1.2 mK tweezer needs about 57 mW instead of 43 mW
+(\texttt{docs/stacked\_relay.md}, \texttt{docs/collimator.md}).
+\end{quote}
+
+Follow-up to \texttt{docs/independent\_steering.md} (route E,
+sliding-window focal-plane OPA). Code: \texttt{picsim/bpm.py},
+\texttt{picsim/opa/fpr\_layout.py}, \texttt{fpr\_bpm.py},
+\texttt{star\_rs.py}, \texttt{focal\_plane.py}; scripts
+\texttt{m10\_fpr.py}, \texttt{m10\_fpr\_meep.py},
+\texttt{m11\_optimise.py}; results \texttt{results/m10\_*},
+\texttt{results/m11\_*}. Simulated values are valid in the regime
+simulated and should be reviewed before they are quoted. Design choices
+below are made on physical and fabrication grounds, not to match the
+original proposal\textquotesingle s numbers.
+
+\hypertarget{1-result}{%
+\section{Result}\label{fpr_design-1-result}}
+
+A dense-port star coupler designed by wide-angle beam propagation, with
+a Rowland-type port arc, 1.5x oversampled arms and wide emitter facets,
+gives a focal-plane OPA in which 20 tweezers move and switch
+independently along a row, at 1.5 times the power efficiency of the
+first design. Verified by beam propagation of the full 128-port, 192-arm
+structure (calibrated effective-index model, least-squares port
+synthesis):
+
+{\small
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.485\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.330\dimexpr(\linewidth-6\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.184\dimexpr(\linewidth-6\tabcolsep)\relax}@{}}
+\toprule\noalign{}
+quantity & first design (128 x 128, confocal) & optimised design D1 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+field-averaged peak per unit port power (relative) & 1.00 & 1.50 \\
+edge (60 um) / centre peak & 0.52 & 0.70 \\
+laser power per 1.2 mK tweezer, field mean (fibre) & \textasciitilde65
+mW & \textasciitilde43 mW \\
+20 tweezers over +/-60 um & \textasciitilde1.3 W & \textasciitilde0.86
+W \\
+residual arm-phase aberration, worst port & up to 1.3 rad pk-pk &
+\textless= 0.08 rad rms \\
+others\textquotesingle{} change when one of 20 moves by up to 4 um &
+\textless= 3.5 nm, \textless= 0.12\% & \textless= 3.5 nm, \textless=
+0.11\% \\
+residual at a switched-off site & 1.3e-6 & 1.6e-6 \\
+static peak spread of 20 tweezers & 0.56\% & 0.52\% \\
+spot FWHM along the row & 1.71 um & 1.71 um \\
+\end{longtable}
+}
+
+Laser power uses the loss chain of \texttt{m9\_E\_power} (facet -0.37
+dB, 7-stage tunable tree -0.39 dB, 1 cm at 0.3 dB/cm, meta-objective
+transmission 0.7 assumed) and a Gaussian 1.04 um profile across the row.
+
+\textbf{Design D1.} 128 input ports and 192 arms, both 1.7 um wide at
+2.0 um pitch at the slab (0.3 um gaps); slab radius R = 1329 um; ports
+on an arc of radius 0.555 R through the slab vertex, pointing at the
+arm-array centre; arms on an arc of radius R; 30 um tapers to 0.6 um
+guides; 192 end-fire emitters at 1.5 um pitch with 1.2 um facets (facet
+taper \textless= 15 um); static phase trims on all arms and ports; port
+amplitudes from least-squares synthesis on the calibrated response.
+
+\hypertarget{2-method-and-its-validation}{%
+\section{Method and its
+validation}\label{fpr_design-2-method-and-its-validation}}
+
+\textbf{Vertical dimension.} The 400 nm film is uniform and fully
+etched, so every guide and the slab share one vertical mode, and the
+lateral effective-index model carries the star-coupler physics (standard
+AWG practice). The plain effective-index model overestimates lateral
+confinement: its coupling lengths are 31 to 36\% short of the 3D
+vector-FEM values. We calibrate the lateral core and cladding indices
+(1.8423, 1.3551) to vector-FEM effective indices of 0.6, 1.0 and 1.7 um
+guides (residuals \textless= 4.3e-4) and to the coupling length of the
+dense ports (1.7 um, 0.3 um gap: 622 vs 625 um). Held-out checks: 1.4 um
+guides at 0.49 um gap, 1373 vs 1330 um (+3\%); 0.6 um guides at 1.0 um
+gap, 2287 vs 1777 um (+29\%; narrow, widely spaced guides couple
+negligibly in the design, so this residual has little effect). A second
+calibration that fits both coupling lengths degrades the dense-port
+value by 10\% and is kept as a bound.
+
+\textbf{Propagation.} 2D wide-angle (Pade 1,1) Crank-Nicolson BPM with
+the TM-type lateral operator that matches the chip TE mode; all ports
+propagated together. Unit tests: power conserved to 1e-3 over 300 um;
+phase index error \textless{} 3e-4; half a coupling length transfers
+half the power. Grid: dx = 0.04 um, dz = 0.125 um (capture within 0.5\%
+and arm-field fidelity \textgreater= 0.992 against dz = 0.0625 um).
+
+\textbf{Against 2D FDTD.} On a reduced 8-port, 8-arm coupler with the
+same angular range, MEEP (resolution 20/um) and the BPM agree with
+arm-field fidelity 0.997 (centre port), 0.985 (middle) and 0.93 (edge
+port), and capture within 2 to 5\%. At FDTD resolution 30/um the
+edge-port fidelity rises to 0.981 (rms phase difference 0.13 rad,
+capture 0.369 vs 0.371), and the FDTD result itself changes by fidelity
+0.98 between the two resolutions; hence the residual difference is
+dominated by FDTD discretisation rather than by the BPM.
+
+\textbf{Exact-path (Huygens) model.} For fast optimisation, a 2D
+Rayleigh-Sommerfeld model with exact path lengths (\texttt{star\_rs.py})
+reproduces the full 128 x 128 BPM to within 1\% in capture and with
+fidelity 0.996 to 0.9996 after arm-phase calibration (0.96 at the two
+extreme ports, where taper coupling, absent from this model, matters).
+On the optimised design the BPM and the exact-path model give the same
+field-averaged efficiency to 0.6\%.
+
+\hypertarget{3-what-the-beam-propagation-found}{%
+\section{What the beam propagation
+found}\label{fpr_design-3-what-the-beam-propagation-found}}
+
+(i) \textbf{Aberration of the confocal coupler.} With ports on an arc of
+radius R, each off-axis port\textquotesingle s arm phases deviate from a
+straight line by up to 1.3 rad pk-pk at the edge port (0.43 rad half-way
+out), confirmed by exact path lengths. Arm trims cannot remove it
+because it depends on the port. Placing the ports on an arc of radius
+0.555 R (close to the Rowland circle) halves it over the field of use;
+with 192 arms the worst residual is 0.08 rad rms. The Rowland-type arc
+gives each port a different piston phase, which the static port trims of
+route E remove (without them, adjacent ports in a window do not add in
+phase).
+
+(ii) \textbf{Coupling between dense ports.} In the converging 1.7 um
+tapers (0.3 um gaps) neighbouring ports exchange light. With fixed
+Gaussian windows this broadens the spot tails, and moving one of 20
+tweezers then changes the others by up to 7 nm and 1.1\%. All of this is
+linear and static: least-squares synthesis on the calibrated
+port-to-atom response removes it (\textless= 3.5 nm, \textless= 0.12\%;
+switch-off residual 1.3e-6) at 1 to 2\% cost in efficiency. Synthesis
+also equalises depth over the field without a lookup. It is one matrix
+product per update (precomputed 128 x n matrix).
+
+\hypertarget{4-geometry-optimisation}{%
+\section{Geometry optimisation}\label{fpr_design-4-geometry-optimisation}}
+
+Figure of merit: the field-averaged laser power per tweezer for equal
+depth, i.e. the harmonic mean of the peak intensity per unit port power
+over \textbar x\textbar{} \textless= 60 um. Constraints: neighbour
+intensity at 4 um \textless= 1e-4; gaps
+
+\begin{quote}
+= 0.3 um; 128 ports (fast actuators) fixed.
+\end{quote}
+
+The roll-off across the field has one physical origin on both sides of
+the chip: scan loss. The arms capture tilted light from off-axis ports,
+and the emitters radiate tilted beams, each with an element pattern that
+falls across its angular range. Two levers act on it:
+
+{\small
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+arms (128 ports) & facet 0.6 um: gain / edge ratio & facet 0.9 um &
+facet 1.2 um \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+128 & 1.01 / 0.53 & 1.10 / 0.51 & 1.23 / 0.46 \\
+160 & 1.12 / 0.67 & 1.24 / 0.65 & 1.41 / 0.61 \\
+192 & 1.18 / 0.76 & 1.31 / 0.74 & 1.51 / 0.71 \\
+256 & 1.24 / 0.86 & 1.39 / 0.85 & 1.61 / 0.83 \\
+\end{longtable}
+}
+
+(Gain relative to the confocal 128 x 128 design with 0.6 um facets;
+exact-path model, Rowland-type arc.)
+
+\textbf{Oversampling} (more arms and emitters than ports) confines the
+ports to the central part of the arms\textquotesingle{} angular range
+and raises the edge capture from 0.44 to 0.54 (192 arms). Arms and
+emitters carry only static trims in route E, so this costs area and slow
+heaters, not fast actuators. 192 arms take most of the benefit; 256 add
+7\% for 64 more trims and a 1.8 mm slab.
+
+\textbf{Wider emitter facets} narrow the element pattern and raise the
+relay transmission at the centre from 0.64 (0.6 um) to 0.84 (1.2 um at
+1.5 um pitch). At 0.5 um gaps the transmission saturates near 0.74 to
+0.76 for any pitch from 1.5 to 2.2 um, so the 0.3 um gap of the 1.2 um
+facet is what buys the last 10\%. Its coupling length is 227 um, which
+limits the wide facet section to about 15 um.
+
+\textbf{Slab widths.} The widest arms and ports (1.7 um at 2.0 um pitch)
+win: field-averaged efficiency 0.261 against 0.18 to 0.24 for 1.2 to 1.5
+um, because fill factor outweighs the slightly better angular acceptance
+of narrow arms. The 0.3 um gaps are safe at the slab: the coupling
+length is 622 um and the tapers converge over about 20 um.
+
+\textbf{Window width.} Narrowing the Gaussian window from 0.9 to 0.85
+ports gains 5\% but raises the neighbour intensity to 4.8e-5;
+least-squares synthesis with a 1.68 um target is the adopted compromise.
+
+\hypertarget{5-limits-and-open-points}{%
+\section{Limits and open points}\label{fpr_design-5-limits-and-open-points}}
+
+The model is 2D with a calibrated effective index; the residual 3D
+effects are polarisation coupling at sidewalls and slab-edge scattering.
+Fabrication variation of the 0.3 um gaps and of the taper geometry has
+not been simulated; static errors are absorbed by the trims and the
+measured response matrix, but the 1\% actuator accuracy for 10 nm
+position noise (\texttt{m10\_route\_E\_LS\_*}, noise) remains. The relay
+and objective are scalar and aberration-free. Steering is along one row.
+
+Next steps: (i) tolerance analysis of gap and width errors in the dense
+tapers; (ii) 3D FDTD of a few port-taper-slab cells for polarisation and
+scattering; (iii) GDS layout of D1 with its 255 fast actuators (127 tree
+splitters, 128 port phase shifters, which also carry the port trims) and
+192 static arm trims; (iv) the calibration procedure that measures the
+port-to-atom response on the device.
+
+\hypertarget{verification-notes}{%
+\section{Verification notes}\label{fpr_design-verification-notes}}
+
+All numbers are SIM outputs of this repository except the loss-chain
+assumptions marked above (CHOICE).
+
+{\small
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.320\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.094\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.086\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.500\dimexpr(\linewidth-8\tabcolsep)\relax}@{}}
+\toprule\noalign{}
+value & location & type & pointer \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+calibrated indices, coupling lengths & Sec. 2 & SIM &
+results/m10\_eim\_calibration.json \\
+BPM convergence, BPM vs FDTD & Sec. 2 & SIM &
+results/m10\_bpm\_small.json, m10\_bpm\_vs\_fdtd.json \\
+confocal 128 x 128 capture and aberration & Sec. 3 & SIM &
+results/m10\_fpr\_full\_A.json \\
+optimised D1 capture and aberration & Sec. 1 & SIM &
+results/m10\_fpr\_opt\_A.json \\
+window and least-squares evaluations & Sec. 1, 3 & SIM &
+results/m10\_route\_E\_\{full,opt\}\emph{A.json,
+m10\_route\_E\_LS}\{full,opt\}\_A.json \\
+optimisation tables & Sec. 4 & SIM & results/m11\_stage1.json,
+m11\_stage2.json \\
+power per tweezer & Sec. 1 & DERIVED & m9\_E\_power.json scaled by the
+field-averaged peak per unit power \\
+\end{longtable}
+}
