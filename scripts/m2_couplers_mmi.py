@@ -30,8 +30,7 @@ def _tip_job(args):
     lam = LAMS[lk]
     x, y, E, te = cp.tip_mode_field(w, t, lam)
     wx, wy = cp.mode_size(x, y, E)
-    r = {"lam": lk, "t": t, "w_tip": w, "neff": te.neff.real, "aeff_um2": te.aeff, "mfd_x": wx, "mfd_y": wy,
-         "window_half_um": te.window_half_um, "window_converged": bool(te.window_converged)}
+    r = {"lam": lk, "t": t, "w_tip": w, "neff": te.neff.real, "aeff_um2": te.aeff, "mfd_x": wx, "mfd_y": wy}
     for name, mfd in MFDS[lk].items():
         eta, y0 = cp.best_overlap(x, y, E, mfd / 2)
         r[f"eta_{name}"] = eta
@@ -46,17 +45,17 @@ def _tip_job(args):
 
 def couplers():
     jobs = [(lk, t, w) for lk in LAMS for t in (0.2, 0.4) for w in TIPS]
-    rows = pmap(_tip_job, jobs, processes=2)  # large windows near cutoff need more memory per solve
+    rows = pmap(_tip_job, jobs)
     best = {}
     f, ax = fig(1, 2, h=3.0)
     for j, lk in enumerate(LAMS):
         for t, ls in ((0.2, "--"), (0.4, "-")):
             r = [x for x in rows if x["lam"] == lk and x["t"] == t]
             for (name, _), c in zip(MFDS[lk].items(), ("C0", "C1", "C2")):
-                eta = np.array([x[f"eta_{name}"] if x["window_converged"] else np.nan for x in r])
+                eta = np.array([x[f"eta_{name}"] for x in r])
                 ax[0, j].plot([x["w_tip"] for x in r], 10 * np.log10(eta), ls + "o", color=c, ms=3,
                               label=f"{name}, t={t*1e3:.0f} nm")
-                k = int(np.nanargmax(eta))
+                k = int(np.argmax(eta))
                 best[f"{lk}_{t}_{name}"] = {"w_tip": r[k]["w_tip"], "dB": float(10 * np.log10(eta[k])),
                                             "tol_1dB_x_um": r[k][f"tol_1dB_x_{name}"]}
         ax[0, j].set_title(f"lambda = {LAMS[lk]*1e3:.1f} nm")
@@ -184,6 +183,21 @@ def mmi():
 
 if __name__ == "__main__":
     parts = sys.argv[1:] or ["couplers", "mmi"]
+    if "tipconv" in parts:
+        # window convergence of the tips that set the large-mode-field optima (sequential: memory and time grow fast)
+        cases = [("1064", 0.4, 0.1), ("1064", 0.4, 0.125), ("1064", 0.4, 0.15), ("895", 0.4, 0.1), ("895", 0.4, 0.125),
+                 ("895", 0.4, 0.15)]
+        conv = {}
+        for lk, t, w in cases:
+            mf = list(MFDS[lk].values())
+            conv[f"{lk}_{t}_{w}"] = cp.window_convergence(w, t, LAMS[lk], mf)
+            print(lk, t, w, conv[f"{lk}_{t}_{w}"], flush=True)
+            save_result("m2_tip_convergence", script=SCRIPT,
+                        inputs={"fibres_mfd_um": MFDS, "windows_um": [7, 11, 15, 20],
+                                "mesh": "res_max 0.5 um below 12 um window, 1 um above"},
+                        outputs=conv,
+                        notes="Fibre overlap of the tip mode versus the closed computational window. The main sweep "
+                              "(m2_couplers) uses a 7 um window; near cutoff that clips the mode tail.")
     if "couplers" in parts:
         o = couplers()
         for k, v in o["best"].items():

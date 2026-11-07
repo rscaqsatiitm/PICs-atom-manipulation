@@ -22,7 +22,7 @@ def convert(name: str) -> str:
     tex = subprocess.run(["pandoc", "-f", "gfm", "-t", "latex", "--top-level-division=chapter", f"--id-prefix={name}-", str(md)],
                          check=True, capture_output=True, text=True).stdout
     # the docs number their own sections ("## 3. Platform"); LaTeX numbers them again, so drop the doc's number
-    tex = re.sub(r"\\(section|subsection|subsubsection)\{\d+(\.\d+)*\.?\s+", r"\\\1{", tex)
+    tex = re.sub(r"\\(section|subsection|subsubsection)\{\d+(\.\d+)*\.\s+", r"\\\1{", tex)
     # pandoc 3.1 ignores --id-prefix for gfm headings: prefix every label and internal link with the document name
     tex = re.sub(r"\\label\{(?!doc:)", "\\\\label{" + name + "-", tex)
     tex = re.sub(r"\\hyperref\[", "\\\\hyperref[" + name + "-", tex)

@@ -44,8 +44,8 @@ sliding-window focal-plane OPA is required
 (iii) \textbf{Switch architecture.} A single MZI with the simulated 2x2
 MMI spread reaches 50 dB in only 49\% of devices at 3 mrad phase
 accuracy. A cascaded pair, as in {[}ZHAO{]}, reaches \textgreater= 50 dB
-in every trial (5th percentile 66 to 88 dB). The binding constraints are
-then polarisation and free-space crosstalk, not the interferometer.
+in every trial (5th percentile 88 dB). The binding constraints are then
+polarisation and free-space crosstalk, not the interferometer.
 
 (iv) \textbf{Addressing crosstalk is optical, not on-chip.} With a
 uniformly filled NA 0.5 pupil, the 894.6 nm spot puts 1.0e-3 of its peak
@@ -63,7 +63,7 @@ quanta). Heating below 10 quanta/s needs S\_x(84 kHz) \textless= 1.3e-25
 m\^{}2/Hz.
 
 The end-to-end loss of the end-fire OPA from fibre to atoms, for 21
-tweezers at N = 128, is 5.9 dB (7.1 dB for the best grating emitters),
+tweezers at N = 128, is 6.0 dB (7.1 dB for the best grating emitters),
 against the \textasciitilde10 dB assumed in the proposal; the
 per-tweezer on-chip power falls from 66 mW to about 26 mW. This estimate
 excludes sidewall scattering and assumes a meta-objective transmission
@@ -92,8 +92,9 @@ near field, Fourier-plane slit, aplanatic objective); and an exact
 harmonic-oscillator result for transport heating. The mode, slab, MZI,
 OPA and transport models are checked against analytic limits or
 published examples (\texttt{tests/}, 16 tests); the FDTD closes its
-energy balance to better than 0.5\%, and the heater result changes by
-1.4\% when the domain is doubled.
+energy balance to within 3\% at the centre wavelength (7\% across the
+band), and the heater result changes by 1.4\% when the domain is
+doubled.
 
 The principal limits are as follows. The MMI and grating models are 2D.
 Edge-coupler numbers are mode overlaps without Fresnel or taper
@@ -123,17 +124,24 @@ for \textless{} 0.01 dB/90 deg, TE / TM (um) \\
 \endlastfoot
 400 nm & 1064.4 & 0.6 & 1.708 & 2.14 & 2.36e-5 & 8 / 10 \\
 400 nm & 894.6 & 0.5 & 1.745 & 2.17 & 2.41e-5 & 6 / 6 \\
-200 nm & 1064.4 & 0.9 & 1.613 & 1.98 & 2.02e-5 & 20 / 60 \\
-200 nm & 894.6 & 0.7 & 1.651 & 2.05 & 2.16e-5 & 20 / 30 \\
+200 nm & 1064.4 & 0.9 & 1.613 & 1.98 & 2.02e-5 & \textless= 20 / 60 \\
+200 nm & 894.6 & 0.7 & 1.651 & 2.05 & 2.16e-5 & \textless= 20 / 30 \\
 \end{longtable}
 }
 
+(R is the smallest radius of the swept set that meets the criterion; 20
+um was the smallest radius swept, hence "\textless= 20". Between swept
+radii the true minimum is smaller, e.g. about 50 um for 200 nm TM at
+1064.4 nm.)
+
 Substrate leakage on 400 nm film is below 1e-5 dB/cm for a buried oxide
-of 2 um or more at both wavelengths; on 200 nm film at 1064.4 nm the
-oxide must be at least 3 um (TE 7e-8 dB/cm; at 2 um, TM leaks 0.33
-dB/cm). The coupling length of two 1064.4 nm guides on 400 nm film is
-1.8 mm at 1.6 um pitch and 29 mm at 2.1 um pitch. At 1.4 W the Kerr
-phase is 0.05 rad/cm and the peak in-guide intensity 420 MW/cm\^{}2.
+of 2 um or more at both wavelengths for TE (TM at 1064.4 nm leaks 7e-5
+dB/cm at 2 um; 3 um keeps both polarisations below 1e-5 dB/cm); on 200
+nm film at 1064.4 nm the oxide must be at least 3 um (TE 7e-8 dB/cm; at
+2 um, TM leaks 0.33 dB/cm). The coupling length of two 1064.4 nm guides
+on 400 nm film is 1.8 mm at 1.6 um pitch and 29 mm at 2.1 um pitch. At
+1.4 W the Kerr phase is 0.05 rad/cm and the peak in-guide intensity 420
+MW/cm\^{}2.
 
 On 400 nm film the TM bend loss is only about ten times the TE loss at
 the same radius, hence bends cannot strip TM light. On 200 nm film at
@@ -189,9 +197,12 @@ two cascaded MZIs & 100 / 88 & 1.00 & 92 / 81 & 1.00 \\
 \end{longtable}
 }
 
-Arm amplitude imbalance (0.5\% rms) is included. With the 0.010 design
-offset added, a single MZI falls to P = 0.15 while the cascade keeps P =
-1.00 (5th percentile 66 dB). An incoherent stray-light floor of -70 dB
+Arm amplitude imbalance (0.5\% rms) is included. The 0.010 design offset
+of the first-pass 2x2 does not change these figures: it is shared by
+both couplers of an MZI, and two identical couplers still null exactly
+(P = 0.49 and 5th percentile 88 dB with the offset as a shifted mean).
+(Corrected: an earlier version added the offset to the random spread and
+reported P = 0.15 and 66 dB.) An incoherent stray-light floor of -70 dB
 caps the cascade at 70 dB. A single balanced MZI with a phase error
 delta has ER = -20 log10(delta/2), so 50 dB needs delta \textless= 6.3
 mrad; for the AlN half-wave voltage at 894.6 nm, which we bracket
@@ -218,7 +229,8 @@ assumptions to be replaced by measured ones.
 The 16-output router (four stages of thermo-optically tuned MZI
 splitters) leaks at most 1.4e-3 into the worst unaddressed output (95th
 percentile) for a 30 mrad trim error, so with the cascaded output switch
-the idle-site extinction exceeds 90 dB. Its insertion loss is 5.0 dB, of
+the idle-site extinction exceeds 110 dB (116 dB at 30 mrad; corrected
+from \textgreater{} 90 dB, see above). Its insertion loss is 5.0 dB, of
 which 3 dB is the assumed free-space delivery, so 16 sites at 20 uW need
 about 1 mW at the input.
 
@@ -249,17 +261,19 @@ along x (um) & power for equal depth \\
 \endlastfoot
 32 & 1.0 & 16 & 9 & 0.95 & 1.00 \\
 64 & 1.0 & 33 & 17 & 0.95 & 1.00 \\
-64 & 0.5 & 68 & 35 & 1.89 & 1.99 \\
+64 & 0.5 & 67 & 33 & 1.89 & 1.99 \\
 128 & 1.0 & 67 & 33 & 0.94 & 1.00 \\
 128 & 0.75 & 89 & 45 & 1.26 & 1.33 \\
 256 & 1.0 & 134 & 67 & 0.94 & 1.00 \\
 \end{longtable}
 }
 
-"Usable" means the steered peak keeps at least half its on-axis value.
-Uniform channel amplitudes give 4.7\% first sidelobes along x; a
-Gaussian channel apodisation (1/e\^{}2 at the aperture edge) lowers them
-to 0.9\% at a FWHM of 1.09 um.
+"Usable" means the steered peak keeps at least half its on-axis value
+and sits within 0.1 um of its target. (Corrected: the first criterion
+alone counted half-clipped, displaced spots at fill 0.5, e.g. 68 um and
+35 sites for N = 64.) Uniform channel amplitudes give 4.7\% first
+sidelobes along x; a Gaussian channel apodisation (1/e\^{}2 at the
+aperture edge) lowers them to 0.9\% at a FWHM of 1.09 um.
 
 \textbf{Emitter pitch.} A Fourier-plane slit passes only the central
 diffraction zone, so the efficiency into it falls with pitch: 0.65 at
@@ -326,11 +340,11 @@ sufficient, and a PZT hysteresis error must stay below about 4\% of the
 applied phase at N = 64.
 
 \textbf{Loss budget (end-fire, N = 128, K = 21, 2 um pitch).} Edge
-coupler -0.37 dB, MMI tree -0.27 dB, propagation 1 cm at 0.3 dB/cm
-(assumed) -0.30 dB, emitters with slit, pupil and synthesis -3.43 dB,
-meta-objective transmission 0.7 (assumed) -1.55 dB: total -5.9 dB. The
-grating case adds -1.2 dB of directionality. At 1.5 um pitch the slit
-term improves by about 1 dB.
+coupler -0.37 dB, 7-stage MMI tree -0.31 dB (corrected from a 6-stage
+tree), propagation 1 cm at 0.3 dB/cm (assumed) -0.30 dB, emitters with
+slit, pupil and synthesis -3.43 dB, meta-objective transmission 0.7
+(assumed) -1.55 dB: total -5.95 dB. The grating case adds -1.2 dB of
+directionality. At 1.5 um pitch the slit term improves by about 1 dB.
 
 \hypertarget{7-error-budget-links-and-power-handling-modules-6-and-7}{%
 \section{Error-budget links and power handling (Modules 6 and
@@ -370,12 +384,12 @@ conservative value but note the modelled one. (iv) Sec. 4 error budget:
 replace "position noise \textless= 10 nm rms" by a spectral density at
 the trap frequency, S\_x(nu\_trap) \textless= 1.3e-25 m\^{}2/Hz for
 \textless{} 10 quanta/s at 1.2 mK, and add the 894.6 nm pupil
-apodisation needed for neighbour crosstalk \textless= 1e-4. (v) Sec.
-4(ii): 6.6 mW gives 1.0 mK for w0 = 1.04 um; quote 7.8 mW or the OPA
-spot. (vi) Phase C: specify cascaded MZIs (or trimmed single MZIs with
-\textless= 3 mrad phase accuracy), an output polariser of \textgreater=
-30 dB on the 894.6 nm path, and shaped (ZVD) drive for \textless= 100 ns
-settling.
+apodisation needed for neighbour crosstalk of about 1.2e-4 (Gaussian
+fill truncated at 0.7 of the pupil radius). (v) Sec. 4(ii): 6.6 mW gives
+1.0 mK for w0 = 1.04 um; quote 7.8 mW or the OPA spot. (vi) Phase C:
+specify cascaded MZIs (or trimmed single MZIs with \textless= 3 mrad
+phase accuracy), an output polariser of \textgreater= 30 dB on the 894.6
+nm path, and shaped (ZVD) drive for \textless= 100 ns settling.
 
 \hypertarget{9-next-steps}{%
 \section{Next steps}\label{findings-9-next-steps}}
@@ -432,13 +446,13 @@ picsim.transport.n\_bar\_staircase, run in session (review) \\
 picsim.transport.radial\_freq\_Hz, w0 = 1.04 um (USER) \\
 +/-33, 67, 89 um ranges; 17, 33, 45 sites & Sec. 1(ii), 6 & SIM &
 results/m3\_field\_tradeoff.json (review) \\
-49\%, 89\%, P = 1.00, 66-88 dB & Sec. 1(iii), 5 & SIM &
+49\%, 89\%, P = 1.00, 88 dB & Sec. 1(iii), 5 & SIM &
 results/m4\_extinction.json (review) \\
 1.0e-3, 1.2e-4 neighbour intensity; 2.5e-3, 2.9e-4 error & Sec. 1(iv) &
 SIM & results/m7\_budget.json (review) \\
 7,700 quanta/s; 1.3e-25 m\^{}2/Hz & Sec. 1(v), 8(iv) & DERIVED &
 {[}OHARA{]} formula, results/m7\_budget.json \\
--5.9 dB, -7.1 dB, 26 mW & Sec. 1, 6 & SIM &
+-5.95 dB, -7.15 dB, 26 mW & Sec. 1, 6 & SIM &
 results/m3\_loss\_budget.json (review) \\
 design widths, n\_eff, n\_g, dn/dT, bend radii & Sec. 3 & SIM &
 results/m1\_*.json (review) \\
@@ -450,7 +464,7 @@ results/m2\_mmi.json (review) \\
 results/m4\_dynamics.json \\
 0.98 us, 24 ns, 49 ns, 0.19 us & Sec. 5 & SIM &
 results/m4\_dynamics.json (f0, Q assumed; review) \\
-1.4e-3 leak, \textgreater{} 90 dB, 5.0 dB, 1 mW & Sec. 5 & SIM &
+1.4e-3 leak, \textgreater{} 110 dB, 5.0 dB, 1 mW & Sec. 5 & SIM &
 results/m4\_router.json (review) \\
 84, 54, 3 mW; 34 us, 1.5 ms; 16\%, 2\% & Sec. 5 & SIM &
 results/m5\_heaters.json (review) \\

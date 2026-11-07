@@ -4,7 +4,7 @@ plan}\label{collimator-fast-axis-collimator-facet-loss-relay-lens-and-the-power-
 
 \begin{quote}
 Follow-up (\texttt{docs/megascale.md}, Sec. 12): this module and
-\texttt{docs/collimator.md} treat the y axis for light with no x
+\texttt{docs/stacked\_relay.md} treat the y axis for light with no x
 component (s\_x = 0). A tweezer at x\_a is made of light with s\_x =
 x\_a / 288 um, and the cylindrical collimator then acts with effective
 indices sqrt(n\^{}2 - s\_x\^{}2). The adopted collimator defocuses the
@@ -47,7 +47,7 @@ collimator, from 47 mW (\texttt{docs/stacked\_relay.md}, facet loss
 omitted). With an ideal lens in air it would be 61 mW.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.547\dimexpr(\linewidth-4\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.453\dimexpr(\linewidth-4\tabcolsep)\relax}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.556\dimexpr(\linewidth-4\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.444\dimexpr(\linewidth-4\tabcolsep)\relax}@{}}
 \toprule\noalign{}
 quantity & adopted collimator (Weierstrass block + aplanat) \\
 \midrule\noalign{}
@@ -59,8 +59,9 @@ focal length / NA / sine-condition error over the aperture & 175 um /
 length (facet to last vertex) / clear height & 395 um / +/-158 um \\
 largest incidence angle on any surface & 25 deg \\
 peak per guided power vs ideal lens in air & 1.10 (2D check: 1.107) \\
-row crosstalk at 4 um & 8e-5 \\
-decentre / focus for \textless= 3\% loss & +/-0.1 um / +/-1 um \\
+row crosstalk at 4 um (1D line; 2D single tweezer 1.7e-4) & 8.4e-5 \\
+decentre / focus for \textless= 3\% loss (1D line; in 2D: 0.988 / 0.953
+at 0.5 / 1 um focus, 0.968 at 0.1 um decentre) & +/-0.1 um / +/-1 um \\
 surface form error for \textless= 2\% loss & \textless= 20 nm rms \\
 laser power per 1.2 mK tweezer & 57 mW \\
 \end{longtable}
@@ -179,7 +180,7 @@ design & beta & peak & y FWHM & crosstalk at 3 / 4 um \\
 \endlastfoot
 ideal, air & 0.7 um & 1.00 & 1.31 um & 2.8e-4 / 1.1e-4 \\
 \textbf{Weierstrass + aplanat} & 0.7 um & \textbf{1.10} & 1.35 um &
-4.0e-4 / 8.0e-5 \\
+4.0e-4 / 8.4e-5 \\
 ellipse, printed & 0.9 um & 1.03 & 1.35 um & 6.6e-4 / 1.8e-4 \\
 ellipse, printed & 0.7 um & 1.22 & 1.13 um & 2.1e-3 / 1.0e-3 \\
 plano-asphere n = 1.8 & 0.7 um & 1.03 & 1.27 um & 4.0e-4 / 1.7e-4 \\
@@ -241,7 +242,12 @@ the slit) sees the whole emitter row, +/-144 um, so it works off axis.
 We traced two fused-silica designs from 7 emitter heights. Each off-axis
 wavefront was applied to each emitter\textquotesingle s angular spectrum
 in the D1 model (BPM matrix), and tweezers at 0, +/-30 and +/-60 um were
-evaluated before and after least-squares recalibration:
+evaluated before and after least-squares recalibration. (Corrected: the
+first aplanat, with r0 = 1.5 mm, covered only \textbar s\textbar{}
+\textless= 0.33, short of the slit edge 0.355, and the wavefronts were
+quoted at the 125 um field point; the aplanat now uses r0 = 2.0 mm,
+which covers the slit at every field point, and both lenses are
+evaluated at 144 um. Its back focal distance is 6.76 mm.)
 
 {\footnotesize
 \begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.191\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.213\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.213\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.229\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.154\dimexpr(\linewidth-10\tabcolsep)\relax}@{}}
@@ -253,9 +259,9 @@ uncalibrated: peak / shift & after recalibration: peak per power / shift
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-aplanat (sine condition) & 0.15 waves rms & 0.960 / 164 nm & 1.001 /
-\textless= 1.5 nm & 4e-4 / \textless{} 1 nm \\
-plano-asphere (no sine condition) & 0.60 waves rms & 0.672 / 590 nm &
+aplanat (sine condition), r0 2.0 mm & 0.12 waves rms & 0.983 / 21 nm &
+0.998 / \textless= 1.3 nm & 4e-4 / \textless{} 1 nm \\
+plano-asphere (no sine condition) & 0.76 waves rms & 0.672 / 590 nm &
 0.964 / \textless= 0.5 nm & 4e-4 / 0.7 nm \\
 \end{longtable}
 }

@@ -13,9 +13,9 @@ import numpy as np
 from . import modes as M
 
 
-def _solve_tip(w_tip, t, lam, half, n):
+def _solve_tip(w_tip, t, lam, half, n, res_max=0.5):
     xs = M.XSection(cores=[(0, w_tip)], t=t, x_left=-half, x_right=half, clad_bottom=half, t_top=half,
-                    res_core=min(0.03, w_tip / 3), res_max=0.5)
+                    res_core=min(0.03, w_tip / 3), res_max=res_max)
     ms = M.solve(xs, lam, num_modes=2)
     te = M.fundamental(ms)
     x = np.linspace(-half + 0.5, half - 0.5, n)
@@ -24,38 +24,31 @@ def _solve_tip(w_tip, t, lam, half, n):
     return x, y, E, te
 
 
-def tip_mode_field(w_tip, t, lam, half=None, n=None, decay_lengths=7.0, half_max=35.0):
-    """|Ex| of the TE0 mode at the tip on a square grid, plus grid vectors and mode data.
+def tip_mode_field(w_tip, t, lam, half=7.0, n=281, res_max=0.5):
+    """|Ex| of the TE0 mode at the tip on a square grid (closed window of half-width `half`), plus grid vectors and
+    mode data. Near cutoff the mode tail reaches several micrometres and the 7 um default window clips it; use
+    `window_convergence` to check a case (the eigen-solve cost grows quickly with the window)."""
+    x, y, E, te = _solve_tip(w_tip, t, lam, half, n, res_max)
+    return x, y, E, te
 
-    half=None: the closed computational window grows until it extends `decay_lengths` evanescent decay lengths,
-    lambda / (2 pi sqrt(n_eff^2 - n_clad^2)), beyond the core (at most half_max). Near cutoff the mode tail reaches
-    several micrometres, and a fixed 7 um window clipped it (the HI1060 overlap of a 100 nm tip moved from -0.48 to
-    -0.86 dB between 7 and 15 um). te.window_converged is False when half_max was not enough, or the mode is at or
-    below the cladding index (a box mode, not a guided one).
-    """
+
+def window_convergence(w_tip, t, lam, mfds, halves=(7.0, 11.0, 15.0, 20.0)):
+    """Fibre overlaps (dB) of one tip versus the window half-width, with the evanescent decay length
+    lambda / (2 pi sqrt(n_eff^2 - n_clad^2)). Larger windows use a 1 um cladding mesh (0.5 um below 12 um)."""
     from . import materials as mat
     n_clad = float(mat.n_sio2(lam))
-    if half is not None:
-        x, y, E, te = _solve_tip(w_tip, t, lam, half, n or 281)
-        te.window_converged = None
-        return x, y, E, te
-    h = 7.0
-    while True:
-        x, y, E, te = _solve_tip(w_tip, t, lam, h, n or min(int(40 * h), 700) + 1)  # <= 0.1 um grid
+    rows = []
+    for h in halves:
+        x, y, E, te = tip_mode_field(w_tip, t, lam, half=h, n=min(int(40 * h), 700) + 1,
+                                     res_max=0.5 if h < 12 else 1.0)
         dn2 = te.neff.real**2 - n_clad**2
-        if dn2 <= 1e-7:
-            te.window_converged = False
-            break
-        need = max(w_tip, t) / 2 + decay_lengths * lam / (2 * np.pi * np.sqrt(dn2))
-        if need <= h:
-            te.window_converged = True
-            break
-        if h >= half_max:
-            te.window_converged = False
-            break
-        h = min(half_max, max(need, 1.4 * h))
-    te.window_half_um = h
-    return x, y, E, te
+        r = {"half_um": h, "neff": float(te.neff.real), "n_clad": n_clad,
+             "decay_um": float(lam / (2 * np.pi * np.sqrt(dn2))) if dn2 > 0 else None, "aeff_um2": float(te.aeff)}
+        for mfd in mfds:
+            eta, _ = best_overlap(x, y, E, mfd / 2)
+            r[f"dB_mfd_{mfd}"] = float(10 * np.log10(eta))
+        rows.append(r)
+    return rows
 
 
 def gaussian(x, y, w, x0=0.0, y0=0.0):

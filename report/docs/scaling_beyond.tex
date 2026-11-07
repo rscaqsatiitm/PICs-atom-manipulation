@@ -4,10 +4,12 @@ tweezers}\label{scaling_beyond-scaling-beyond-one-row-of-about-40-tweezers}}
 
 \begin{quote}
 Follow-up (\texttt{docs/megascale.md}): scaling to 1e4, 1e5 and 1e6
-sites. A 32 x 4 engine block assembles 1e6 sites in 1.5 s and holds them
-at the loss-limited floor rho \textasciitilde{} 1.5-1.8 (eps\_img +
-T\_img/tau); static trapping power, the objective\textquotesingle s
-field and the 3 um lane distance are the walls.
+sites. A 32 x 4 engine block with fast steps assembles 1e6 sites in 1.1
+s and holds them at the loss-limited floor (2.4e-4 just after each
+image, 1.8 to 2.0e-4 time-averaged); static trapping power and the
+objective\textquotesingle s field are the walls, and the cylindrical
+collimator limits each engine to the central half of its segment
+(\texttt{docs/megascale.md} Sec. 12).
 \end{quote}
 
 \begin{quote}
@@ -35,7 +37,7 @@ In general the useful number per row is the row length divided by the
 site pitch, so it cannot be raised by packing tweezers more densely.
 Hence scaling means longer rows and more rows.
 
-The per-tweezer costs do not fall with scale: 8.7 fast actuators and
+The per-tweezer costs do not fall with scale: 8.5 fast actuators and
 about 57 mW at 1.2 mK per simultaneous tweezer. Two levers nevertheless
 remove most of the penalty.
 
