@@ -5,6 +5,12 @@
 > then acts with effective indices sqrt(n^2 - s_x^2). The adopted collimator defocuses the facet by -99 s_x^2 um. The
 > y figures below therefore hold near the row centre: the peak falls to 0.97 at x_a = 30 um and 0.48 at 60 um.
 > With the best common focus offset a row is usable over |x_a| <= 45 um.
+>
+> Follow-up (Sec. 10, module 27): an all-reflective collimator removes this limit. Two mirrors in one fused-silica
+> block glued to the facet collimate exactly at every s_x and obey the sine condition. In 1D the peak stays at or
+> above 0.98 out to the slit edge (x_a = 102 um), and the on-axis figures equal those of the refractive design. The
+> costs are a mirror form tolerance of about 10 nm rms (against 20 nm) and coating-dependent polarisation
+> (Sec. 10.5).
 
 Follow-up to `docs/stacked_relay.md`, which assumed an ideal collimator (focal length 175 um, NA 0.9, Abbe sine
 condition). Code: `picsim/raytrace.py`, `picsim/opa/collimator.py`, `scripts/m14_collimator.py`,
@@ -222,6 +228,230 @@ form, thickness, index); (ii) a 3D FDTD of the emitter facet, glued and in air; 
 the Weierstrass block and aplanat at 0.5 mm pitch (moulded glass array, wafer-level optics or two-photon
 printing); (iv) alignment trials using the pupil-walk signal.
 
+## 10. All-reflective collimator (module 27)
+
+Code: `picsim/opa/mirror_collimator.py`, `scripts/m27_reflective_collimator.py`; results `results/m27_*.json`.
+Values are SIM or DERIVED and should be reviewed before they are quoted.
+
+### 10.1 Why two mirrors
+
+A cylindrical surface conserves k_x. Light of a tweezer at x_a, with x direction sine s_x = x_a / 288 um, therefore
+sees the y-z problem of the 2D design with every index replaced by n_eff = sqrt(n^2 - s_x^2)
+(`docs/megascale.md`, Sec. 12). A refracting surface changes its power under this map. A mirror does not: the law
+of reflection in the y-z projection is the 2D law, and in one medium the phase is k0 n_eff L_yz along the whole
+path. Hence a 2D design that collimates exactly in one medium collimates exactly at every s_x (DERIVED). A flat
+exit face normal to the collimated beam keeps the wavefront flat.
+
+One mirror (an off-axis parabola) collimates but maps the far field with a distortion that is strongly
+asymmetric for a cone of +/-38 deg in glass. Two mirrors designed together can meet two conditions:
+(i) exact collimation, and
+(ii) the sine condition in the medium, y_S - y_c = sign n f sin(theta).
+
+Under the effective-index map such a pair stays aplanatic. Only its focal length changes, to f n / n_eff, i.e. by
+3.1% at the slit edge (s_x = 0.355) in fused silica (7% in air). The stripe edge at S does not move, because the
+rim of M1 fixes the ray angle in the glass.
+
+### 10.2 Construction and selection
+
+We construct the pair as in the refractive aplanat of Sec. 2 (Wassermann-Wolf in 2D), with mirrors:
+- M1 = r(theta) (sin theta, cos theta) from the facet;
+- the direction after M1 follows in closed form from the constant path to a plane z = const;
+- the law of reflection gives r'(theta) = r cot((phi - theta)/2);
+- M2 then sends every ray along z.
+
+The free parameters are:
+- r0, the distance of M1 on the axis;
+- y_c, the centre of the collimated beam;
+- phi0, the direction of the axial ray after M1;
+- the mapping orientation.
+
+A scan of 3,780 constructions (`m27_scan`) applied four filters:
+- (i) no light behind the facet plane (1,698 rejected);
+- (ii) no obscuration, i.e. no light crosses a mirror except where it reflects (1,897);
+- (iii) blocks of neighbouring chips at the 0.5 mm pitch do not overlap, with 10 um clearance around each block's
+  light (697);
+- (iv) smallest radius of curvature >= 20 um (214).
+
+Sheared layouts are allowed: a block may extend beyond its own 0.5 mm band at one z, as long as it does not meet
+its neighbours at that z. 290 layouts pass.
+
+We ranked them by the form-error sensitivity:
+- a normal displacement delta of a back-surface mirror in glass changes the path by 2 n cos(i) delta;
+- this is 2.1 to 3.2 over the passing layouts, rms over the pupil, against 0.45 to 0.8 per refracting surface
+  of the adopted refractive design;
+- grazing folds are less sensitive but longer.
+
+We adopted the least sensitive layout no longer than 0.5 mm (CHOICE, comparable to the 0.40 mm refractive
+collimator). Ties within 1% were broken by the smallest y extent, then by the largest radius of curvature. A
+second layout, where both mirrors work by total internal reflection (TIR) over the whole aperture, is kept for
+comparison.
+
+| quantity | adopted | TIR variant |
+|---|---|---|
+| r0 / y_c / phi0 / orientation | 50 um / -390 um / -70 deg / + | 40 um / -450 um / -60 deg / - |
+| block length (facet to exit face) / glass path of the axial ray | 476 um / 749 um | 659 um / 919 um |
+| light y extent / largest cross-section | -547 to +17 um / 315 um | -608 to +10 um / 315 um |
+| M1: incidence / smallest radius of curvature | 28 to 77 deg (TIR over 73% of the pupil) / 193 um | 50 to 63 deg (TIR) / 37 um |
+| M2: incidence / smallest radius of curvature | 44.6 to 60.0 deg (TIR everywhere; critical 43.6 deg) / 798 um | 45.1 to 66.9 deg (TIR) / 322 um |
+| form sensitivity, rms of sqrt(sum (2 n cos i)^2) | 2.43 | 2.14 |
+
+![layout](../results/m27_figure.png)
+
+*Left: y-z section of the adopted block, from the facet (origin) to the flat exit face, with rays every 6.4 deg
+in the glass. Grey: the light regions, with 10 um margin, of the blocks of the neighbouring chips at +/-0.5 mm.
+Dark grey: the chips (z < 0). Right: peak of a tweezer at x_a relative to an ideal collimator at the same s_x,
+for the refractive (m26) and reflective (m27) designs; 1D to the slit edge, 2D within the 67 um reach of the
+D1 engine of the 2D model.*
+
+### 10.3 The independent check
+
+We traced the adopted design through spline fits of the two mirror curves:
+- in 3D, with rays launched with k_x (not with the effective index);
+- with the vector law of reflection;
+- with the optical path taken as n times the 3D length.
+
+The phase of the k_x = k0 s_x component (path minus s_x x_exit) is flat to below 2e-12 waves at s_x = 0, 0.1,
+0.2, 0.312 and 0.355. The exit height equals f s n / n_eff to 2e-10, the exit tilt is below 5e-11 rad, and the
+2D effective-index lens map used by the wave model agrees with the 3D trace to 1e-12 waves (`m27_trace`). The
+refractive design, by contrast, carries 0.30 / 1.18 / 2.86 / 3.67 waves p-v at the same s_x. Unit tests cover the
+same checks.
+
+### 10.4 Performance
+
+**On axis (s_x = 0)** (`m27_wave`):
+- The design reproduces the ideal lens in glass and the refractive design to four digits: peak per guided power
+  1.10 relative to the ideal lens in air at beta = 0.7 um, y FWHM 1.35 um, crosstalk 4.0e-4 / 8e-5 at 3 / 4 um.
+- With the mirror losses of real coatings, computed from the Johnson & Christy constants of silver and gold
+  (SOURCE, interpolated to 1064.4 nm: Ag 0.04 + 7.61i, Au 0.26 + 6.97i), the mirror pair reflects:
+  - 99.6% with M1 silvered and M2 used in TIR;
+  - 98.2% with M1 gold.
+- The power per 1.2 mK tweezer is 57.7 mW (silver) or 58.5 mW (gold), against 57.4 mW for the refractive design
+  with ideal AR coatings.
+- Real silver films reflect less than the bulk-quality constants imply [REF?].
+
+**Across the row** (`m27_skew`, effective-index trace verified above, downstream relay ideal):
+
+| x_a (s_x) | peak, reflective: 1D (2D) | peak, refractive: 1D (2D) | crosstalk at 4 um, reflective / refractive | comb at the far row: loss, reflective |
+|---|---|---|---|---|
+| 0 | 1.000 (1.000) | 1.000 (1.000) | 8.4e-5 / 8.4e-5 | 4.8e-3 |
+| 30 um (0.104) | 0.999 (0.999) | 0.971 (0.942) | 8.4e-5 / 3.0e-3 | 4.9e-3 |
+| 45 um (0.156) | 0.997 (0.997) | 0.794 (0.725) | 8.6e-5 / 8.2e-3 | 5.0e-3 |
+| 60 um (0.208) | 0.993 (0.994) | 0.481 (0.440) | 9.0e-5 / 6.9e-3 | 5.1e-3 |
+| 90 um (0.312) | 0.985 | 0.231 | 9.7e-5 / 9.0e-3 | 5.4e-3 |
+| 102 um (0.355, slit edge) | 0.980 | 0.177 | 1.0e-4 / 8.6e-3 | 5.5e-3 |
+
+Peaks are relative to an ideal collimator of focal length 175 um at the same s_x. The remaining 1.5% at 90 um is
+the 2.4% longer focal length (a slightly wider stripe at S); relative to its own centre the reflective tweezer
+keeps 0.990 at 90 um. The y centroid does not move (below 1e-11 nm), because the mapping stays antisymmetric.
+
+The 2D model covers |x_a| <= 60 um only. Its engine (D1, 128 ports) cannot place a tweezer beyond about 67 um for
+any collimator; the 2D values m26 reported at 75 and 90 um are outside the model (Corrected in
+`docs/megascale.md`, Sec. 12).
+
+Hence one engine serves its whole segment: |x_a| <= 90 um, and in 1D to the slit edge. No common focus offset is
+needed.
+
+**Tolerances** (`m27_tolerance`):
+- Facet decentre and focus behave as for the refractive design: 0.973 at 0.1 um decentre, 0.995 at 0.5 um focus
+  and 0.977 at 1 um. The decentre tolerance remains a property of the facet.
+- Exact traces of a displaced source agree with the first-order model of the wave model to 1e-4 waves rms
+  (0.2 um decentre) and 3e-4 waves rms (0.5 um focus).
+- The mirrors are about twice as sensitive to form error as the refractive surfaces.
+
+| form error, rms (correlation 20 um / 60 um) | reflective, adopted: mean peak (10th percentile) | refractive (m14) |
+|---|---|---|
+| 5 nm | 0.996 (0.993) / 0.998 (0.996) | |
+| 10 nm | 0.988 (0.983) / 0.989 (0.981) | 0.995 (0.992) / 0.997 (0.994) |
+| 20 nm | 0.936 (0.902) / 0.957 (0.921) | 0.984 (0.970) / 0.987 (0.968) |
+| 50 nm | 0.70 (0.54) / 0.79 (0.67) | 0.916 (0.880) / 0.920 (0.823) |
+
+Hence the two mirrors need <= 10 nm rms for <= 2% loss, against about 20 nm for the refractive surfaces. The TIR
+variant, with lower sensitivity, gives 0.989 / 0.956 at 10 / 20 nm (20 um correlation).
+
+**x axis** (`m27_xaxis`). The folded glass path changes the x geometry, but the effect is small.
+- **Geometry.** The glass path of the axial ray is 749 um. The x slit plane lies 6.72 mm from the facet, and the
+  virtual plane S lies 0.29 mm behind it (the chief-ray construction of a folded system).
+- **Comb.** The comb therefore starts 7.51 mm from S, and the far row of a 32-row comb sits at 23.5 mm (23.0 mm
+  with the refractive collimator). There the comb loses 4.8e-3 at x_a = 0 and 5.5e-3 at the slit edge, with
+  crosstalk at 4 um of 1.1e-4.
+- **Slab phase.** After its defocus is absorbed by placing the x lens, the glass slab adds 0.47 waves p-v of
+  higher-order phase in s_x (refractive: 0.17). Before recalibration it costs D1 tweezers at +/-60 um less than
+  3e-4 in peak and 1.4 nm in position; after recalibration, nothing measurable.
+
+### 10.5 Polarisation
+
+The refractive collimator works below total internal reflection, with real Fresnel coefficients, so it adds no
+s-p phase and no circular polarisation (DERIVED). Mirrors do add one. The TE field of the chip (E along x) is pure
+s-polarisation for s_x = 0, so nothing happens on axis. For s_x != 0 the plane of incidence tilts, the field gains a
+p component, and the s-p phase of the reflection mixes the two.
+
+We traced the field through both mirrors in 3D (`m27_pol`):
+- launch: TE, the x unit vector projected transverse to each ray;
+- reflection: Fresnel coefficients of each coating, in a convention checked against a perfect conductor;
+- metric 1, the cross-polarised power at the centre of the tweezer: the coherent pupil sum, weighted by the facet
+  far field;
+- metric 2, its degree of circular polarisation V.
+
+Perfect mirrors give neither (below 1e-26). The coatings do. Their s-p phase departs from that of a perfect mirror
+(the excess retardance) as follows:
+- silver in fused silica: 6 deg at 30 deg incidence, 31 deg at 60 deg, 68 deg at 75 deg;
+- TIR: 142 to 159 deg between 45 and 75 deg, close to a half-wave.
+
+| coating (adopted layout unless stated) | x_a = 30 um: cross-pol / V | 60 um | 90 um | 102 um |
+|---|---|---|---|---|
+| perfect mirrors | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| M1 silver, M2 TIR | 1.0e-2 / -0.013 | 4.2e-2 / -0.026 | 9.6e-2 / -0.039 | 0.12 / -0.045 |
+| M1 gold, M2 TIR | 1.0e-2 / -0.009 | 4.2e-2 / -0.018 | 9.5e-2 / -0.027 | 0.12 / -0.031 |
+| both silver | 1.6e-3 / -0.072 | 6.7e-3 / -0.146 | 1.6e-2 / -0.223 | 2.1e-2 / -0.256 |
+| TIR variant, both TIR | 3.3e-3 / +0.093 | 1.3e-2 / +0.185 | 2.9e-2 / +0.277 | 3.8e-2 / +0.313 |
+| lossless coating, excess retardance 2 deg on both | 1.5e-5 / -0.008 | 5.8e-5 / -0.015 | 1.3e-4 / -0.023 | 1.6e-4 / -0.026 |
+| same, 5 deg | 9.2e-5 / -0.019 | 3.6e-4 / -0.038 | 8.0e-4 / -0.056 | 1.0e-3 / -0.064 |
+| same, 10 deg | 3.7e-4 / -0.038 | 1.4e-3 / -0.075 | 3.2e-3 / -0.111 | 4.1e-3 / -0.125 |
+
+Three points follow.
+
+(i) The circular component grows linearly with x_a and with the excess retardance, by about 0.011 per degree at
+x_a = 90 um (two mirrors).
+
+(ii) The layout does not help. With two silver mirrors, all 290 passing layouts give |V| = 0.20 to 0.23 at 90 um
+(`m27_poltrade`). The least form-sensitive layouts have the larger incidence angles, so polarisation and form
+tolerance do not trade usefully.
+
+(iii) The coating does. Using M2 in TIR, its near half-wave retardance largely cancels the ellipticity of the
+silver or gold on M1. The circular component falls to |V| <= 0.04 (silver) or 0.03 (gold) at 90 um, but the
+polarisation is then rotated as a whole, by about 18 deg at 90 um (cross-polarised power 0.096). This is the
+adopted configuration.
+
+For alkali ground states (J = 1/2) the light shift depends on the circular component (vector shift, proportional
+to V m_F) but, apart from a small hyperfine-induced tensor part, not on the direction of linear polarisation. The
+rotation is therefore benign to first order, and V is the figure that matters. For m_F = 0 clock states the
+first-order vector shift vanishes. We have not set a criterion for V for the qubit encoding and bias field used
+in transport [VALUE?].
+
+If a lower V is needed, there are two options:
+- a coating with an excess retardance of about 2 deg or less over 28 to 77 deg on both mirrors, giving
+  |V| <= 0.023 and almost no rotation;
+- a compensating retarder at the x slit plane, where x encodes s_x.
+
+Neither is designed here. The comb teeth add a further reflection at 45 deg for half of the stacks, which we did
+not include.
+
+### 10.6 Limits and next steps
+
+The trace is exact for cylindrical mirrors, and the wave model is 1D, with 2D checks to 60 um. Coatings and TIR
+enter through their Fresnel coefficients only, with no thin-film stack designed. The downstream relay, the comb
+teeth (another reflection at 45 deg) and the objective are ideal or not modelled for s_x != 0. Polarisation is
+evaluated at the pupil, before the objective.
+
+Next steps:
+- (i) a coating with small s-p retardance over 28 to 77 deg on M1, or a layout with smaller incidence angles
+  (Sec. 10.5);
+- (ii) a fabrication route for a 0.48 mm fused-silica block with two freeform mirrors at <= 10 nm rms (diamond-
+  turned moulds, grey-scale lithography or two-photon printing followed by reflow [REF?]), registered to each
+  other to the precision the construction assumes;
+- (iii) a tolerance Monte Carlo of the block with all errors combined;
+- (iv) the polarisation criterion for the qubit encoding used in transport.
+
 ## Verification notes
 
 | value | location | type | pointer |
@@ -240,6 +470,18 @@ printing); (iv) alignment trials using the pupil-walk signal.
 | CTE Si 2.6e-6/K, fused silica 0.55e-6/K | Sec. 7 | RECALLED | verify |
 | 20 MW/cm^2 facet cap | Sec. 8 | CHOICE | m6 (no damage threshold found) |
 
+| reflective collimator: scan, construction, selection | Sec. 10.2 | SIM | results/m27_scan.json (review) |
+| 3D trace: W, mapping, effective-index check | Sec. 10.3 | SIM | results/m27_trace.json |
+| wave model, mirror reflectance, power | Sec. 10.4 | SIM | results/m27_wave.json (review) |
+| skew, comb at the far row | Sec. 10.4 | SIM | results/m27_skew.json, results/m27_skew_summary.json (review) |
+| tolerances, form Monte Carlo | Sec. 10.4 | SIM | results/m27_tolerance.json (24 samples per point; review) |
+| x geometry, slab phase | Sec. 10.4 | SIM | results/m27_xaxis.json (review) |
+| polarisation, coating trade | Sec. 10.5 | SIM | results/m27_pol.json, results/m27_poltrade.json (review) |
+| n(Ag), n(Au) at 1064.4 nm | Sec. 10.4, 10.5 | SOURCE | Johnson & Christy, Phys. Rev. B 6, 4370 (1972), doi:10.1103/PhysRevB.6.4370; refractiveindex.info tables retrieved 2026-11-09, interpolated |
+| 0.5 mm length limit, 10 um clearance, 20 um radius limit | Sec. 10.2 | CHOICE | design choices |
+
 Open placeholders: [REF?] UV-adhesive shrinkage and creep at the 0.1 um level; [REF?] placement accuracy of
 two-photon-printed micro-optics on chip facets; [VALUE?] CW power handling of acousto-optic shifters at 3 W,
-1064 nm; [VALUE?] available single-frequency 1064 nm power at 40 to 55 W.
+1064 nm; [VALUE?] available single-frequency 1064 nm power at 40 to 55 W; [REF?] reflectance of deposited silver on
+fused silica at 1064 nm; [REF?] fabrication of freeform glass micro-mirrors at <= 10 nm rms; [VALUE?] tolerable
+circular polarisation of the transport tweezers.

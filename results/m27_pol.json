@@ -1,0 +1,538 @@
+{
+ "name": "m27_pol",
+ "script": "scripts/m27_reflective_collimator.py",
+ "git": "778b0f1",
+ "notes": "cross_pol_focus: |E_y|^2 / |E|^2 of the coherent pupil sum (field at the centre of the tweezer, before the objective); V_focus: its degree of circular polarisation; cross_pol_power_pupil: incoherent pupil average. The objective's own vector effects are not included.",
+ "inputs": {
+  "launch": "TE: x unit vector projected transverse to each ray",
+  "weights": "facet far field amplitude (FacetY, effective source index) times sqrt(cos)",
+  "metals": "Johnson & Christy 1972 via refractiveindex.info, interpolated to 1.0644 um (SOURCE)",
+  "TIR": "fused silica to air",
+  "excess retardance": "lossless coating r_s = -1, r_p = exp(i delta) (perfect mirror: delta = 0), same delta at every angle of incidence"
+ },
+ "outputs": {
+  "adopted, perfect conductors": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": 0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 2.7936013804308846e-26,
+    "cross_pol_focus": 3.340257691544458e-29,
+    "V_focus": -3.24852093767925e-20,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 1.1240563686452805e-25,
+    "cross_pol_focus": 1.3447245298611195e-28,
+    "V_focus": -6.505335650700369e-20,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 2.5542538912122643e-25,
+    "cross_pol_focus": 3.0580402271592042e-28,
+    "V_focus": -9.778097396607712e-20,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 4.6045265860477e-25,
+    "cross_pol_focus": 5.520209014661432e-28,
+    "V_focus": -1.3076500111101212e-19,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 7.325667728804854e-25,
+    "cross_pol_focus": 8.795581611270066e-28,
+    "V_focus": -1.6409393446231183e-19,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 1.0786905625501532e-24,
+    "cross_pol_focus": 1.2977575917188953e-27,
+    "V_focus": -1.9784168094664837e-19,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 1.420564300866264e-24,
+    "cross_pol_focus": 1.712417256209377e-27,
+    "V_focus": -2.256541198088206e-19,
+    "V_pupil_rms": 0.0
+   }
+  ],
+  "adopted, M1 silver, M2 TIR": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": -0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 0.0026479282872973976,
+    "cross_pol_focus": 0.002605341573747259,
+    "V_focus": -0.006329817698072309,
+    "V_pupil_rms": 0.01583117344698206
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 0.01059471952920752,
+    "cross_pol_focus": 0.010449730414382958,
+    "V_focus": -0.012646891925082303,
+    "V_pupil_rms": 0.0316502518689616
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 0.023840404343451974,
+    "cross_pol_focus": 0.023614101192045822,
+    "V_focus": -0.018987293053285743,
+    "V_pupil_rms": 0.04744152912513551
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 0.04233167805610514,
+    "cross_pol_focus": 0.042222447386997104,
+    "V_focus": -0.025620434336836858,
+    "V_pupil_rms": 0.06318281276890159
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 0.06596390208270526,
+    "cross_pol_focus": 0.06625129731854493,
+    "V_focus": -0.032579573091856315,
+    "V_pupil_rms": 0.07885198982456824
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.09464205606630094,
+    "cross_pol_focus": 0.09565574812980754,
+    "V_focus": -0.03949345197308604,
+    "V_pupil_rms": 0.09421726179605448
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.12154664944082534,
+    "cross_pol_focus": 0.1234170410613956,
+    "V_focus": -0.04484626460716153,
+    "V_pupil_rms": 0.10626537710587519
+   }
+  ],
+  "adopted, M1 gold, M2 TIR": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": -0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 0.0026188746976374064,
+    "cross_pol_focus": 0.0025802575106495407,
+    "V_focus": -0.0043542563325807,
+    "V_pupil_rms": 0.014232910325736394
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 0.010478539113471776,
+    "cross_pol_focus": 0.01034879283953747,
+    "V_focus": -0.008682065314370936,
+    "V_pupil_rms": 0.028454133543479917
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 0.023579223667863906,
+    "cross_pol_focus": 0.02338476486173138,
+    "V_focus": -0.013006580490990502,
+    "V_pupil_rms": 0.04264913694259572
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 0.04186855353372165,
+    "cross_pol_focus": 0.04180916811410625,
+    "V_focus": -0.017585072980430657,
+    "V_pupil_rms": 0.056793338128937124
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 0.06524295383715516,
+    "cross_pol_focus": 0.06559662420710408,
+    "V_focus": -0.022452353763878368,
+    "V_pupil_rms": 0.07088637060412692
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.09360828077689427,
+    "cross_pol_focus": 0.09470064069465374,
+    "V_focus": -0.027238558637693547,
+    "V_pupil_rms": 0.0847122182968666
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.12021918820761052,
+    "cross_pol_focus": 0.12217383467693299,
+    "V_focus": -0.03083979525706953,
+    "V_pupil_rms": 0.09554812763374562
+   }
+  ],
+  "adopted, both silver": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": 0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 0.00041146028518702167,
+    "cross_pol_focus": 0.0004016581352838379,
+    "V_focus": -0.03607201901217302,
+    "V_pupil_rms": 0.03615530561451704
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 0.0016570346988929576,
+    "cross_pol_focus": 0.0016176794616833273,
+    "V_focus": -0.07234227724384447,
+    "V_pupil_rms": 0.0725011529863413
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 0.003770797699139575,
+    "cross_pol_focus": 0.003681703193916434,
+    "V_focus": -0.10901005044363597,
+    "V_pupil_rms": 0.10922872078391271
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 0.006811214562868885,
+    "cross_pol_focus": 0.006651486435975484,
+    "V_focus": -0.14627647842231595,
+    "V_pupil_rms": 0.1465302298227361
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 0.01086375433827547,
+    "cross_pol_focus": 0.010611549177640114,
+    "V_focus": -0.18434493298168064,
+    "V_pupil_rms": 0.18459884242063934
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.016044754701892826,
+    "cross_pol_focus": 0.015677097696872307,
+    "V_focus": -0.2234205869928552,
+    "V_pupil_rms": 0.22362769245550465
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.021188397123307105,
+    "cross_pol_focus": 0.020709198008346082,
+    "V_focus": -0.25604822474083594,
+    "V_pupil_rms": 0.2561728230087665
+   }
+  ],
+  "TIR variant, both TIR": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": 0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 0.0008772510956885685,
+    "cross_pol_focus": 0.0008127215824125441,
+    "V_focus": 0.04629541335828685,
+    "V_pupil_rms": 0.043928223853248634
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 0.0035102932548201743,
+    "cross_pol_focus": 0.0032515330708915383,
+    "V_focus": 0.09257162991441176,
+    "V_pupil_rms": 0.08779196822853583
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 0.007902731656842396,
+    "cross_pol_focus": 0.007317647337214434,
+    "V_focus": 0.13879911233942827,
+    "V_pupil_rms": 0.13152318421578008
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 0.014058947237479932,
+    "cross_pol_focus": 0.0130097946023767,
+    "V_focus": 0.18493258521674524,
+    "V_pupil_rms": 0.17504725386810957
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 0.021982139897699142,
+    "cross_pol_focus": 0.02032046169973796,
+    "V_focus": 0.2308780948620037,
+    "V_pupil_rms": 0.21828483824479533
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.031667489477948146,
+    "cross_pol_focus": 0.029225372281020744,
+    "V_focus": 0.27650542322897564,
+    "V_pupil_rms": 0.2611482153625812
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.0408098299539395,
+    "cross_pol_focus": 0.037590483795411064,
+    "V_focus": 0.3131257329143974,
+    "V_pupil_rms": 0.29566006605430245
+   }
+  ],
+  "adopted, both mirrors excess retardance 2 deg": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": 0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 3.95185620122068e-06,
+    "cross_pol_focus": 3.701074598793874e-06,
+    "V_focus": -0.003845175851054977,
+    "V_pupil_rms": 0.003973194781322933
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 1.5740980528090483e-05,
+    "cross_pol_focus": 1.4749816130809522e-05,
+    "V_focus": -0.007676198935819486,
+    "V_pupil_rms": 0.007929684720883895
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 3.517821797834602e-05,
+    "cross_pol_focus": 3.299064368239926e-05,
+    "V_focus": -0.01148019580735871,
+    "V_pupil_rms": 0.011854359184544262
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 6.197990182047718e-05,
+    "cross_pol_focus": 5.818894722714772e-05,
+    "V_focus": -0.015246683524992092,
+    "V_pupil_rms": 0.015735045403845
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 9.580812288489057e-05,
+    "cross_pol_focus": 9.006339724406377e-05,
+    "V_focus": -0.018968398054373482,
+    "V_pupil_rms": 0.01956343931563002
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.00013631598357192348,
+    "cross_pol_focus": 0.00012832360101377993,
+    "V_focus": -0.022641807016415015,
+    "V_pupil_rms": 0.023335591486860142
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.00017392424849036213,
+    "cross_pol_focus": 0.00016392482954766363,
+    "V_focus": -0.0255906381146664,
+    "V_pupil_rms": 0.02635884619744278
+   }
+  ],
+  "adopted, both mirrors excess retardance 5 deg": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": 0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 2.4647778403434554e-05,
+    "cross_pol_focus": 2.3082584192128954e-05,
+    "V_focus": -0.009570497114000253,
+    "V_pupil_rms": 0.009887803730052894
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 9.817664143670855e-05,
+    "cross_pol_focus": 9.199125951569521e-05,
+    "V_focus": -0.019105988581658274,
+    "V_pupil_rms": 0.01973420649688071
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 0.00021940642742612114,
+    "cross_pol_focus": 0.00020575755633074426,
+    "V_focus": -0.02857460761637796,
+    "V_pupil_rms": 0.029501722118000825
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 0.0003865665201630178,
+    "cross_pol_focus": 0.0003629204185365956,
+    "V_focus": -0.03795035179704844,
+    "V_pupil_rms": 0.03916007860035638
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 0.0005975460250895916,
+    "cross_pol_focus": 0.0005617264614736334,
+    "V_focus": -0.04721511327647479,
+    "V_pupil_rms": 0.04868850315341059
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.000850174779695814,
+    "cross_pol_focus": 0.000800363314880642,
+    "V_focus": -0.05635993267171501,
+    "V_pupil_rms": 0.05807691292801771
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.0010847061450062923,
+    "cross_pol_focus": 0.0010224132636391546,
+    "V_focus": -0.06370095502799356,
+    "V_pupil_rms": 0.06560110657835815
+   }
+  ],
+  "adopted, both mirrors excess retardance 10 deg": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": 0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 9.786076609894017e-05,
+    "cross_pol_focus": 9.163116639032259e-05,
+    "V_focus": -0.018839613099593065,
+    "V_pupil_rms": 0.019454825021394482
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 0.00038979663352515197,
+    "cross_pol_focus": 0.0003651886710472035,
+    "V_focus": -0.037611863262220956,
+    "V_pupil_rms": 0.038829409387800135
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 0.0008711163040936667,
+    "cross_pol_focus": 0.0008168539564770738,
+    "V_focus": -0.05625525003423618,
+    "V_pupil_rms": 0.05805084577387195
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 0.0015347703382070546,
+    "cross_pol_focus": 0.001440857243320143,
+    "V_focus": -0.07471921981978254,
+    "V_pupil_rms": 0.07705974013857352
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 0.002372330635834293,
+    "cross_pol_focus": 0.0022302549528183287,
+    "V_focus": -0.09296794102201998,
+    "V_pupil_rms": 0.09581448710814332
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.0033750887671068377,
+    "cross_pol_focus": 0.0031778347927222247,
+    "V_focus": -0.11098261605333554,
+    "V_pupil_rms": 0.11429348382829913
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.004305817079176427,
+    "cross_pol_focus": 0.004059518983833754,
+    "V_focus": -0.12544406687313098,
+    "V_pupil_rms": 0.1291011286792787
+   }
+  ],
+  "adopted, both mirrors excess retardance 20 deg": [
+   {
+    "x_a_um": 0.0,
+    "cross_pol_power_pupil": 0.0,
+    "cross_pol_focus": 0.0,
+    "V_focus": 0.0,
+    "V_pupil_rms": 0.0
+   },
+   {
+    "x_a_um": 15.0,
+    "cross_pol_power_pupil": 0.0003799332429095373,
+    "cross_pol_focus": 0.00035550643062533656,
+    "V_focus": -0.035323205251182266,
+    "V_pupil_rms": 0.03640382951099465
+   },
+   {
+    "x_a_um": 30.0,
+    "cross_pol_power_pupil": 0.0015133283392283383,
+    "cross_pol_focus": 0.0014169938212464479,
+    "V_focus": -0.0705316846247739,
+    "V_pupil_rms": 0.07266709686637844
+   },
+   {
+    "x_a_um": 45.0,
+    "cross_pol_power_pupil": 0.003381887132047297,
+    "cross_pol_focus": 0.003170039439848777,
+    "V_focus": -0.10551939381699971,
+    "V_pupil_rms": 0.10866020927652072
+   },
+   {
+    "x_a_um": 60.0,
+    "cross_pol_power_pupil": 0.0059579493288968,
+    "cross_pol_focus": 0.005592715557873495,
+    "V_focus": -0.14019644788210278,
+    "V_pupil_rms": 0.14427378772904612
+   },
+   {
+    "x_a_um": 75.0,
+    "cross_pol_power_pupil": 0.009208089149741736,
+    "cross_pol_focus": 0.008658342655242048,
+    "V_focus": -0.17449457262321863,
+    "V_pupil_rms": 0.17942503907010476
+   },
+   {
+    "x_a_um": 90.0,
+    "cross_pol_power_pupil": 0.013097120818591303,
+    "cross_pol_focus": 0.012338682221898616,
+    "V_focus": -0.20837028639520375,
+    "V_pupil_rms": 0.21406096995313245
+   },
+   {
+    "x_a_um": 102.18576,
+    "cross_pol_power_pupil": 0.01670386903029327,
+    "cross_pol_focus": 0.015762621431320758,
+    "V_focus": -0.23556650247214264,
+    "V_pupil_rms": 0.24180269889870182
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

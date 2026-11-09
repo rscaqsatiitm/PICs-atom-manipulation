@@ -60,6 +60,13 @@ def skewed(d, sx):
     return dd
 
 
+def _bfp(d):
+    """S of a traced collimator: its own method (folded reflective designs, picsim.opa.mirror_collimator) or the
+    chief-ray construction of picsim.opa.collimator."""
+    own = getattr(d, "back_focal_plane", None)
+    return own() if callable(own) else C.back_focal_plane(d)
+
+
 def fac_adopted():
     """Adopted collimator of docs/collimator.md: Weierstrass block (fused silica, glued) + 10 um gap + 250 um
     aplanat of index 1.8."""
@@ -85,7 +92,7 @@ class CombY:
             self.L = dd.lensmap(LAM, NA_FAC, coated=True)
             self.fa = FacetY(LAM, 1.2, 0.4, n_m=dd.indices[0])
             self.r = RelayY(self.fa, BETA, NA=NA, NA_FAC=NA_FAC, apod=apod, lens=self.L)
-            self.z_ap = design.z_out - C.back_focal_plane(design)
+            self.z_ap = design.z_out - _bfp(design)
             n_air = dd.indices[-1]
         self.y = (np.arange(NY) - NY // 2) * DY
         s, amp, kern = self.r.spectrum()
@@ -321,6 +328,9 @@ def _sigma_from_facet_um(d):
     on axis (the collimator has no x power)."""
     import json
     zb = json.load(open(RESULTS / "m14_xlens.json"))["outputs"]["aplanat SiO2"]["back_focal_z_um"]
+    if callable(getattr(d, "sigma_z", None)):  # folded reflective collimator: its own unfolded glass path
+        sig = d.sigma_z(zb)
+        return sig, zb, sig - zb
     zs = [0.0] + [sf.z_v for sf in d.surfaces]
     shift = sum((zs[j + 1] - zs[j]) * (1 - 1 / n) for j, n in enumerate(d.indices[:-1]) if n > 1)
     return zb + shift, zb, shift
@@ -334,7 +344,7 @@ def lens():
     relay = cy.metrics(cy.Py_ref)
     thin = CombY()
     tbase = thin.metrics(thin.pupil(thin.field_S()))
-    zS = C.back_focal_plane(d)
+    zS = _bfp(d)
     sig, zb_x, shift = _sigma_from_facet_um(d)
     z_c = (sig - zS) * 1e-3 + 0.5  # mm, comb start 0.5 mm beyond the slit plane (CHOICE)
     geo = {"S_from_facet_um": zS, "exit_plane_from_facet_um": d.z_out, "x_lens_back_focal_um": zb_x,
@@ -404,18 +414,20 @@ def _profile_2d(F, w, xa):
     return y, I.max(axis=1)
 
 
-def skew():
-    """x dependence: the cylindrical collimator for tweezers at x_a (x direction sine sx = x_a / x_scale)."""
-    d = fac_adopted()
+def skew(design=None, name="m26_skew", xas=None):
+    """x dependence: the cylindrical collimator for tweezers at x_a (x direction sine sx = x_a / x_scale).
+    design: a traced collimator (default: the adopted refractive one); name: result file."""
+    d = fac_adopted() if design is None else design
     fp, ls, _, _ = setup()
     x_scale, s_cut = fp.opa.x_scale, fp.opa.s_cut
     ya = np.arange(-12.0, 12.0001, 0.01)
     sig, _, _ = _sigma_from_facet_um(d)
-    zw = ((sig - C.back_focal_plane(d)) * 1e-3 + 0.5 + 16.0) * 1e3
+    zw = ((sig - _bfp(d)) * 1e-3 + 0.5 + 16.0) * 1e3
     rows = []
     dzs = np.arange(-8.0, 8.001, 0.25)
     peak_vs_dz = {}
-    for xa in (0.0, 10.0, 15.0, 20.0, 30.0, 45.0, 60.0, 75.0, 90.0, s_cut * x_scale):
+    xas = (0.0, 10.0, 15.0, 20.0, 30.0, 45.0, 60.0, 75.0, 90.0, s_cut * x_scale) if xas is None else xas
+    for xa in xas:
         sx = xa / x_scale
         cy = CombY(design=d, sx=sx)
         r = cy.r
@@ -439,8 +451,8 @@ def skew():
         row = {"x_a_um": xa, "sx": sx, "peak_rel_ideal": float(I.max() / I_id.max()), "dz_equiv_um": dz_eq,
                "W_pv_waves": float(np.ptp(L.W)), "W_resid_after_focus_pv_waves": float(np.ptp(resid)),
                "peak_rel_ideal_refocused_facet": float(I_fix.max() / I_id.max()),
-               "xt_3um": eps_at(ya, I, 3.0), "xt_4um": eps_at(ya, I, 4.0),
-               "g_edge_over_s": float(L.g[-1] / L.s[-1]),
+               "xt_3um": eps_at(ya, I, 3.0), "xt_4um": eps_at(ya, I, 4.0), "centroid_nm": base["centroid_nm"],
+               "s_max": float(L.s_max), "g_edge_over_s": float(L.g[-1] / L.s[-1]),
                "twod_peak_rel_ideal": m2["peak"] / m2i["peak"], "twod_eps4": m2["eps4"],
                "twod_best_focus_um": zb, "twod_peak_at_best_focus_rel_ideal": pb / m2i["peak"],
                "comb_worst_row": {"loss": 1 - comb["transmission"] / base["transmission"],
@@ -486,8 +498,8 @@ def skew():
     ax[0, 1].axhline(2e-4, color="0.5", lw=0.7)
     ax[0, 1].set_xlabel("tweezer position x_a (um)")
     ax[0, 1].set_ylabel("crosstalk at 4 um")
-    save_result("m26_skew", script=SCRIPT, fig=f,
-                inputs={"collimator": "adopted (m14)", "method": "cylindrical surfaces conserve k_x: the y-z problem is "
+    save_result(name, script=SCRIPT, fig=f,
+                inputs={"collimator": "adopted (m14)" if design is None else d.name, "method": "cylindrical surfaces conserve k_x: the y-z problem is "
                         "the 2D trace with effective indices sqrt(n^2 - sx^2) (exact); facet spectrum FacetY with the "
                         "effective source index; AR coated; downstream y relay ideal for every sx",
                         "sx": "x_a / x_scale (D1 slit relay)", "comb": f"slot a = 250 um at z = {zw / 1e3:.1f} mm"},
@@ -525,7 +537,7 @@ def z_c_real():
     """Nearest comb point from S (mm): 0.5 mm (CHOICE) beyond the x slit plane of the traced x lens and collimator."""
     d = fac_adopted()
     sig, _, _ = _sigma_from_facet_um(d)
-    return (sig - C.back_focal_plane(d)) * 1e-3 + 0.5
+    return (sig - _bfp(d)) * 1e-3 + 0.5
 
 
 def z_max_rule(a):

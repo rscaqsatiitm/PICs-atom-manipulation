@@ -1,0 +1,88 @@
+{
+ "name": "m27_skew_summary",
+ "script": "scripts/m27_reflective_collimator.py",
+ "git": "778b0f1",
+ "notes": "",
+ "inputs": {
+  "rows": "results/m27_skew.json (reflective) and results/m26_skew.json (refractive)",
+  "own_centre": "1D line peak and centroid relative to the same collimator at x_a = 0 (facet spectrum in the effective source index)"
+ },
+ "outputs": {
+  "contiguous_x_a_um": {
+   "reflective peak >= 0.97": 102.18576,
+   "reflective 2D peak >= 0.97 (within D1 reach)": 60.0,
+   "reflective xt4 <= 2e-4": 102.18576,
+   "refractive peak >= 0.97": 30.0,
+   "refractive xt4 <= 2e-4": 10.0
+  },
+  "own_centre": {
+   "reflective": {
+    "x_a_um": [
+     0.0,
+     15.0,
+     30.0,
+     45.0,
+     60.0,
+     75.0,
+     90.0,
+     102.18576
+    ],
+    "peak_rel_own_centre": [
+     1.0,
+     1.0005746791432697,
+     0.9991131174881432,
+     0.9977305439974992,
+     0.9953477967066158,
+     0.9930242561756057,
+     0.9896496203487503,
+     0.9865252211790352
+    ],
+    "centroid_shift_nm": [
+     0.0,
+     3.809626041816657e-13,
+     1.059101428415721e-13,
+     -1.566127326406524e-13,
+     -3.055191596567682e-13,
+     -4.452031992166656e-13,
+     -7.038313285123533e-13,
+     -8.677571061623343e-13
+    ]
+   },
+   "refractive": {
+    "x_a_um": [
+     0.0,
+     15.0,
+     30.0,
+     45.0,
+     60.0,
+     75.0,
+     90.0,
+     102.18576
+    ],
+    "peak_rel_own_centre": [
+     1.0,
+     0.9991853045875619,
+     0.9713174847094124,
+     0.7949575239540964,
+     0.4824699972971062,
+     0.3305206104114313,
+     0.23167982684413255,
+     0.17763084433557202
+    ],
+    "centroid_shift_nm": [
+     0.0,
+     -8.74920880647885e-05,
+     -0.00026156178627533943,
+     -0.0002005242997718673,
+     -9.726873186536791e-05,
+     -5.102593412089269e-05,
+     -4.310905852480195e-05,
+     -4.6433559837039256e-05
+    ]
+   }
+  },
+  "twod_valid_up_to_x_a_um": 67.0,
+  "note_2d": "2D rows with x_a > 67 um are outside the steering range of the D1 engine of the 2D model (its synthesis cannot place a tweezer there, for any collimator); they are not collimator results"
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

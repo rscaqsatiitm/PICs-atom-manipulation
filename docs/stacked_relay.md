@@ -4,7 +4,8 @@
 > no x component (s_x = 0). A tweezer at x_a is made of light with s_x = x_a / 288 um, and the cylindrical collimator
 > then acts with effective indices sqrt(n^2 - s_x^2). The adopted collimator defocuses the facet by -99 s_x^2 um. The
 > y figures below therefore hold near the row centre: the peak falls to 0.97 at x_a = 30 um and 0.48 at 60 um.
-> With the best common focus offset a row is usable over |x_a| <= 45 um.
+> With the best common focus offset a row is usable over |x_a| <= 45 um. With the all-reflective collimator of
+> `docs/collimator.md`, Sec. 10, the s_x = 0 figures hold across the whole row (1D peak >= 0.98 to the slit edge).
 
 Follow-up to `docs/scaling.md`, Sec. 4(v). Code: `picsim/opa/stack.py`, `scripts/m13_stack.py`; results
 `results/m13_*.json` (+ .png); tests `tests/test_stack.py`. Each chip is design D1 (`docs/fpr_design.md`): 128

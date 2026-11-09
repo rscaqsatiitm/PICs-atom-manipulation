@@ -2,7 +2,7 @@
 
 \subsection{What was shown}\label{sec:discussion-shown}
 
-Within the models used, the study establishes five points. (i) The passive SiN elements meet the proposal's
+Within the models used, the study establishes six points. (i) The passive SiN elements meet the proposal's
 targets on the 400~nm film, and two targets need restating: the steering update rate should be $\geq 200$~kHz
 for moves at 1.2~mK, and position noise must be specified as a spectral density at the trap frequency rather
 than as an rms value (\cref{sec:platform}). (ii) Independent motion of about 20 tweezers along a row, the
@@ -20,7 +20,11 @@ falls to 0.12~\textmu K (about 0.3~\textmu K per move including the $x$ move) at
 must be held to $\pm0.5$~\textmu m (\cref{sec:transport}). (v) At $10^6$ sites, a block of 128 engines with fast
 steps holds a time-averaged defect fraction of $1.8\times10^{-4}$ to $2.0\times10^{-4}$, set by vacuum and
 imaging losses rather than by the repair. Slower steps reach a similar floor if the imaging period is raised
-to match the sweep time of the block (\cref{sec:megascale}).
+to match the sweep time of the block (\cref{sec:megascale}). (vi) A refractive cylindrical collimator serves only the
+central half of a segment, but two mirrors in a 0.48~mm fused-silica block glued to the facet collimate exactly at
+every $x$ angle and obey the sine condition. In 1D the peak stays at or above 0.98 out to the slit edge and the
+crosstalk at 4~\textmu m at or below $1.0\times10^{-4}$, so one engine serves its whole 180~\textmu m segment
+(\cref{sec:combine-reflective}).
 
 \subsection{What is model-dependent}\label{sec:discussion-model}
 
@@ -30,13 +34,15 @@ relay is scalar, with ideal relay lenses downstream of the collimator. The trans
 three dimensions, checked quantum mechanically in one dimension per axis. The steady-state simulator draws
 losses at assumed rates (vacuum lifetime, loss per image and per move) from a single random seed per case.
 
-The most consequential model dependence was found last. Every y-axis result before \cref{sec:combine} assumed
+The most consequential model dependence was found late. Every y-axis result before \cref{sec:combine} assumed
 light without an x component. A tweezer at $x_a$ is formed by light with x direction sine $s_x = x_a/x_\mathrm{scale}$.
-The cylindrical collimator, which conserves $k_x$, then acts with effective indices $\sqrt{n^2-s_x^2}$ and
-defocuses the facet by about $-99\,s_x^2$~\textmu m. This keeps the earlier y figures valid near the row centre
-only. With the best common focus offset a row is usable over $|x_a|\leq 45$~\textmu m, half of the
-180~\textmu m segment. The transport, power and crosstalk numbers for tweezers in the outer half of a segment
-are therefore optimistic until the collimator is redesigned.
+The refractive cylindrical collimator, which conserves $k_x$, then acts with effective indices $\sqrt{n^2-s_x^2}$
+and defocuses the facet by about $-99\,s_x^2$~\textmu m, so a row is usable over $|x_a|\leq 45$~\textmu m only. The
+all-reflective collimator removes this dependence exactly. In its place it brings two dependences of its own: the
+mirror form, which must be held to about 10~nm rms, and the s-p phase of the coatings, which makes the tweezer
+polarisation partly circular away from the row centre ($|V|\leq0.04$ at 90~\textmu m with a silvered or gilded
+first mirror and the second in total internal reflection, 0.22 with two silvered mirrors). The 2D checks reach
+60~\textmu m, the limit of the D1 engine used in the 2D model.
 
 In addition, a review of the whole project for errors corrected several earlier results, all reflected in this
 report: (i) the steady-state simulator skipped block positions after each visit, which had inflated every
@@ -44,9 +50,10 @@ assembly time and the slow-step floors at $10^6$ sites; (ii) the phase-noise opt
 scaled away the incoherent part of the crosstalk and looked better than fully incoherent rows; (iii) the
 $2\times2$ MMI design offset of the switches was treated as random spread; (iv) the field-mean laser power of
 the first engine was evaluated in the wrong units; (v) the arm-phase aberration of the first star coupler was
-mis-evaluated by phase unwrapping; (vi) the first $x$ relay lens did not cover the slit edge; and (vii) the
+mis-evaluated by phase unwrapping; (vi) the first $x$ relay lens did not cover the slit edge; (vii) the
 position error of the 20-port star-coupler engine depends on the relative port phases, which an earlier text
-treated as fixed. Some figures still differ between documents for stated reasons: the heating per slow step is
+treated as fixed; and (viii) the 2D values beyond 67~\textmu m in the first skew study were read as a break-up of the
+spot, but lie outside the reach of the model's engine. Some figures still differ between documents for stated reasons: the heating per slow step is
 0.12~\textmu K per handoff and about 0.3~\textmu K per move including the $x$ move (the 3D classical run gives
 0.16~\textmu K); the greedy scheduler's pass count depends on the set of random loadings (7.8 or 8.05 passes);
 the steering half-range at 128 channels is 67~\textmu m by the usable-range criterion and 68~\textmu m by the
@@ -60,17 +67,19 @@ average by about 25\% at the nominal point.
 The large-array chapters extrapolate in three respects. (i) The optics for $10^6$ sites assume a corrected field
 of about $\pm2.8$~mm at NA 0.5, which we did not design. (ii) The static potential for $10^6$ sites needs of the
 order of kilowatts of laser power, from tweezers or from a cavity lattice, which we priced but did not
-design. (iii) The comb that combines four 16-chip stacks into a 64-row block, and the reflective collimator that
-would restore full segments, exist only as first-order concepts with wave-optics checks of their key
-penalties.
+design. (iii) The comb that combines four 16-chip stacks into a 64-row block exists only as a first-order concept with
+wave-optics checks of its key penalties. The reflective collimator is constructed and traced exactly, but its
+coatings are not designed, its tolerances are evaluated one at a time, and no fabrication route is
+demonstrated.
 
 \subsection{Conclusions}\label{sec:discussion-concl}
 
 We have shown, in simulation, that SiN circuits can steer independent transport tweezers along rows of a
 4~\textmu m lattice, that stacked rows can be made independent without per-chip frequency shifters, and that
-handoff transport is clean and cold with slow steps and lanes between rows. The main limitation is the
-cylindrical collimator, which in its present refractive form serves only the central half of each engine's
-segment. The next step is the design of a collimator insensitive to the x angle, for example all-reflective
-in one medium, followed by measurements on fabricated D1 engines of the quantities the models assume: phase
-accuracy and update rate of the actuators, facet transmission, and the intensity noise of the decorrelated
-laser chain.
+handoff transport is clean and cold with slow steps and lanes between rows. A refractive cylindrical collimator
+serves only the central half of each engine's segment; a two-mirror collimator in glass, designed here, serves the
+whole segment. The main limitation is now that collimator's fabrication: two freeform mirrors held to about 10~nm
+rms in a 0.48~mm block glued at $\pm0.1$~\textmu m, with coatings of small s-p retardance. The next steps are a
+criterion for the circular polarisation of the transport tweezers, a coating design, and measurements on
+fabricated D1 engines of the quantities the models assume: phase accuracy and update rate of the actuators,
+facet transmission, and the intensity noise of the decorrelated laser chain.

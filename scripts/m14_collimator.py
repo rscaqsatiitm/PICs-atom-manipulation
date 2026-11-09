@@ -276,6 +276,38 @@ def form():
 
 
 # ------------------------------------------------------------------ first x lens of the relay
+def x_effect(fp, ls, phase_fn, xt, w0=None, I0=None, b0=None, p0=None):
+    """D1 tweezers at xt with an extra x-pupil phase phase_fn(s, x_emitter) (rad): peak and position before and
+    after least-squares recalibration, and the change of the others when the middle tweezer moves by 0.25 um."""
+    if w0 is None:
+        w0 = ls.weights(xt)
+        I0 = fp.intensity(w0)
+        b0 = [fp.peak_near(I0, x) for x in xt]
+        p0 = np.sum(np.abs(w0) ** 2)
+    fp2 = copy.copy(fp)
+    fp2.G = channel_response(fp.opa, fp.x, phase_fn=phase_fn)
+    Iu = fp2.intensity(w0)
+    bu = [fp2.peak_near(Iu, x) for x in xt]
+    ls2 = LinearSynth(fp2)
+    w2 = ls2.weights(xt)
+    Ic = fp2.intensity(w2)
+    bc = [fp2.peak_near(Ic, x) for x in xt]
+    p2 = np.sum(np.abs(w2) ** 2)
+    # independence after recalibration: move the middle tweezer
+    im = len(xt) // 2
+    xm = np.array(xt, float).copy()
+    xm[im] += 0.25
+    Im = fp2.intensity(ls2.weights(xm))
+    oth = [fp2.peak_near(Im, x) for i, x in enumerate(xt) if i != im]
+    obc = [b for i, b in enumerate(bc) if i != im]
+    return {"uncalibrated_peak_rel": [u["peak"] / b["peak"] for u, b in zip(bu, b0)],
+            "uncalibrated_pos_nm": [(u["x_peak"] - x) * 1e3 for u, x in zip(bu, xt)],
+            "recalibrated_peak_per_power_rel": [(c["peak"] / p2) / (b["peak"] / p0) for c, b in zip(bc, b0)],
+            "recalibrated_pos_nm": [(c["x_peak"] - x) * 1e3 for c, x in zip(bc, xt)],
+            "recalibrated_move_others": {"peak": float(max(abs(o["peak"] / b["peak"] - 1) for o, b in zip(oth, obc))),
+                                         "pos_nm": float(max(abs(o["x_peak"] - b["x_peak"]) for o, b in zip(oth, obc)) * 1e3)}}
+
+
 def xlens():
     T = np.load(RESULTS / "m10_T_opt_A.npz")["T"]
     fp = FocalPlane(A=T, **D1)
@@ -322,30 +354,10 @@ def xlens():
             Wx = np.interp(np.sign(xn) * s if xn != 0 else s, sg, Wx)
             return 2 * np.pi / LAM * Wx
 
-        fp2 = copy.copy(fp)
-        fp2.G = channel_response(fp.opa, fp.x, phase_fn=phase_fn)
-        Iu = fp2.intensity(w0)
-        bu = [fp2.peak_near(Iu, x) for x in xt]
-        ls2 = LinearSynth(fp2)
-        w2 = ls2.weights(xt)
-        Ic = fp2.intensity(w2)
-        bc = [fp2.peak_near(Ic, x) for x in xt]
-        p2 = np.sum(np.abs(w2) ** 2)
-        # independence after recalibration: move the middle tweezer
-        xm = xt.copy()
-        xm[2] += 0.25
-        Im = fp2.intensity(ls2.weights(xm))
-        oth = [fp2.peak_near(Im, x) for i, x in enumerate(xt) if i != 2]
-        obc = [b for i, b in enumerate(bc) if i != 2]
         out[name] = {"back_focal_z_um": zb, "W_rms_waves_field_144um_after_tilt": rms_edge,
                      "launch_s_covered_by_field": dict(zip([f"{x:g}" for x in xs_tab], cover)),
                      "W_pv_um_by_field": [float(np.ptp(Wt[m])) for Wt in Wtab], "field_um": xs_tab.tolist(),
-                     "uncalibrated_peak_rel": [u["peak"] / b["peak"] for u, b in zip(bu, b0)],
-                     "uncalibrated_pos_nm": [(u["x_peak"] - x) * 1e3 for u, x in zip(bu, xt)],
-                     "recalibrated_peak_per_power_rel": [(c["peak"] / p2) / (b["peak"] / p0) for c, b in zip(bc, b0)],
-                     "recalibrated_pos_nm": [(c["x_peak"] - x) * 1e3 for c, x in zip(bc, xt)],
-                     "recalibrated_move_others": {"peak": float(max(abs(o["peak"] / b["peak"] - 1) for o, b in zip(oth, obc))),
-                                                  "pos_nm": float(max(abs(o["x_peak"] - b["x_peak"]) for o, b in zip(oth, obc)) * 1e3)},
+                     **x_effect(fp, ls, phase_fn, xt, w0=w0, I0=I0, b0=b0, p0=p0),
                      "geometry": d.geometry(0.36)}
         print(name, json.dumps(out[name], default=float)[:900], flush=True)
     save_result("m14_xlens", script=SCRIPT,

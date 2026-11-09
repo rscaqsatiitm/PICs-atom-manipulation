@@ -23,6 +23,12 @@
 > -99 s_x^2 um, s_x = x_a / 288 um). With the best common focus offset a row is usable over |x_a| <= 45 um, half
 > of the 180 um segment. Earlier power and crosstalk figures hold near the row centre only; a collimator that is
 > insensitive to the x angle (for example all-reflective) is needed for full segments.
+>
+> Follow-up (Sec. 13): such a collimator is now designed. Two mirrors in one glued fused-silica block (0.48 mm
+> long) collimate exactly at every x angle and obey the sine condition. In 1D the peak stays at or above 0.98 out
+> to the slit edge, and the crosstalk at 4 um stays at or below 1.0e-4. Full 180 um segments are therefore usable,
+> and the engine count of Secs. 4 to 10 stands. The costs are a mirror form tolerance of about 10 nm rms and a
+> coating-dependent circular polarisation (|V| <= 0.04 at 90 um with the adopted coatings).
 
 Follow-up to `docs/scaling_beyond.md`, `docs/transport3d.md`, `docs/rearrangement.md` and `docs/repair.md`. Code:
 `scripts/m22_megascale.py` (budget, tiling), `picsim/megasort.py` and `scripts/m23_steady.py` (assembly and steady
@@ -604,9 +610,11 @@ The error is almost purely a focus shift of the facet, dz = -99 s_x^2 um. A thin
 fully; the residual after refocusing stays below 0.1 waves up to 90 um. But all tweezers of a row share the facet
 and the collimator. The phase sits at S, which is conjugate to the atoms, so refocusing the atom plane does not
 help either. In 2D the best atom-plane focus recovers the peak up to x_a = 30 um (1.02, with a 1.5 um y-focus
-shift, outside the +/-0.5 um axial registration of `docs/transport3d.md`), and not beyond. Beyond about 60 um the
-2D spot breaks up (peak 0.11 at 75 um), because the y pupil is then filled to its rim and the circular pupil cuts
-it differently for each x pupil column.
+shift, outside the +/-0.5 um axial registration of `docs/transport3d.md`), and not beyond. (Corrected: an earlier
+text read the 2D values at 75 and 90 um (peak 0.11 at 75 um) as a break-up of the spot in the circular pupil. They
+are outside the model: the D1 engine of the 2D model, with 128 ports, cannot form a tweezer beyond about 67 um for
+any collimator, so its synthesis returns no tweezer there. The 2D results are valid up to 60 um; the 1D results,
+which do not involve the engine, hold to the slit edge.)
 
 **What a common focus offset recovers.** A single facet offset for the whole row (the length of the glued block,
 set at fabrication) trades the centre against the ends. With dz = -1.25 um the peak stays at or above 0.96 out to
@@ -621,11 +629,12 @@ about 23 sites at 4 um), not all of it. Every power and crosstalk figure of m13,
 row centre and is optimistic for the outer half. For the large arrays this doubles the number of engines per row
 at fixed coverage: 90 um segments instead of 180 um. Alternatively, the collimator must become insensitive to s_x.
 Serving |x_a| <= 90 um within the +/-0.5 um focus tolerance, with the best common offset, needs
-|dz/s_x^2| <= 10 um: ten times less than now. We see four routes, none of them designed here.
+|dz/s_x^2| <= 10 um: ten times less than now. We see four routes. Route (i) is now designed (Sec. 13).
 
 (i) An all-reflective collimator in one medium. The law of reflection and a uniform medium are unchanged by the
 effective-index map, so W = 0 for every s_x; a flat exit face normal to the collimated beam keeps it so (DERIVED).
-It does not obey the sine condition and needs a folded geometry within the 0.5 mm chip pitch.
+It needs a folded geometry within the 0.5 mm chip pitch. (Corrected: an earlier text said such a collimator cannot
+obey the sine condition. One mirror cannot, but two mirrors designed together can, Sec. 13.)
 
 (ii) A cemented refractive design. Glass-glass interfaces are less sensitive than glass-air ones (relative power
 change 0.41 s_x^2 for 1.45 | 2.0 against 0.84 s_x^2 for 1.45 | air, DERIVED), but a factor of two is not enough on
@@ -639,6 +648,57 @@ S like a y lens of 4 mm focal length (2.9 waves at 158 um), so the beam has pass
 pupil fill, and with it f_FAC, grows with the mode.
 
 The downstream cylindrical lenses of the y relay see x angles below about 0.05 and are not modelled here.
+
+## 13. Follow-up: an all-reflective collimator
+
+Module 27 (`scripts/m27_reflective_collimator.py`, `picsim/opa/mirror_collimator.py`; details in
+`docs/collimator.md`, Sec. 10) designs route (i) of Sec. 12.
+
+**Design.** A two-mirror aplanat in fused silica, glued to the facet. It is constructed in 2D for exact collimation
+and the sine condition, like the refractive aplanat of module 14, but with mirrors. The adopted layout:
+- the block is 0.48 mm long, folds the beam down and forward, and keeps all light inside 315 um at every z;
+- M2 works by total internal reflection; M1 needs a coating (silver or gold);
+- neighbouring blocks at 0.5 mm pitch clear each other by 20 um.
+
+It was selected from 290 layouts that pass the geometric filters (no obscuration, no light behind the facet,
+neighbouring blocks disjoint, radius of curvature >= 20 um). The ranking was by form sensitivity, at a length of at
+most 0.5 mm.
+
+**Exactness.** A 3D vector trace (rays with k_x, not the effective index) gives a wavefront flat to 2e-12 waves at
+every s_x up to the slit edge. The focal length grows as n / sqrt(n^2 - s_x^2), by 2.4% at x_a = 90 um.
+
+**Row performance** (1D, relative to an ideal collimator at the same s_x; 2D in brackets where the model's engine
+reaches):
+
+| x_a | 0 | 30 um | 45 um | 60 um | 90 um | 102 um |
+|---|---|---|---|---|---|---|
+| reflective | 1.000 (1.000) | 0.999 (0.999) | 0.997 (0.997) | 0.993 (0.994) | 0.985 | 0.980 |
+| refractive (Sec. 12) | 1.000 (1.000) | 0.971 (0.942) | 0.794 (0.725) | 0.481 (0.440) | 0.231 | 0.177 |
+
+With the reflective collimator:
+- the crosstalk at 4 um stays between 8.1e-5 and 1.0e-4;
+- the y centroid does not move;
+- on axis the design equals the refractive one (peak 1.10 per guided power, 57.4 mW per 1.2 mK tweezer with ideal
+  coatings, 57.7 mW with a silvered M1).
+
+Hence the doubling of engines considered in Sec. 12 is not needed.
+
+**Geometry of the comb.** The folded glass path moves S and the x slit plane, so the comb starts 7.51 mm from S
+and the far row of a 32-row comb sits at 23.5 mm (23.0 mm before). There the comb loses 4.8e-3 to 5.5e-3 across
+the row, with crosstalk 1.1e-4 at 4 um, as before.
+
+**Costs.**
+- (i) **Form tolerance.** The mirrors need <= 10 nm rms form error for <= 2% loss, against about 20 nm for the
+  refractive surfaces, since a back-surface mirror in glass changes the path by 2 n cos(i) per unit sag.
+- (ii) **Polarisation.** For s_x != 0 the s-p phase of the coatings mixes in a cross-polarised, partly circular
+  component. With M1 silvered or gilded and M2 in TIR, the circular degree at the centre of a tweezer at 90 um is
+  |V| = 0.03 to 0.04 and the polarisation is rotated by about 18 deg. Two silvered mirrors give |V| = 0.22 in every
+  passing layout. The criterion for V depends on the qubit encoding and has not been set; for m_F = 0 states the
+  first-order vector shift vanishes.
+- (iii) **Fabrication.** A 0.48 mm glass block with two freeform mirrors at <= 10 nm rms, glued at +/-0.1 um, has
+  no demonstrated route here [REF?].
+
+**Correction to Sec. 12.** The 2D values at 75 and 90 um there are outside the model (Sec. 12, corrected).
 
 ## Verification notes
 
@@ -679,4 +739,6 @@ The downstream cylindrical lenses of the y relay see x angles below about 0.05 a
 | common facet offset | Sec. 12 | SIM | results/m26_skew_offset.json (first-order focus phase, 1D; review) |
 | thin-lens skew estimate, glass-glass sensitivity, corrector focal length | Sec. 12 | DERIVED | formulas in the text |
 | moving-tweezer / static crosstalk ratio 0.13 | Sec. 12 | SIM | m13 (results/m13_crosstalk.json); not recomputed for skewed tweezers |
-| skew-insensitive collimator (reflective) | Sec. 12 | open | not designed |
+| skew-insensitive collimator (reflective) | Sec. 12, 13 | SIM | designed in Sec. 13 (m27; review) |
+| reflective collimator: design, trace, wave, skew, comb, tolerance, polarisation | Sec. 13 | SIM | results/m27_*.json (review) |
+| D1 2D reach about 67 um | Sec. 12, 13 | SIM | m26 / m27 2D rows; m3 steering range |

@@ -1,0 +1,235 @@
+{
+ "name": "m27_trace",
+ "script": "scripts/m27_reflective_collimator.py",
+ "git": "778b0f1",
+ "notes": "g_over_target: exit height / (f sy n / n_eff); f_scale = n / n_eff. effective_index_vs_3d: largest difference between the 2D effective-index lens map (used by the wave model) and the 3D trace.",
+ "inputs": {
+  "method": "3D rays from the facet in fused silica, direction (sx, sy, .)/n, vector law of reflection on the spline-fitted mirror curves (cylinders along x), optical path n x 3D length to the exit plane; W = OPL - sx x_exit (phase of the k_x = k0 sx component)",
+  "refractive": "m14 adopted collimator in the effective-index trace (m26.skewed)"
+ },
+ "outputs": {
+  "x_scale_um": 288.0,
+  "s_cut": 0.3548116666666667,
+  "adopted": {
+   "params": {
+    "n": 1.4496257710158857,
+    "f_um": 175.0,
+    "r0_um": 50.0,
+    "y_c_um": -390.0,
+    "phi0_deg": -70.0,
+    "sign": 1,
+    "s_max": 0.9,
+    "theta_m_deg": 38.37822451556823,
+    "F_glass_um": 253.68450992778,
+    "M1_M2_distance_um": [
+     245.8282150018709,
+     507.98505538003707
+    ],
+    "exit_gap_um": 20.0
+   },
+   "rows": [
+    {
+     "sx": 0.0,
+     "x_a_um": 0.0,
+     "n_eff": 1.4496257710158857,
+     "s_rim": 0.9,
+     "rays_ok": 801,
+     "W_pv_waves": 1.7088778587192796e-12,
+     "g_over_target_max_dev": 1.8919132926953353e-10,
+     "f_scale": 1.0,
+     "antisymmetry_um": 1.6539009051186326e-08,
+     "exit_tilt_max_rad": 4.9298676252362845e-11,
+     "stripe_edge_um": 157.42124999932523,
+     "effective_index_vs_3d": {
+      "W_waves": 1.0001578757093642e-12,
+      "g": 3.4672487103648564e-11
+     },
+     "refractive_W_pv_waves": 3.56805152511292e-08
+    },
+    {
+     "sx": 0.1,
+     "x_a_um": 28.8,
+     "n_eff": 1.4461724917842274,
+     "s_rim": 0.8978560319700205,
+     "rays_ok": 801,
+     "W_pv_waves": 2.1360973233990996e-12,
+     "g_over_target_max_dev": 1.8916757049680655e-10,
+     "f_scale": 1.0023878750641964,
+     "antisymmetry_um": 1.653906733789512e-08,
+     "exit_tilt_max_rad": 4.9299098402101695e-11,
+     "stripe_edge_um": 157.4212499993251,
+     "effective_index_vs_3d": {
+      "W_waves": 1.2010874005123429e-12,
+      "g": 3.4673486304370726e-11
+     },
+     "refractive_W_pv_waves": 0.29521480652308296
+    },
+    {
+     "sx": 0.2,
+     "x_a_um": 57.6,
+     "n_eff": 1.4357628202434416,
+     "s_rim": 0.8913931885424083,
+     "rays_ok": 801,
+     "W_pv_waves": 1.4952681263793698e-12,
+     "g_over_target_max_dev": 1.8916068711405387e-10,
+     "f_scale": 1.0096554602034433,
+     "antisymmetry_um": 1.6538989622283395e-08,
+     "exit_tilt_max_rad": 4.9298725372081563e-11,
+     "stripe_edge_um": 157.42124999932514,
+     "effective_index_vs_3d": {
+      "W_waves": 1.0680486616995498e-12,
+      "g": 3.4672931192858414e-11
+     },
+     "refractive_W_pv_waves": 1.180269600139944
+    },
+    {
+     "sx": 0.312,
+     "x_a_um": 89.856,
+     "n_eff": 1.41565210274043,
+     "s_rim": 0.8789074517994514,
+     "rays_ok": 801,
+     "W_pv_waves": 1.9224875910591898e-12,
+     "g_over_target_max_dev": 1.8916723742989916e-10,
+     "f_scale": 1.0239985998040686,
+     "antisymmetry_um": 1.653908676679805e-08,
+     "exit_tilt_max_rad": 4.9298410778879365e-11,
+     "stripe_edge_um": 157.4212499993251,
+     "effective_index_vs_3d": {
+      "W_waves": 1.512757374807934e-12,
+      "g": 3.46732642597658e-11
+     },
+     "refractive_W_pv_waves": 2.856492013694816
+    },
+    {
+     "sx": 0.3548116666666667,
+     "x_a_um": 102.18576,
+     "n_eff": 1.405533193201293,
+     "s_rim": 0.8726251279284836,
+     "rays_ok": 801,
+     "W_pv_waves": 1.9224875910591894e-12,
+     "g_over_target_max_dev": 1.8918289157454637e-10,
+     "f_scale": 1.0313707125721918,
+     "antisymmetry_um": 1.6539047908992188e-08,
+     "exit_tilt_max_rad": 4.929893329343114e-11,
+     "stripe_edge_um": 157.42124999932517,
+     "effective_index_vs_3d": {
+      "W_waves": 1.1798222150542022e-12,
+      "g": 3.4672154036741176e-11
+     },
+     "refractive_W_pv_waves": 3.6739965532887084
+    }
+   ]
+  },
+  "tir": {
+   "params": {
+    "n": 1.4496257710158857,
+    "f_um": 175.0,
+    "r0_um": 40.0,
+    "y_c_um": -450.0,
+    "phi0_deg": -60.0,
+    "sign": -1,
+    "s_max": 0.9,
+    "theta_m_deg": 38.37822451556823,
+    "F_glass_um": 253.68450992778,
+    "M1_M2_distance_um": [
+     194.34241649712263,
+     883.7552073669546
+    ],
+    "exit_gap_um": 20.0
+   },
+   "rows": [
+    {
+     "sx": 0.0,
+     "x_a_um": 0.0,
+     "n_eff": 1.4496257710158857,
+     "s_rim": 0.9,
+     "rays_ok": 801,
+     "W_pv_waves": 1.2816583940394596e-12,
+     "g_over_target_max_dev": 2.054518777327985e-10,
+     "f_scale": 1.0,
+     "antisymmetry_um": 4.695480115834982e-09,
+     "exit_tilt_max_rad": 8.977152354816553e-12,
+     "stripe_edge_um": 157.42125000061264,
+     "effective_index_vs_3d": {
+      "W_waves": 8.266558281433866e-13,
+      "g": 2.6964264154827333e-11
+     },
+     "refractive_W_pv_waves": 3.56805152511292e-08
+    },
+    {
+     "sx": 0.1,
+     "x_a_um": 28.8,
+     "n_eff": 1.4461724917842274,
+     "s_rim": 0.8978560319700205,
+     "rays_ok": 801,
+     "W_pv_waves": 1.2816583940394598e-12,
+     "g_over_target_max_dev": 2.05465200409094e-10,
+     "f_scale": 1.0023878750641964,
+     "antisymmetry_um": 4.695382971320328e-09,
+     "exit_tilt_max_rad": 8.977221490380886e-12,
+     "stripe_edge_um": 157.42125000061253,
+     "effective_index_vs_3d": {
+      "W_waves": 9.970948955164906e-13,
+      "g": 2.6964042110222408e-11
+     },
+     "refractive_W_pv_waves": 0.29521480652308296
+    },
+    {
+     "sx": 0.2,
+     "x_a_um": 57.6,
+     "n_eff": 1.4357628202434416,
+     "s_rim": 0.8913931885424083,
+     "rays_ok": 801,
+     "W_pv_waves": 1.2816583940394598e-12,
+     "g_over_target_max_dev": 2.0547563650552547e-10,
+     "f_scale": 1.0096554602034433,
+     "antisymmetry_um": 4.695596689252568e-09,
+     "exit_tilt_max_rad": 8.976957829857365e-12,
+     "stripe_edge_um": 157.42125000061276,
+     "effective_index_vs_3d": {
+      "W_waves": 9.565243014621178e-13,
+      "g": 2.696370904331502e-11
+     },
+     "refractive_W_pv_waves": 1.180269600139944
+    },
+    {
+     "sx": 0.312,
+     "x_a_um": 89.856,
+     "n_eff": 1.41565210274043,
+     "s_rim": 0.8789074517994514,
+     "rays_ok": 801,
+     "W_pv_waves": 1.2816583940394598e-12,
+     "g_over_target_max_dev": 2.0547741286236487e-10,
+     "f_scale": 1.0239985998040686,
+     "antisymmetry_um": 4.6954218291261896e-09,
+     "exit_tilt_max_rad": 8.976927805296337e-12,
+     "stripe_edge_um": 157.42125000061264,
+     "effective_index_vs_3d": {
+      "W_waves": 1.0992866984810221e-12,
+      "g": 2.696459722173472e-11
+     },
+     "refractive_W_pv_waves": 2.856492013694816
+    },
+    {
+     "sx": 0.3548116666666667,
+     "x_a_um": 102.18576,
+     "n_eff": 1.405533193201293,
+     "s_rim": 0.8726251279284836,
+     "rays_ok": 801,
+     "W_pv_waves": 1.0680486616995498e-12,
+     "g_over_target_max_dev": 2.054758585501304e-10,
+     "f_scale": 1.0313707125721918,
+     "antisymmetry_um": 4.696121269631703e-09,
+     "exit_tilt_max_rad": 8.977089349098938e-12,
+     "stripe_edge_um": 157.42125000061276,
+     "effective_index_vs_3d": {
+      "W_waves": 9.20121172590224e-13,
+      "g": 2.6964486199432258e-11
+     },
+     "refractive_W_pv_waves": 3.6739965532887084
+    }
+   ]
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

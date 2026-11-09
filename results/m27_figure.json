@@ -1,0 +1,58 @@
+{
+ "name": "m27_figure",
+ "script": "scripts/m27_reflective_collimator.py",
+ "git": "778b0f1",
+ "notes": "Left: y-z section of the adopted block (rays every 6.4 deg, mirrors black, exit face), with the light regions of the blocks of the neighbouring chips (grey, 10 um margin) and the chips (dark grey, z < 0). Right: peak vs x_a, refractive (m26_skew) and reflective (m27_skew); 2D only within the 67 um reach of the D1 engine of the 2D model.",
+ "inputs": {
+  "design": "reflective aplanat n=1.4496 r0=50 y_c=-390 phi0=-70 sign=+1"
+ },
+ "outputs": {
+  "layout": {
+   "block_length_um": 476.23979833928786,
+   "region_y_extent_um": [
+    -547.4999999917401,
+    17.341016358008908
+   ],
+   "max_cross_section_um": 314.99999999151146,
+   "pitch_overlap_area_um2": 0.0,
+   "margin_um": 10.0,
+   "obscured_length_um": 0.0,
+   "light_behind_facet_um2": 0.0,
+   "M1_y_um": [
+    -198.9234553198351,
+    17.3410296942653
+   ],
+   "M1_z_um": [
+    21.896024223947407,
+    251.17498056271123
+   ],
+   "M2_y_um": [
+    -547.5,
+    -232.5
+   ],
+   "M2_z_um": [
+    5.245427663416354,
+    447.2753203400236
+   ],
+   "incidence_M1_deg": [
+    27.618252533624137,
+    76.98859559135765
+   ],
+   "incidence_M2_deg": [
+    44.60346521520361,
+    60.00788619582794
+   ],
+   "tir_angle_deg": 43.616907503712696,
+   "TIR_fraction_M1": 0.7267683772538142,
+   "TIR_fraction_M2": 1.0,
+   "min_radius_of_curvature_um": [
+    192.5608563320299,
+    797.8465270532606
+   ],
+   "form_sensitivity_rms": 2.433398787808357,
+   "exit_tilt_max_rad": 2.3282265004809233e-11,
+   "glass_path_um": 749.3207382410748
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

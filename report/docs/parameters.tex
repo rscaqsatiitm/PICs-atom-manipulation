@@ -399,6 +399,47 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   edge: chip m windowed by y \textless{} a, chip m+1 by the mirror image
   (block combining boundary). Roll and straightness use the local win
 \item
+  \texttt{results/m27\_figure.json}: Left: y-z section of the adopted
+  block (rays every 6.4 deg, mirrors black, exit face), with the light
+  regions of the blocks of the neighbouring chips (grey, 10 um margin)
+  and the chips (dark grey, z \textless{}
+\item
+  \texttt{results/m27\_pol.json}: cross\_pol\_focus:
+  \textbar E\_y\textbar\^{}2 / \textbar E\textbar\^{}2 of the coherent
+  pupil sum (field at the centre of the tweezer, before the objective);
+  V\_focus: its degree of circular polarisation;
+  cross\_pol\_power\_pupil: incoherent p
+\item
+  \texttt{results/m27\_poltrade.json}:
+\item
+  \texttt{results/m27\_scan.json}: form\_sensitivity\_rms: rms over the
+  pupil of sqrt(sum\_j (2 n cos i\_j)\^{}2), optical path per unit
+  normal sag error of the two mirrors. Ranking: sensitivity, then block
+  length.
+\item
+  \texttt{results/m27\_skew.json}: peak\_rel\_ideal: y-line peak
+  relative to an ideal sine-condition collimator with the same facet
+  spectrum and sx. dz\_equiv: facet focus error (in the source medium)
+  whose first-order wavefront best matc
+\item
+  \texttt{results/m27\_skew\_summary.json}:
+\item
+  \texttt{results/m27\_tolerance.json}: exact\_check: residual between
+  exactly traced path change of a displaced source and the first-order
+  model of the wave model (waves rms, peak-to-valley),
+  \textbar s\textbar{} \textless= 0.9.
+\item
+  \texttt{results/m27\_trace.json}: g\_over\_target: exit height / (f sy
+  n / n\_eff); f\_scale = n / n\_eff. effective\_index\_vs\_3d: largest
+  difference between the 2D effective-index lens map (used by the wave
+  model) and the 3D trace.
+\item
+  \texttt{results/m27\_wave.json}: 1D y line, s\_x = 0.
+  peak\_rel\_ideal: per unit guided power, relative to the ideal lens in
+  air at beta 0.7 (as m14\_wave).
+\item
+  \texttt{results/m27\_xaxis.json}:
+\item
   \texttt{results/m2\_couplers.json}: Excludes Fresnel loss
   (index-matched or AR-coated facet assumed) and taper conversion loss.
 \item
