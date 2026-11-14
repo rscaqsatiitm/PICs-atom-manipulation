@@ -45,6 +45,7 @@ rebuild with `make report` (needs TeX Live with latexmk, and pandoc).
 | 25 Imaging cadence | `scripts/m25_imaging.py` | steady-state defect fraction (at image, before image, time average) against imaging period, loss per image, imaging time and vacuum lifetime at 1e5 and 1e6 sites; `docs/megascale.md` |
 | 26 Stack combining | `scripts/m26_stack_combine.py` | interleaving chip stacks with a slotted 45 deg comb mirror at the collimator plane: 1D wave optics of the window vs distance, layouts for 32-64 rows with PBS, tilt and path tolerances, 2D check; the real (traced) collimator, and its detuning for tweezers away from the row centre (skew rays, effective indices); `docs/megascale.md` |
 | 27 Reflective collimator | `scripts/m27_reflective_collimator.py` | two-mirror collimator in a glued glass block, exact at every x angle (sine condition built in): layout scan within the chip pitch, 3D vector trace, wave model, skew and comb, form and alignment tolerances, polarisation of metal and TIR mirrors, x-axis effects; `docs/collimator.md` Sec. 10, `docs/megascale.md` Sec. 13 |
+| 28 AOD baseline | `scripts/m28_aod_baseline.py` | the PIC rearrangement engine against crossed AODs (row-wise, fields of 24 to 128 sites), a single moving tweezer and an all-parallel ceiling in the same steady-state simulator (`picsim/megasort.py`, `Block.mode`): assembly time, steady-state defects, tweezers per pass, transport laser power and control channels at 1e3 to 1e5 sites; `docs/aod_comparison.md` |
 
 ## Layout
 

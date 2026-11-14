@@ -101,6 +101,13 @@ in): layout scan within the chip pitch, 3D vector trace, wave model,
 skew and comb, form and alignment tolerances, polarisation of metal and
 TIR mirrors, x-axis effects; \texttt{docs/collimator.md} Sec. 10,
 \texttt{docs/megascale.md} Sec. 13 \\
+28 AOD baseline & \texttt{scripts/m28\_\allowbreak{}aod\_\allowbreak{}baseline.py} & the PIC
+rearrangement engine against crossed AODs (row-wise, fields of 24 to 128
+sites), a single moving tweezer and an all-parallel ceiling in the same
+steady-state simulator (\texttt{picsim/megasort.py},
+\texttt{Block.mode}): assembly time, steady-state defects, tweezers per
+pass, transport laser power and control channels at 1e3 to 1e5 sites;
+\texttt{docs/aod\_\allowbreak{}comparison.md} \\
 path & content & \\
 -\/-\/- & -\/-\/- & \\
 \texttt{picsim/params.py} & every physical input, with provenance (USER,

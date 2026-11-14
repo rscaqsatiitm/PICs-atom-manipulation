@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "report" / "docs"
 ORDER = ["findings", "parameters", "twenty_tweezers", "independent_steering", "fpr_design", "scaling",
          "scaling_beyond", "stacked_relay", "collimator", "row_coherence", "pm_am", "transport3d", "rearrangement",
-         "repair", "megascale"]
+         "repair", "megascale", "aod_comparison"]
 
 
 def convert(name: str) -> str:

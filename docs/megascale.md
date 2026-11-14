@@ -1,5 +1,10 @@
 # Rearranging 10^4, 10^5 and 10^6-atom arrays at 3-4 um pitch
 
+> Follow-up (`docs/aod_comparison.md`, module 28): the same simulator with crossed-AOD, single-tweezer and
+> all-parallel move constraints. At 1e3 to 1e5 sites every method that has assembled holds the same steady-state
+> floor (1.3e-4 to 1.5e-4 at tau 3000 s), because steady-state holes come one at a time. The PIC block's advantage
+> is assembly from a random loading: 0.24 s against 6.6 s for a 40-site crossed AOD at 1e5 sites.
+
 > Follow-up (Sec. 9): a 3 x 4 um lattice (3 um along the rows, rows 4 um apart) transports as cleanly as 4 x 4 um
 > and has 33% more sites. This supersedes the corridor conclusion of Sec. 5. A free-space lattice needs more power
 > than tweezers; only a cavity lattice (buildup ~100) needs less. At 10^6 sites, fast handoff steps are needed in

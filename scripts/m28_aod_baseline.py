@@ -228,11 +228,12 @@ def hardware():
 # ---------------------------------------------------------------------------------------------- figure
 def figure():
     o = json.loads((RESULTS / "m28_main.json").read_text())["outputs"]
+    col = {m: f"C{i}" for i, m in enumerate(METHODS)}
     f, ax = fig(1, 2, h=3.2)
-    for m, c in o["curves_1e4_tau3000_seed1"].items():
-        c = np.array(c)
-        ax[0, 0].semilogy(c[:, 0], np.maximum(c[:, 1], 1e-5), label=m, lw=0.9)
-    ax[0, 0].set_xlim(0, 6)
+    for m in METHODS:
+        c = np.array(o["curves_1e4_tau3000_seed1"][m])
+        ax[0, 0].semilogy(c[:, 0], np.maximum(c[:, 1], 1e-5), label=m, lw=0.9, color=col[m])
+    ax[0, 0].set_xlim(0, 4)
     ax[0, 0].set_xlabel("time (s)")
     ax[0, 0].set_ylabel("defect fraction at image (1e4 sites)")
     ax[0, 0].legend(fontsize=5.5)
@@ -240,18 +241,19 @@ def figure():
     Ns = sorted({s["N"] for s in summ})
     w = 0.13
     for i, m in enumerate(METHODS):
-        y = [next((s["steady_mean_defect"][0] for s in summ if s["N"] == N and s["method"] == m), np.nan) for N in Ns]
-        e = [next(((s["steady_mean_defect"][1] or 0) for s in summ if s["N"] == N and s["method"] == m), 0) for N in Ns]
-        ax[0, 1].bar(np.arange(len(Ns)) + (i - 2.5) * w, y, w, yerr=e, label=m, capsize=1.5)
+        y = [next((s["t_1e-3_s"][0] for s in summ if s["N"] == N and s["method"] == m), np.nan) for N in Ns]
+        ax[0, 1].bar(np.arange(len(Ns)) + (i - 2.5) * w, [np.nan if v is None else v for v in y], w, color=col[m])
+    ax[0, 1].axhline(0.12, color="0.5", lw=0.7)
     ax[0, 1].set_yscale("log")
     ax[0, 1].set_xticks(range(len(Ns)))
     ax[0, 1].set_xticklabels([f"{int(N):.0e}" for N in Ns])
     ax[0, 1].set_xlabel("sites")
-    ax[0, 1].set_ylabel("time-averaged defect fraction, steady state")
+    ax[0, 1].set_ylabel("assembly time to 1e-3 (s)")
     save_result("m28_figure", script=SCRIPT, fig=f, inputs={"source": "results/m28_main.json"}, outputs={},
                 notes="Left: defect fraction just after each image, 1e4 sites, tau 3000 s, cold steps, seed 1. Right: "
-                      "time-averaged steady-state defect fraction (second half of each run), mean and spread over "
-                      "seeds, tau 3000 s, cold steps.")
+                      "time to the first image with defect fraction <= 1e-3 from 85% random loading, mean over seeds, "
+                      "tau 3000 s, cold steps; the grey line (0.12 s) is the first image after the start, the "
+                      "resolution of this metric.")
     return f
 
 
