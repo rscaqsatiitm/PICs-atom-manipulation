@@ -1,0 +1,71 @@
+{
+ "name": "m31_frequency",
+ "script": "scripts/m31_addressing.py",
+ "git": "d5ac981",
+ "notes": "A crossed AOD shifts each addressed site by its own RF frequency. For a light-shift (Z) gate this is harmless; for coherent two-photon (Raman) addressing against a global beam the relative phase walks as 2 pi delta_f t and must be tracked per site. The PIC router and a DMD keep one optical frequency for all sites.",
+ "inputs": {
+  "bandwidth_Hz": 20000000.0,
+  "resolvable_spots": 150,
+  "source": "45035-5-6.5DEG-1.06 (sintec listing)"
+ },
+ "outputs": {
+  "tone_spacing_per_site_Hz": 133333.33333333334,
+  "rows": [
+   {
+    "site_separation": 1,
+    "pulse_s": 1e-07,
+    "delta_f_Hz": 133333.33333333334,
+    "phase_rad": 0.08377580409572782
+   },
+   {
+    "site_separation": 1,
+    "pulse_s": 1e-06,
+    "delta_f_Hz": 133333.33333333334,
+    "phase_rad": 0.8377580409572782
+   },
+   {
+    "site_separation": 1,
+    "pulse_s": 1e-05,
+    "delta_f_Hz": 133333.33333333334,
+    "phase_rad": 8.377580409572783
+   },
+   {
+    "site_separation": 10,
+    "pulse_s": 1e-07,
+    "delta_f_Hz": 1333333.3333333335,
+    "phase_rad": 0.8377580409572781
+   },
+   {
+    "site_separation": 10,
+    "pulse_s": 1e-06,
+    "delta_f_Hz": 1333333.3333333335,
+    "phase_rad": 8.377580409572781
+   },
+   {
+    "site_separation": 10,
+    "pulse_s": 1e-05,
+    "delta_f_Hz": 1333333.3333333335,
+    "phase_rad": 83.77580409572782
+   },
+   {
+    "site_separation": 40,
+    "pulse_s": 1e-07,
+    "delta_f_Hz": 5333333.333333334,
+    "phase_rad": 3.3510321638291125
+   },
+   {
+    "site_separation": 40,
+    "pulse_s": 1e-06,
+    "delta_f_Hz": 5333333.333333334,
+    "phase_rad": 33.510321638291124
+   },
+   {
+    "site_separation": 40,
+    "pulse_s": 1e-05,
+    "delta_f_Hz": 5333333.333333334,
+    "phase_rad": 335.1032163829113
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

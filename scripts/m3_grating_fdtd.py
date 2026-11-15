@@ -43,7 +43,13 @@ RES = int(os.environ.get("MEEP_RES", 40))  # pixels per um
 DPML = 1.0
 
 
-def run_case(etch, t_box, L_grat=float(os.environ.get("GRAT_L", 30.0)), theta_deg=THETA_DEG, duty=0.5):
+def run_case(etch, t_box, L_grat=float(os.environ.get("GRAT_L", 30.0)), theta_deg=THETA_DEG, duty=0.5, stack=None,
+             substrate="si"):
+    """stack: layers between the BOX and the substrate, top to bottom, as (thickness_um, index) (e.g. a Si/SiO2
+    Bragg mirror); substrate: "si" (default) or "metal" (perfect electric conductor). Defaults reproduce the
+    original cases."""
+    stack = list(stack or [])
+    t_stack = sum(t for t, _ in stack)
     n_sin, n_ox, n_si = float(mat.n_sin(LAM)), float(mat.n_sio2(LAM)), float(prm.N_SI_1064.value)
     # nominal period from duty-weighted slab index (first-order phase matching to air)
     n_full = slab.slab_neff(T, LAM, n_sin, n_ox)
@@ -56,7 +62,7 @@ def run_case(etch, t_box, L_grat=float(os.environ.get("GRAT_L", 30.0)), theta_de
     t_si = 1.0
     pad_x = 4.0
     sx = L + 2 * pad_x + 2 * DPML
-    y_bot = -t_box - t_si - DPML
+    y_bot = -t_box - t_stack - t_si - DPML
     y_top = T + T_TOP + 1.5 + DPML
     sy = y_top - y_bot
     yc = 0.5 * (y_top + y_bot)
@@ -64,12 +70,20 @@ def run_case(etch, t_box, L_grat=float(os.environ.get("GRAT_L", 30.0)), theta_de
     x0 = -L / 2
 
     SiN, Ox, Si = mp.Medium(index=n_sin), mp.Medium(index=n_ox), mp.Medium(index=n_si)
+    sub = mp.metal if substrate == "metal" else Si
     geom = [
-        mp.Block(size=mp.Vector3(mp.inf, t_si + DPML), center=mp.Vector3(0, Y(-t_box - (t_si + DPML) / 2)), material=Si),
+        mp.Block(size=mp.Vector3(mp.inf, t_si + DPML), center=mp.Vector3(0, Y(-t_box - t_stack - (t_si + DPML) / 2)),
+                 material=sub),
         mp.Block(size=mp.Vector3(mp.inf, t_box + T + T_TOP), center=mp.Vector3(0, Y((-t_box + T + T_TOP) / 2)),
                  material=Ox),
         mp.Block(size=mp.Vector3(mp.inf, T), center=mp.Vector3(0, Y(T / 2)), material=SiN),
     ]
+    y_l = -t_box
+    for t_l, n_l in stack:  # layers under the BOX, top to bottom
+        geom.append(mp.Block(size=mp.Vector3(mp.inf, t_l), center=mp.Vector3(0, Y(y_l - t_l / 2)),
+                             material=mp.Medium(index=n_l)))
+        y_l -= t_l
+    n_base = 3 + len(stack)  # substrate, oxide, SiN, stack layers: the straight-guide reference keeps all of them
     # etched trenches (filled by top oxide), (1 - duty) of each period
     w_tr = (1 - duty) * period
     for i in range(n_per):
@@ -91,7 +105,8 @@ def run_case(etch, t_box, L_grat=float(os.environ.get("GRAT_L", 30.0)), theta_de
                                                           size=mp.Vector3(0, 3.0))),
         "up": sim.add_flux(fcen, df, nf, mp.FluxRegion(center=mp.Vector3(0, Y(T + T_TOP + 0.75)),
                                                        size=mp.Vector3(sx - 2 * DPML, 0))),
-        "down": sim.add_flux(fcen, df, nf, mp.FluxRegion(center=mp.Vector3(0, Y(-t_box - 0.3)),
+        "down": sim.add_flux(fcen, df, nf, mp.FluxRegion(center=mp.Vector3(0, Y(-t_box - t_stack - (0.3 if substrate == "si"
+                                                                                                 else -0.05))),
                                                          size=mp.Vector3(sx - 2 * DPML, 0), weight=-1)),
     }
     dft = sim.add_dft_fields([mp.Ez], fcen, 0, 1, center=mp.Vector3(0, Y(T + T_TOP + 0.75)),
@@ -105,7 +120,7 @@ def run_case(etch, t_box, L_grat=float(os.environ.get("GRAT_L", 30.0)), theta_de
     sim.reset_meep()
 
     # reference: straight waveguide, same source, gives incident power
-    sim = mp.Simulation(cell_size=mp.Vector3(sx, sy), geometry=geom[:3], sources=sources, resolution=RES,
+    sim = mp.Simulation(cell_size=mp.Vector3(sx, sy), geometry=geom[:n_base], sources=sources, resolution=RES,
                         boundary_layers=[mp.PML(DPML)], default_material=mp.Medium(index=1.0))
     ref = sim.add_flux(fcen, df, nf, mp.FluxRegion(center=mp.Vector3(src_x + 0.6, yw), size=mp.Vector3(0, 3.0)))
     sim.run(until_after_sources=mp.stop_when_fields_decayed(50, mp.Ez, mp.Vector3(sx / 2 - DPML - 0.5, yw), 1e-6))
@@ -130,7 +145,7 @@ def run_case(etch, t_box, L_grat=float(os.environ.get("GRAT_L", 30.0)), theta_de
     # angle vs wavelength from phase matching with measured neff-shift neglected: use measured s at centre and
     # the grating equation slope d s / d lambda = -(1/Lambda) + d n_avg/d lambda (~ -1/Lambda - ng-ish term)
     return {
-        "etch_um": etch, "t_box_um": t_box, "period_um": period, "n_periods": n_per, "L_um": L,
+        "etch_um": etch, "t_box_um": t_box, "stack": stack, "substrate": substrate, "period_um": period, "n_periods": n_per, "L_um": L,
         "n_avg_slab": n_avg, "theta_air_deg": float(np.degrees(np.arcsin(s_peak))),
         "alpha_per_um": alpha, "L_1e_power_um": 1 / (2 * alpha) if alpha > 0 else float("inf"),
         "lam_um": lam_arr.tolist(), "up": up.tolist(), "down": down.tolist(), "trans": tr.tolist(),

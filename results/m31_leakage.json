@@ -1,0 +1,82 @@
+{
+ "name": "m31_leakage",
+ "script": "scripts/m31_addressing.py",
+ "git": "d5ac981",
+ "notes": "With equally spaced tones every third-order product lands on a site of the same line, so the idle-site leakage of a multi-tone AOD equals its intermodulation level at those sites.",
+ "inputs": {
+  "imd": "tones on an equally spaced grid (one tone per site), third-order products 2 f_i - f_j",
+  "m4": "results/m4_switches.json"
+ },
+ "outputs": {
+  "imd3_line": [
+   {
+    "sites_per_line": 16,
+    "tones": 2,
+    "idle_sites_hit_mean": 0.895,
+    "idle_fraction_hit": 0.06392857142857143
+   },
+   {
+    "sites_per_line": 16,
+    "tones": 4,
+    "idle_sites_hit_mean": 4.28,
+    "idle_fraction_hit": 0.3566666666666667
+   },
+   {
+    "sites_per_line": 16,
+    "tones": 8,
+    "idle_sites_hit_mean": 7.44,
+    "idle_fraction_hit": 0.93
+   },
+   {
+    "sites_per_line": 40,
+    "tones": 2,
+    "idle_sites_hit_mean": 1.065,
+    "idle_fraction_hit": 0.028026315789473684
+   },
+   {
+    "sites_per_line": 40,
+    "tones": 4,
+    "idle_sites_hit_mean": 5.165,
+    "idle_fraction_hit": 0.14347222222222222
+   },
+   {
+    "sites_per_line": 40,
+    "tones": 8,
+    "idle_sites_hit_mean": 17.405,
+    "idle_fraction_hit": 0.54390625
+   },
+   {
+    "sites_per_line": 40,
+    "tones": 16,
+    "idle_sites_hit_mean": 23.585,
+    "idle_fraction_hit": 0.9827083333333334
+   }
+  ],
+  "table": {
+   "PIC router + cascaded switch (simulated)": {
+    "idle_extinction_dB": ">= 88 (5th percentile, m4), capped at 70 by the assumed stray-light floor",
+    "source": "SIM (m4_switches)"
+   },
+   "PIC switch, measured (8 channels, 795 nm)": {
+    "extinction_dB": 71.4,
+    "crosstalk_on_chip_dB": -68.0,
+    "crosstalk_after_free_space_dB": -50.8,
+    "rise_ns": 26,
+    "source": "arXiv:2508.09920 abstract, read 2026-11-15"
+   },
+   "SLM/DMD modulator (>10,000 spots)": {
+    "contrast_dB": 46,
+    "crosstalk_nearest_dB": -44,
+    "rate_kHz": 43,
+    "source": "arXiv:2310.08539 abstract, read 2026-11-15"
+   },
+   "crossed AOD": {
+    "intermodulation_dBc": "[VALUE?] not found in the sources read; swept -30 to -60",
+    "rounds": "m31_patterns",
+    "access_us": "4.5 to 7.5 (1064 nm TeO2 listing)"
+   }
+  },
+  "m4_available": false
+ },
+ "outputs_kind": "SIM (review before submission)"
+}
