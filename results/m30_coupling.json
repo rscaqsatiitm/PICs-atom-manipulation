@@ -1,8 +1,8 @@
 {
  "name": "m30_coupling",
  "script": "scripts/m30_planar_tile.py",
- "git": "5249e43",
- "notes": "Bloch picture: a tweezer at x_a is formed by emitters with phase step q = k0 s_x p, close to one Bloch mode of the coupled array; its effective index, and so the y emission sine, is n0 + (dn_split/2)... the band spans 2 dn_split (uniform array) between q = 0 and pi. Mode-solver noise is about 1e-7 in n_eff.",
+ "git": "04d2d6c",
+ "notes": "Bloch picture: a tweezer at x_a is formed by emitters with phase step q = k0 s_x p, close to one Bloch mode of the coupled array; its effective index, and so the y emission sine, is n0 + (dn_split/2)... the band spans 2 dn_split (uniform array) between q = 0 and pi. Mode-solver noise is about 1e-7 in n_eff. For mismatched pairs the two-guide extraction fails (each guide's index is pulled by its neighbour's dielectric, unequally), so their swing is taken from the supermode spread of 8-guide arrays (bloch_swing_sin_array).",
  "inputs": {
   "emitter_um": [
    1.2,
@@ -20,13 +20,13 @@
     "gap": 0.3,
     "pitch": 1.5,
     "n_top2": [
-     1.800731664142147,
-     1.7983999865008102
+     1.8007316641421462,
+     1.7983999865008116
     ],
-    "dn_split": 0.0023316776413366824,
-    "kappa_per_um": 0.006881755436981026,
-    "Lc_mm": 0.2282551801178208,
-    "bloch_swing_sin": 0.004663355282673365,
+    "dn_split": 0.002331677641334684,
+    "kappa_per_um": 0.006881755436975128,
+    "Lc_mm": 0.22825518011801643,
+    "bloch_swing_sin": 0.004663355282669368,
     "s_cut": 0.3548116666666667,
     "x_field_fraction_of_D1": 0.9994694835680752
    },
@@ -36,13 +36,13 @@
     "gap": 0.5,
     "pitch": 1.7,
     "n_top2": [
-     1.7997743624497762,
-     1.7991787556616152
+     1.7997743624497777,
+     1.7991787556616161
     ],
-    "dn_split": 0.0005956067881609517,
-    "kappa_per_um": 0.0017578846149503334,
-    "Lc_mm": 0.8935719178811274,
-    "bloch_swing_sin": 0.0011912135763219034,
+    "dn_split": 0.0005956067881616178,
+    "kappa_per_um": 0.0017578846149522993,
+    "Lc_mm": 0.8935719178801281,
+    "bloch_swing_sin": 0.0011912135763232357,
     "s_cut": 0.31306911764705886,
     "x_field_fraction_of_D1": 0.8818848384424194
    },
@@ -52,13 +52,13 @@
     "gap": 0.8,
     "pitch": 2.0,
     "n_top2": [
-     1.7995107808786543,
+     1.7995107808786548,
      1.7994308707625077
     ],
-    "dn_split": 7.99101161466087e-05,
-    "kappa_per_um": 0.00023584815778670656,
-    "Lc_mm": 6.660201807535313,
-    "bloch_swing_sin": 0.0001598202322932174,
+    "dn_split": 7.991011614705279e-05,
+    "kappa_per_um": 0.00023584815778801725,
+    "Lc_mm": 6.660201807498299,
+    "bloch_swing_sin": 0.00015982023229410558,
     "s_cut": 0.26610875,
     "x_field_fraction_of_D1": 0.7496021126760564
    },
@@ -68,13 +68,13 @@
     "gap": 1.1,
     "pitch": 2.3,
     "n_top2": [
-     1.7994762628099756,
-     1.7994652802235687
+     1.7994762628099765,
+     1.7994652802235709
     ],
-    "dn_split": 1.0982586406971251e-05,
-    "kappa_per_um": 3.241420356673353e-05,
-    "Lc_mm": 48.46012407989545,
-    "bloch_swing_sin": 2.1965172813942502e-05,
+    "dn_split": 1.0982586405638983e-05,
+    "kappa_per_um": 3.2414203562801454e-05,
+    "Lc_mm": 48.46012408577402,
+    "bloch_swing_sin": 2.1965172811277967e-05,
     "s_cut": 0.2313989130434783,
     "x_field_fraction_of_D1": 0.6518279240661361
    },
@@ -84,13 +84,13 @@
     "gap": 1.4,
     "pitch": 2.5999999999999996,
     "n_top2": [
-     1.7994714951960407,
-     1.7994699609462181
+     1.7994714951960409,
+     1.799469960946217
     ],
-    "dn_split": 1.5342498225212609e-06,
-    "kappa_per_um": 4.528212592787946e-06,
-    "Lc_mm": 346.89102921022163,
-    "bloch_swing_sin": 3.0684996450425217e-06,
+    "dn_split": 1.5342498238535285e-06,
+    "kappa_per_um": 4.528212596720024e-06,
+    "Lc_mm": 346.89102890899835,
+    "bloch_swing_sin": 3.068499647707057e-06,
     "s_cut": 0.2046990384615385,
     "x_field_fraction_of_D1": 0.5766170097508128
    },
@@ -101,12 +101,12 @@
     "pitch": 2.9,
     "n_top2": [
      1.799470895413272,
-     1.799470646656477
+     1.799470646656476
     ],
-    "dn_split": 2.4875679516256355e-07,
-    "kappa_per_um": 7.341852909884123e-07,
-    "Lc_mm": 2139.509393712014,
-    "bloch_swing_sin": 4.975135903251271e-07,
+    "dn_split": 2.4875679605074197e-07,
+    "kappa_per_um": 7.341852936097981e-07,
+    "Lc_mm": 2139.509386072962,
+    "bloch_swing_sin": 4.975135921014839e-07,
     "s_cut": 0.18352327586206899,
     "x_field_fraction_of_D1": 0.5169669742593492
    },
@@ -116,13 +116,13 @@
     "gap": 2.0,
     "pitch": 3.2,
     "n_top2": [
-     1.7994708715767715,
+     1.7994708715767729,
      1.799470745452775
     ],
-    "dn_split": 1.261239965799632e-07,
-    "kappa_per_um": 3.722446378567001e-07,
-    "Lc_mm": 4219.7957124088725,
-    "bloch_swing_sin": 2.522479931599264e-07,
+    "dn_split": 1.2612399791223083e-07,
+    "kappa_per_um": 3.7224464178877884e-07,
+    "Lc_mm": 4219.795667834506,
+    "bloch_swing_sin": 2.5224799582446167e-07,
     "s_cut": 0.16631796875,
     "x_field_fraction_of_D1": 0.46850132042253523
    },
@@ -132,13 +132,13 @@
     "gap": 2.3,
     "pitch": 3.5,
     "n_top2": [
-     1.7994707817240512,
+     1.7994707817240523,
      1.7994707299070922
     ],
-    "dn_split": 5.181695894584948e-08,
-    "kappa_per_um": 1.5293350703015651e-07,
-    "Lc_mm": 10271.106425913295,
-    "bloch_swing_sin": 1.0363391789169896e-07,
+    "dn_split": 5.18169600560725e-08,
+    "kappa_per_um": 1.5293351030688875e-07,
+    "Lc_mm": 10271.10620584599,
+    "bloch_swing_sin": 1.03633920112145e-07,
     "s_cut": 0.15206214285714287,
     "x_field_fraction_of_D1": 0.42834406438631795
    }
@@ -150,14 +150,15 @@
     "pitch": 1.5,
     "gap": 0.30000000000000004,
     "n_iso_at_3um_gap": [
-     1.7834375163267264,
-     1.8097514677082638
+     1.7834375163267269,
+     1.809751467708265
     ],
-    "dn0": 0.02631395138153736,
-    "split": 0.026261552068527427,
+    "dn0": 0.026313951381538025,
+    "split": 0.026261552068526983,
     "kappa_per_um": 0.0,
     "bloch_swing_sin": 0.0,
-    "note": "two emitter types radiate at different angles unless their grating periods differ"
+    "note": "two emitter types radiate at different angles unless their grating periods differ",
+    "bloch_swing_sin_array": 0.00021144402965899328
    },
    {
     "w1": 0.9,
@@ -165,14 +166,15 @@
     "pitch": 1.5,
     "gap": 0.30000000000000004,
     "n_iso_at_3um_gap": [
-     1.7718576497580911,
-     1.8135526983757155
+     1.7718576497580905,
+     1.8135526983757146
     ],
-    "dn0": 0.04169504861762441,
-    "split": 0.04144524318490661,
+    "dn0": 0.041695048617624186,
+    "split": 0.04144524318490883,
     "kappa_per_um": 0.0,
     "bloch_swing_sin": 0.0,
-    "note": "two emitter types radiate at different angles unless their grating periods differ"
+    "note": "two emitter types radiate at different angles unless their grating periods differ",
+    "bloch_swing_sin_array": 0.00013974124214095922
    },
    {
     "w1": 0.8,
@@ -180,16 +182,84 @@
     "pitch": 1.5,
     "gap": 0.2999999999999998,
     "n_iso_at_3um_gap": [
-     1.7565796041053225,
-     1.8167216747894865
+     1.756579604105324,
+     1.8167216747894872
     ],
-    "dn0": 0.060142070684163995,
-    "split": 0.059356205859097066,
+    "dn0": 0.06014207068416311,
+    "split": 0.05935620585909884,
     "kappa_per_um": 0.0,
     "bloch_swing_sin": 0.0,
-    "note": "two emitter types radiate at different angles unless their grating periods differ"
+    "note": "two emitter types radiate at different angles unless their grating periods differ",
+    "bloch_swing_sin_array": 0.0001026896165518747
    }
   ],
+  "arrays_8_guides": {
+   "uniform 1.5": {
+    "neff": [
+     1.8017949226710672,
+     1.8014089090660301,
+     1.8008104568026422,
+     1.8000647272089043,
+     1.7992571532927246,
+     1.7984854624226272,
+     1.7978475401217788,
+     1.797427095859045
+    ],
+    "bloch_swing_sin": 0.004648144207378339
+   },
+   "uniform 2.0": {
+    "neff": [
+     1.7995459387181074,
+     1.7995321135388376,
+     1.799510869597779,
+     1.7994848189839991,
+     1.7994570667262149,
+     1.7994309594675029,
+     1.7994096836170512,
+     1.7993957564857048
+    ],
+    "bloch_swing_sin": 0.00015982059354365422
+   },
+   "alt 1.0/1.4": {
+    "neff": [
+     1.8100133958766718,
+     1.8099651025928727,
+     1.8099112722459145,
+     1.8098423340633185,
+     1.783927524088518,
+     1.783784315501333,
+     1.7836211354366036,
+     1.7835099850092868
+    ],
+    "bloch_swing_sin": 0.00021144402965899328
+   },
+   "alt 0.9/1.5": {
+    "neff": [
+     1.8137321711484735,
+     1.8137023769714657,
+     1.8136695882220684,
+     1.8136191181087664,
+     1.772738478397862,
+     1.7725347904731246,
+     1.7723020017712363,
+     1.7720980991553357
+    ],
+    "bloch_swing_sin": 0.00013974124214095922
+   },
+   "alt 0.8/1.6": {
+    "neff": [
+     1.8168551940299782,
+     1.8168338636823749,
+     1.8168105270529327,
+     1.8167721163850419,
+     1.7588416082427083,
+     1.7583111891405698,
+     1.7576613998932198,
+     1.7571285953577573
+    ],
+    "bloch_swing_sin": 0.0001026896165518747
+   }
+  },
   "tolerance_delta_sin": 5.204616970675431e-05,
   "min_pitch_uniform_um": 2.3,
   "x_field_fraction_at_min_pitch": 0.6518279240661361
