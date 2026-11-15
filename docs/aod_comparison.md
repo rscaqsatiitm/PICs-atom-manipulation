@@ -1,5 +1,10 @@
 # The PIC rearrangement engine against crossed AODs, a single tweezer and an all-parallel ceiling
 
+> Follow-up (`docs/concurrency.md`, module 29): at 10^6 sites one unit of any kind is too slow to return to new
+> holes, and K independent units are needed (K = 4 for 2e-4, K = 16 for 1.5e-4 at tau 3000 s). At equal K every
+> unit converges, a single moving tweezer per zone included. So concurrency does not favour the PIC either.
+> Addressing is compared in `docs/addressing.md` (module 31).
+
 Module 28. Code: `picsim/megasort.py` (`Block.mode`), `scripts/m28_aod_baseline.py`; results
 `results/m28_main.json`, `results/m28_hardware.json`, `results/m28_figure.png`; tests `tests/test_megascale.py`.
 Values are SIM or DERIVED, valid in the regime stated, and should be reviewed before they are quoted.

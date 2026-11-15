@@ -120,6 +120,11 @@ rather than 0.500; this offset is removable by redesign and is carried separatel
 
 ## 5. Switches and router (Modules 4 and 5)
 
+> Follow-up (`docs/addressing.md`, module 31): against crossed AODs the router addresses an arbitrary pattern in
+> one round (AODs need about one round per row: 16 on 16 x 16, 40 on 40 x 40), in 1.2 us against 84 to 340 us
+> with 1 us pulses, at one optical frequency. An SLM/DMD modulator (> 10,000 spots, 46 dB, 43 kHz) also needs one
+> round, but takes 24 us.
+
 | Architecture (894.6 nm, split spread 0.0024) | phase error 3 mrad: median / 5th pct (dB) | P(>= 50 dB) | phase error 10 mrad: median / 5th pct (dB) | P(>= 50 dB) |
 |---|---|---|---|---|
 | single MZI | 49.8 / 41.4 | 0.49 | 45.3 / 38.8 | 0.21 |
