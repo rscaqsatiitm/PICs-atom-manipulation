@@ -166,6 +166,25 @@ def ladder():
     return summ
 
 
+def ladder_fast():
+    """Fast steps (50 us ramps, 10 uK and 4e-3 loss per move) for K = 1 and 4 at 1e6 sites, tau 3000 s: the
+    operating point at which docs/megascale.md finds one 128-engine block near 2e-4."""
+    cfgs = []
+    for unit in ("PIC 32 x 4", "PIC 16 x 1", "AOD 40", "AOD 128"):
+        for Nz in (1e6, 2.5e5):
+            R, C = zone_dims(Nz)
+            cfgs.append({"unit": unit, "kind": "ladder fast", "Nz": Nz, "R": R, "C": C, "tau": 3000.0, "timing": "fast",
+                         "seed": 1, "assembled": True, "t_end": 15.0})
+    rows = _pool(cfgs)
+    for r in sorted(rows, key=lambda r: (r["unit"], -r["Nz"])):
+        print(r["unit"].ljust(11), "K %5.1f" % (N_TOTAL / r["comp_sites"]), "| defect %.3e" % r["steady_mean_defect"], flush=True)
+    save_result("m29_ladder_fast", script=SCRIPT,
+                inputs={"timing": "fast", "p_move": 4e-3, "heat_uK_per_move": 10.0, "tau_s": 3000.0, "seed": 1,
+                        "start": "assembled"},
+                outputs={"rows": rows})
+    return rows
+
+
 # ---------------------------------------------------------------------------------------------- hardware
 def hardware():
     lad = json.loads((RESULTS / "m29_ladder.json").read_text())["outputs"]["summary"]

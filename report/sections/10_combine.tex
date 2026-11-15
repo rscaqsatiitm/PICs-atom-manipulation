@@ -232,3 +232,17 @@ $x_a$ & reflective & refractive & reflective & refractive & reflective \\
 
 The model is 1D with 2D checks to 60~\textmu m. Coatings enter through their Fresnel coefficients only, without a designed thin-film stack. The comb teeth, a further reflection at $45^\circ$ for half of the stacks, are not included in the polarisation model.
 
+
+\subsection{A planar alternative to the stack}\label{sec:combine-planar}
+
+The stack and its glued collimator can be avoided altogether. Each engine lies flat on a carrier, its emitters continue as weak gratings radiating upwards, and the grating aperture is imaged onto the atoms' $y$ axis with demagnification $D=1500$ (6~mm tiles, 4~\textmu m rows). No collimator is needed, and tile placement errors shrink by $D$ (\texttt{scripts/\allowbreak m30\_planar\_tile.py}, \texttt{docs/\allowbreak planar\_tile.md}). We simulated four open quantities.
+
+(i) Directionality, by 2D FDTD of the weak grating. With the Si substrate as the only reflector, the upward fraction is at best 0.70, and it varies from 0.28 to 0.70 with the buried-oxide thickness. A Bragg mirror of three Si/SiO$_2$ pairs under the oxide raises it to 0.993 to 0.997 (two pairs: up to 0.985), and a perfect metal mirror to 1.000; metal absorption is not modelled. The oxide thickness also changes the emission rate by up to a factor of eight, so an apodized grating needs the oxide controlled along its length.
+
+(ii) Grating length. The atoms see the grating's near field demagnified 1500 times through an object-side NA of $3.3\times10^{-4}$. Filling that pupil as the edge emitter's facet image does needs a near field of about 1.45~mm radius. A 2~mm grating therefore truncates the beam and leaves $3\times10^{-3}$ to $7\times10^{-3}$ crosstalk at 4~\textmu m. A 4~mm grating with a Gaussian apodization of 1.7~mm radius gives $1.2\times10^{-4}$ at a 1.30~\textmu m $y$ FWHM. Its emission-angle tolerance is $5.2\times10^{-5}$ in sine for a peak of at least 0.97 ($3.6\times10^{-5}$ for crosstalk below $2\times10^{-4}$), which confirms the earlier 30~\textmu rad estimate.
+
+(iii) Coupling between emitters. Along a 4~mm grating the emitters form a coupled array. A tweezer at $x_a$ is close to one Bloch mode, whose index, and so whose $y$ emission angle, depends on $x_a$, with a swing of $4\kappa/k_0$ across the field. At the D1 pitch of 1.5~\textmu m the swing is $4.7\times10^{-3}$, 90 times the tolerance. A pitch of about 2.2~\textmu m meets it ($2.2\times10^{-5}$ at 2.3~\textmu m), but narrows the grating-lobe-free field to 0.65 of D1, i.e.\ 35\% fewer sites per engine or 1.5 times more ports. Alternating emitter widths at 1.5~\textmu m pitch reduce the swing to 1.0 to $2.1\times10^{-4}$ (from 8-guide supermodes), still 2 to 4 times too large. This problem does not arise for edge emitters, which end at the facet.
+
+(iv) Power. The power per 1.2~mK tweezer is 46.5~mW with the three-pair Bragg mirror and 66~mW with the substrate alone, against 57.7~mW for the edge emitter with the reflective collimator ($y$ axis only).
+
+Hence the tile removes the collimator and its $\pm0.1$~\textmu m alignment, and it can be about 20\% more efficient. It needs instead a 4~mm apodized grating per emitter, a Bragg mirror, and either a wider emitter pitch or a phase-mismatched emitter design that we have not found. The coupling is the open problem. These results are 2D (FDTD, coupling) and 1D (imaging) models.
