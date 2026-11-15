@@ -1,0 +1,117 @@
+{
+ "name": "m27_xaxis",
+ "script": "scripts/m27_reflective_collimator.py",
+ "git": "778b0f1",
+ "notes": "",
+ "inputs": {
+  "x lens": "m14 aplanat SiO2 back focal distance (results/m14_xlens.json)",
+  "slab": "glass path of the axial ray along the unfolded path; phase k0 t sqrt(n^2 - s^2) minus its defocus (absorbed by placing the x lens), applied to every emitter of D1",
+  "comb": "starts 0.5 mm beyond the x slit plane (CHOICE, m26)",
+  "tweezers": [
+   -60.0,
+   -30.0,
+   0.0,
+   30.0,
+   60.0
+  ]
+ },
+ "outputs": {
+  "reflective": {
+   "glass_sections_um_n": [
+    [
+     749.3207382410748,
+     1.4496257710158857
+    ]
+   ],
+   "S_from_facet_um": -293.2804856920974,
+   "sigma_from_facet_um": 6719.699724391665,
+   "glass_x_shift_um": -40.66653240009873,
+   "z_c_mm": 7.512980210083763,
+   "far_row_z_mm_32_rows": 23.51298021008376,
+   "slab_phase_pv_waves_after_defocus": 0.47205618176734765,
+   "uncalibrated_peak_rel": [
+    0.9998494534325084,
+    0.9997718476401113,
+    0.9997573156395181,
+    0.9997629812992855,
+    0.999848554712902
+   ],
+   "uncalibrated_pos_nm": [
+    -1.3663961467216268,
+    -0.4161005819582897,
+    -0.0003437327042200844,
+    0.4154922356356394,
+    1.3673157819269477
+   ],
+   "recalibrated_peak_per_power_rel": [
+    1.0006464059040319,
+    1.0005674476018136,
+    1.00057266318355,
+    1.0005619772412115,
+    1.000646551716181
+   ],
+   "recalibrated_pos_nm": [
+    -1.5202874729638438,
+    -0.33534799689149963,
+    0.0001069554147487689,
+    0.3357504963616975,
+    1.5220220950453722
+   ],
+   "recalibrated_move_others": {
+    "peak": 0.0004458774590268,
+    "pos_nm": 0.6161567536118184
+   }
+  },
+  "refractive": {
+   "glass_sections_um_n": [
+    [
+     135.18665685967812,
+     1.4496257710158857
+    ],
+    [
+     250.0,
+     1.8
+    ]
+   ],
+   "S_from_facet_um": 442.07383317785366,
+   "sigma_from_facet_um": 6913.4077792110265,
+   "glass_x_shift_um": 153.0415224192629,
+   "z_c_mm": 6.971333946033173,
+   "far_row_z_mm_32_rows": 22.971333946033173,
+   "slab_phase_pv_waves_after_defocus": 0.16653540334874595,
+   "uncalibrated_peak_rel": [
+    0.9999789311224505,
+    0.9999424549596948,
+    0.9999364066666794,
+    0.9999398438751922,
+    0.9999785029623988
+   ],
+   "uncalibrated_pos_nm": [
+    -1.110355507364602,
+    -0.2557913313907534,
+    -2.0567121179759784e-05,
+    0.2556070811969846,
+    1.1107892237234296
+   ],
+   "recalibrated_peak_per_power_rel": [
+    1.000223064726746,
+    1.0001886132994515,
+    1.0001887112030818,
+    1.000186655245983,
+    1.0002230918813355
+   ],
+   "recalibrated_pos_nm": [
+    -1.1749955374682486,
+    -0.24416768163604274,
+    0.00023444662728550059,
+    0.24453314621908362,
+    1.1758663755614407
+   ],
+   "recalibrated_move_others": {
+    "peak": 0.00044194214411730215,
+    "pos_nm": 0.6292962168643612
+   }
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

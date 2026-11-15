@@ -1,0 +1,167 @@
+{
+ "name": "m27_wave",
+ "script": "scripts/m27_reflective_collimator.py",
+ "git": "778b0f1",
+ "notes": "1D y line, s_x = 0. peak_rel_ideal: per unit guided power, relative to the ideal lens in air at beta 0.7 (as m14_wave).",
+ "inputs": {
+  "beta_um": "0.6-0.8",
+  "NA_FAC": 0.9,
+  "facet": "D1 emitter radiating into SiO2 (glued block)",
+  "coatings": "AR exit face (t = 1); mirrors ideal in the line metrics, real in the power",
+  "power": "m13 power (47 mW) scaled as in m14 plan: peak_rel_ideal x T_facet(air) x FDTD/Kirchhoff (SiO2), divided by the mirror-pair reflectance",
+  "metals": "Johnson & Christy 1972 via refractiveindex.info, interpolated to 1.0644 um (SOURCE)"
+ },
+ "outputs": {
+  "T_facet": {
+   "air": 0.731349717942456,
+   "SiO2": 0.8904571678096488
+  },
+  "reflective (adopted)|beta0.6": {
+   "eta_y": 0.9062335654012021,
+   "peak": 0.7265849237442067,
+   "fwhm_um": 1.2010863484751932,
+   "eps3": 0.0009166945947144175,
+   "eps4": 0.00044356425526585205,
+   "eps6": 0.00017305023291864125,
+   "eps8": 9.190660182843683e-05,
+   "peak_rel_ideal": 1.2344305856233941
+  },
+  "reflective (adopted)|beta0.7": {
+   "eta_y": 0.9084432226798155,
+   "peak": 0.6473621861025617,
+   "fwhm_um": 1.3504837017193994,
+   "eps3": 0.0003960998188648979,
+   "eps4": 8.39211520013809e-05,
+   "eps6": 1.6616862264857952e-05,
+   "eps8": 6.522425848653198e-06,
+   "peak_rel_ideal": 1.0998352104293818
+  },
+  "reflective (adopted)|beta0.8": {
+   "eta_y": 0.9089152962073619,
+   "peak": 0.5575721916467542,
+   "fwhm_um": 1.574879829853997,
+   "eps3": 0.0017225358491568677,
+   "eps4": 0.00043870296470546895,
+   "eps6": 0.00010215887811798412,
+   "eps8": 4.48795576790097e-05,
+   "peak_rel_ideal": 0.9472866069323119
+  },
+  "reflective, TIR variant|beta0.6": {
+   "eta_y": 0.9062335628199653,
+   "peak": 0.7265849212671749,
+   "fwhm_um": 1.2010863491634245,
+   "eps3": 0.0009166945870568697,
+   "eps4": 0.00044356425079125806,
+   "eps6": 0.0001730502309480694,
+   "eps8": 9.190660073782881e-05,
+   "peak_rel_ideal": 1.234430581415044
+  },
+  "reflective, TIR variant|beta0.7": {
+   "eta_y": 0.9084432200456123,
+   "peak": 0.6473621835691076,
+   "fwhm_um": 1.350483703100108,
+   "eps3": 0.00039609982975061773,
+   "eps4": 8.392115500325571e-05,
+   "eps6": 1.6616862812922022e-05,
+   "eps8": 6.522425941575874e-06,
+   "peak_rel_ideal": 1.0998352061251728
+  },
+  "reflective, TIR variant|beta0.8": {
+   "eta_y": 0.9089152935929667,
+   "peak": 0.5575721891478828,
+   "fwhm_um": 1.5748798326145796,
+   "eps3": 0.0017225358767886869,
+   "eps4": 0.0004387029734280086,
+   "eps6": 0.00010215888080010364,
+   "eps8": 4.487955899896044e-05,
+   "peak_rel_ideal": 0.9472866026868573
+  },
+  "refractive (m14 adopted)|beta0.6": {
+   "eta_y": 0.9062341323232832,
+   "peak": 0.7265854558611429,
+   "fwhm_um": 1.2010862172009102,
+   "eps3": 0.0009166960475854376,
+   "eps4": 0.00044356512982949084,
+   "eps6": 0.00017305062468729194,
+   "eps8": 9.190681980190859e-05,
+   "peak_rel_ideal": 1.2344314896628252
+  },
+  "refractive (m14 adopted)|beta0.7": {
+   "eta_y": 0.9084438005660264,
+   "peak": 0.6473627279981408,
+   "fwhm_um": 1.3504834269834212,
+   "eps3": 0.0003960974893999104,
+   "eps4": 8.392049668030494e-05,
+   "eps6": 1.6616740095952803e-05,
+   "eps8": 6.522403919390239e-06,
+   "peak_rel_ideal": 1.0998361310822267
+  },
+  "refractive (m14 adopted)|beta0.8": {
+   "eta_y": 0.9089158695852412,
+   "peak": 0.5575727289433126,
+   "fwhm_um": 1.5748792539796401,
+   "eps3": 0.0017225293712124477,
+   "eps4": 0.00043870089762169267,
+   "eps6": 0.00010215825039652295,
+   "eps8": 4.487925031267706e-05,
+   "peak_rel_ideal": 0.947287519771656
+  },
+  "ideal lens, immersed|beta0.6": {
+   "eta_y": 0.9062335643917995,
+   "peak": 0.7265849227713945,
+   "fwhm_um": 1.2010863487510215,
+   "eps3": 0.0009166945916352379,
+   "eps4": 0.0004435642535009704,
+   "eps6": 0.0001730502321502708,
+   "eps8": 9.190660140472117e-05,
+   "peak_rel_ideal": 1.2344305839706362
+  },
+  "ideal lens, immersed|beta0.7": {
+   "eta_y": 0.9084432216501578,
+   "peak": 0.6473621851123638,
+   "fwhm_um": 1.3504837022575065,
+   "eps3": 0.00039609982288762904,
+   "eps4": 8.39211530935384e-05,
+   "eps6": 1.6616862460930572e-05,
+   "eps8": 6.522425880282522e-06,
+   "peak_rel_ideal": 1.0998352087470864
+  },
+  "ideal lens, immersed|beta0.8": {
+   "eta_y": 0.9089152951846311,
+   "peak": 0.5575721906804436,
+   "fwhm_um": 1.5748798308945102,
+   "eps3": 0.001722535858614813,
+   "eps4": 0.0004387029676630971,
+   "eps6": 0.00010215887903829335,
+   "eps8": 4.487955813402967e-05,
+   "peak_rel_ideal": 0.9472866052905997
+  },
+  "mirror_pair_reflectance": {
+   "adopted: M1 silver, M2 TIR": 0.996164839378197,
+   "adopted: M1 gold, M2 TIR": 0.9819111377742745,
+   "adopted: both silver": 0.9956166724579832,
+   "TIR variant: both TIR": 0.9958125396095568
+  },
+  "P_tweezer_mW_ideal_coatings": {
+   "reflective (adopted)": 57.429210036736094,
+   "reflective, TIR variant": 57.429210261485515,
+   "refractive (m14 adopted)": 57.42916196378768,
+   "ideal lens, immersed": 57.42921012457916
+  },
+  "P_tweezer_mW_real_mirrors": {
+   "adopted: M1 silver, M2 TIR": 57.65030822868957,
+   "adopted: M1 gold, M2 TIR": 58.48717651468186,
+   "adopted: both silver": 57.68204935234218,
+   "TIR variant: both TIR": 57.670704050385474
+  },
+  "n_Ag": [
+   0.04,
+   7.612780769230769
+  ],
+  "n_Au": [
+   0.2586538461538461,
+   6.968461538461538
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

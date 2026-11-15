@@ -1,0 +1,11 @@
+{
+ "name": "m29_figure",
+ "script": "scripts/m29_concurrency.py",
+ "git": "9834504",
+ "notes": "Steady-state defect fraction at 1e6 sites vs number of independent units (zones of 1e6/K sites), cold steps, assembled start. Grey line: eps + T/(2 tau), the floor for zero latency.",
+ "inputs": {
+  "source": "results/m29_hardware.json"
+ },
+ "outputs": {},
+ "outputs_kind": "SIM (review before submission)"
+}

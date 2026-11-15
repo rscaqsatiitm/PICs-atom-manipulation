@@ -1,0 +1,70 @@
+{
+ "name": "m30_power",
+ "script": "scripts/m30_planar_tile.py",
+ "git": "9834504",
+ "notes": "P_tweezer scales the edge-chain power by the ratio of line peaks per unit guided power (y axis only). If the emitter pitch must grow to suppress coupling, the x field per engine shrinks by x_field_fraction (or the port count must grow by its inverse).",
+ "inputs": {
+  "edge": "m14 wave (Weierstrass + aplanat, beta 0.7) x T_facet(SiO2) x FDTD/Kirchhoff x m27 mirror pair (silver M1, TIR M2): 57.7 mW per 1.2 mK tweezer",
+  "tile": "m30 imaging design x FDTD directionality x (1 - back-reflection)",
+  "x_axis": "unchanged (same engine and x relay); the emitter pitch cost is in m30_coupling"
+ },
+ "outputs": {
+  "edge_line_peak_per_guided": 0.590169787451321,
+  "tile_line_peak_per_emitted": 0.7336183895411068,
+  "by_reflector": {
+   "si": {
+    "t_box_um": 2.65,
+    "directionality": 0.7023664771091519,
+    "back_reflection": 6.23903275525084e-05,
+    "line_peak_per_guided": 0.5152368160050472,
+    "P_tweezer_mW": 66.0915440786507
+   },
+   "dbr2": {
+    "t_box_um": 1.9,
+    "directionality": 0.9849580799441672,
+    "back_reflection": 0.0002755592541413554,
+    "line_peak_per_guided": 0.722384245842301,
+    "P_tweezer_mW": 47.13945096661904
+   },
+   "dbr3": {
+    "t_box_um": 1.9,
+    "directionality": 0.9974200633119698,
+    "back_reflection": 0.0002470470659282631,
+    "line_peak_per_guided": 0.7315449298555327,
+    "P_tweezer_mW": 46.54915282191355
+   },
+   "metal": {
+    "t_box_um": 1.9,
+    "directionality": 0.9999995310027391,
+    "back_reflection": 0.00030648937081967365,
+    "line_peak_per_guided": 0.7333931993429116,
+    "P_tweezer_mW": 46.43184142756034
+   }
+  },
+  "x_relay_alternative": {
+   "capture_fraction_by_pitch_um": {
+    "1.5": 0.7075875177545436,
+    "2": 0.5838774291183495,
+    "2.2": 0.5367735020667198,
+    "2.3": 0.5121747339750291
+   },
+   "fill_factor": {
+    "1.5": 0.7999999999999999,
+    "2.2": 0.5454545454545454,
+    "2.3": 0.5217391304347826
+   },
+   "relative_efficiency_2.2_vs_1.5": 0.7585966238778709,
+   "P_tweezer_mW_dbr3_at_2.2um_relay_rescaled": 61.362193498777906,
+   "status": "provisional: x relay not simulated; element-factor capture only"
+  },
+  "x_field_fraction_at_min_pitch_uniform": 0.6518279240661361,
+  "min_pitch_um": 2.3,
+  "y_relay_object_field_mm_16_tiles": 96.0,
+  "object_NA": 0.0003333333333333333,
+  "lagrange_check": {
+   "object_half_field_x_NA": 16.0,
+   "atom_half_rows_x_NA": 16.0
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

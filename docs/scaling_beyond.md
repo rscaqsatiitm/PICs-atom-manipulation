@@ -98,7 +98,10 @@ in the proposal. Refractive plan objectives of NA 0.5 have flat fields of severa
 (RECALLED; verify). With a +/-250 um field, 480 ports would give 110 tweezers per row, at the slab and aberration
 costs of `docs/scaling.md` (R ~ 5 mm, about 0.12 rad).
 
-**Planar tiling of surface-emitting chips (speculative, not simulated).** Chips side by side on a common carrier,
+**Planar tiling of surface-emitting chips** (simulated in `docs/planar_tile.md`, module 30: a Bragg mirror under the
+BOX gives 0.997 directionality; the grating must be about 4 mm long; neighbouring emitters must sit at about 2.2 um
+pitch, or the y angle varies along the row; power per tweezer 46.5 mW at the D1 pitch, about 61 mW at 2.2 um,
+provisional). The original estimate follows. Chips side by side on a common carrier,
 each with long grating emitters, imaged in y onto the atoms with demagnification D = tile pitch / 4 um. For a
 6 mm tile pitch, D = 1500. The object-side NA in y is then 3.3e-4, which a 2 mm weak grating radiates directly, so no
 collimator is needed. Chip placement errors shrink by D (10 um becomes 7 nm). The 0.1 um decentre tolerance is

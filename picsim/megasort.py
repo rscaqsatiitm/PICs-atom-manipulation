@@ -10,6 +10,16 @@ Each visit runs repair passes inside the block: a pass has one common row shift 
 and in every (row, segment) the chosen reservoir atoms are matched in order to the known holes of row r + j in the
 same segment; one move per refilled hole. Only holes and reservoir atoms seen in the last image are acted on.
 
+Block modes (move constraints; everything else, timing, losses, imaging, is shared):
+  pic       the stacked PIC engines above (default)
+  aod_row   crossed AODs over a field of S rows x seg columns (Mx = 1): per pass one row tone and many column tones,
+            i.e. the reservoir atoms of one source row move by one common row shift to the holes of one destination
+            row, matched in order (column tones do not cross). Multi-row passes with a shared column pattern are not
+            used, so this is a lower bound on what crossed AODs can do.
+  single    one moving tweezer in the field: one atom per pass, the (reservoir, hole) pair of shortest pass time
+  parallel  idealised ceiling: every known hole in the field is matched in one pass to a nearby unused reservoir
+            atom, with independent 2D moves (crossing allowed); not a hardware model
+
 Losses: vacuum (lifetime tau, every atom, Poisson-sampled per interval), imaging (eps per atom per image, after
 detection), per move (p_move). Reservoir rows are refreshed every t_reload to loading fraction f (an external
 supply; its feasibility is a separate question). Freshly loaded reservoir atoms are taken as known at once (the
@@ -42,6 +52,7 @@ class Block:
     S: int  # rows
     Mx: int  # engines per row
     seg: int  # sites per segment
+    mode: str = "pic"  # "pic", "aod_row", "single", "parallel" (see the module docstring)
 
     def positions(self, R, C):
         nseg = int(np.ceil(C / self.seg))
@@ -78,6 +89,8 @@ class Params:
     heat_slow: float = 0.3  # uK per move with `timing` (m19 quantum, m18 slow-lane 3D)
     heat_fast: float = 10.0  # uK per move with `timing_fast` (m18 classical 3D, 100 us steps, 0.3 mK)
     p_move_fast: float | None = None  # loss per move with `timing_fast`; None: p_move
+    max_passes_single: int = 400  # per visit in mode "single" (also stopped by the next image)
+    skip_reposition_same: bool = False  # no scanner reposition when the block visits the same position again
 
 
 class Sim:
@@ -101,6 +114,8 @@ class Sim:
         self._next_img = 0.0
         self._next_reload = prm.t_reload
         self._cursor = 0  # round-robin position of the block (continues across images)
+        self._last_pos = None
+        self.pass_tweezers = []  # number of atoms moved in each pass (simultaneous moving tweezers)
 
     # ------------------------------------------------------------------ losses
     def _vacuum(self, dt):
@@ -158,12 +173,16 @@ class Sim:
         return self.P.timing, self.P.heat_slow, self.P.p_move
 
     def visit(self, k, gs):
+        mode = self.Bk.mode
+        if mode != "pic":
+            return {"aod_row": self._visit_aod_row, "single": self._visit_single,
+                    "parallel": self._visit_parallel}[mode](k, gs)
         S, seg = self.Bk.S, self.Bk.seg
         tm, h_move, p_move = self._timing()
         py = tm.pitch if tm.pitch_y is None else tm.pitch_y
         rows = np.arange(k, min(k + S, self.L.R))
         cols = np.concatenate([np.arange(g * seg, min((g + 1) * seg, self.L.C)) for g in gs])
-        t_used = tm.t_reposition
+        t_used = self._reposition((k, gs), tm)
         n_pass = 0
         for _ in range(self.P.max_passes):
             H = self.known_holes[np.ix_(rows, cols)]
@@ -185,6 +204,7 @@ class Sim:
                 break
             dxm = 0.0
             j = bj
+            n_tw = 0
             for ia in range(max(0, -j), min(n, n - j)):
                 r_src, r_dst = rows[ia], rows[ia + j]
                 for g in useg:
@@ -196,6 +216,7 @@ class Sim:
                         continue
                     dst = np.sort(dst[:m]) if m == len(dst) else np.sort(dst[np.argsort(np.abs(dst - dst.mean()))[:m]])
                     src = np.sort(src[np.argsort(np.abs(src - dst.mean()))[:m]])
+                    n_tw += m
                     for a_, b_ in zip(src, dst):
                         self.known_res[r_src, a_] = False
                         self.known_holes[r_dst, b_] = False
@@ -211,6 +232,140 @@ class Sim:
                         dxm = max(dxm, abs(int(b_) - int(a_)) * tm.pitch)
             t_used += tm.pass_time(dxm, abs(j) * py) - tm.t_reposition
             n_pass += 1
+            self.pass_tweezers.append(n_tw)
+        return t_used, n_pass
+
+    # ------------------------------------------------------------------ other move constraints
+    def _reposition(self, pos, tm):
+        same = self.P.skip_reposition_same and pos == self._last_pos
+        self._last_pos = pos
+        return 0.0 if same else tm.t_reposition
+
+    def _field(self, k, gs):
+        seg = self.Bk.seg
+        rows = np.arange(k, min(k + self.Bk.S, self.L.R))
+        cols = np.concatenate([np.arange(g * seg, min((g + 1) * seg, self.L.C)) for g in gs])
+        return rows, cols
+
+    def _move(self, r_src, a_, r_dst, b_, h_move, p_move):
+        """One atom from (r_src, a_) to (r_dst, b_): the bookkeeping of the pic visit."""
+        self.known_res[r_src, a_] = False
+        self.known_holes[r_dst, b_] = False
+        self.n_moves += 1
+        if self.occ[r_src, a_]:
+            self.occ[r_src, a_] = False
+            self.consumed += 1
+            if self.rng.random() > p_move:
+                self.occ[r_dst, b_] = True
+                self.moves[r_dst, b_] = self.moves[r_src, a_] + 1
+                self.heat[r_dst, b_] = self.heat[r_src, a_] + h_move
+                self.n_fills += 1
+
+    @staticmethod
+    def _tmove(tm, d):
+        d = np.asarray(d, float)
+        return np.where(d > 0, np.maximum(tm.t_min, tm.t_x40 * np.sqrt(np.maximum(d, 0) / 40e-6)), 0.0)
+
+    def _pass_times(self, tm, dx, dy):
+        """Vectorised Timing.pass_time for arrays of x and y travel (m)."""
+        dy = np.asarray(dy, float)
+        extra = np.where(dy > 0, self._tmove(tm, dy) + self._tmove(tm, tm.pitch / 2), 0.0)
+        return 2 * tm.t_ramp + 2 * tm.t_lane + self._tmove(tm, dx) + extra + tm.t_reposition
+
+    def _visit_aod_row(self, k, gs):
+        tm, h_move, p_move = self._timing()
+        py = tm.pitch if tm.pitch_y is None else tm.pitch_y
+        rows, cols = self._field(k, gs)
+        t_used = self._reposition((k, gs), tm)
+        n_pass = 0
+        for _ in range(self.P.max_passes):
+            H = self.known_holes[np.ix_(rows, cols)]
+            Rv = self.known_res[np.ix_(rows, cols)]
+            hc, rc = H.sum(axis=1), Rv.sum(axis=1)
+            if hc.sum() == 0 or rc.sum() == 0:
+                break
+            M = np.minimum(rc[:, None], hc[None, :]).astype(float)
+            dist = np.abs(np.arange(len(rows))[:, None] - np.arange(len(rows))[None, :])
+            score = M - 1e-3 * dist / max(len(rows), 1)  # most refills; ties: shortest row shift
+            a, b = np.unravel_index(np.argmax(score), score.shape)
+            m = int(M[a, b])
+            if m == 0:
+                break
+            r_src, r_dst = rows[a], rows[b]
+            src = cols[self.known_res[r_src, cols]]
+            dst = cols[self.known_holes[r_dst, cols]]
+            dst = np.sort(dst[:m]) if m == len(dst) else np.sort(dst[np.argsort(np.abs(dst - dst.mean()))[:m]])
+            src = np.sort(src[np.argsort(np.abs(src - dst.mean()))[:m]])
+            for a_, b_ in zip(src, dst):
+                self._move(r_src, a_, r_dst, b_, h_move, p_move)
+            dxm = float(np.max(np.abs(dst - src))) * tm.pitch
+            t_used += tm.pass_time(dxm, abs(int(r_dst) - int(r_src)) * py) - tm.t_reposition
+            n_pass += 1
+            self.pass_tweezers.append(m)
+        return t_used, n_pass
+
+    def _visit_single(self, k, gs):
+        tm, h_move, p_move = self._timing()
+        py = tm.pitch if tm.pitch_y is None else tm.pitch_y
+        rows, cols = self._field(k, gs)
+        t_used = self._reposition((k, gs), tm)
+        n_pass = 0
+        for _ in range(self.P.max_passes_single):
+            if n_pass and self.t + t_used >= self._next_img:
+                break
+            sub = np.ix_(rows, cols)
+            hr, hcol = np.nonzero(self.known_holes[sub])
+            rr, rcol = np.nonzero(self.known_res[sub])
+            if len(hr) == 0 or len(rr) == 0:
+                break
+            dx = np.abs(cols[hcol][:, None] - cols[rcol][None, :]) * tm.pitch
+            dy = np.abs(rows[hr][:, None] - rows[rr][None, :]) * py
+            T = self._pass_times(tm, dx, dy)
+            i, j = np.unravel_index(np.argmin(T), T.shape)
+            self._move(rows[rr[j]], cols[rcol[j]], rows[hr[i]], cols[hcol[i]], h_move, p_move)
+            t_used += float(T[i, j]) - tm.t_reposition
+            n_pass += 1
+            self.pass_tweezers.append(1)
+        return t_used, n_pass
+
+    def _visit_parallel(self, k, gs, k_near=8):
+        from scipy.spatial import cKDTree
+
+        tm, h_move, p_move = self._timing()
+        py = tm.pitch if tm.pitch_y is None else tm.pitch_y
+        rows, cols = self._field(k, gs)
+        t_used = self._reposition((k, gs), tm)
+        n_pass = 0
+        for _ in range(self.P.max_passes):
+            sub = np.ix_(rows, cols)
+            hr, hcol = np.nonzero(self.known_holes[sub])
+            rr, rcol = np.nonzero(self.known_res[sub])
+            if len(hr) == 0 or len(rr) == 0:
+                break
+            hxy = np.c_[cols[hcol] * tm.pitch, rows[hr] * py]
+            rxy = np.c_[cols[rcol] * tm.pitch, rows[rr] * py]
+            kk = min(k_near, len(rr))
+            dist, idx = cKDTree(rxy).query(hxy, k=kk)
+            dist, idx = dist.reshape(len(hr), kk), idx.reshape(len(hr), kk)
+            used = np.zeros(len(rr), bool)
+            pairs = []
+            for i in np.argsort(dist[:, 0], kind="stable"):  # closest holes first
+                for q in range(kk):
+                    j = idx[i, q]
+                    if not used[j]:
+                        used[j] = True
+                        pairs.append((i, j))
+                        break
+            if not pairs:
+                break
+            dxm = dym = 0.0
+            for i, j in pairs:
+                self._move(rows[rr[j]], cols[rcol[j]], rows[hr[i]], cols[hcol[i]], h_move, p_move)
+                dxm = max(dxm, abs(hxy[i, 0] - rxy[j, 0]))
+                dym = max(dym, abs(hxy[i, 1] - rxy[j, 1]))
+            t_used += tm.pass_time(dxm, dym) - tm.t_reposition
+            n_pass += 1
+            self.pass_tweezers.append(len(pairs))
         return t_used, n_pass
 
     # ------------------------------------------------------------------ run

@@ -1,0 +1,223 @@
+{
+ "name": "m28_hardware",
+ "script": "scripts/m28_aod_baseline.py",
+ "git": "29d391a",
+ "notes": "Laser power is provisioned for the peak number of simultaneously moving tweezers seen in the simulation (assembly included). AOD multi-tone efficiency and intermodulation are not included (per-tone efficiency falls with tone count; [VALUE?]).",
+ "inputs": {
+  "P_tweezer_PIC_mW": 57.7,
+  "P_tweezer_atoms_mW": 7.92,
+  "eta_AOD_per_deflector": 0.65,
+  "actuators_per_engine": 383,
+  "depth": "1.2 mK reference; the transport model moves at 0.3 mK (power scales linearly)",
+  "objective_and_relay": "transmission not included for either method"
+ },
+ "outputs": {
+  "rows": [
+   {
+    "N": 1000.0,
+    "method": "AOD row-wise, field 128",
+    "peak_tweezers_per_pass": 10,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.18745562130177512,
+    "P_transport_W_at_0.3mK": 0.04686390532544378,
+    "fast_control_channels": 2,
+    "field_positions": 1,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 1000.0,
+    "method": "AOD row-wise, field 40",
+    "peak_tweezers_per_pass": 10,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.18745562130177512,
+    "P_transport_W_at_0.3mK": 0.04686390532544378,
+    "fast_control_channels": 2,
+    "field_positions": 2,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 1000.0,
+    "method": "PIC 16 x 1",
+    "peak_tweezers_per_pass": 28,
+    "P_per_tweezer_mW": 57.7,
+    "P_transport_W_at_1.2mK": 1.6156000000000001,
+    "P_transport_W_at_0.3mK": 0.40390000000000004,
+    "fast_control_channels": 6128,
+    "field_positions": 3,
+    "note": "16 engines x 383 fast actuators"
+   },
+   {
+    "N": 1000.0,
+    "method": "PIC 32 x 4",
+    "peak_tweezers_per_pass": 53,
+    "P_per_tweezer_mW": 57.7,
+    "P_transport_W_at_1.2mK": 3.0581,
+    "P_transport_W_at_0.3mK": 0.764525,
+    "fast_control_channels": 49024,
+    "field_positions": 2,
+    "note": "128 engines x 383 fast actuators"
+   },
+   {
+    "N": 1000.0,
+    "method": "all-parallel",
+    "peak_tweezers_per_pass": 167,
+    "P_per_tweezer_mW": null,
+    "P_transport_W_at_1.2mK": null,
+    "P_transport_W_at_0.3mK": null,
+    "fast_control_channels": null,
+    "field_positions": 1,
+    "note": "SLM-like ceiling: not a hardware model"
+   },
+   {
+    "N": 1000.0,
+    "method": "single tweezer, field 40",
+    "peak_tweezers_per_pass": 1,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.01874556213017751,
+    "P_transport_W_at_0.3mK": 0.004686390532544378,
+    "fast_control_channels": 2,
+    "field_positions": 2,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 10000.0,
+    "method": "AOD row-wise, field 128",
+    "peak_tweezers_per_pass": 26,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.4873846153846153,
+    "P_transport_W_at_0.3mK": 0.12184615384615383,
+    "fast_control_channels": 2,
+    "field_positions": 2,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 10000.0,
+    "method": "AOD row-wise, field 40",
+    "peak_tweezers_per_pass": 13,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.24369230769230765,
+    "P_transport_W_at_0.3mK": 0.06092307692307691,
+    "fast_control_channels": 2,
+    "field_positions": 12,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 10000.0,
+    "method": "PIC 16 x 1",
+    "peak_tweezers_per_pass": 40,
+    "P_per_tweezer_mW": 57.7,
+    "P_transport_W_at_1.2mK": 2.308,
+    "P_transport_W_at_0.3mK": 0.577,
+    "fast_control_channels": 6128,
+    "field_positions": 27,
+    "note": "16 engines x 383 fast actuators"
+   },
+   {
+    "N": 10000.0,
+    "method": "PIC 32 x 4",
+    "peak_tweezers_per_pass": 80,
+    "P_per_tweezer_mW": 57.7,
+    "P_transport_W_at_1.2mK": 4.616,
+    "P_transport_W_at_0.3mK": 1.154,
+    "fast_control_channels": 49024,
+    "field_positions": 10,
+    "note": "128 engines x 383 fast actuators"
+   },
+   {
+    "N": 10000.0,
+    "method": "all-parallel",
+    "peak_tweezers_per_pass": 1573,
+    "P_per_tweezer_mW": null,
+    "P_transport_W_at_1.2mK": null,
+    "P_transport_W_at_0.3mK": null,
+    "fast_control_channels": null,
+    "field_positions": 1,
+    "note": "SLM-like ceiling: not a hardware model"
+   },
+   {
+    "N": 10000.0,
+    "method": "single tweezer, field 40",
+    "peak_tweezers_per_pass": 1,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.01874556213017751,
+    "P_transport_W_at_0.3mK": 0.004686390532544378,
+    "fast_control_channels": 2,
+    "field_positions": 12,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 100000.0,
+    "method": "AOD row-wise, field 128",
+    "peak_tweezers_per_pass": 31,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.5811124260355028,
+    "P_transport_W_at_0.3mK": 0.1452781065088757,
+    "fast_control_channels": 2,
+    "field_positions": 12,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 100000.0,
+    "method": "AOD row-wise, field 40",
+    "peak_tweezers_per_pass": 16,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.2999289940828402,
+    "P_transport_W_at_0.3mK": 0.07498224852071005,
+    "fast_control_channels": 2,
+    "field_positions": 88,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   },
+   {
+    "N": 100000.0,
+    "method": "PIC 16 x 1",
+    "peak_tweezers_per_pass": 44,
+    "P_per_tweezer_mW": 57.7,
+    "P_transport_W_at_1.2mK": 2.5388,
+    "P_transport_W_at_0.3mK": 0.6347,
+    "fast_control_channels": 6128,
+    "field_positions": 189,
+    "note": "16 engines x 383 fast actuators"
+   },
+   {
+    "N": 100000.0,
+    "method": "PIC 32 x 4",
+    "peak_tweezers_per_pass": 253,
+    "P_per_tweezer_mW": 57.7,
+    "P_transport_W_at_1.2mK": 14.5981,
+    "P_transport_W_at_0.3mK": 3.649525,
+    "fast_control_channels": 49024,
+    "field_positions": 28,
+    "note": "128 engines x 383 fast actuators"
+   },
+   {
+    "N": 100000.0,
+    "method": "all-parallel",
+    "peak_tweezers_per_pass": 15013,
+    "P_per_tweezer_mW": null,
+    "P_transport_W_at_1.2mK": null,
+    "P_transport_W_at_0.3mK": null,
+    "fast_control_channels": null,
+    "field_positions": 1,
+    "note": "SLM-like ceiling: not a hardware model"
+   },
+   {
+    "N": 100000.0,
+    "method": "single tweezer, field 40",
+    "peak_tweezers_per_pass": 1,
+    "P_per_tweezer_mW": 18.74556213017751,
+    "P_transport_W_at_1.2mK": 0.01874556213017751,
+    "P_transport_W_at_0.3mK": 0.004686390532544378,
+    "fast_control_channels": 2,
+    "field_positions": 88,
+    "note": "2 RF channels (multi-tone synthesis); AOD pair efficiency 0.65^2 = 0.42 (single tone, mid-band)"
+   }
+  ],
+  "AOD_P_per_tweezer_mW_vs_eta_per_deflector": {
+   "0.6": 26.181818181818176,
+   "0.7": 18.74556213017751,
+   "0.8": 14.08,
+   "0.9": 9.777777777777777
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

@@ -22,6 +22,7 @@ SEC = ROOT / "report" / "sections"
 def md2tex(md: str) -> str:
     tex = subprocess.run(["pandoc", "-f", "gfm", "-t", "latex"], input=md, check=True, capture_output=True,
                          text=True).stdout
+    tex = tex.replace("\\_", "\\_\\allowbreak{}")  # long file names (texttt) may break after underscores
     blocks = re.split(r"(\\begin\{longtable\}.*?\\end\{longtable\})", tex, flags=re.S)
     return "".join(fit_table(b) if b.startswith("\\begin{longtable}") else b for b in blocks)
 

@@ -1,5 +1,11 @@
 # How far the focal-plane OPA scales
 
+> Follow-up (`docs/aod_comparison.md`, module 28): the comparison below with crossed AODs (720 independent
+> tweezers against a median of 13 moved per step) counts parallelism, not outcome. In a like-for-like simulation the
+> PIC block assembles 1e4 to 1e5-site arrays 3 to 27 times faster than a crossed AOD of 128- or 40-site field. It
+> holds the same steady-state defect fraction, at about 50 times the transport laser power and up to 49,024 fast
+> channels against 2.
+
 Follow-up to `docs/fpr_design.md`. Code: `scripts/m12_scaling.py`; results `results/m12_*.json`. Packing is
 simulated on the beam-propagation matrix of design D1; aberration with exact path lengths; the rest of the
 scaling table is derived from those results. Values are SIM or DERIVED and valid in the regime stated.

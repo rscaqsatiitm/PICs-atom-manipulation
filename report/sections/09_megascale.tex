@@ -201,6 +201,84 @@ intermediate (2~\textmu K per move) & $1.5\times10^{-3}$ & $4.1\times10^{-4}$ & 
 \end{tabular}
 \end{table}
 
+\subsection{Against crossed AODs and other rearrangement methods}\label{sec:megascale-aod}
+
+The comparison with crossed AODs in Sec.~\ref{sec:moretweezers} counts parallelism: 720 independent tweezers in a 16-chip stack against a median of 13 atoms moved per step in the crossed-AOD assembly cited in the proposal. Parallelism is not the outcome. We therefore ran the steady-state simulator with four move constraints and nothing else changed: the layout, loading, timing physics, losses and imaging are common (\texttt{picsim/\allowbreak megasort.py}, \texttt{scripts/\allowbreak m28\_aod\_baseline.py}).
+\begin{itemize}
+\item The PIC blocks above (16~$\times$~1 and 32~$\times$~4).
+\item Crossed AODs, row-wise: one row tone and many column tones per pass, so the reservoir atoms of one row move in order to the holes of another row within a square field. Moves of several rows that share one column pattern are not used, so this is a lower bound on AOD throughput.
+\item A single moving tweezer in the same field.
+\item An all-parallel ceiling: every known hole is filled in one pass by independent 2D moves. This idealises SLM rearrangement and carries no hardware cost.
+\end{itemize}
+The AOD field follows from 1064~nm TeO$_2$ deflectors listed with 90 and 150 resolvable spots and at least 65\% efficiency per device. With the 1.06~\textmu m resolution cell at NA~0.5, 150 spots span about 40 sites at 4~\textmu m; we take 40 sites as the base and 24 to 128 as sensitivity cases.
+
+\begin{table}[htbp]\centering\small
+\caption{Rearrangement methods in one simulator at $10^5$ sites (85\% loading, 4~\textmu m, $\tau=3000$~s, cold steps; simulated, \texttt{results/\allowbreak m28\_main.json}; power and channels derived, \texttt{m28\_hardware.json}). Assembly is the time to the first image with defect fraction $\leq10^{-3}$ (resolution 0.1~s, first image at 0.12~s); the steady defect fraction is the time average over the second half of each run (two seeds). Transport power is the peak number of simultaneously moving tweezers times the power per 1.2~mK tweezer: 57.7~mW at the fibre for the PIC, and 18.7~mW for the AOD (the proposal's 6.6~mW for 1.0~mK scaled to 1.2~mK, over $0.65^2$). The objective and relay are excluded for both.}
+\label{tab:megascale-aod}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\toprule
+method & assembly & steady defect & peak & power & fast & field \\
+ & & & tweezers & (1.2~mK) & channels & positions \\
+\midrule
+PIC 32 $\times$ 4 & 0.24~s & $1.43\times10^{-4}$ & 253 & 14.6~W & 49,024 & 28 \\
+PIC 16 $\times$ 1 & 1.5~s & $1.46\times10^{-4}$ & 44 & 2.5~W & 6,128 & 189 \\
+AOD, 40-site field & 6.6~s & $1.43\times10^{-4}$ & 16 & 0.30~W & 2 & 88 \\
+AOD, 128-site field & 2.8~s & $1.47\times10^{-4}$ & 31 & 0.58~W & 2 & 12 \\
+single, 40-site field & 33~s & -- & 1 & 0.019~W & 2 & 88 \\
+all-parallel & 0.12~s & $1.27\times10^{-4}$ & 15,013 & -- & -- & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.85\linewidth]{m28_figure.png}
+\caption{Rearrangement methods in one simulator (simulated, \texttt{results/\allowbreak m28\_main.json}; 85\% loading, 4~\textmu m pitch, $\tau=3000$~s, cold steps with 200~\textmu s ramps and 400~\textmu s lane steps, loss $10^{-4}$ per image and per move, images every 0.1~s). Left: defect fraction just after each image at $10^4$ sites, seed 1. Right: time to the first image with defect fraction $\leq10^{-3}$, mean over 4, 3 and 2 seeds at $10^3$, $10^4$ and $10^5$ sites; grey line at 0.12~s, the first image after the start.}
+\label{fig:megascale-aod}
+\end{figure}
+
+Three results follow (Table~\ref{tab:megascale-aod}, Fig.~\ref{fig:megascale-aod}).
+
+(i) In steady state the move constraint does not matter between $10^3$ and $10^5$ sites. With $\tau=3000$~s every method that has assembled holds a time-averaged defect fraction of $1.3\times10^{-4}$ to $1.5\times10^{-4}$, the loss-limited floor $\epsilon+T/(2\tau)=1.2\times10^{-4}$ of Sec.~\ref{sec:megascale-imaging} plus the latency. The reason is that steady-state holes appear one at a time: every hardware method moves on average 1.0 to 1.1 atoms per pass in the steady window. Only at $10^5$ sites with $\tau=300$~s (420 refills/s) do the methods separate: $3.2\times10^{-4}$ (all-parallel), $4.5\times10^{-4}$ (PIC 32~$\times$~4), $4.7\times10^{-4}$ and $5.1\times10^{-4}$ (AOD fields of 128 and 40 sites) and $5.1\times10^{-4}$ (PIC 16~$\times$~1). The single tweezer does not assemble there.
+
+(ii) The PIC advantage is assembly from a random loading, and it grows with size. At $10^4$ sites the 128-engine block is done by the first image (0.12~s), against 0.36 to 0.70~s for the AODs, 3 to 6 times longer. At $10^5$ sites it takes 0.24~s against 2.8 to 6.6~s, 12 to 27 times longer. At $10^3$ sites all methods except the single tweezer finish by the first image. Fast steps (50~\textmu s ramps) narrow the gap: 0.12~s against 1.1 to 2.4~s at $10^5$ sites.
+
+(iii) The advantage costs about 50 times the transport laser power and up to 49,024 fast channels against 2. The heating per refilled atom is the same for every method, because each refill is one move whatever the hardware.
+
+Hence the PIC engine has not been shown to be better than crossed AODs in general. It is faster at assembly, equal in steady-state refilling, and much more expensive in power and control. Its practical competitors are also not only AODs. A fast SLM assembles defect-free arrays of up to 2,024 atoms in a constant 60~ms by moving all atoms at once \cite{lin2024}, which approaches our all-parallel ceiling. Lattice conveyor belts reload 300,000 atoms per second into tweezers and have kept more than 3,000 atoms for over 2~hours \cite{chiu2025}.\footnote{Both from abstracts read on 2026-11-14. The record is \texttt{docs/\allowbreak aod\_comparison.md}, which also corrects three figures of the analysis that prompted this comparison: the actuator count per stack, the pass time of a single tweezer, and the delivery fraction.}
+
+These results rest on shared assumptions: one loss model, one objective field covering the array, and the same field reposition time for the AOD scanner as for the row-select scanner. The AOD model leaves out multi-tone efficiency and intermodulation, which would favour the PIC.
+
+\subsection{Concurrent repair at \texorpdfstring{$10^6$}{10\textasciicircum 6} sites}\label{sec:megascale-concurrency}
+
+A further proposition is that steady-state repair at $10^6$ sites is limited per stream, so the winning quantity is the number of units working at once, and that chips replicate where AOD pairs do not. Zones are independent, each holding its own reservoir rows and unit. Hence $K$ units on $10^6$ sites behave as one zone of $10^6/K$ sites, which we simulated for every unit of Sec.~\ref{sec:megascale-aod} from an assembled start (\texttt{scripts/\allowbreak m29\_concurrency.py}).
+
+\begin{table}[htbp]\centering\small
+\caption{Time-averaged steady-state defect fraction at $10^6$ sites served by $K$ independent units (simulated, \texttt{results/\allowbreak m29\_ladder.json}; zones of $10^6/K$ sites, 85\% loading, 4~\textmu m, cold steps, loss $10^{-4}$ per image at 10~Hz, 2 to 6 seeds, assembled start). The floor for zero latency is $\epsilon+T/(2\tau)=1.17\times10^{-4}$ ($\tau=3000$~s) and $2.7\times10^{-4}$ ($\tau=300$~s).}
+\label{tab:megascale-conc}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+$K$ & PIC 32 $\times$ 4 & PIC 16 $\times$ 1 & AOD, 128-site field & AOD, 40-site field & single tweezer \\
+\midrule
+\multicolumn{6}{l}{$\tau=3000$~s} \\
+1 & $8.9\times10^{-4}$ & $4.6\times10^{-3}$ & $4.6\times10^{-3}$ & $6.2\times10^{-3}$ & -- \\
+4 & $1.68\times10^{-4}$ & $1.67\times10^{-4}$ & $1.66\times10^{-4}$ & $1.67\times10^{-4}$ & -- \\
+16 & $1.39\times10^{-4}$ & $1.39\times10^{-4}$ & $1.38\times10^{-4}$ & $1.37\times10^{-4}$ & $1.37\times10^{-4}$ \\
+\multicolumn{6}{l}{$\tau=300$~s} \\
+1 & $3.8\times10^{-3}$ & $2.3\times10^{-2}$ & $2.5\times10^{-2}$ & $3.1\times10^{-2}$ & -- \\
+4 & $1.0\times10^{-3}$ & $5.1\times10^{-3}$ & $7.1\times10^{-3}$ & $1.3\times10^{-2}$ & -- \\
+16 & $4.1\times10^{-4}$ & $4.4\times10^{-4}$ & $4.1\times10^{-4}$ & $4.4\times10^{-4}$ & $4.3\times10^{-4}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As can be seen from Table~\ref{tab:megascale-conc}, the first half of the proposition holds and the second does not. (i) One unit scanning the whole array leaves $8.9\times10^{-4}$ (PIC 32~$\times$~4) to $6.2\times10^{-3}$ (40-site AOD) at $\tau=3000$~s, so concurrency is needed by every method. (ii) Four units bring every method to $1.7\times10^{-4}$ and sixteen to $1.4\times10^{-4}$, a single moving tweezer per zone included. At equal $K$ the units converge, and the PIC units then cost more. For $K=4$ the fixed cost is 196,096 fast channels (PIC 32~$\times$~4) or 24,512 (one stack), against 8 for AOD pairs. The laser power provisioned for each unit's peak when busy is 71.5~W or 40.6~W, against 3.0 to 9.0~W, at 1.2~mK. In steady state every unit moves only 1.0 to 1.1 tweezers per pass, so the power in use is 0.25~W or 0.23~W against 0.075~W. (iii) Throughput is not the limit. At saturation a unit sustains about 76,000 moves/s (PIC 32~$\times$~4), 37,000 to 40,000 (one stack or a 128-site AOD), 20,000 (40-site AOD) or 570 (single tweezer), against a demand of 1,242/s at $\tau=3000$~s (with the simulator's image cycle of 0.11~s; 1,335/s for a 10~Hz cycle). A single unit on a large array is limited by latency, the time its field needs to return to a new hole after each image, and splitting the array shortens it for every method alike.\footnote{The proposition started from 420 to 570 refills/s per stream. That was measured for the single tweezer only; for the other units module 28 measured refills equal to the demand, not their capacity (\texttt{docs/\allowbreak concurrency.md}).}
+
+With fast steps (10~\textmu K and $4\times10^{-3}$ loss per move), the operating point at which one 128-engine block reaches about $2\times10^{-4}$ (Sec.~\ref{sec:megascale-remedies}), a single crossed AOD with a 128-site field does as well: $(1.84\pm0.01)\times10^{-4}$ against $(1.91\pm0.03)\times10^{-4}$ for the block, equal to within 4\% (three seeds; \texttt{m29\_ladder\_fast.json}). With four units every type gives 1.45 to $1.50\times10^{-4}$, within the seed spread.
+
+Hence concurrency does not favour the PIC: it needs as many units as AOD pairs for the same defect fraction, with more power and control. The PIC 32~$\times$~4 block is the best single unit with cold steps, particularly at $\tau=300$~s, but it is itself 128 engines. The sharing of one objective field by $K$ units is reported, not modelled.
+
 \subsection{Limits}\label{sec:megascale-limits}
 
 The steady-state model assumes perfect detection apart from the imaging loss, an external reservoir supply, a single objective whose field reaches every site, and one move per refill. It does not schedule the reservoir refresh physically (conveyor timing) and does not include photon scattering. The heating per move is taken from the 1D quantum and 3D classical transport results (Sec.~\ref{sec:transport}), not computed within the steady-state model. The remedy and imaging scans use one seed per case. The tiling result is 1D, with ideal thin lenslets and no surface scatter, and the 24~mm chip edge for a 32~$\times$~8 block is not designed. The static-potential comparison is a first-order budget with an assumed delivery efficiency and cavity buildup. Recommendations follow directly. For $10^4$ sites, one large-field objective or two zones and one 16-chip stack suffice. For $10^5$ sites, a 32~$\times$~4 block, a field of $\pm0.9$~mm or about 13 zones, and about 85\% loading, which cuts the reservoir from two thirds of the sites to a quarter and the static power by 40\%. For $10^6$ sites the transport side is feasible with a block of 128 to 256 engines, but the static potential needs a different source (a cavity lattice or much lower depths), the field needs a lithography-class objective, and the loss rates must improve to reach $10^{-4}$ defects.

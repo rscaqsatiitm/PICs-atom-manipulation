@@ -10,116 +10,116 @@ value & unit & type & pointer & used in \\
 \bottomrule\noalign{}
 \endlastfoot
 4.0 & um & CHOICE & buried thermal oxide; checked against substrate
-leakage in scripts/m1\_platform.py & m5\_heaters \\
+leakage in scripts/m1\_\allowbreak{}platform.py & m5\_\allowbreak{}heaters \\
 2.5 & um & CHOICE & lensed/tapered fibre spot, typical catalogue range
-2-3 um & m2\_couplers \\
+2-3 um & m2\_\allowbreak{}couplers \\
 {[}0.2, 0.3, 0.4{]} & um & CHOICE & thickness sweep agreed with PI; 200
-nm covers foundry runs & m1\_width\_sweep \\
+nm covers foundry runs & m1\_\allowbreak{}width\_\allowbreak{}sweep \\
 5.60228947368421 & V & DERIVED & 2.8 V x 1064.4/532 assuming the same
 coil length and stress-optic coefficient; real value depends on mode
-overlap & m5\_actuators \\
-886.0600542866746 & um & DERIVED & R = N p\_a p\_port / lambda\_s (one
-port per resolvable spot) & m9\_E\_window \\
+overlap & m5\_\allowbreak{}actuators \\
+886.0600542866746 & um & DERIVED & R = N p\_\allowbreak{}a p\_\allowbreak{}port / lambda\_\allowbreak{}s (one
+port per resolvable spot) & m9\_\allowbreak{}E\_\allowbreak{}window \\
 15.0 & mm & DERIVED & focal length taken as the 15 mm working distance
-(order of magnitude) & m9\_routes \\
-84000.0 & Hz & DERIVED & radial, 1.2 mK, w0 = 1.04 um (m3\_update\_rate)
-& m9\_routes \\
+(order of magnitude) & m9\_\allowbreak{}routes \\
+84000.0 & Hz & DERIVED & radial, 1.2 mK, w0 = 1.04 um (m3\_\allowbreak{}update\_\allowbreak{}rate)
+& m9\_\allowbreak{}routes \\
 5000.0 & m/s & RECALLED & AlN surface-acoustic-wave velocity, order of
-magnitude; verify for the AlN/SiN/SiO2 stack & m9\_routes \\
+magnitude; verify for the AlN/SiN/SiO2 stack & m9\_\allowbreak{}routes \\
 6.2 & um & RECALLED & Corning HI1060 MFD at 1060 nm approx. 6.2 um;
-verify datasheet & m2\_couplers \\
+verify datasheet & m2\_\allowbreak{}couplers \\
 2.5e-19 & m\^{}2/W & RECALLED & Kerr index of LPCVD Si3N4, approx.
-2.4-2.5e-19 m\^{}2/W (Ikeda 2008); verify & m1\_design\_modes \\
+2.4-2.5e-19 m\^{}2/W (Ikeda 2008); verify & m1\_\allowbreak{}design\_\allowbreak{}modes \\
 20.0 & W/(m K) & RECALLED & LPCVD SiN film, literature spread
-\textasciitilde10-30 W/(m K); verify & m5\_heaters \\
+\textasciitilde10-30 W/(m K); verify & m5\_\allowbreak{}heaters \\
 5.3 & um & RECALLED & PM780-HP MFD at 850 nm approx. 5.3 um; verify
-datasheet & m2\_couplers \\
+datasheet & m2\_\allowbreak{}couplers \\
 20.0 & W/(m K) & RECALLED & TiN/NiCr heater film order of magnitude;
-verify & m5\_heaters \\
+verify & m5\_\allowbreak{}heaters \\
 3.55 & - & RECALLED & crystalline Si near 1.06 um, approx. 3.55 +
-0.0001i; verify (Green 2008) & m1\_box\_leakage \\
-1628000 & J/(m\^{}3 K) & RECALLED & density 2200 kg/m\^{}3 x c\_p 740
-J/(kg K) & m5\_heaters \\
-1631000 & J/(m\^{}3 K) & RECALLED & density 2330 kg/m\^{}3 x c\_p 700
-J/(kg K) & m5\_heaters \\
+0.0001i; verify (Green 2008) & m1\_\allowbreak{}box\_\allowbreak{}leakage \\
+1628000 & J/(m\^{}3 K) & RECALLED & density 2200 kg/m\^{}3 x c\_\allowbreak{}p 740
+J/(kg K) & m5\_\allowbreak{}heaters \\
+1631000 & J/(m\^{}3 K) & RECALLED & density 2330 kg/m\^{}3 x c\_\allowbreak{}p 700
+J/(kg K) & m5\_\allowbreak{}heaters \\
 1.38 & W/(m K) & RECALLED & fused/thermal silica thermal conductivity;
-verify & m5\_heaters \\
+verify & m5\_\allowbreak{}heaters \\
 148.0 & W/(m K) & RECALLED & silicon thermal conductivity at 300 K;
-verify & m5\_heaters \\
+verify & m5\_\allowbreak{}heaters \\
 (model) & - & SOURCE & Luke et al., Opt. Lett. 40, 4823 (2015),
 doi:10.1364/OL.40.004823; Sellmeier via refractiveindex.info Si3N4/Luke
-(340 nm LPCVD film), read 2026-10-31 & m1\_width\_sweep \\
+(340 nm LPCVD film), read 2026-10-31 & m1\_\allowbreak{}width\_\allowbreak{}sweep \\
 (model) & - & SOURCE & Malitson, JOSA 55, 1205 (1965),
 doi:10.1364/JOSA.55.001205; via refractiveindex.info SiO2/Malitson, read
-2026-10-31 & m1\_width\_sweep \\
+2026-10-31 & m1\_\allowbreak{}width\_\allowbreak{}sweep \\
 400000.0 & Hz & SOURCE & Montifiore et al., arXiv:2601.15695 (abstract,
-read 2026-10-31): coil MZM 3-dB bandwidth 0.4 MHz & m3\_update\_rate,
-m5\_actuators \\
+read 2026-10-31): coil MZM 3-dB bandwidth 0.4 MHz & m3\_\allowbreak{}update\_\allowbreak{}rate,
+m5\_\allowbreak{}actuators \\
 2.8 & V & SOURCE & Montifiore et al., arXiv:2601.15695 (abstract, read
-2026-10-31): coil MZM V\_pi 2.8 V at 532 nm & m5\_actuators \\
+2026-10-31): coil MZM V\_\allowbreak{}pi 2.8 V at 532 nm & m5\_\allowbreak{}actuators \\
 2.6e-08 & s & SOURCE & Zhao et al., arXiv:2508.09920 (abstract and Sec.
-2, read 2026-10-31): 10-90\% rise 26 +/- 7 ns & m4\_dynamics,
-m5\_actuators \\
+2, read 2026-10-31): 10-90\% rise 26 +/- 7 ns & m4\_\allowbreak{}dynamics,
+m5\_\allowbreak{}actuators \\
 200.0 & V & SOURCE & Zhao et al., arXiv:2508.09920 (abstract and Sec. 2,
-read 2026-10-31): V\_pi 200 V at 1013 nm & m4\_dynamics,
-m5\_actuators \\
+read 2026-10-31): V\_\allowbreak{}pi 200 V at 1013 nm & m4\_\allowbreak{}dynamics,
+m5\_\allowbreak{}actuators \\
 74.7 & V & SOURCE & Zhao et al., arXiv:2508.09920 (abstract and Sec. 2,
-read 2026-10-31): single-ended V\_pi 74.7 +/- 3.7 V at 795 nm &
-m4\_dynamics, m5\_actuators \\
+read 2026-10-31): single-ended V\_\allowbreak{}pi 74.7 +/- 3.7 V at 795 nm &
+m4\_\allowbreak{}dynamics, m5\_\allowbreak{}actuators \\
 2.45e-05 & 1/K & SOURCE & arXiv:2606.05673, introduction (values at 193
 THz; \textasciitilde7\% dispersion to visible), read 2026-10-31 &
-m1\_design\_modes \\
+m1\_\allowbreak{}design\_\allowbreak{}modes \\
 1e-05 & 1/K & SOURCE & arXiv:2606.05673, introduction (values at 193
 THz; \textasciitilde7\% dispersion to visible), read 2026-10-31 &
-m1\_design\_modes \\
+m1\_\allowbreak{}design\_\allowbreak{}modes \\
 (model) & - & SOURCE & heating rates: O\textquotesingle Hara et al.,
 arXiv:physics/0003049 (PRL 82, 4204 (1999)), Gamma = pi\^{}2 nu\^{}2
-S\_I(2 nu), Q\_dot = 4 pi\^{}4 M nu\^{}4 S\_x(nu); read 2026-11-01 &
-m7\_budget \\
+S\_\allowbreak{}I(2 nu), Q\_\allowbreak{}dot = 4 pi\^{}4 M nu\^{}4 S\_\allowbreak{}x(nu); read 2026-11-01 &
+m7\_\allowbreak{}budget \\
 1160.0 & a.u. & USER & ANRF/ARG/2026/009937 draft v97, Sec. 3 citing Le
-Kien et al. EPJD 67, 92 (2013) & m3\_update\_rate, m7\_budget,
-m8\_power, m9\_E\_power \\
+Kien et al. EPJD 67, 92 (2013) & m3\_\allowbreak{}update\_\allowbreak{}rate, m7\_\allowbreak{}budget,
+m8\_\allowbreak{}power, m9\_\allowbreak{}E\_\allowbreak{}power \\
 4.0 & um & USER & ANRF/ARG/2026/009937 draft v97, Sec. 3:
 \textquotesingle about five sites at 4 um pitch\textquotesingle{} &
-m3\_field\_tradeoff, m3\_multibeam, m7\_budget, m8\_final,
-m8\_star\_design \\
+m3\_\allowbreak{}field\_\allowbreak{}tradeoff, m3\_\allowbreak{}multibeam, m7\_\allowbreak{}budget, m8\_\allowbreak{}final,
+m8\_\allowbreak{}star\_\allowbreak{}design \\
 1.04 & um & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget:
-1.04 um waist & m3\_spot, m3\_update\_rate, m7\_budget, m8\_power,
-m9\_E\_power \\
+1.04 um waist & m3\_\allowbreak{}spot, m3\_\allowbreak{}update\_\allowbreak{}rate, m7\_\allowbreak{}budget, m8\_\allowbreak{}power,
+m9\_\allowbreak{}E\_\allowbreak{}power \\
 0.01 & um & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4 error budget:
-\textless= 10 nm rms & m3\_noise, m7\_budget \\
+\textless= 10 nm rms & m3\_\allowbreak{}noise, m7\_\allowbreak{}budget \\
 0.0012 & K & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4(ii):
-transport tweezers \textasciitilde1.2 mK & m3\_update\_rate, m7\_budget,
-m8\_power, m9\_E\_power \\
+transport tweezers \textasciitilde1.2 mK & m3\_\allowbreak{}update\_\allowbreak{}rate, m7\_\allowbreak{}budget,
+m8\_\allowbreak{}power, m9\_\allowbreak{}E\_\allowbreak{}power \\
 1.4 & W & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4(ii):
-\textasciitilde1.4 W on chip for 21 tweezers & m1\_design\_modes,
-m6\_power \\
+\textasciitilde1.4 W on chip for 21 tweezers & m1\_\allowbreak{}design\_\allowbreak{}modes,
+m6\_\allowbreak{}power \\
 10.0 & dB & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4(ii):
-\textasciitilde10 dB of chip and OPA loss & m3\_loss\_budget \\
+\textasciitilde10 dB of chip and OPA loss & m3\_\allowbreak{}loss\_\allowbreak{}budget \\
 0.0066 & W & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4(ii):
-\textasciitilde6.6 mW per tweezer at the atoms & m3\_loss\_budget,
-m7\_budget \\
+\textasciitilde6.6 mW per tweezer at the atoms & m3\_\allowbreak{}loss\_\allowbreak{}budget,
+m7\_\allowbreak{}budget \\
 16 & - & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4: 16 channels on
-the 895 nm router & m4\_router \\
+the 895 nm router & m4\_\allowbreak{}router \\
 1.0 & dB & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4: 5-6 MMI
-stages, \textasciitilde1 dB & m2\_mmi \\
+stages, \textasciitilde1 dB & m2\_\allowbreak{}mmi \\
 {[}1.0, 2.0{]} & dB & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4:
-\textasciitilde1-2 dB per facet & m2\_couplers \\
+\textasciitilde1-2 dB per facet & m2\_\allowbreak{}couplers \\
 {[}1e-06, 2e-05{]} & W & USER & ANRF/ARG/2026/009937 draft v97, Sec. 4:
-\textasciitilde1-20 uW per site at the atoms & m4\_router, m8\_power \\
+\textasciitilde1-20 uW per site at the atoms & m4\_\allowbreak{}router, m8\_\allowbreak{}power \\
 0.4 & um & USER & ANRF/ARG/2026/009937 draft v97, Sec. 7.4: CoE-CPPICS
-stoichiometric LPCVD SiN up to 400 nm & m2\_mmi \\
+stoichiometric LPCVD SiN up to 400 nm & m2\_\allowbreak{}mmi \\
 50.0 & dB & USER & ANRF/ARG/2026/009937 draft v97, Table 1:
-\textgreater= 50 dB at 895 nm & m4\_extinction, m4\_polarisation \\
+\textgreater= 50 dB at 895 nm & m4\_\allowbreak{}extinction, m4\_\allowbreak{}polarisation \\
 100.0 & um & USER & ANRF/ARG/2026/009937 draft v97, Table 1: Strehl
-\textgreater= 0.8 over \textgreater= +/-100 um & m3\_field\_tradeoff \\
+\textgreater= 0.8 over \textgreater= +/-100 um & m3\_\allowbreak{}field\_\allowbreak{}tradeoff \\
 0.5 & - & USER & ANRF/ARG/2026/009937 draft v97, Table 1: meta-objective
-NA \textgreater= 0.5 & m3\_field\_tradeoff, m3\_multibeam, m3\_noise,
-m3\_spot, m7\_budget, m8\_star\_design, m9\_E\_window \\
+NA \textgreater= 0.5 & m3\_\allowbreak{}field\_\allowbreak{}tradeoff, m3\_\allowbreak{}multibeam, m3\_\allowbreak{}noise,
+m3\_\allowbreak{}spot, m7\_\allowbreak{}budget, m8\_\allowbreak{}star\_\allowbreak{}design, m9\_\allowbreak{}E\_\allowbreak{}window \\
 1.064435 & um & USER & ANRF/ARG/2026/009937 draft v97, Table 2: side-B
-tweezers at 1064.4350 nm (45S1/2 double magic) & m1\_width\_sweep,
-m3\_field\_tradeoff \\
+tweezers at 1064.4350 nm (45S1/2 double magic) & m1\_\allowbreak{}width\_\allowbreak{}sweep,
+m3\_\allowbreak{}field\_\allowbreak{}tradeoff \\
 0.8946 & um & USER & ANRF/ARG/2026/009937 draft v97: 895 nm Raman
-addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
+addressing (Cs D1 line, 894.6 nm) & m1\_\allowbreak{}width\_\allowbreak{}sweep, m7\_\allowbreak{}budget \\
 \end{longtable}
 }

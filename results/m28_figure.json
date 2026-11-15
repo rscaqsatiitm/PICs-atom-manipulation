@@ -1,0 +1,11 @@
+{
+ "name": "m28_figure",
+ "script": "scripts/m28_aod_baseline.py",
+ "git": "29d391a",
+ "notes": "Left: defect fraction just after each image, 1e4 sites, tau 3000 s, cold steps, seed 1. Right: time to the first image with defect fraction <= 1e-3 from 85% random loading, mean over seeds, tau 3000 s, cold steps; the grey line (0.12 s) is the first image after the start, the resolution of this metric.",
+ "inputs": {
+  "source": "results/m28_main.json"
+ },
+ "outputs": {},
+ "outputs_kind": "SIM (review before submission)"
+}

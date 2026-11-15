@@ -399,6 +399,83 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   edge: chip m windowed by y \textless{} a, chip m+1 by the mirror image
   (block combining boundary). Roll and straightness use the local win
 \item
+  \texttt{results/m27\_figure.json}: Left: y-z section of the adopted
+  block (rays every 6.4 deg, mirrors black, exit face), with the light
+  regions of the blocks of the neighbouring chips (grey, 10 um margin)
+  and the chips (dark grey, z \textless{}
+\item
+  \texttt{results/m27\_pol.json}: cross\_pol\_focus:
+  \textbar E\_y\textbar\^{}2 / \textbar E\textbar\^{}2 of the coherent
+  pupil sum (field at the centre of the tweezer, before the objective);
+  V\_focus: its degree of circular polarisation;
+  cross\_pol\_power\_pupil: incoherent p
+\item
+  \texttt{results/m27\_poltrade.json}:
+\item
+  \texttt{results/m27\_scan.json}: form\_sensitivity\_rms: rms over the
+  pupil of sqrt(sum\_j (2 n cos i\_j)\^{}2), optical path per unit
+  normal sag error of the two mirrors. Ranking: sensitivity, then block
+  length.
+\item
+  \texttt{results/m27\_skew.json}: peak\_rel\_ideal: y-line peak
+  relative to an ideal sine-condition collimator with the same facet
+  spectrum and sx. dz\_equiv: facet focus error (in the source medium)
+  whose first-order wavefront best matc
+\item
+  \texttt{results/m27\_skew\_summary.json}:
+\item
+  \texttt{results/m27\_tolerance.json}: exact\_check: residual between
+  exactly traced path change of a displaced source and the first-order
+  model of the wave model (waves rms, peak-to-valley),
+  \textbar s\textbar{} \textless= 0.9.
+\item
+  \texttt{results/m27\_trace.json}: g\_over\_target: exit height / (f sy
+  n / n\_eff); f\_scale = n / n\_eff. effective\_index\_vs\_3d: largest
+  difference between the 2D effective-index lens map (used by the wave
+  model) and the 3D trace.
+\item
+  \texttt{results/m27\_wave.json}: 1D y line, s\_x = 0.
+  peak\_rel\_ideal: per unit guided power, relative to the ideal lens in
+  air at beta 0.7 (as m14\_wave).
+\item
+  \texttt{results/m27\_xaxis.json}:
+\item
+  \texttt{results/m28\_figure.json}: Left: defect fraction just after
+  each image, 1e4 sites, tau 3000 s, cold steps, seed 1. Right: time to
+  the first image with defect fraction \textless= 1e-3 from 85\% random
+  loading, mean over seeds, tau 3000 s
+\item
+  \texttt{results/m28\_hardware.json}: Laser power is provisioned for
+  the peak number of simultaneously moving tweezers seen in the
+  simulation (assembly included). AOD multi-tone efficiency and
+  intermodulation are not included (per-tone ef
+\item
+  \texttt{results/m28\_main.json}: One objective field covering the
+  array is assumed for every method. AOD row-wise is a lower bound on
+  crossed-AOD throughput; all-parallel is an idealised ceiling, not a
+  hardware model.
+\item
+  \texttt{results/m29\_capacity.json}: Demand (1 refill/s per site plus
+  vacuum) exceeds every unit\textquotesingle s capacity, so
+  moves\_per\_s is the throughput (capacity) of one unit, travel and
+  field scanning included; refills\_per\_s is lower because some
+\item
+  \texttt{results/m29\_figure.json}: Steady-state defect fraction at 1e6
+  sites vs number of independent units (zones of 1e6/K sites), cold
+  steps, assembled start. Grey line: eps + T/(2 tau), the floor for zero
+  latency.
+\item
+  \texttt{results/m29\_hardware.json}: K = whole units covering 1e6
+  sites. P\_transport: provisioned for K units each at its peak
+  simultaneous tweezers when busy (assembly or saturation); P\_steady: K
+  x mean tweezers per pass in the steady w
+\item
+  \texttt{results/m29\_ladder.json}: K\_at\_1e6 = 1e6 / computation
+  sites per zone. Zones are independent, so the time-averaged defect
+  fraction of one zone is that of 1e6 sites served by K such units.
+\item
+  \texttt{results/m29\_ladder\_fast.json}:
+\item
   \texttt{results/m2\_couplers.json}: Excludes Fresnel loss
   (index-matched or AR-coated facet assumed) and taper conversion loss.
 \item
@@ -410,6 +487,41 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   mode versus the closed computational window. The main sweep
   (m2\_couplers) uses a 7 um window; near cutoff that clips the mode
   tail.
+\item
+  \texttt{results/m30\_coupling.json}: Bloch picture: a tweezer at x\_a
+  is formed by emitters with phase step q = k0 s\_x p, close to one
+  Bloch mode of the coupled array; its effective index, and so the y
+  emission sine, is n0 + (dn\_split/2).
+\item
+  \texttt{results/m30\_directionality.json}: directionality = up / (up +
+  down) of the radiated power; for a long grating the transmitted
+  remainder vanishes and the up-fraction of guided power approaches it
+  (minus back-reflection).
+\item
+  \texttt{results/m30\_imaging.json}: peak: line intensity (1/um) per
+  unit emitted power, same normalisation as RelayY.atom\_line. Design:
+  shortest grating with crosstalk at 4 um \textless= 1.2e-4 (the edge
+  emitter gives 8e-5 to 1.1e-4), then the
+\item
+  \texttt{results/m30\_power.json}: P\_tweezer scales the edge-chain
+  power by the ratio of line peaks per unit guided power (y axis only).
+  If the emitter pitch must grow to suppress coupling, the x field per
+  engine shrinks by x\_field\_fra
+\item
+  \texttt{results/m31\_frequency.json}: A crossed AOD shifts each
+  addressed site by its own RF frequency. For a light-shift (Z) gate
+  this is harmless; for coherent two-photon (Raman) addressing against a
+  global beam the relative phase walks
+\item
+  \texttt{results/m31\_leakage.json}: With equally spaced tones every
+  third-order product lands on a site of the same line, so the idle-site
+  leakage of a multi-tone AOD equals its intermodulation level at those
+  sites.
+\item
+  \texttt{results/m31\_patterns.json}: Crossed AODs illuminate row-set x
+  column-set rectangles; an arbitrary pattern lit once per site needs an
+  exact partition of its ones into rectangles. Bands: real rank (lower)
+  to the best of greedy, di
 \item
   \texttt{results/m3\_field\_tradeoff.json}: 1D scalar Fourier optics;
   aplanatic objective (pupil radius F NA). The number of resolvable
