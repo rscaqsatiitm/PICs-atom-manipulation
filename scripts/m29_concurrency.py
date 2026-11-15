@@ -41,6 +41,16 @@ FIXED = {"PIC 16 x 1": (16, 46), "PIC 32 x 4": (32, 8 * 46), "AOD 40": (40, 40),
 LADDER = [1e6, 2.5e5, 6.25e4, 1.5625e4, 3.9e3]
 
 
+def demand(n_comp, tau, eps=1e-4, T_img=0.1, t_img=0.01):
+    """Refills per second needed: vacuum losses plus imaging losses, one image per cycle T_img + t_img (megasort)."""
+    return n_comp * (1 / tau + eps / (T_img + t_img))
+
+
+def units(n_comp, N=N_TOTAL):
+    """Whole units, each serving n_comp computation sites, needed to cover N sites."""
+    return int(np.ceil(N / n_comp - 1e-9))
+
+
 def zone_dims(Nz):
     """Rows and columns of a square-ish zone holding Nz computation sites (band layout B, BC)."""
     C = int(np.ceil(np.sqrt(Nz)))
@@ -83,7 +93,7 @@ def run(cfg):
             "steady_mean_defect": sim.mean_defect(t0), "steady_at_image_defect": float(d[d[:, 0] >= t0, 1].mean()),
             "refills_per_s": (sim.n_fills - fills0) / max(sim.t - t_mid, 1e-9),
             "moves_per_s": (sim.n_moves - moves0) / max(sim.t - t_mid, 1e-9),
-            "demand_per_s": float(sim.comp.sum() * (1 / cfg["tau"] + P.eps_img / P.T_img)),
+            "demand_per_s": float(demand(sim.comp.sum(), cfg["tau"], P.eps_img, P.T_img, P.t_img)),
             "tweezers_per_pass_max_window": int(pt.max()), "tweezers_per_pass_mean_window": float(pt.mean())}
 
 
@@ -173,15 +183,22 @@ def ladder_fast():
     for unit in ("PIC 32 x 4", "PIC 16 x 1", "AOD 40", "AOD 128"):
         for Nz in (1e6, 2.5e5):
             R, C = zone_dims(Nz)
-            cfgs.append({"unit": unit, "kind": "ladder fast", "Nz": Nz, "R": R, "C": C, "tau": 3000.0, "timing": "fast",
-                         "seed": 1, "assembled": True, "t_end": 15.0})
+            for seed in (1, 2, 3):
+                cfgs.append({"unit": unit, "kind": "ladder fast", "Nz": Nz, "R": R, "C": C, "tau": 3000.0,
+                             "timing": "fast", "seed": seed, "assembled": True, "t_end": 15.0})
     rows = _pool(cfgs)
-    for r in sorted(rows, key=lambda r: (r["unit"], -r["Nz"])):
-        print(r["unit"].ljust(11), "K %5.1f" % (N_TOTAL / r["comp_sites"]), "| defect %.3e" % r["steady_mean_defect"], flush=True)
+    summ = []
+    for unit in ("PIC 32 x 4", "PIC 16 x 1", "AOD 40", "AOD 128"):
+        for Nz in (1e6, 2.5e5):
+            v = [r["steady_mean_defect"] for r in rows if r["unit"] == unit and r["Nz"] == Nz]
+            summ.append({"unit": unit, "Nz": Nz, "K": int(np.ceil(N_TOTAL / Nz - 1e-9)), "seeds": len(v),
+                         "mean": float(np.mean(v)), "std": float(np.std(v)), "min": float(min(v)), "max": float(max(v))})
+            print(unit.ljust(11), "K %d | defect %.3e +/- %.1e (%.3e to %.3e)" % (summ[-1]["K"], summ[-1]["mean"],
+                  summ[-1]["std"], summ[-1]["min"], summ[-1]["max"]), flush=True)
     save_result("m29_ladder_fast", script=SCRIPT,
-                inputs={"timing": "fast", "p_move": 4e-3, "heat_uK_per_move": 10.0, "tau_s": 3000.0, "seed": 1,
+                inputs={"timing": "fast", "p_move": 4e-3, "heat_uK_per_move": 10.0, "tau_s": 3000.0, "seeds": [1, 2, 3],
                         "start": "assembled"},
-                outputs={"rows": rows})
+                outputs={"summary": summ, "rows": rows})
     return rows
 
 
@@ -191,6 +208,7 @@ def hardware():
     cap = json.loads((RESULTS / "m29_capacity.json").read_text())["outputs"]["rows"]
     p_tw = {"PIC": P_TW_PIC_W, "AOD": P_TW_ATOMS_W / ETA_AOD**2, "single": P_TW_ATOMS_W / ETA_AOD**2}
     chans = {"PIC 16 x 1": 16 * ACT_ENGINE, "PIC 32 x 4": 128 * ACT_ENGINE, "AOD 40": 2, "AOD 128": 2, "single 40": 2}
+    runs = json.loads((RESULTS / "m29_ladder.json").read_text())["outputs"]["runs"]
     rows, best = [], {}
     for s in lad:
         if "assembly" in s["kind"]:
@@ -199,13 +217,17 @@ def hardware():
         c = [r for r in cap if r["unit"] == u and r["timing"] == "slow"]
         cap_u = max(r["moves_per_s"] for r in c)  # moves/s per unit, largest of the 1e4 / 1e5 zones
         tw = max(r["tweezers_per_pass_max_window"] for r in c)  # peak when busy
-        K = s["K_at_1e6"]
+        K = units(s["comp_sites"])  # whole units covering 1e6 sites
         P = K * tw * p_tw[u.split()[0]]
+        tw_ss = float(np.mean([r["tweezers_per_pass_mean_window"] for r in runs if r["unit"] == u and r["kind"] == s["kind"]
+                               and r["R"] == s["R"] and r["C"] == s["C"] and r["tau"] == s["tau"]]))
+        P_ss = K * tw_ss * p_tw[u.split()[0]]
         row = {**{k: s[k] for k in ("unit", "kind", "tau", "R", "C", "comp_sites", "positions", "steady_mean_defect",
                                     "steady_std")},
                "K": K, "capacity_per_unit": cap_u, "capacity_total": K * cap_u,
-               "demand_1e6": N_TOTAL * (1 / s["tau"] + 1e-4 / 0.1), "peak_tweezers_per_unit": tw,
-               "P_transport_W_1.2mK": P, "P_transport_W_0.3mK": P / 4, "fast_channels": K * chans[u]}
+               "demand_1e6": demand(N_TOTAL, s["tau"]), "peak_tweezers_per_unit": tw,
+               "P_transport_W_1.2mK": P, "P_transport_W_0.3mK": P / 4,
+               "steady_tweezers_per_pass_per_unit": tw_ss, "P_steady_W_1.2mK": P_ss, "fast_channels": K * chans[u]}
         rows.append(row)
     for u in UNITS:
         for tau in (3000.0, 300.0):
@@ -214,7 +236,9 @@ def hardware():
                 if ok:
                     r = min(ok, key=lambda r: r["K"])
                     best[f"{u}|{tau:g}|{tgt:g}"] = {"K": r["K"], "zone": [r["R"], r["C"]], "defect": r["steady_mean_defect"],
-                                                    "P_W_1.2mK": r["P_transport_W_1.2mK"], "fast_channels": r["fast_channels"]}
+                                                    "P_W_1.2mK": r["P_transport_W_1.2mK"],
+                                                    "P_steady_W_1.2mK": r["P_steady_W_1.2mK"],
+                                                    "fast_channels": r["fast_channels"]}
                 else:
                     best[f"{u}|{tau:g}|{tgt:g}"] = None
     for k, v in best.items():
@@ -225,8 +249,11 @@ def hardware():
                         "defects": "results/m29_ladder.json", "units": "one unit = one separate beam path into the "
                         "objective (stack, block, AOD pair, single spot)"},
                 outputs={"rows": rows, "smallest_K": best},
-                notes="Power is provisioned for K units each at its peak simultaneous tweezers when busy. The ladder "
-                      "is coarse, so smallest_K is the smallest simulated K meeting the target, not an interpolation.")
+                notes="K = whole units covering 1e6 sites. P_transport: provisioned for K units each at its peak "
+                      "simultaneous tweezers when busy (assembly or saturation); P_steady: K x mean tweezers per pass "
+                      "in the steady window. Channels are the fixed cost. Demand uses the simulator's image cycle "
+                      "T_img + t_img = 0.11 s. The ladder is coarse, so smallest_K is the smallest simulated K meeting "
+                      "the target, not an interpolation.")
     return rows, best
 
 

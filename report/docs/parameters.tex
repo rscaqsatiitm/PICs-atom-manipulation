@@ -465,10 +465,10 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   steps, assembled start. Grey line: eps + T/(2 tau), the floor for zero
   latency.
 \item
-  \texttt{results/m29\_hardware.json}: Power is provisioned for K units
-  each at its peak simultaneous tweezers when busy. The ladder is
-  coarse, so smallest\_K is the smallest simulated K meeting the target,
-  not an interpolation.
+  \texttt{results/m29\_hardware.json}: K = whole units covering 1e6
+  sites. P\_transport: provisioned for K units each at its peak
+  simultaneous tweezers when busy (assembly or saturation); P\_steady: K
+  x mean tweezers per pass in the steady w
 \item
   \texttt{results/m29\_ladder.json}: K\_at\_1e6 = 1e6 / computation
   sites per zone. Zones are independent, so the time-averaged defect

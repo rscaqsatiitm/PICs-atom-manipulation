@@ -28,10 +28,11 @@ to the floor eps + T/(2 tau) = 1.17e-4.
 (ii) \textbf{Concurrency does not favour the PIC.} At equal K the units
 converge. Every unit needs K = 4 for 2e-4 and K = 16 for 1.5e-4, and
 with K = 16 even a single moving tweezer per zone holds 1.37e-4. The PIC
-units then cost far more:
+units then cost far more. Fast control channels are the fixed cost;
+laser power is given provisioned and in steady state:
 
 {\footnotesize
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.156\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.156\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.148\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.180\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.156\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.205\dimexpr(\linewidth-12\tabcolsep)\relax}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.229\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.145\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.122\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.168\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.145\dimexpr(\linewidth-12\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.191\dimexpr(\linewidth-12\tabcolsep)\relax}@{}}
 \toprule\noalign{}
 K & PIC 32 x 4 & PIC 16 x 1 & AOD, 128-site field & AOD, 40-site field &
 single tweezer \\
@@ -39,15 +40,32 @@ single tweezer \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-4 (\textless= 2e-4) & 71 W / 195,700 ch. & 41 W / 24,460 ch. & 9.0 W / 8
-ch. & 3.0 W / 8 ch. & not simulated \\
-16 (\textless= 1.5e-4) & 285 W / 781,000 ch. & 162 W / 97,700 ch. & 36 W
-/ 32 ch. & 12 W / 32 ch. & 0.30 W / 32 ch. \\
+4 (\textless= 2e-4): channels & 196,096 & 24,512 & 8 & 8 & not
+simulated \\
+power provisioned / steady & 71.5 W / 0.25 W & 40.6 W / 0.23 W & 9.0 W /
+0.076 W & 3.0 W / 0.075 W & \\
+16 (\textless= 1.5e-4): channels & 784,384 & 98,048 & 32 & 32 & 32 \\
+power provisioned / steady & 286 W / 0.99 W & 162 W / 0.94 W & 36 W /
+0.30 W & 12 W / 0.30 W & 0.30 W / 0.30 W \\
 \end{longtable}
 }
 
-Transport laser power is at 1.2 mK (divide by 4 for the 0.3 mK moving
-depth of the transport model); "ch." counts fast control channels.
+K counts whole units, ceil(10\^{}6 / sites per zone). Transport laser
+power is at 1.2 mK; divide by 4 for the 0.3 mK moving depth of the
+transport model.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Provisioned power} covers each unit at its peak simultaneous
+  tweezers when busy (assembly or saturation, up to 310 for PIC 32 x 4).
+\item
+  \textbf{Steady-state power} is K x the mean tweezers per pass in the
+  steady window, about 1.0 to 1.1 per unit. (Corrected: an earlier
+  version used the non-integer 10\^{}6 / sites per zone, which gave
+  slightly low totals, e.g. 195,705 instead of 196,096, and showed only
+  the provisioned power.)
+\end{itemize}
 
 (iii) \textbf{Throughput is not the limit.} At saturation, the capacity
 per unit with cold steps is:
@@ -61,11 +79,14 @@ per unit with cold steps is:
 \item
   40-site AOD: about 20,000;
 \item
-  single tweezer: 570. The demand at 10\^{}6 sites is 1,335/s at tau
-  3000 s and 4,330/s at 300 s. What limits one unit on a large array is
-  latency: the time its field needs to come back to a new hole after
-  each image. Splitting the array shortens that time for every method
-  alike.
+  single tweezer: 570. The demand at 10\^{}6 sites is 1,242/s at tau
+  3000 s and 4,242/s at 300 s, with the simulator\textquotesingle s
+  image cycle T\_img + t\_img = 0.11 s. The measured refill rates match:
+  1,225/s and 4,247/s for PIC 32 x 4 at K = 1. (Corrected: an earlier
+  version used a 0.1 s cycle, 1,335/s and 4,330/s.) What limits one unit
+  on a large array is latency: the time its field needs to come back to
+  a new hole after each image. Splitting the array shortens that time
+  for every method alike.
 \end{itemize}
 
 The analysis\textquotesingle s starting figure, 420 to 570 refills/s
@@ -131,10 +152,22 @@ second in the window are the capacity. Refills are 1 to 8\% lower,
 because some reservoir atoms seen in the image are lost before they are
 moved.
 
-\textbf{Hardware.} Laser power is K x peak simultaneous tweezers of a
-busy unit x power per tweezer: 57.7 mW for the PIC (fibre input, m27),
-18.7 mW for the AOD (module 28). Channels are 383 per PIC engine
-(192-port engine) and 2 per AOD pair.
+\textbf{Hardware.}
+
+\begin{itemize}
+\tightlist
+\item
+  Laser power per tweezer is 57.7 mW for the PIC (fibre input, m27) and
+  18.7 mW for the AOD (module 28).
+\item
+  Provisioned power: K x peak simultaneous tweezers of a busy unit
+  (capacity runs) x power per tweezer.
+\item
+  Steady-state power: K x mean tweezers per pass in the
+  ladder\textquotesingle s steady window x power per tweezer.
+\item
+  Channels: 383 per PIC engine (192-port engine) and 2 per AOD pair.
+\end{itemize}
 
 \hypertarget{3-results}{%
 \section{Results}\label{concurrency-3-results}}
@@ -171,10 +204,10 @@ however. Once the array is split among 16 or more units, the unit no
 longer matters.
 
 \textbf{Fast steps} (50 us ramps, 10 uK and 4e-3 loss per move; tau 3000
-s, one seed; \texttt{results/m29\_ladder\_fast.json}).
-\texttt{docs/megascale.md} finds one 128-engine block near 2e-4 at
-10\^{}6 sites at this operating point. The 128-site AOD pair reaches the
-same level:
+s; three seeds, mean +/- spread;
+\texttt{results/m29\_ladder\_fast.json}). \texttt{docs/megascale.md}
+finds one 128-engine block near 2e-4 at 10\^{}6 sites at this operating
+point. The 128-site AOD pair reaches the same level:
 
 {\small
 \begin{longtable}[]{@{}lllll@{}}
@@ -184,14 +217,16 @@ K & PIC 32 x 4 & PIC 16 x 1 & AOD 128 & AOD 40 \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-1 & 1.87e-4 & 4.0e-4 & 1.83e-4 & 3.1e-4 \\
-4 & 1.50e-4 & 1.50e-4 & 1.47e-4 & 1.45e-4 \\
+1 & 1.91e-4 +/- 0.03e-4 & 4.03e-4 +/- 0.09e-4 & 1.84e-4 +/- 0.01e-4 &
+3.19e-4 +/- 0.14e-4 \\
+4 & 1.48e-4 +/- 0.02e-4 & 1.50e-4 +/- 0.02e-4 & 1.45e-4 +/- 0.04e-4 &
+1.48e-4 +/- 0.03e-4 \\
 \end{longtable}
 }
 
-So with fast steps even one unit of each kind comes close to the floor,
-and the PIC block has no advantage over a crossed AOD with a 128-site
-field.
+So with fast steps one PIC 32 x 4 block and one crossed AOD with a
+128-site field are equal to within 4\%; the AOD is marginally lower.
+With four units every type is within the seed spread of the others.
 
 \textbf{Assembly from a random loading} (zones of 6.25e4 sites and
 smaller, i.e. K \textgreater= 16): PIC units are done by the first image
@@ -269,14 +304,14 @@ value & location & type & pointer \\
 defect fractions vs K, assembly times & Sec. 1, 3 & SIM &
 results/m29\_ladder.json (review) \\
 fast-step K = 1 and 4 at 10\^{}6 sites & Sec. 3 & SIM &
-results/m29\_ladder\_fast.json (one seed; review) \\
+results/m29\_ladder\_fast.json (three seeds; review) \\
 capacity per unit, peak tweezers & Sec. 1, 3 & SIM &
 results/m29\_capacity.json (review) \\
 power and channels vs K, smallest K & Sec. 1 & DERIVED &
 results/m29\_hardware.json \\
 floor eps + T/(2 tau) & Sec. 1 & DERIVED & docs/megascale.md Sec. 10 \\
-demand 1,335/s (tau 3000 s), 4,330/s (300 s) & Sec. 1 & DERIVED & N
-(1/tau + eps/T\_img) \\
+demand 1,242/s (tau 3000 s), 4,242/s (300 s) & Sec. 1 & DERIVED & N
+(1/tau + eps/(T\_img + t\_img)), cycle 0.11 s \\
 units, timings, losses, per-tweezer powers & Sec. 2 & SIM / CHOICE /
 SOURCE & docs/aod\_comparison.md \\
 \end{longtable}

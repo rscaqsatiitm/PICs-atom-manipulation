@@ -54,8 +54,16 @@ emitter's facet image has a 1/e^2 radius of about D x 0.97 um = 1.45 mm.
 substrate alone), against 57.7 mW for the edge emitter with the reflective collimator. This counts the y axis only;
 the x axis is that of the edge emitter, at the pitch D1 uses.
 
-Hence the tile removes the stack, the collimator and its +/-0.1 um glue tolerance, and it can be about 20% more
-efficient. It brings its own costs:
+**At the wider pitch the coupling needs, the gain is lost (provisional).** The 35% loss of x field at 2.2 um pitch
+may be recoverable by changing the x-relay magnification, since the number of resolvable spots equals the number of
+emitters at any pitch. The price is the fill factor (1.2 um emitters: 0.80 at 1.5 um, 0.55 at 2.2 um). The fraction
+of one emitter's far-field power inside the grating-lobe-free range |s| <= lambda / (2p) falls from 0.71 at 1.5 um to
+0.54 at 2.2 um (0.51 at 2.3 um), a relative efficiency of 0.76 (DERIVED from the femwell emitter mode; the x relay is
+not simulated). The tile at 2.2 um would then need about 61 mW per tweezer, no better than the edge emitter.
+
+Hence the tile removes the stack, the collimator and its +/-0.1 um glue tolerance. It is about 20% more efficient
+only at the D1 pitch, where coupling rules it out; at the pitch coupling allows it is about equal to the edge
+emitter. It brings its own costs:
 - a 4 mm apodized grating per emitter, with the emission rate controlled along it;
 - a Bragg mirror under the BOX;
 - an emitter pitch of about 2.2 um, or a phase-mismatched emitter design that has not been found;
@@ -149,6 +157,7 @@ the grating, so the engine (FPR slab of about 2 mm) has to sit beside the emitte
 | coupling, band swing, field fraction | Sec. 1, 3 | SIM | results/m30_coupling.json (review) |
 | imaging profiles, angle and focus tolerance | Sec. 1, 4 | SIM | results/m30_imaging.json |
 | power per tweezer | Sec. 1, 4 | DERIVED | results/m30_power.json |
+| capture fraction vs pitch, relay-magnification alternative | Sec. 1 | DERIVED | results/m30_power.json (x_relay_alternative; provisional) |
 | tile pitch 6 mm, D = 1500, grating length choices | Sec. 1 | CHOICE | docs/scaling_beyond.md Sec. 5 |
 | n(Si) 3.55, n(SiO2) 1.4496 at 1064.4 nm | Sec. 2 | SOURCE / CHOICE | picsim/params.py, picsim/materials.py |
 | edge chain 57.7 mW | Sec. 1 | SIM | results/m27_wave.json |

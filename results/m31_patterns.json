@@ -1,8 +1,8 @@
 {
  "name": "m31_patterns",
  "script": "scripts/m31_addressing.py",
- "git": "d5ac981",
- "notes": "Crossed AODs illuminate row-set x column-set rectangles; an arbitrary pattern lit once per site needs an exact partition of its ones into rectangles. Bands: real rank (lower) to the best of greedy, distinct rows and distinct columns (upper). PIC router and SLM/DMD: one round. Black line: one round. The figure shows the band between the bounds.",
+ "git": "9834504",
+ "notes": "Crossed AODs illuminate row-set x column-set rectangles; an arbitrary pattern lit once per site needs an exact partition of its ones into rectangles. Bands: real rank (lower) to the best of greedy, distinct rows and distinct columns (upper). PIC router and free-space modulator: one round. Black line: one round. The figure shows the band between the bounds.",
  "inputs": {
   "patterns": "random, independent sites",
   "aod_access_s": [
@@ -32,7 +32,7 @@
       5.699999999999999
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -40,7 +40,7 @@
       6.375
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -48,7 +48,7 @@
       13.125
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -63,7 +63,7 @@
       7.9799999999999995
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -71,7 +71,7 @@
       8.925
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -79,7 +79,7 @@
       18.375000000000004
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -94,7 +94,7 @@
       18.43
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -102,7 +102,7 @@
       20.6125
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -110,7 +110,7 @@
       42.4375
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -125,7 +125,7 @@
       24.51
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -133,7 +133,7 @@
       27.412499999999998
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -141,7 +141,7 @@
       56.43750000000001
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -156,7 +156,7 @@
       19.19
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -164,7 +164,7 @@
       21.4625
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -172,7 +172,7 @@
       44.1875
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -187,7 +187,7 @@
       29.26
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -195,7 +195,7 @@
       32.725
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -203,7 +203,7 @@
       67.37500000000001
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -218,7 +218,7 @@
       48.26
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -226,7 +226,7 @@
       53.974999999999994
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -234,7 +234,7 @@
       111.125
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -249,7 +249,7 @@
       59.09
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -257,7 +257,7 @@
       66.0875
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -265,7 +265,7 @@
       136.0625
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -280,7 +280,7 @@
       58.9
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -288,7 +288,7 @@
       65.875
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -296,7 +296,7 @@
       135.625
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -311,7 +311,7 @@
       86.83000000000001
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -319,7 +319,7 @@
       97.11250000000001
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -327,7 +327,7 @@
       199.93750000000003
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -342,7 +342,7 @@
       118.18
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -350,7 +350,7 @@
       132.175
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -358,7 +358,7 @@
       272.125
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -373,7 +373,7 @@
       121.6
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -381,7 +381,7 @@
       136.0
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -389,7 +389,7 @@
       280.00000000000006
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -404,7 +404,7 @@
       102.6
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -412,7 +412,7 @@
       114.75
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -420,7 +420,7 @@
       236.25000000000003
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -435,7 +435,7 @@
       154.5333333333333
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -443,7 +443,7 @@
       172.83333333333331
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -451,7 +451,7 @@
       355.8333333333333
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -466,7 +466,7 @@
       182.39999999999998
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -474,7 +474,7 @@
       204.0
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -482,7 +482,7 @@
       420.0
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -497,7 +497,7 @@
       182.39999999999998
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -505,7 +505,7 @@
       204.0
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -513,7 +513,7 @@
       420.0
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -528,7 +528,7 @@
       238.13333333333333
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -536,7 +536,7 @@
       266.3333333333333
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -544,7 +544,7 @@
       548.3333333333334
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -559,7 +559,7 @@
       294.5
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -567,7 +567,7 @@
       329.375
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -575,7 +575,7 @@
       678.1250000000001
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -590,7 +590,7 @@
       304.0
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -598,7 +598,7 @@
       340.0
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -606,7 +606,7 @@
       700.0000000000001
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    },
    {
@@ -621,7 +621,7 @@
       304.0
      ],
      "PIC": 0.316,
-     "SLM_DMD": 23.35581395348837
+     "free_space_modulator": 23.35581395348837
     },
     "time_us_pulse_1us": {
      "AOD": [
@@ -629,7 +629,7 @@
       340.0
      ],
      "PIC": 1.216,
-     "SLM_DMD": 24.25581395348837
+     "free_space_modulator": 24.25581395348837
     },
     "time_us_pulse_10us": {
      "AOD": [
@@ -637,7 +637,7 @@
       700.0000000000001
      ],
      "PIC": 10.216,
-     "SLM_DMD": 33.25581395348837
+     "free_space_modulator": 33.25581395348837
     }
    }
   ]

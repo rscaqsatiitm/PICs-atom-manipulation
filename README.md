@@ -48,7 +48,7 @@ rebuild with `make report` (needs TeX Live with latexmk, and pandoc).
 | 28 AOD baseline | `scripts/m28_aod_baseline.py` | the PIC rearrangement engine against crossed AODs (row-wise, fields of 24 to 128 sites), a single moving tweezer and an all-parallel ceiling in the same steady-state simulator (`picsim/megasort.py`, `Block.mode`): assembly time, steady-state defects, tweezers per pass, transport laser power and control channels at 1e3 to 1e5 sites; `docs/aod_comparison.md` |
 | 29 Concurrency | `scripts/m29_concurrency.py` | K independent units (zones of 1e6/K sites) for PIC blocks, crossed AODs and a single tweezer: capacity at saturation, steady-state defects vs K at 1e6 sites, power and channels vs K; `docs/concurrency.md` |
 | 30 Planar tile | `scripts/m30_planar_tile.py` | surface-emitting tile instead of the chip stack: coupling of long grating emitters (Bloch-angle swing vs pitch), grating directionality with substrate, Bragg and metal mirrors (MEEP), y imaging and angle tolerance, power per tweezer; `docs/planar_tile.md` |
-| 31 Addressing | `scripts/m31_addressing.py` | the switch router against crossed AODs and an SLM/DMD modulator: rounds per arbitrary pattern (rank and partition bounds), time per pattern, third-order products on idle sites, per-site frequency tags; `docs/addressing.md` |
+| 31 Addressing | `scripts/m31_addressing.py` | the switch router against crossed AODs and a free-space modulator: rounds per arbitrary pattern (rank and partition bounds), time per pattern, third-order products on idle sites, per-site frequency tags; `docs/addressing.md` |
 
 ## Layout
 

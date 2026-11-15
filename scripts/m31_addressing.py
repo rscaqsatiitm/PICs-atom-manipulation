@@ -1,11 +1,11 @@
-"""Module 31: addressing at 894.6 nm. The PIC switch router against crossed AODs and an SLM/DMD modulator.
+"""Module 31: addressing at 894.6 nm. The PIC switch router against crossed AODs and a free-space modulator (Zhang et al.).
 
 Parts:
   patterns   arbitrary on/off patterns on an n x n block: crossed AODs light row-set x column-set rectangles, so a
              pattern needs as many rounds as a partition of its ones into rectangles (lower bound: matrix rank over
              the reals; upper bound: greedy partition, distinct rows, distinct columns). The PIC router (one switch
-             per site) and an SLM/DMD modulator need one round. Time per pattern from the access / switching times
-  leakage    idle-site light: PIC (m4 cascade, measured device), SLM/DMD (Zhang et al.), crossed AODs with k tones
+             per site) and a free-space modulator (Zhang et al.) need one round. Time per pattern from the access / switching times
+  leakage    idle-site light: PIC (m4 cascade, measured device), free-space modulator (Zhang et al.), crossed AODs with k tones
              (third-order intermodulation spots at 2 f_i - f_j land on sites of the same line; level swept)
   frequency  per-site frequency tags of an AOD (tone spacing = bandwidth / resolvable spots) and the phase they
              accumulate in coherent (Raman) addressing; the PIC and the DMD keep one frequency
@@ -75,11 +75,11 @@ def patterns():
                 aod = [r["rounds_lower_mean"] * (T_AOD_ACCESS[0] + tp), r["rounds_upper_mean"] * (T_AOD_ACCESS[1] + tp)]
                 r[f"time_us_pulse_{tp * 1e6:g}us"] = {"AOD": [t * 1e6 for t in aod],
                                                       "PIC": (T_PIC_RISE + T_PIC_SETTLE + tp) * 1e6,
-                                                      "SLM_DMD": (T_DMD + tp) * 1e6}
+                                                      "free_space_modulator": (T_DMD + tp) * 1e6}
             rows.append(r)
             print("n %2d density %.2f | AOD rounds %.1f to %.1f (max %d) | 1 us pulse: AOD %.0f-%.0f us, PIC %.2f us, DMD %.1f us"
                   % (n, rho, r["rounds_lower_mean"], r["rounds_upper_mean"], r["rounds_upper_max"],
-                     *r["time_us_pulse_1us"]["AOD"], r["time_us_pulse_1us"]["PIC"], r["time_us_pulse_1us"]["SLM_DMD"]),
+                     *r["time_us_pulse_1us"]["AOD"], r["time_us_pulse_1us"]["PIC"], r["time_us_pulse_1us"]["free_space_modulator"]),
                   flush=True)
     f, ax = fig(1, 1, h=3.0)
     for rho in (0.05, 0.1, 0.25, 0.5):
@@ -96,7 +96,7 @@ def patterns():
                 outputs={"rows": rows},
                 notes="Crossed AODs illuminate row-set x column-set rectangles; an arbitrary pattern lit once per site "
                       "needs an exact partition of its ones into rectangles. Bands: real rank (lower) to the best of "
-                      "greedy, distinct rows and distinct columns (upper). PIC router and SLM/DMD: one round. Black "
+                      "greedy, distinct rows and distinct columns (upper). PIC router and free-space modulator: one round. Black "
                       "line: one round. The figure shows the band between the bounds.")
     return rows
 
@@ -133,7 +133,7 @@ def leakage():
         "PIC switch, measured (8 channels, 795 nm)": {"extinction_dB": 71.4, "crosstalk_on_chip_dB": -68.0,
                                                       "crosstalk_after_free_space_dB": -50.8, "rise_ns": 26,
                                                       "source": "arXiv:2508.09920 abstract, read 2026-11-15"},
-        "SLM/DMD modulator (>10,000 spots)": {"contrast_dB": 46, "crosstalk_nearest_dB": -44, "rate_kHz": 43,
+        "free-space modulator, Zhang et al. (>10,000 spots; device not named in the abstract)": {"contrast_dB": 46, "crosstalk_nearest_dB": -44, "rate_kHz": 43,
                                               "source": "arXiv:2310.08539 abstract, read 2026-11-15"},
         "crossed AOD": {"intermodulation_dBc": "[VALUE?] not found in the sources read; swept -30 to -60",
                         "rounds": "m31_patterns", "access_us": "4.5 to 7.5 (1064 nm TeO2 listing)"}}
@@ -147,9 +147,22 @@ def leakage():
 
 
 # ---------------------------------------------------------------------------------------------- frequency
+def tone_spacing_per_site(bw=20e6, sites_per_field=None):
+    """RF offset between neighbouring 4 um sites: the band spread over the sites of one field (module 28: 40)."""
+    if sites_per_field is None:
+        sys.path.insert(0, str(RESULTS.parent / "scripts"))
+        from m28_aod_baseline import AOD_FIELD
+        sites_per_field = AOD_FIELD
+    return bw / sites_per_field
+
 def frequency():
+    """(Corrected: an earlier version divided the band by the 150 resolvable spots and called it the offset per
+    site; the 150 spots span a 40-site field at 4 um pitch (module 28), so the offset per site is band / 40.)"""
+    sys.path.insert(0, str(RESULTS.parent / "scripts"))
+    from m28_aod_baseline import AOD_FIELD
     bw, spots = 20e6, 150  # Hz, 25-45 MHz operating band and 150 spots (45035-5-6.5DEG-1.06, SOURCE as above)
-    df = bw / spots
+    df = tone_spacing_per_site(bw, AOD_FIELD)  # per 4 um site: 150 spots x 1.06 um = 160 um = 40 sites
+    df_spot = bw / spots
     rows = []
     for d_sites in (1, 10, 40):
         for tp in PULSES:
@@ -159,8 +172,9 @@ def frequency():
         print("sites apart %2d, pulse %5.1f us: frequency offset %.2f MHz, phase %.2f rad" % (
             r["site_separation"], r["pulse_s"] * 1e6, r["delta_f_Hz"] / 1e6, r["phase_rad"]), flush=True)
     save_result("m31_frequency", script=SCRIPT,
-                inputs={"bandwidth_Hz": bw, "resolvable_spots": spots, "source": "45035-5-6.5DEG-1.06 (sintec listing)"},
-                outputs={"tone_spacing_per_site_Hz": df, "rows": rows},
+                inputs={"bandwidth_Hz": bw, "resolvable_spots": spots, "sites_per_field": AOD_FIELD,
+                        "source": "45035-5-6.5DEG-1.06 (sintec listing); 40 sites per field from module 28"},
+                outputs={"tone_spacing_per_site_Hz": df, "tone_spacing_per_resolvable_spot_Hz": df_spot, "rows": rows},
                 notes="A crossed AOD shifts each addressed site by its own RF frequency. For a light-shift (Z) gate this "
                       "is harmless; for coherent two-photon (Raman) addressing against a global beam the relative phase "
                       "walks as 2 pi delta_f t and must be tracked per site. The PIC router and a DMD keep one optical "

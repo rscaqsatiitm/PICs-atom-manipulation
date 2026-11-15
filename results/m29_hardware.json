@@ -1,8 +1,8 @@
 {
  "name": "m29_hardware",
  "script": "scripts/m29_concurrency.py",
- "git": "d5ac981",
- "notes": "Power is provisioned for K units each at its peak simultaneous tweezers when busy. The ladder is coarse, so smallest_K is the smallest simulated K meeting the target, not an interpolation.",
+ "git": "9834504",
+ "notes": "K = whole units covering 1e6 sites. P_transport: provisioned for K units each at its peak simultaneous tweezers when busy (assembly or saturation); P_steady: K x mean tweezers per pass in the steady window. Channels are the fixed cost. Demand uses the simulator's image cycle T_img + t_img = 0.11 s. The ladder is coarse, so smallest_K is the smallest simulated K meeting the target, not an interpolation.",
  "inputs": {
   "P_tweezer_PIC_mW": 57.7,
   "P_tweezer_AOD_mW": 18.74556213017751,
@@ -29,14 +29,16 @@
     "positions": 1,
     "steady_mean_defect": 0.00033181111883826453,
     "steady_std": 1.148436484415404e-05,
-    "K": 81.38020833333333,
+    "K": 82,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 3247450.2172268615,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 3272182.7980812616,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 183.06213017751477,
-    "P_transport_W_0.3mK": 45.765532544378694,
-    "fast_channels": 162.76041666666666
+    "P_transport_W_1.2mK": 184.4563313609467,
+    "P_transport_W_0.3mK": 46.11408284023668,
+    "steady_tweezers_per_pass_per_unit": 1.0293431347069268,
+    "P_steady_W_1.2mK": 1.5822404861634707,
+    "fast_channels": 164
    },
    {
     "unit": "AOD 128",
@@ -48,14 +50,16 @@
     "positions": 1,
     "steady_mean_defect": 0.00013221937487803033,
     "steady_std": 9.057510647025126e-06,
-    "K": 81.38020833333333,
+    "K": 82,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 3247450.2172268615,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 3272182.7980812616,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 183.06213017751477,
-    "P_transport_W_0.3mK": 45.765532544378694,
-    "fast_channels": 162.76041666666666
+    "P_transport_W_1.2mK": 184.4563313609467,
+    "P_transport_W_0.3mK": 46.11408284023668,
+    "steady_tweezers_per_pass_per_unit": 1.0073703574361026,
+    "P_steady_W_1.2mK": 1.5484653371202424,
+    "fast_channels": 164
    },
    {
     "unit": "AOD 128",
@@ -67,14 +71,16 @@
     "positions": 1,
     "steady_mean_defect": 0.0003291743052262418,
     "steady_std": 1.0817355027274508e-05,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 10054086.235647185,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 10055976.403859487,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 566.7592480779293,
-    "P_transport_W_0.3mK": 141.68981201948233,
-    "fast_channels": 503.90526581002774
+    "P_transport_W_1.2mK": 566.8657988165679,
+    "P_transport_W_0.3mK": 141.71644970414198,
+    "steady_tweezers_per_pass_per_unit": 1.0137923011991152,
+    "P_steady_W_1.2mK": 4.789034855444359,
+    "fast_channels": 504
    },
    {
     "unit": "AOD 128",
@@ -86,14 +92,16 @@
     "positions": 1,
     "steady_mean_defect": 0.00012784424103529568,
     "steady_std": 6.695377673966756e-06,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 10054086.235647185,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 10055976.403859487,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 566.7592480779293,
-    "P_transport_W_0.3mK": 141.68981201948233,
-    "fast_channels": 503.90526581002774
+    "P_transport_W_1.2mK": 566.8657988165679,
+    "P_transport_W_0.3mK": 141.71644970414198,
+    "steady_tweezers_per_pass_per_unit": 1.0040304149859245,
+    "P_steady_W_1.2mK": 4.742920860226052,
+    "fast_channels": 504
    },
    {
     "unit": "AOD 128",
@@ -105,14 +113,16 @@
     "positions": 2,
     "steady_mean_defect": 0.0003440521120479314,
     "steady_std": 8.094659308322802e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 2533629.731383091,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 2553898.7692341553,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 142.8233305156382,
-    "P_transport_W_0.3mK": 35.70583262890955,
-    "fast_channels": 126.98412698412699
+    "P_transport_W_1.2mK": 143.96591715976328,
+    "P_transport_W_0.3mK": 35.99147928994082,
+    "steady_tweezers_per_pass_per_unit": 1.0289665295338917,
+    "P_steady_W_1.2mK": 1.2344675845920448,
+    "fast_channels": 128
    },
    {
     "unit": "AOD 128",
@@ -124,14 +134,16 @@
     "positions": 2,
     "steady_mean_defect": 0.00013747681244553713,
     "steady_std": 8.658649817957507e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 2533629.731383091,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 2553898.7692341553,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 142.8233305156382,
-    "P_transport_W_0.3mK": 35.70583262890955,
-    "fast_channels": 126.98412698412699
+    "P_transport_W_1.2mK": 143.96591715976328,
+    "P_transport_W_0.3mK": 35.99147928994082,
+    "steady_tweezers_per_pass_per_unit": 1.007293402280547,
+    "P_steady_W_1.2mK": 1.2084659875691446,
+    "fast_channels": 128
    },
    {
     "unit": "AOD 128",
@@ -143,14 +155,16 @@
     "positions": 6,
     "steady_mean_defect": 0.00041295245134681893,
     "steady_std": 5.384101031123909e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 635930.9684347996,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 638474.6923085388,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 35.84808694217213,
-    "P_transport_W_0.3mK": 8.962021735543033,
-    "fast_channels": 31.872509960159363
+    "P_transport_W_1.2mK": 35.99147928994082,
+    "P_transport_W_0.3mK": 8.997869822485205,
+    "steady_tweezers_per_pass_per_unit": 1.0296279676914393,
+    "P_steady_W_1.2mK": 0.30881528062925245,
+    "fast_channels": 32
    },
    {
     "unit": "AOD 128",
@@ -162,14 +176,16 @@
     "positions": 6,
     "steady_mean_defect": 0.00013816338573867476,
     "steady_std": 7.074804788118817e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 635930.9684347996,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 638474.6923085388,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 35.84808694217213,
-    "P_transport_W_0.3mK": 8.962021735543033,
-    "fast_channels": 31.872509960159363
+    "P_transport_W_1.2mK": 35.99147928994082,
+    "P_transport_W_0.3mK": 8.997869822485205,
+    "steady_tweezers_per_pass_per_unit": 1.0090944600219567,
+    "P_steady_W_1.2mK": 0.30265668632895226,
+    "fast_channels": 32
    },
    {
     "unit": "AOD 128",
@@ -181,14 +197,16 @@
     "positions": 24,
     "steady_mean_defect": 0.007147266804756923,
     "steady_std": 1.094382317652371e-05,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 159300.07293127215,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 159618.6730771347,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 8.979910002480244,
-    "P_transport_W_0.3mK": 2.244977500620061,
-    "fast_channels": 7.984031936127744
+    "P_transport_W_1.2mK": 8.997869822485205,
+    "P_transport_W_0.3mK": 2.2494674556213012,
+    "steady_tweezers_per_pass_per_unit": 2.482249255213506,
+    "P_steady_W_1.2mK": 0.18612463054476652,
+    "fast_channels": 8
    },
    {
     "unit": "AOD 128",
@@ -200,14 +218,16 @@
     "positions": 24,
     "steady_mean_defect": 0.00016575731907394583,
     "steady_std": 1.2253774032139483e-06,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 159300.07293127215,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 159618.6730771347,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 8.979910002480244,
-    "P_transport_W_0.3mK": 2.244977500620061,
-    "fast_channels": 7.984031936127744
+    "P_transport_W_1.2mK": 8.997869822485205,
+    "P_transport_W_0.3mK": 2.2494674556213012,
+    "steady_tweezers_per_pass_per_unit": 1.0079562873747157,
+    "P_steady_W_1.2mK": 0.07557882883794316,
+    "fast_channels": 8
    },
    {
     "unit": "AOD 128",
@@ -219,14 +239,16 @@
     "positions": 88,
     "steady_mean_defect": 0.024942893665737213,
     "steady_std": 1.0034218665428557e-05,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 39864.80346581786,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 39904.66826928368,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 2.247220235385915,
-    "P_transport_W_0.3mK": 0.5618050588464788,
-    "fast_channels": 1.998001998001998
+    "P_transport_W_1.2mK": 2.2494674556213012,
+    "P_transport_W_0.3mK": 0.5623668639053253,
+    "steady_tweezers_per_pass_per_unit": 6.551309054672283,
+    "P_steady_W_1.2mK": 0.12280797091835378,
+    "fast_channels": 2
    },
    {
     "unit": "AOD 128",
@@ -238,14 +260,16 @@
     "positions": 88,
     "steady_mean_defect": 0.004629298313582452,
     "steady_std": 2.237655241268781e-05,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 39904.66826928368,
-    "capacity_total": 39864.80346581786,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 39904.66826928368,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 120,
-    "P_transport_W_1.2mK": 2.247220235385915,
-    "P_transport_W_0.3mK": 0.5618050588464788,
-    "fast_channels": 1.998001998001998
+    "P_transport_W_1.2mK": 2.2494674556213012,
+    "P_transport_W_0.3mK": 0.5623668639053253,
+    "steady_tweezers_per_pass_per_unit": 2.1355180210246063,
+    "P_steady_W_1.2mK": 0.04003148574323048,
+    "fast_channels": 2
    },
    {
     "unit": "AOD 40",
@@ -257,14 +281,16 @@
     "positions": 1,
     "steady_mean_defect": 0.0003268032807041661,
     "steady_std": 8.70053507709172e-06,
-    "K": 833.3333333333334,
+    "K": 834,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 16429421.022346782,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 16442564.559164658,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 624.8520710059171,
-    "P_transport_W_0.3mK": 156.21301775147927,
-    "fast_channels": 1666.6666666666667
+    "P_transport_W_1.2mK": 625.3519526627218,
+    "P_transport_W_0.3mK": 156.33798816568046,
+    "steady_tweezers_per_pass_per_unit": 1.0093789295517892,
+    "P_steady_W_1.2mK": 15.780427114295481,
+    "fast_channels": 1668
    },
    {
     "unit": "AOD 40",
@@ -276,14 +302,16 @@
     "positions": 1,
     "steady_mean_defect": 0.0001294059601603083,
     "steady_std": 1.0394313664136865e-05,
-    "K": 833.3333333333334,
+    "K": 834,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 16429421.022346782,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 16442564.559164658,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 624.8520710059171,
-    "P_transport_W_0.3mK": 156.21301775147927,
-    "fast_channels": 1666.6666666666667
+    "P_transport_W_1.2mK": 625.3519526627218,
+    "P_transport_W_0.3mK": 156.33798816568046,
+    "steady_tweezers_per_pass_per_unit": 1.0036424320543416,
+    "P_steady_W_1.2mK": 15.690743866508639,
+    "fast_channels": 1668
    },
    {
     "unit": "AOD 40",
@@ -295,14 +323,16 @@
     "positions": 6,
     "steady_mean_defect": 0.00033694666628496527,
     "steady_std": 8.028827259756823e-06,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 4967323.060422308,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 4968256.917157667,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 188.91974935930978,
-    "P_transport_W_0.3mK": 47.229937339827444,
-    "fast_channels": 503.90526581002774
+    "P_transport_W_1.2mK": 188.9552662721893,
+    "P_transport_W_0.3mK": 47.238816568047326,
+    "steady_tweezers_per_pass_per_unit": 1.0090308402120043,
+    "P_steady_W_1.2mK": 4.766542277227755,
+    "fast_channels": 504
    },
    {
     "unit": "AOD 40",
@@ -314,14 +344,16 @@
     "positions": 6,
     "steady_mean_defect": 0.0001302139465531136,
     "steady_std": 5.7932760048325045e-06,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 4967323.060422308,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 4968256.917157667,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 188.91974935930978,
-    "P_transport_W_0.3mK": 47.229937339827444,
-    "fast_channels": 503.90526581002774
+    "P_transport_W_1.2mK": 188.9552662721893,
+    "P_transport_W_0.3mK": 47.238816568047326,
+    "steady_tweezers_per_pass_per_unit": 1.0008726003490402,
+    "P_steady_W_1.2mK": 4.728003717587286,
+    "fast_channels": 504
    },
    {
     "unit": "AOD 40",
@@ -333,14 +365,16 @@
     "positions": 20,
     "steady_mean_defect": 0.00035529390461707766,
     "steady_std": 9.941654417962957e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 1251765.4112264214,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 1261779.5345162328,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 47.60777683854606,
-    "P_transport_W_0.3mK": 11.901944209636515,
-    "fast_channels": 126.98412698412699
+    "P_transport_W_1.2mK": 47.98863905325443,
+    "P_transport_W_0.3mK": 11.997159763313608,
+    "steady_tweezers_per_pass_per_unit": 1.007991838967291,
+    "P_steady_W_1.2mK": 1.2093039132206873,
+    "fast_channels": 128
    },
    {
     "unit": "AOD 40",
@@ -352,14 +386,16 @@
     "positions": 20,
     "steady_mean_defect": 0.0001337278098322537,
     "steady_std": 5.086502223109801e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 1251765.4112264214,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 1261779.5345162328,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 47.60777683854606,
-    "P_transport_W_0.3mK": 11.901944209636515,
-    "fast_channels": 126.98412698412699
+    "P_transport_W_1.2mK": 47.98863905325443,
+    "P_transport_W_0.3mK": 11.997159763313608,
+    "steady_tweezers_per_pass_per_unit": 1.0017366882169776,
+    "P_steady_W_1.2mK": 1.2017995089311753,
+    "fast_channels": 128
    },
    {
     "unit": "AOD 40",
@@ -371,14 +407,16 @@
     "positions": 63,
     "steady_mean_defect": 0.00043950868091764136,
     "steady_std": 1.7955421285232438e-05,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 314188.1311046396,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 315444.8836290582,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 11.949362314057378,
-    "P_transport_W_0.3mK": 2.9873405785143445,
-    "fast_channels": 31.872509960159363
+    "P_transport_W_1.2mK": 11.997159763313608,
+    "P_transport_W_0.3mK": 2.999289940828402,
+    "steady_tweezers_per_pass_per_unit": 1.0086678773865805,
+    "P_steady_W_1.2mK": 0.30252874182823064,
+    "fast_channels": 32
    },
    {
     "unit": "AOD 40",
@@ -390,14 +428,16 @@
     "positions": 63,
     "steady_mean_defect": 0.00013707575292920752,
     "steady_std": 1.211506661931126e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 314188.1311046396,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 315444.8836290582,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 11.949362314057378,
-    "P_transport_W_0.3mK": 2.9873405785143445,
-    "fast_channels": 31.872509960159363
+    "P_transport_W_1.2mK": 11.997159763313608,
+    "P_transport_W_0.3mK": 2.999289940828402,
+    "steady_tweezers_per_pass_per_unit": 1.002169329102489,
+    "P_steady_W_1.2mK": 0.3005796387783843,
+    "fast_channels": 32
    },
    {
     "unit": "AOD 40",
@@ -409,14 +449,16 @@
     "positions": 221,
     "steady_mean_defect": 0.012785706157833233,
     "steady_std": 0.0001883554944231954,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 78703.81328070314,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 78861.22090726455,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 2.9933033341600814,
-    "P_transport_W_0.3mK": 0.7483258335400204,
-    "fast_channels": 7.984031936127744
+    "P_transport_W_1.2mK": 2.999289940828402,
+    "P_transport_W_0.3mK": 0.7498224852071005,
+    "steady_tweezers_per_pass_per_unit": 1.8011991295969656,
+    "P_steady_W_1.2mK": 0.1350579607707263,
+    "fast_channels": 8
    },
    {
     "unit": "AOD 40",
@@ -428,14 +470,16 @@
     "positions": 221,
     "steady_mean_defect": 0.0001673776942250275,
     "steady_std": 3.236509417497708e-06,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 78703.81328070314,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 78861.22090726455,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 2.9933033341600814,
-    "P_transport_W_0.3mK": 0.7483258335400204,
-    "fast_channels": 7.984031936127744
+    "P_transport_W_1.2mK": 2.999289940828402,
+    "P_transport_W_0.3mK": 0.7498224852071005,
+    "steady_tweezers_per_pass_per_unit": 1.001468568100468,
+    "P_steady_W_1.2mK": 0.07509236505898893,
+    "fast_channels": 8
    },
    {
     "unit": "AOD 40",
@@ -447,14 +491,16 @@
     "positions": 850,
     "steady_mean_defect": 0.030747080685520723,
     "steady_std": 0.00017766173098651694,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 19695.609617198937,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 19715.305226816137,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 0.7490734117953052,
-    "P_transport_W_0.3mK": 0.1872683529488263,
-    "fast_channels": 1.998001998001998
+    "P_transport_W_1.2mK": 0.7498224852071005,
+    "P_transport_W_0.3mK": 0.18745562130177512,
+    "steady_tweezers_per_pass_per_unit": 3.3740317578370065,
+    "P_steady_W_1.2mK": 0.06324812194572565,
+    "fast_channels": 2
    },
    {
     "unit": "AOD 40",
@@ -466,14 +512,16 @@
     "positions": 850,
     "steady_mean_defect": 0.006186812975133609,
     "steady_std": 4.280362731917155e-05,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 19715.305226816137,
-    "capacity_total": 19695.609617198937,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 19715.305226816137,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 40,
-    "P_transport_W_1.2mK": 0.7490734117953052,
-    "P_transport_W_0.3mK": 0.1872683529488263,
-    "fast_channels": 1.998001998001998
+    "P_transport_W_1.2mK": 0.7498224852071005,
+    "P_transport_W_0.3mK": 0.18745562130177512,
+    "steady_tweezers_per_pass_per_unit": 1.35759848475599,
+    "P_steady_W_1.2mK": 0.02544894674382826,
+    "fast_channels": 2
    },
    {
     "unit": "PIC 16 x 1",
@@ -485,14 +533,16 @@
     "positions": 1,
     "steady_mean_defect": 0.00033108616260871184,
     "steady_std": 1.0410771392780343e-05,
-    "K": 1811.5942028985507,
+    "K": 1812,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 66226695.17863954,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 66241529.958359554,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 18397.101449275364,
-    "P_transport_W_0.3mK": 4599.275362318841,
-    "fast_channels": 11101449.275362318
+    "P_transport_W_1.2mK": 18401.2224,
+    "P_transport_W_0.3mK": 4600.3056,
+    "steady_tweezers_per_pass_per_unit": 1.0418212238332434,
+    "P_steady_W_1.2mK": 108.9249093227028,
+    "fast_channels": 11103936
    },
    {
     "unit": "PIC 16 x 1",
@@ -504,14 +554,16 @@
     "positions": 1,
     "steady_mean_defect": 0.000127549331136892,
     "steady_std": 8.493355405473697e-06,
-    "K": 1811.5942028985507,
+    "K": 1812,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 66226695.17863954,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 66241529.958359554,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 18397.101449275364,
-    "P_transport_W_0.3mK": 4599.275362318841,
-    "fast_channels": 11101449.275362318
+    "P_transport_W_1.2mK": 18401.2224,
+    "P_transport_W_0.3mK": 4600.3056,
+    "steady_tweezers_per_pass_per_unit": 1.0084076677477538,
+    "P_steady_W_1.2mK": 105.43144184143026,
+    "fast_channels": 11103936
    },
    {
     "unit": "PIC 16 x 1",
@@ -523,14 +575,16 @@
     "positions": 12,
     "steady_mean_defect": 0.000334601269007801,
     "steady_std": 8.623287195984424e-06,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 9210666.600808522,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 9212398.206129475,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 2558.6293776769967,
-    "P_transport_W_0.3mK": 639.6573444192492,
-    "fast_channels": 1543965.734441925
+    "P_transport_W_1.2mK": 2559.1104,
+    "P_transport_W_0.3mK": 639.7776,
+    "steady_tweezers_per_pass_per_unit": 1.0325353380825637,
+    "P_steady_W_1.2mK": 15.013476829855708,
+    "fast_channels": 1544256
    },
    {
     "unit": "PIC 16 x 1",
@@ -542,14 +596,16 @@
     "positions": 12,
     "steady_mean_defect": 0.00013056547308795926,
     "steady_std": 5.324510702166679e-06,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 9210666.600808522,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 9212398.206129475,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 2558.6293776769967,
-    "P_transport_W_0.3mK": 639.6573444192492,
-    "fast_channels": 1543965.734441925
+    "P_transport_W_1.2mK": 2559.1104,
+    "P_transport_W_0.3mK": 639.7776,
+    "steady_tweezers_per_pass_per_unit": 1.0106500119896242,
+    "P_steady_W_1.2mK": 14.695255434333932,
+    "fast_channels": 1544256
    },
    {
     "unit": "PIC 16 x 1",
@@ -561,14 +617,16 @@
     "positions": 33,
     "steady_mean_defect": 0.00034769650064647093,
     "steady_std": 8.38956330063455e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 2321087.9834037474,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 2339656.6872709775,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 644.7746031746032,
-    "P_transport_W_0.3mK": 161.1936507936508,
-    "fast_channels": 389079.3650793651
+    "P_transport_W_1.2mK": 649.9328,
+    "P_transport_W_0.3mK": 162.4832,
+    "steady_tweezers_per_pass_per_unit": 1.042876086533533,
+    "P_steady_W_1.2mK": 3.8511328123510307,
+    "fast_channels": 392192
    },
    {
     "unit": "PIC 16 x 1",
@@ -580,14 +638,16 @@
     "positions": 33,
     "steady_mean_defect": 0.00013694883206522698,
     "steady_std": 5.178135323479162e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 2321087.9834037474,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 2339656.6872709775,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 644.7746031746032,
-    "P_transport_W_0.3mK": 161.1936507936508,
-    "fast_channels": 389079.3650793651
+    "P_transport_W_1.2mK": 649.9328,
+    "P_transport_W_0.3mK": 162.4832,
+    "steady_tweezers_per_pass_per_unit": 1.0106341265567333,
+    "P_steady_W_1.2mK": 3.732069702548705,
+    "fast_channels": 392192
    },
    {
     "unit": "PIC 16 x 1",
@@ -599,14 +659,16 @@
     "positions": 126,
     "steady_mean_defect": 0.00043624814982522604,
     "steady_std": 1.5009553354716067e-05,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 582583.8364718569,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 584914.1718177444,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 161.83585657370517,
-    "P_transport_W_0.3mK": 40.45896414342629,
-    "fast_channels": 97657.37051792828
+    "P_transport_W_1.2mK": 162.4832,
+    "P_transport_W_0.3mK": 40.6208,
+    "steady_tweezers_per_pass_per_unit": 1.0411008516992908,
+    "P_steady_W_1.2mK": 0.9611443062887852,
+    "fast_channels": 98048
    },
    {
     "unit": "PIC 16 x 1",
@@ -618,14 +680,16 @@
     "positions": 126,
     "steady_mean_defect": 0.00013887265085506817,
     "steady_std": 2.2607588136125035e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 582583.8364718569,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 584914.1718177444,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 161.83585657370517,
-    "P_transport_W_0.3mK": 40.45896414342629,
-    "fast_channels": 97657.37051792828
+    "P_transport_W_1.2mK": 162.4832,
+    "P_transport_W_0.3mK": 40.6208,
+    "steady_tweezers_per_pass_per_unit": 1.0129999650730264,
+    "P_steady_W_1.2mK": 0.935201567755418,
+    "fast_channels": 98048
    },
    {
     "unit": "PIC 16 x 1",
@@ -637,14 +701,16 @@
     "positions": 462,
     "steady_mean_defect": 0.0050901212189779724,
     "steady_std": 1.0291029837741165e-05,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 145936.66961520567,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 146228.5429544361,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 40.53972055888224,
-    "P_transport_W_0.3mK": 10.13493013972056,
-    "fast_channels": 24463.07385229541
+    "P_transport_W_1.2mK": 40.6208,
+    "P_transport_W_0.3mK": 10.1552,
+    "steady_tweezers_per_pass_per_unit": 2.093008338300887,
+    "P_steady_W_1.2mK": 0.48306632447984477,
+    "fast_channels": 24512
    },
    {
     "unit": "PIC 16 x 1",
@@ -656,14 +722,16 @@
     "positions": 462,
     "steady_mean_defect": 0.00016671237346900072,
     "steady_std": 1.558168594263063e-06,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 145936.66961520567,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 146228.5429544361,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 40.53972055888224,
-    "P_transport_W_0.3mK": 10.13493013972056,
-    "fast_channels": 24463.07385229541
+    "P_transport_W_1.2mK": 40.6208,
+    "P_transport_W_0.3mK": 10.1552,
+    "steady_tweezers_per_pass_per_unit": 1.0135733644503062,
+    "P_steady_W_1.2mK": 0.2339327325151307,
+    "fast_channels": 24512
    },
    {
     "unit": "PIC 16 x 1",
@@ -675,14 +743,16 @@
     "positions": 1848,
     "steady_mean_defect": 0.023291267273295713,
     "steady_std": 0.00014695278947261803,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 36520.61512348554,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 36557.135738609024,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 10.145054945054945,
-    "P_transport_W_0.3mK": 2.536263736263736,
-    "fast_channels": 6121.878121878122
+    "P_transport_W_1.2mK": 10.1552,
+    "P_transport_W_0.3mK": 2.5388,
+    "steady_tweezers_per_pass_per_unit": 6.954591979803978,
+    "P_steady_W_1.2mK": 0.40127995723468957,
+    "fast_channels": 6128
    },
    {
     "unit": "PIC 16 x 1",
@@ -694,14 +764,16 @@
     "positions": 1848,
     "steady_mean_defect": 0.004607356689641342,
     "steady_std": 2.837945818130478e-05,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 36557.135738609024,
-    "capacity_total": 36520.61512348554,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 36557.135738609024,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 176,
-    "P_transport_W_1.2mK": 10.145054945054945,
-    "P_transport_W_0.3mK": 2.536263736263736,
-    "fast_channels": 6121.878121878122
+    "P_transport_W_1.2mK": 10.1552,
+    "P_transport_W_0.3mK": 2.5388,
+    "steady_tweezers_per_pass_per_unit": 1.9403961562246588,
+    "P_steady_W_1.2mK": 0.11196085821416281,
+    "fast_channels": 6128
    },
    {
     "unit": "PIC 32 x 4",
@@ -713,14 +785,16 @@
     "positions": 2,
     "steady_mean_defect": 0.00032701008948440033,
     "steady_std": 7.882736416898197e-06,
-    "K": 113.22463768115942,
+    "K": 114,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 8653224.430363158,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 8712481.711262286,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 2025.2490942028987,
-    "P_transport_W_0.3mK": 506.3122735507247,
-    "fast_channels": 5550724.637681159
+    "P_transport_W_1.2mK": 2039.118,
+    "P_transport_W_0.3mK": 509.7795,
+    "steady_tweezers_per_pass_per_unit": 1.389832953194971,
+    "P_steady_W_1.2mK": 9.14204319952588,
+    "fast_channels": 5588736
    },
    {
     "unit": "PIC 32 x 4",
@@ -732,14 +806,16 @@
     "positions": 2,
     "steady_mean_defect": 0.00013887908510573863,
     "steady_std": 7.052717795146517e-06,
-    "K": 113.22463768115942,
+    "K": 114,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 8653224.430363158,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 8712481.711262286,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 2025.2490942028987,
-    "P_transport_W_0.3mK": 506.3122735507247,
-    "fast_channels": 5550724.637681159
+    "P_transport_W_1.2mK": 2039.118,
+    "P_transport_W_0.3mK": 509.7795,
+    "steady_tweezers_per_pass_per_unit": 1.1000032202895114,
+    "P_steady_W_1.2mK": 7.235601182420348,
+    "fast_channels": 5588736
    },
    {
     "unit": "PIC 32 x 4",
@@ -751,14 +827,16 @@
     "positions": 6,
     "steady_mean_defect": 0.000332382535260433,
     "steady_std": 1.0895436873037612e-05,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 19255550.05516942,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 19259170.09857979,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 4506.676744771983,
-    "P_transport_W_0.3mK": 1126.6691861929958,
-    "fast_channels": 12351725.8755354
+    "P_transport_W_1.2mK": 4507.524,
+    "P_transport_W_0.3mK": 1126.881,
+    "steady_tweezers_per_pass_per_unit": 1.0633594751103679,
+    "P_steady_W_1.2mK": 15.461672111894792,
+    "fast_channels": 12354048
    },
    {
     "unit": "PIC 32 x 4",
@@ -770,14 +848,16 @@
     "positions": 6,
     "steady_mean_defect": 0.00012724622647761926,
     "steady_std": 4.182974863037662e-06,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 19255550.05516942,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 19259170.09857979,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 4506.676744771983,
-    "P_transport_W_0.3mK": 1126.6691861929958,
-    "fast_channels": 12351725.8755354
+    "P_transport_W_1.2mK": 4507.524,
+    "P_transport_W_0.3mK": 1126.881,
+    "steady_tweezers_per_pass_per_unit": 1.0153752928590298,
+    "P_steady_W_1.2mK": 14.76396290828744,
+    "fast_channels": 12354048
    },
    {
     "unit": "PIC 32 x 4",
@@ -789,14 +869,16 @@
     "positions": 12,
     "steady_mean_defect": 0.000349107246600928,
     "steady_std": 1.0113709699252465e-05,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 4852398.613902694,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 4891217.802813915,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 1135.6825396825398,
-    "P_transport_W_0.3mK": 283.92063492063494,
-    "fast_channels": 3112634.9206349207
+    "P_transport_W_1.2mK": 1144.768,
+    "P_transport_W_0.3mK": 286.192,
+    "steady_tweezers_per_pass_per_unit": 1.12368321097406,
+    "P_steady_W_1.2mK": 4.149537361485009,
+    "fast_channels": 3137536
    },
    {
     "unit": "PIC 32 x 4",
@@ -808,14 +890,16 @@
     "positions": 12,
     "steady_mean_defect": 0.00013704131425624856,
     "steady_std": 4.759908066788401e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 4852398.613902694,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 4891217.802813915,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 1135.6825396825398,
-    "P_transport_W_0.3mK": 283.92063492063494,
-    "fast_channels": 3112634.9206349207
+    "P_transport_W_1.2mK": 1144.768,
+    "P_transport_W_0.3mK": 286.192,
+    "steady_tweezers_per_pass_per_unit": 1.0353291930712725,
+    "P_steady_W_1.2mK": 3.823263644173595,
+    "fast_channels": 3137536
    },
    {
     "unit": "PIC 32 x 4",
@@ -827,14 +911,16 @@
     "positions": 22,
     "steady_mean_defect": 0.0004087062555350942,
     "steady_std": 4.298557243206198e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 1217932.7198241819,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 1222804.4507034787,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 285.0517928286853,
-    "P_transport_W_0.3mK": 71.26294820717132,
-    "fast_channels": 781258.9641434263
+    "P_transport_W_1.2mK": 286.192,
+    "P_transport_W_0.3mK": 71.548,
+    "steady_tweezers_per_pass_per_unit": 1.2453699653508954,
+    "P_steady_W_1.2mK": 1.1497255520119467,
+    "fast_channels": 784384
    },
    {
     "unit": "PIC 32 x 4",
@@ -846,14 +932,16 @@
     "positions": 22,
     "steady_mean_defect": 0.0001385405877080927,
     "steady_std": 3.155830613467669e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 1217932.7198241819,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 1222804.4507034787,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 285.0517928286853,
-    "P_transport_W_0.3mK": 71.26294820717132,
-    "fast_channels": 781258.9641434263
+    "P_transport_W_1.2mK": 286.192,
+    "P_transport_W_0.3mK": 71.548,
+    "steady_tweezers_per_pass_per_unit": 1.0670337360546365,
+    "P_steady_W_1.2mK": 0.9850855451256404,
+    "fast_channels": 784384
    },
    {
     "unit": "PIC 32 x 4",
@@ -865,14 +953,16 @@
     "positions": 84,
     "steady_mean_defect": 0.0010170860168476337,
     "steady_std": 1.2238024112607012e-05,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 305090.9308142412,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 305701.11267586966,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 71.40518962075849,
-    "P_transport_W_0.3mK": 17.851297405189623,
-    "fast_channels": 195704.59081836327
+    "P_transport_W_1.2mK": 71.548,
+    "P_transport_W_0.3mK": 17.887,
+    "steady_tweezers_per_pass_per_unit": 2.068279683790224,
+    "P_steady_W_1.2mK": 0.47735895101878373,
+    "fast_channels": 196096
    },
    {
     "unit": "PIC 32 x 4",
@@ -884,14 +974,16 @@
     "positions": 84,
     "steady_mean_defect": 0.0001675987704514653,
     "steady_std": 8.469403338355895e-07,
-    "K": 3.992015968063872,
+    "K": 4,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 305090.9308142412,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 305701.11267586966,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 71.40518962075849,
-    "P_transport_W_0.3mK": 17.851297405189623,
-    "fast_channels": 195704.59081836327
+    "P_transport_W_1.2mK": 71.548,
+    "P_transport_W_0.3mK": 17.887,
+    "steady_tweezers_per_pass_per_unit": 1.0831119005584062,
+    "P_steady_W_1.2mK": 0.24998222664888017,
+    "fast_channels": 196096
    },
    {
     "unit": "PIC 32 x 4",
@@ -903,14 +995,16 @@
     "positions": 252,
     "steady_mean_defect": 0.003758081660204542,
     "steady_std": 2.8379798430141047e-05,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 76348.92923972769,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 76425.27816896742,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 17.869130869130867,
-    "P_transport_W_0.3mK": 4.467282717282717,
-    "fast_channels": 48975.02497502498
+    "P_transport_W_1.2mK": 17.887,
+    "P_transport_W_0.3mK": 4.47175,
+    "steady_tweezers_per_pass_per_unit": 9.178554123902597,
+    "P_steady_W_1.2mK": 0.5296025729491799,
+    "fast_channels": 49024
    },
    {
     "unit": "PIC 32 x 4",
@@ -922,14 +1016,16 @@
     "positions": 252,
     "steady_mean_defect": 0.0008871659593187426,
     "steady_std": 2.071064475132813e-05,
-    "K": 0.999000999000999,
+    "K": 1,
     "capacity_per_unit": 76425.27816896742,
-    "capacity_total": 76348.92923972769,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 76425.27816896742,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 310,
-    "P_transport_W_1.2mK": 17.869130869130867,
-    "P_transport_W_0.3mK": 4.467282717282717,
-    "fast_channels": 48975.02497502498
+    "P_transport_W_1.2mK": 17.887,
+    "P_transport_W_0.3mK": 4.47175,
+    "steady_tweezers_per_pass_per_unit": 2.3453524814723385,
+    "P_steady_W_1.2mK": 0.13532683818095392,
+    "fast_channels": 49024
    },
    {
     "unit": "single 40",
@@ -941,14 +1037,16 @@
     "positions": 1,
     "steady_mean_defect": 0.0003263047653843537,
     "steady_std": 9.310052423694979e-06,
-    "K": 833.3333333333334,
+    "K": 834,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 472547.25472547364,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 472925.292529254,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 15.621301775147927,
-    "P_transport_W_0.3mK": 3.9053254437869818,
-    "fast_channels": 1666.6666666666667
+    "P_transport_W_1.2mK": 15.633798816568044,
+    "P_transport_W_0.3mK": 3.908449704142011,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 15.633798816568044,
+    "fast_channels": 1668
    },
    {
     "unit": "single 40",
@@ -960,14 +1058,16 @@
     "positions": 1,
     "steady_mean_defect": 0.0001294059601603083,
     "steady_std": 1.0394313664136859e-05,
-    "K": 833.3333333333334,
+    "K": 834,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 472547.25472547364,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 472925.292529254,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 15.621301775147927,
-    "P_transport_W_0.3mK": 3.9053254437869818,
-    "fast_channels": 1666.6666666666667
+    "P_transport_W_1.2mK": 15.633798816568044,
+    "P_transport_W_0.3mK": 3.908449704142011,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 15.633798816568044,
+    "fast_channels": 1668
    },
    {
     "unit": "single 40",
@@ -979,14 +1079,16 @@
     "positions": 6,
     "steady_mean_defect": 0.0003290338672067032,
     "steady_std": 1.314143173389082e-05,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 142871.4300001432,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 142898.28982898322,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 4.722993733982745,
-    "P_transport_W_0.3mK": 1.1807484334956861,
-    "fast_channels": 503.90526581002774
+    "P_transport_W_1.2mK": 4.723881656804733,
+    "P_transport_W_0.3mK": 1.1809704142011832,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 4.723881656804733,
+    "fast_channels": 504
    },
    {
     "unit": "single 40",
@@ -998,14 +1100,16 @@
     "positions": 6,
     "steady_mean_defect": 0.00013021389686813765,
     "steady_std": 5.793220881881062e-06,
-    "K": 251.95263290501387,
+    "K": 252,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 142871.4300001432,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 142898.28982898322,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 4.722993733982745,
-    "P_transport_W_0.3mK": 1.1807484334956861,
-    "fast_channels": 503.90526581002774
+    "P_transport_W_1.2mK": 4.723881656804733,
+    "P_transport_W_0.3mK": 1.1809704142011832,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 4.723881656804733,
+    "fast_channels": 504
    },
    {
     "unit": "single 40",
@@ -1017,14 +1121,16 @@
     "positions": 20,
     "steady_mean_defect": 0.00034859496386257225,
     "steady_std": 7.7883363214192e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 36003.600360036085,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 36291.629162916375,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 1.1901944209636515,
-    "P_transport_W_0.3mK": 0.29754860524091287,
-    "fast_channels": 126.98412698412699
+    "P_transport_W_1.2mK": 1.1997159763313607,
+    "P_transport_W_0.3mK": 0.2999289940828402,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 1.1997159763313607,
+    "fast_channels": 128
    },
    {
     "unit": "single 40",
@@ -1036,14 +1142,16 @@
     "positions": 20,
     "steady_mean_defect": 0.00013105591613342884,
     "steady_std": 6.68772350428151e-06,
-    "K": 63.492063492063494,
+    "K": 64,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 36003.600360036085,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 36291.629162916375,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 1.1901944209636515,
-    "P_transport_W_0.3mK": 0.29754860524091287,
-    "fast_channels": 126.98412698412699
+    "P_transport_W_1.2mK": 1.1997159763313607,
+    "P_transport_W_0.3mK": 0.2999289940828402,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 1.1997159763313607,
+    "fast_channels": 128
    },
    {
     "unit": "single 40",
@@ -1055,14 +1163,16 @@
     "positions": 63,
     "steady_mean_defect": 0.000428676257988915,
     "steady_std": 6.922778205223504e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 9036.760249730172,
-    "demand_1e6": 4333.333333333333,
+    "capacity_total": 9072.907290729094,
+    "demand_1e6": 4242.424242424243,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 0.2987340578514344,
-    "P_transport_W_0.3mK": 0.0746835144628586,
-    "fast_channels": 31.872509960159363
+    "P_transport_W_1.2mK": 0.2999289940828402,
+    "P_transport_W_0.3mK": 0.07498224852071005,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 0.2999289940828402,
+    "fast_channels": 32
    },
    {
     "unit": "single 40",
@@ -1074,281 +1184,308 @@
     "positions": 63,
     "steady_mean_defect": 0.000137143742772348,
     "steady_std": 4.696493976741633e-06,
-    "K": 15.936254980079681,
+    "K": 16,
     "capacity_per_unit": 567.0567056705684,
-    "capacity_total": 9036.760249730172,
-    "demand_1e6": 1333.3333333333333,
+    "capacity_total": 9072.907290729094,
+    "demand_1e6": 1242.4242424242423,
     "peak_tweezers_per_unit": 1,
-    "P_transport_W_1.2mK": 0.2987340578514344,
-    "P_transport_W_0.3mK": 0.0746835144628586,
-    "fast_channels": 31.872509960159363
+    "P_transport_W_1.2mK": 0.2999289940828402,
+    "P_transport_W_0.3mK": 0.07498224852071005,
+    "steady_tweezers_per_pass_per_unit": 1.0,
+    "P_steady_W_1.2mK": 0.2999289940828402,
+    "fast_channels": 32
    }
   ],
   "smallest_K": {
    "PIC 16 x 1|3000|0.00015": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.00013887265085506817,
-    "P_W_1.2mK": 161.83585657370517,
-    "fast_channels": 97657.37051792828
+    "P_W_1.2mK": 162.4832,
+    "P_steady_W_1.2mK": 0.935201567755418,
+    "fast_channels": 98048
    },
    "PIC 16 x 1|3000|0.0002": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.00016671237346900072,
-    "P_W_1.2mK": 40.53972055888224,
-    "fast_channels": 24463.07385229541
+    "P_W_1.2mK": 40.6208,
+    "P_steady_W_1.2mK": 0.2339327325151307,
+    "fast_channels": 24512
    },
    "PIC 16 x 1|3000|0.0003": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.00016671237346900072,
-    "P_W_1.2mK": 40.53972055888224,
-    "fast_channels": 24463.07385229541
+    "P_W_1.2mK": 40.6208,
+    "P_steady_W_1.2mK": 0.2339327325151307,
+    "fast_channels": 24512
    },
    "PIC 16 x 1|3000|0.0005": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.00016671237346900072,
-    "P_W_1.2mK": 40.53972055888224,
-    "fast_channels": 24463.07385229541
+    "P_W_1.2mK": 40.6208,
+    "P_steady_W_1.2mK": 0.2339327325151307,
+    "fast_channels": 24512
    },
    "PIC 16 x 1|300|0.00015": null,
    "PIC 16 x 1|300|0.0002": null,
    "PIC 16 x 1|300|0.0003": null,
    "PIC 16 x 1|300|0.0005": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.00043624814982522604,
-    "P_W_1.2mK": 161.83585657370517,
-    "fast_channels": 97657.37051792828
+    "P_W_1.2mK": 162.4832,
+    "P_steady_W_1.2mK": 0.9611443062887852,
+    "fast_channels": 98048
    },
    "PIC 32 x 4|3000|0.00015": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.0001385405877080927,
-    "P_W_1.2mK": 285.0517928286853,
-    "fast_channels": 781258.9641434263
+    "P_W_1.2mK": 286.192,
+    "P_steady_W_1.2mK": 0.9850855451256404,
+    "fast_channels": 784384
    },
    "PIC 32 x 4|3000|0.0002": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.0001675987704514653,
-    "P_W_1.2mK": 71.40518962075849,
-    "fast_channels": 195704.59081836327
+    "P_W_1.2mK": 71.548,
+    "P_steady_W_1.2mK": 0.24998222664888017,
+    "fast_channels": 196096
    },
    "PIC 32 x 4|3000|0.0003": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.0001675987704514653,
-    "P_W_1.2mK": 71.40518962075849,
-    "fast_channels": 195704.59081836327
+    "P_W_1.2mK": 71.548,
+    "P_steady_W_1.2mK": 0.24998222664888017,
+    "fast_channels": 196096
    },
    "PIC 32 x 4|3000|0.0005": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.0001675987704514653,
-    "P_W_1.2mK": 71.40518962075849,
-    "fast_channels": 195704.59081836327
+    "P_W_1.2mK": 71.548,
+    "P_steady_W_1.2mK": 0.24998222664888017,
+    "fast_channels": 196096
    },
    "PIC 32 x 4|300|0.00015": null,
    "PIC 32 x 4|300|0.0002": null,
    "PIC 32 x 4|300|0.0003": null,
    "PIC 32 x 4|300|0.0005": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.0004087062555350942,
-    "P_W_1.2mK": 285.0517928286853,
-    "fast_channels": 781258.9641434263
+    "P_W_1.2mK": 286.192,
+    "P_steady_W_1.2mK": 1.1497255520119467,
+    "fast_channels": 784384
    },
    "AOD 40|3000|0.00015": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.00013707575292920752,
-    "P_W_1.2mK": 11.949362314057378,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 11.997159763313608,
+    "P_steady_W_1.2mK": 0.3005796387783843,
+    "fast_channels": 32
    },
    "AOD 40|3000|0.0002": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.0001673776942250275,
-    "P_W_1.2mK": 2.9933033341600814,
-    "fast_channels": 7.984031936127744
+    "P_W_1.2mK": 2.999289940828402,
+    "P_steady_W_1.2mK": 0.07509236505898893,
+    "fast_channels": 8
    },
    "AOD 40|3000|0.0003": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.0001673776942250275,
-    "P_W_1.2mK": 2.9933033341600814,
-    "fast_channels": 7.984031936127744
+    "P_W_1.2mK": 2.999289940828402,
+    "P_steady_W_1.2mK": 0.07509236505898893,
+    "fast_channels": 8
    },
    "AOD 40|3000|0.0005": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.0001673776942250275,
-    "P_W_1.2mK": 2.9933033341600814,
-    "fast_channels": 7.984031936127744
+    "P_W_1.2mK": 2.999289940828402,
+    "P_steady_W_1.2mK": 0.07509236505898893,
+    "fast_channels": 8
    },
    "AOD 40|300|0.00015": null,
    "AOD 40|300|0.0002": null,
    "AOD 40|300|0.0003": null,
    "AOD 40|300|0.0005": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.00043950868091764136,
-    "P_W_1.2mK": 11.949362314057378,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 11.997159763313608,
+    "P_steady_W_1.2mK": 0.30252874182823064,
+    "fast_channels": 32
    },
    "AOD 128|3000|0.00015": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.00013816338573867476,
-    "P_W_1.2mK": 35.84808694217213,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 35.99147928994082,
+    "P_steady_W_1.2mK": 0.30265668632895226,
+    "fast_channels": 32
    },
    "AOD 128|3000|0.0002": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.00016575731907394583,
-    "P_W_1.2mK": 8.979910002480244,
-    "fast_channels": 7.984031936127744
+    "P_W_1.2mK": 8.997869822485205,
+    "P_steady_W_1.2mK": 0.07557882883794316,
+    "fast_channels": 8
    },
    "AOD 128|3000|0.0003": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.00016575731907394583,
-    "P_W_1.2mK": 8.979910002480244,
-    "fast_channels": 7.984031936127744
+    "P_W_1.2mK": 8.997869822485205,
+    "P_steady_W_1.2mK": 0.07557882883794316,
+    "fast_channels": 8
    },
    "AOD 128|3000|0.0005": {
-    "K": 3.992015968063872,
+    "K": 4,
     "zone": [
      667,
      500
     ],
     "defect": 0.00016575731907394583,
-    "P_W_1.2mK": 8.979910002480244,
-    "fast_channels": 7.984031936127744
+    "P_W_1.2mK": 8.997869822485205,
+    "P_steady_W_1.2mK": 0.07557882883794316,
+    "fast_channels": 8
    },
    "AOD 128|300|0.00015": null,
    "AOD 128|300|0.0002": null,
    "AOD 128|300|0.0003": null,
    "AOD 128|300|0.0005": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.00041295245134681893,
-    "P_W_1.2mK": 35.84808694217213,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 35.99147928994082,
+    "P_steady_W_1.2mK": 0.30881528062925245,
+    "fast_channels": 32
    },
    "single 40|3000|0.00015": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.000137143742772348,
-    "P_W_1.2mK": 0.2987340578514344,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 0.2999289940828402,
+    "P_steady_W_1.2mK": 0.2999289940828402,
+    "fast_channels": 32
    },
    "single 40|3000|0.0002": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.000137143742772348,
-    "P_W_1.2mK": 0.2987340578514344,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 0.2999289940828402,
+    "P_steady_W_1.2mK": 0.2999289940828402,
+    "fast_channels": 32
    },
    "single 40|3000|0.0003": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.000137143742772348,
-    "P_W_1.2mK": 0.2987340578514344,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 0.2999289940828402,
+    "P_steady_W_1.2mK": 0.2999289940828402,
+    "fast_channels": 32
    },
    "single 40|3000|0.0005": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.000137143742772348,
-    "P_W_1.2mK": 0.2987340578514344,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 0.2999289940828402,
+    "P_steady_W_1.2mK": 0.2999289940828402,
+    "fast_channels": 32
    },
    "single 40|300|0.00015": null,
    "single 40|300|0.0002": null,
    "single 40|300|0.0003": null,
    "single 40|300|0.0005": {
-    "K": 15.936254980079681,
+    "K": 16,
     "zone": [
      334,
      250
     ],
     "defect": 0.000428676257988915,
-    "P_W_1.2mK": 0.2987340578514344,
-    "fast_channels": 31.872509960159363
+    "P_W_1.2mK": 0.2999289940828402,
+    "P_steady_W_1.2mK": 0.2999289940828402,
+    "fast_channels": 32
    }
   }
  },

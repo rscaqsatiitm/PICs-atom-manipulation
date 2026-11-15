@@ -95,7 +95,7 @@ def one(cfg):
             "tweezers_per_pass_mean_window": float(pt_late.mean()), "moves_total": sim.n_moves,
             "fills_total": sim.n_fills, "consumed_total": sim.consumed, "heat_mean_uK": hs["mean_uK"],
             "heat_p99_uK": hs["p99_uK"], "moved_fraction": hs["moved_fraction"],
-            "generation_per_s": float(sim.comp.sum() * (1 / tau + P.eps_img / P.T_img)),
+            "generation_per_s": float(sim.comp.sum() * (1 / tau + P.eps_img / (P.T_img + P.t_img))),  # cycle T + t_img
             "curve": d[:: max(1, len(d) // 200)].tolist()}
 
 

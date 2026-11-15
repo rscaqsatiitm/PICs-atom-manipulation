@@ -50,3 +50,19 @@ def test_y_imaging_ideal_and_tilt():
     assert abs(np.sum(I0) * (y[1] - y[0]) - tr0) < 1e-9  # normalisation: integral = transmitted fraction
     peaks = [m30._line(A, u, dtheta=t)[1].max() for t in (0.0, 3e-5, 6e-5)]
     assert peaks[0] > peaks[1] > peaks[2]
+
+
+def test_frequency_tag_per_site_uses_the_field_in_sites():
+    assert abs(m31.tone_spacing_per_site(20e6) - 0.5e6) < 1.0  # 20 MHz over the 40-site field of module 28
+    assert abs(2 * np.pi * m31.tone_spacing_per_site(20e6) * 1e-6 - np.pi) < 1e-9  # 3.14 rad per site per us
+
+
+def test_units_are_whole_and_cover_the_array():
+    for n in (1200, 10003, 250103, 1e6):
+        K = m29.units(n)
+        assert isinstance(K, int) and K * n >= 1e6 and (K - 1) * n < 1e6
+
+
+def test_demand_uses_the_image_cycle():
+    assert abs(m29.demand(1e6, 3000.0) - 1e6 * (1 / 3000 + 1e-4 / 0.11)) < 1e-6
+    assert 1240 < m29.demand(1e6, 3000.0) < 1245

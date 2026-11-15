@@ -1,7 +1,7 @@
 {
  "name": "m30_power",
  "script": "scripts/m30_planar_tile.py",
- "git": "502374c",
+ "git": "9834504",
  "notes": "P_tweezer scales the edge-chain power by the ratio of line peaks per unit guided power (y axis only). If the emitter pitch must grow to suppress coupling, the x field per engine shrinks by x_field_fraction (or the port count must grow by its inverse).",
  "inputs": {
   "edge": "m14 wave (Weierstrass + aplanat, beta 0.7) x T_facet(SiO2) x FDTD/Kirchhoff x m27 mirror pair (silver M1, TIR M2): 57.7 mW per 1.2 mK tweezer",
@@ -40,6 +40,22 @@
     "line_peak_per_guided": 0.7333931993429116,
     "P_tweezer_mW": 46.43184142756034
    }
+  },
+  "x_relay_alternative": {
+   "capture_fraction_by_pitch_um": {
+    "1.5": 0.7075875177545436,
+    "2": 0.5838774291183495,
+    "2.2": 0.5367735020667198,
+    "2.3": 0.5121747339750291
+   },
+   "fill_factor": {
+    "1.5": 0.7999999999999999,
+    "2.2": 0.5454545454545454,
+    "2.3": 0.5217391304347826
+   },
+   "relative_efficiency_2.2_vs_1.5": 0.7585966238778709,
+   "P_tweezer_mW_dbr3_at_2.2um_relay_rescaled": 61.362193498777906,
+   "status": "provisional: x relay not simulated; element-factor capture only"
   },
   "x_field_fraction_at_min_pitch_uniform": 0.6518279240661361,
   "min_pitch_um": 2.3,

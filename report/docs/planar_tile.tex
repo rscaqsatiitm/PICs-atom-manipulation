@@ -125,9 +125,22 @@ mirror (47.1 mW with two pairs, 66 mW with the substrate alone), against
 the y axis only; the x axis is that of the edge emitter, at the pitch D1
 uses.
 
+\textbf{At the wider pitch the coupling needs, the gain is lost
+(provisional).} The 35\% loss of x field at 2.2 um pitch may be
+recoverable by changing the x-relay magnification, since the number of
+resolvable spots equals the number of emitters at any pitch. The price
+is the fill factor (1.2 um emitters: 0.80 at 1.5 um, 0.55 at 2.2 um).
+The fraction of one emitter\textquotesingle s far-field power inside the
+grating-lobe-free range \textbar s\textbar{} \textless= lambda / (2p)
+falls from 0.71 at 1.5 um to 0.54 at 2.2 um (0.51 at 2.3 um), a relative
+efficiency of 0.76 (DERIVED from the femwell emitter mode; the x relay
+is not simulated). The tile at 2.2 um would then need about 61 mW per
+tweezer, no better than the edge emitter.
+
 Hence the tile removes the stack, the collimator and its +/-0.1 um glue
-tolerance, and it can be about 20\% more efficient. It brings its own
-costs:
+tolerance. It is about 20\% more efficient only at the D1 pitch, where
+coupling rules it out; at the pitch coupling allows it is about equal to
+the edge emitter. It brings its own costs:
 
 \begin{itemize}
 \tightlist
@@ -307,7 +320,7 @@ sit beside the emitter array in x rather than in line.
 \section{Verification notes}\label{planar_tile-verification-notes}}
 
 {\footnotesize
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.274\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.123\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.106\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.497\dimexpr(\linewidth-8\tabcolsep)\relax}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.309\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.117\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.101\dimexpr(\linewidth-8\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.473\dimexpr(\linewidth-8\tabcolsep)\relax}@{}}
 \toprule\noalign{}
 value & location & type & pointer \\
 \midrule\noalign{}
@@ -321,6 +334,9 @@ results/m30\_coupling.json (review) \\
 imaging profiles, angle and focus tolerance & Sec. 1, 4 & SIM &
 results/m30\_imaging.json \\
 power per tweezer & Sec. 1, 4 & DERIVED & results/m30\_power.json \\
+capture fraction vs pitch, relay-magnification alternative & Sec. 1 &
+DERIVED & results/m30\_power.json (x\_relay\_alternative;
+provisional) \\
 tile pitch 6 mm, D = 1500, grating length choices & Sec. 1 & CHOICE &
 docs/scaling\_beyond.md Sec. 5 \\
 n(Si) 3.55, n(SiO2) 1.4496 at 1064.4 nm & Sec. 2 & SOURCE / CHOICE &

@@ -298,7 +298,24 @@ def power():
                    "line_peak_per_guided": eff, "P_tweezer_mW": p_edge * edge / eff}
         print(k, rows[k], flush=True)
     xf = cp["x_field_fraction_at_min_pitch"]
+    # provisional alternative: keep the sites per engine by changing the x-relay magnification at a wider emitter
+    # pitch; the cost is the fill factor: the fraction of one emitter's far-field power inside the grating-lobe-free
+    # range |s| <= lambda / (2 p) (D1 emitter mode, 1.2 x 0.4 um, femwell)
+    from picsim.opa.focal_plane import emitter_profile
+    e = emitter_profile(LAM, W_EMIT, T_SIN)
+    xg = np.linspace(-40.0, 40.0, 1 << 14)
+    ff = np.fft.fftshift(np.fft.fft(e(xg)))
+    sg = np.fft.fftshift(np.fft.fftfreq(len(xg), xg[1] - xg[0])) * LAM
+    pw = np.abs(ff) ** 2 * (np.abs(sg) < 1)
+    cap = {f"{p:g}": float(pw[np.abs(sg) <= LAM / (2 * p)].sum() / pw.sum()) for p in (1.5, 2.0, 2.2, 2.3)}
+    alt = {"capture_fraction_by_pitch_um": cap, "fill_factor": {f"{p:g}": W_EMIT / p for p in (1.5, 2.2, 2.3)},
+           "relative_efficiency_2.2_vs_1.5": cap["2.2"] / cap["1.5"],
+           "P_tweezer_mW_dbr3_at_2.2um_relay_rescaled": rows["dbr3"]["P_tweezer_mW"] * cap["1.5"] / cap["2.2"]
+           if "dbr3" in rows else None,
+           "status": "provisional: x relay not simulated; element-factor capture only"}
+    print("relay-magnification alternative", alt, flush=True)
     out = {"edge_line_peak_per_guided": edge, "tile_line_peak_per_emitted": tile_peak, "by_reflector": rows,
+           "x_relay_alternative": alt,
            "x_field_fraction_at_min_pitch_uniform": xf, "min_pitch_um": cp["min_pitch_uniform_um"],
            "y_relay_object_field_mm_16_tiles": 16 * TILE * 1e-3, "object_NA": NA / D,
            "lagrange_check": {"object_half_field_x_NA": 8 * TILE * NA / D, "atom_half_rows_x_NA": 8 * ROW * NA}}
