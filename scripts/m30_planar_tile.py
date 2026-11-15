@@ -55,6 +55,17 @@ def _pair(args):
     return {"w1": w1, "w2": w2, "gap": gap, "pitch": gap + (w1 + w2) / 2, "n_top2": te[:2]}
 
 
+def _array(args):
+    """TE supermode indices of a finite array of guides (widths cycling through `widths`) at centre pitch p."""
+    from picsim import modes as M
+    widths, p, n = args
+    ws = [widths[i % len(widths)] for i in range(n)]
+    xc = (np.arange(n) - (n - 1) / 2) * p
+    xs = M.XSection(cores=list(zip(xc, ws)), t=T_SIN, x_left=xc[0] - 5, x_right=xc[-1] + 5)
+    ms = M.solve(xs, LAM, num_modes=n + 6)
+    return sorted([m.neff.real for m in ms if m.te_fraction > 0.5], reverse=True)[:n]
+
+
 def _single(w):
     from picsim import modes as M
     xs = M.XSection(cores=[(0.0, w)], t=T_SIN, x_left=-w / 2 - 4, x_right=w / 2 + 4)
@@ -97,19 +108,39 @@ def coupling():
                       "note": "two emitter types radiate at different angles unless their grating periods differ"})
         print("alternating %.1f/%.1f at %.2f | dn0 %.3e kappa %.2e /um | swing %.2e" % (w1, w2, P_OUT, dn0, kap, sw),
               flush=True)
+    # finite 8-guide arrays (tight binding): a chain of m guides has n_j = n0 + c cos(j pi / (m + 1)), c = 2 kappa / k0,
+    # while the infinite band spans 2 c; so swing = 2 x spread / (cos(pi/(m+1)) - cos(m pi/(m+1))). The uniform case
+    # checks the method against the two-guide value
+    arr = pmap(_array, [((W_EMIT,), P_OUT, 8), ((W_EMIT,), 2.0, 8)] + [((w1, w2), P_OUT, 8) for w1, w2 in pairs],
+               processes=3)
+    f8 = np.cos(np.pi / 9) - np.cos(8 * np.pi / 9)  # 8-guide chain: n_j = n0 + (2 kappa/k0) cos(j pi/9), spread / (2 kappa/k0)
+    f4 = np.cos(np.pi / 5) - np.cos(4 * np.pi / 5)  # 4 guides per band in the alternating chain
+    out_arr = {}
+    for name, n8 in zip(["uniform 1.5", "uniform 2.0"] + [f"alt {w1}/{w2}" for w1, w2 in pairs], arr):
+        if name.startswith("uniform"):
+            sw = (n8[0] - n8[-1]) / f8 * 2  # full band 4 kappa / k0 = 2 x (2 kappa / k0)
+        else:
+            top = n8[:4]  # upper band: modes on the wide guides
+            sw = (top[0] - top[-1]) / f4 * 2
+        out_arr[name] = {"neff": n8, "bloch_swing_sin": float(sw)}
+        print("8-guide array", name, "| band swing %.2e" % sw, flush=True)
+    for r, (w1, w2) in zip(out_a, pairs):
+        r["bloch_swing_sin_array"] = out_arr[f"alt {w1}/{w2}"]["bloch_swing_sin"]
     need = tol["delta_sin_for_peak_0.97"]
     ok = [r for r in out_u if r["bloch_swing_sin"] <= need]
     p_min = min(r["pitch"] for r in ok) if ok else None
     save_result("m30_coupling", script=SCRIPT,
                 inputs={"emitter_um": [W_EMIT, T_SIN], "lam_um": LAM, "solver": "femwell (picsim.modes), two guides",
                         "tolerance": "angle error for peak >= 0.97 from m30_imaging"},
-                outputs={"uniform": out_u, "alternating": out_a, "tolerance_delta_sin": need,
+                outputs={"uniform": out_u, "alternating": out_a, "arrays_8_guides": out_arr, "tolerance_delta_sin": need,
                          "min_pitch_uniform_um": p_min,
                          "x_field_fraction_at_min_pitch": None if p_min is None else LAM / (2 * p_min) / S_CUT_D1},
                 notes="Bloch picture: a tweezer at x_a is formed by emitters with phase step q = k0 s_x p, close to one "
                       "Bloch mode of the coupled array; its effective index, and so the y emission sine, is "
                       "n0 + (dn_split/2)... the band spans 2 dn_split (uniform array) between q = 0 and pi. Mode-solver "
-                      "noise is about 1e-7 in n_eff.")
+                      "noise is about 1e-7 in n_eff. For mismatched pairs the two-guide extraction fails (each guide's "
+                      "index is pulled by its neighbour's dielectric, unequally), so their swing is taken from the "
+                      "supermode spread of 8-guide arrays (bloch_swing_sin_array).")
     return out_u, out_a
 
 
