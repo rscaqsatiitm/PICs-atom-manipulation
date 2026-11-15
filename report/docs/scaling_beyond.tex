@@ -169,19 +169,23 @@ micrometres (RECALLED; verify). With a +/-250 um field, 480 ports would
 give 110 tweezers per row, at the slab and aberration costs of
 \texttt{docs/scaling.md} (R \textasciitilde{} 5 mm, about 0.12 rad).
 
-\textbf{Planar tiling of surface-emitting chips (speculative, not
-simulated).} Chips side by side on a common carrier, each with long
-grating emitters, imaged in y onto the atoms with demagnification D =
-tile pitch / 4 um. For a 6 mm tile pitch, D = 1500. The object-side NA
-in y is then 3.3e-4, which a 2 mm weak grating radiates directly, so no
-collimator is needed. Chip placement errors shrink by D (10 um becomes 7
-nm). The 0.1 um decentre tolerance is replaced by an emission-angle
-tolerance of about 30 urad. That corresponds to delta n\_eff
-\textasciitilde{} 3e-5, trimmable with a heater (about 1.5 K) or by
-tilting the chip. The open questions are grating efficiency (up and down
-emission) and fitting the engine (slab of about 2 mm) and a 2 mm grating
-within the tile. This is worth a separate study, because it removes the
-stack and the collimators altogether.
+\textbf{Planar tiling of surface-emitting chips} (simulated in
+\texttt{docs/planar\_tile.md}, module 30: a Bragg mirror under the BOX
+gives 0.997 directionality; the grating must be about 4 mm long;
+neighbouring emitters must sit at about 2.2 um pitch, or the y angle
+varies along the row; power per tweezer 46.5 mW). The original estimate
+follows. Chips side by side on a common carrier, each with long grating
+emitters, imaged in y onto the atoms with demagnification D = tile pitch
+/ 4 um. For a 6 mm tile pitch, D = 1500. The object-side NA in y is then
+3.3e-4, which a 2 mm weak grating radiates directly, so no collimator is
+needed. Chip placement errors shrink by D (10 um becomes 7 nm). The 0.1
+um decentre tolerance is replaced by an emission-angle tolerance of
+about 30 urad. That corresponds to delta n\_eff \textasciitilde{} 3e-5,
+trimmable with a heater (about 1.5 K) or by tilting the chip. The open
+questions are grating efficiency (up and down emission) and fitting the
+engine (slab of about 2 mm) and a 2 mm grating within the tile. This is
+worth a separate study, because it removes the stack and the collimators
+altogether.
 
 \textbf{What does not work.} Packing tweezers below the site pitch adds
 nothing on a 4 um lattice. Several emitter rows per chip cannot be

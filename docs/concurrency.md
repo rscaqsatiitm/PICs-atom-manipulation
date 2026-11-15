@@ -92,8 +92,21 @@ pair.
 | 64 | 3.5e-4 | 3.5e-4 | 3.4e-4 | 3.6e-4 | 3.5e-4 |
 | fixed field | 3.3e-4 | 3.3e-4 | 3.3e-4 | 3.3e-4 | 3.3e-4 |
 
-The PIC 32 x 4 block is clearly the best single unit, at K = 1 and 4 and especially with tau 300 s. It is itself
-128 engines, however. Once the array is split among 16 or more units, the unit no longer matters.
+The PIC 32 x 4 block is clearly the best single unit with cold steps, at K = 1 and 4 and especially with
+tau 300 s. It is itself 128 engines, however. Once the array is split among 16 or more units, the unit no longer
+matters.
+
+**Fast steps** (50 us ramps, 10 uK and 4e-3 loss per move; tau 3000 s, one seed; `results/m29_ladder_fast.json`).
+`docs/megascale.md` finds one 128-engine block near 2e-4 at 10^6 sites at this operating point. The 128-site AOD
+pair reaches the same level:
+
+| K | PIC 32 x 4 | PIC 16 x 1 | AOD 128 | AOD 40 |
+|---|---|---|---|---|
+| 1 | 1.87e-4 | 4.0e-4 | 1.83e-4 | 3.1e-4 |
+| 4 | 1.50e-4 | 1.50e-4 | 1.47e-4 | 1.45e-4 |
+
+So with fast steps even one unit of each kind comes close to the floor, and the PIC block has no advantage over a
+crossed AOD with a 128-site field.
 
 **Assembly from a random loading** (zones of 6.25e4 sites and smaller, i.e. K >= 16): PIC units are done by the
 first image (0.12 s) up to 1.56e4-site zones. At 6.25e4 sites the times are:
@@ -132,6 +145,7 @@ zero latency.*
 | value | location | type | pointer |
 |---|---|---|---|
 | defect fractions vs K, assembly times | Sec. 1, 3 | SIM | results/m29_ladder.json (review) |
+| fast-step K = 1 and 4 at 10^6 sites | Sec. 3 | SIM | results/m29_ladder_fast.json (one seed; review) |
 | capacity per unit, peak tweezers | Sec. 1, 3 | SIM | results/m29_capacity.json (review) |
 | power and channels vs K, smallest K | Sec. 1 | DERIVED | results/m29_hardware.json |
 | floor eps + T/(2 tau) | Sec. 1 | DERIVED | docs/megascale.md Sec. 10 |

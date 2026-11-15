@@ -3,6 +3,15 @@
 pitch}\label{megascale-rearranging-104-105-and-106-atom-arrays-at-3-4-um-pitch}}
 
 \begin{quote}
+Follow-up (\texttt{docs/concurrency.md}, module 29): at 10\^{}6 sites a
+single block, even PIC 32 x 4, leaves 8.9e-4 (tau 3000 s), because it
+returns to new holes too slowly. Splitting the array among K independent
+units brings every unit type to 1.7e-4 (K = 4) and 1.4e-4 (K = 16). The
+units\textquotesingle{} capacity (2e4 to 8e4 moves/s, single tweezer
+570) is not the limit.
+\end{quote}
+
+\begin{quote}
 Follow-up (\texttt{docs/aod\_comparison.md}, module 28): the same
 simulator with crossed-AOD, single-tweezer and all-parallel move
 constraints. At 1e3 to 1e5 sites every method that has assembled holds

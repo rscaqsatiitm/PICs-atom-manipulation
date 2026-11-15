@@ -455,6 +455,27 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   crossed-AOD throughput; all-parallel is an idealised ceiling, not a
   hardware model.
 \item
+  \texttt{results/m29\_capacity.json}: Demand (1 refill/s per site plus
+  vacuum) exceeds every unit\textquotesingle s capacity, so
+  moves\_per\_s is the throughput (capacity) of one unit, travel and
+  field scanning included; refills\_per\_s is lower because some
+\item
+  \texttt{results/m29\_figure.json}: Steady-state defect fraction at 1e6
+  sites vs number of independent units (zones of 1e6/K sites), cold
+  steps, assembled start. Grey line: eps + T/(2 tau), the floor for zero
+  latency.
+\item
+  \texttt{results/m29\_hardware.json}: Power is provisioned for K units
+  each at its peak simultaneous tweezers when busy. The ladder is
+  coarse, so smallest\_K is the smallest simulated K meeting the target,
+  not an interpolation.
+\item
+  \texttt{results/m29\_ladder.json}: K\_at\_1e6 = 1e6 / computation
+  sites per zone. Zones are independent, so the time-averaged defect
+  fraction of one zone is that of 1e6 sites served by K such units.
+\item
+  \texttt{results/m29\_ladder\_fast.json}:
+\item
   \texttt{results/m2\_couplers.json}: Excludes Fresnel loss
   (index-matched or AR-coated facet assumed) and taper conversion loss.
 \item
@@ -466,6 +487,41 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   mode versus the closed computational window. The main sweep
   (m2\_couplers) uses a 7 um window; near cutoff that clips the mode
   tail.
+\item
+  \texttt{results/m30\_coupling.json}: Bloch picture: a tweezer at x\_a
+  is formed by emitters with phase step q = k0 s\_x p, close to one
+  Bloch mode of the coupled array; its effective index, and so the y
+  emission sine, is n0 + (dn\_split/2).
+\item
+  \texttt{results/m30\_directionality.json}: directionality = up / (up +
+  down) of the radiated power; for a long grating the transmitted
+  remainder vanishes and the up-fraction of guided power approaches it
+  (minus back-reflection).
+\item
+  \texttt{results/m30\_imaging.json}: peak: line intensity (1/um) per
+  unit emitted power, same normalisation as RelayY.atom\_line. Design:
+  shortest grating with crosstalk at 4 um \textless= 1.2e-4 (the edge
+  emitter gives 8e-5 to 1.1e-4), then the
+\item
+  \texttt{results/m30\_power.json}: P\_tweezer scales the edge-chain
+  power by the ratio of line peaks per unit guided power (y axis only).
+  If the emitter pitch must grow to suppress coupling, the x field per
+  engine shrinks by x\_field\_fra
+\item
+  \texttt{results/m31\_frequency.json}: A crossed AOD shifts each
+  addressed site by its own RF frequency. For a light-shift (Z) gate
+  this is harmless; for coherent two-photon (Raman) addressing against a
+  global beam the relative phase walks
+\item
+  \texttt{results/m31\_leakage.json}: With equally spaced tones every
+  third-order product lands on a site of the same line, so the idle-site
+  leakage of a multi-tone AOD equals its intermodulation level at those
+  sites.
+\item
+  \texttt{results/m31\_patterns.json}: Crossed AODs illuminate row-set x
+  column-set rectangles; an arbitrary pattern lit once per site needs an
+  exact partition of its ones into rectangles. Bands: real rank (lower)
+  to the best of greedy, di
 \item
   \texttt{results/m3\_field\_tradeoff.json}: 1D scalar Fourier optics;
   aplanatic objective (pupil radius F NA). The number of resolvable

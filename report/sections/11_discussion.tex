@@ -2,7 +2,7 @@
 
 \subsection{What was shown}\label{sec:discussion-shown}
 
-Within the models used, the study establishes seven points. (i) The passive SiN elements meet the proposal's
+Within the models used, the study establishes nine points. (i) The passive SiN elements meet the proposal's
 targets on the 400~nm film, and two targets need restating: the steering update rate should be $\geq 200$~kHz
 for moves at 1.2~mK, and position noise must be specified as a spectral density at the trap frequency rather
 than as an rms value (\cref{sec:platform}). (ii) Independent motion of about 20 tweezers along a row, the
@@ -27,7 +27,15 @@ crosstalk at 4~\textmu m at or below $1.0\times10^{-4}$, so one engine serves it
 (\cref{sec:combine-reflective}). (vii) Against crossed AODs in the same simulator, the PIC block assembles $10^4$ to
 $10^5$-site arrays 3 to 27 times faster. It holds the same steady-state defect fraction, because steady-state holes
 appear one at a time, at about 50 times the transport laser power and with up to 49,024 fast channels against 2
-(\cref{sec:megascale-aod}).
+(\cref{sec:megascale-aod}). At $10^6$ sites several units must work at once, but at equal number every unit type
+converges, a single moving tweezer per zone included, so concurrency does not favour the PIC either
+(\cref{sec:megascale-concurrency}). (viii) Addressing is where the PIC router has a structural lead: an arbitrary
+pattern in one round and about 1~\textmu s, at one optical frequency, against about one round per row for crossed AODs
+(84 to 340~\textmu s on $16\times16$ to $40\times40$ blocks); an SLM/DMD modulator also needs one round but about
+24~\textmu s (\cref{sec:platform-addressing}). (ix) A planar surface-emitting tile would remove the stack and its
+collimator: a Bragg mirror under the oxide gives 0.997 directionality and 46.5~mW per tweezer, but the grating must
+be about 4~mm long and neighbouring emitters must sit about 2.2~\textmu m apart, or the $y$ angle varies along the row
+(\cref{sec:combine-planar}).
 
 \subsection{What is model-dependent}\label{sec:discussion-model}
 
@@ -79,9 +87,11 @@ demonstrated.
 
 We have shown, in simulation, that SiN circuits can steer independent transport tweezers along rows of a
 4~\textmu m lattice, that stacked rows can be made independent without per-chip frequency shifters, and that
-handoff transport is clean and cold with slow steps and lanes between rows. Against crossed AODs the gain is
-assembly speed for large arrays, not steady-state quality, and it is bought with power and control channels; fast
-SLM rearrangement and conveyor reloading are the stronger competitors. A refractive cylindrical collimator
+handoff transport is clean and cold with slow steps and lanes between rows. Against crossed AODs the gain in
+transport is assembly speed for large arrays, not steady-state quality or concurrency, and it is bought with power and
+control channels; fast SLM rearrangement and conveyor reloading are the stronger competitors. The defensible lead of
+the PIC route is addressing: arbitrary patterns in one round, at one frequency, in about a microsecond. Transport is
+best presented as the scaling study it is. A refractive cylindrical collimator
 serves only the central half of each engine's segment; a two-mirror collimator in glass, designed here, serves the
 whole segment. The main limitation is now that collimator's fabrication: two freeform mirrors held to about 10~nm
 rms in a 0.48~mm block glued at $\pm0.1$~\textmu m, with coatings of small s-p retardance. The next steps are a
