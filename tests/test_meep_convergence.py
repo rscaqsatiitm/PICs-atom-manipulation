@@ -1,0 +1,33 @@
+"""The doubled-resolution comparator of module 32 passes identical values and fails perturbed ones."""
+import sys
+
+import numpy as np
+
+from picsim.provenance import REPO
+
+sys.path.insert(0, str(REPO / "scripts"))
+import m32_meep_convergence as m32  # noqa: E402
+
+
+def test_stored_cases_resolve():
+    s = m32.stored()
+    assert len(s["m3"]) == len(m32.M3_CASES) and len(s["m14"]) == 2 and len(s["m10"]) == 1
+    assert abs(s["m3"][m32.M3_CASES[0][0]]["directionality_c"] - 0.715) < 5e-4  # the regression case
+
+
+def test_selftest_detects_a_planted_shift():
+    out = m32.selftest()
+    for module, r in out.items():
+        assert r["identical_all_pass"], module
+        assert r["perturbed_any_fail"], module
+
+
+def test_tolerance_edges():
+    low = {"R": 0.10, "T": 0.80, "T_within_s0.9": 0.70, "fraction_within_s0.9": 0.9, "NA_1e2": 1.0}
+    inside = dict(low, R=0.1099)
+    outside = dict(low, R=0.1101)
+    assert all(r["verdict"] == "PASS" for r in m32.compare("m14", low, inside))
+    assert any(r["verdict"] == "FAIL" for r in m32.compare("m14", low, outside))
+    a = {"T_re": [1.0, 0.5], "T_im": [0.0, 0.2], "capture": 0.4}
+    assert m32.fidelity(np.array([1, 0.5 + 0.2j]), np.array([1, 0.5 + 0.2j])) > 1 - 1e-12
+    assert all(r["verdict"] == "PASS" for r in m32.compare("m10", a, a))

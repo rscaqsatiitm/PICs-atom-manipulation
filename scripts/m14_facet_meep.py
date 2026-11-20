@@ -46,7 +46,8 @@ def slab_mode(nc, ncl, t, lam, ne, y):
     return np.where(inside, np.cos(kap * y), np.cos(kap * t / 2) * np.exp(-gam * (np.abs(y) - t / 2)))
 
 
-def main(medium="air", res=40):
+def main(medium="air", res=40, write=True):
+    """write=False returns the outputs without touching results/ (used by the convergence check, m32)."""
     n_m = 1.0 if medium == "air" else N_OX
     nc = brentq(lambda n: slab_te_neff(n, N_OX, T, LAM) - N_EFF_3D, N_EFF_3D + 1e-3, 2.2)
     ne = slab_te_neff(nc, N_OX, T, LAM)
@@ -111,10 +112,13 @@ def main(medium="air", res=40):
            "kirchhoff": {"T": T_kirch, "fraction_within_s0.9": frac09_k, "T_within_s0.9": T_kirch * frac09_k},
            "spectrum_s": s1[::8].tolist(), "spectrum_P": d1[::8].tolist()}
     print(json.dumps({k: v for k, v in out.items() if not k.startswith("spectrum")}, indent=1), flush=True)
+    if not write:
+        return out
     Path("results").joinpath(f"m14_facet_meep_{medium}.json").write_text(json.dumps(
         {"script": "scripts/m14_facet_meep.py", "inputs": {"medium": medium, "resolution": res, "slab": "SiN core "
          "index fitted to n_eff 1.7995, t 0.4 um, SiO2, Si below 4 um BOX", "polarisation": "Ez (chip TE)"},
          "outputs": out}, indent=1))
+    return out
 
 
 if __name__ == "__main__":
