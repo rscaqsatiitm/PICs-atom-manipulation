@@ -53,6 +53,10 @@ M3_CASES = [  # (label, etch um, BOX um, reflector, Bragg pairs), stored file
 ]
 M14_CASES = ["air", "glass"]
 M10_PORTS = [0]
+# The production pair for m10 (20 -> 40/um) is predicted at about 15 h on one core (results/m32_timing.json), above
+# the 4 h limit; at the user's choice it is not run. A cheaper doubled pair is checked instead, labelled as coarser
+# than production: a new run at 15/um against the stored 30/um result, with the same tolerances.
+M10_CHEAP = {"port 0": (15, 30)}
 
 
 # ---------------------------------------------------------------------------------------------- comparator
@@ -193,9 +197,17 @@ def timing():
     return rows
 
 
+def _cheap_predicted_seconds():
+    t = json.loads((RESULTS / "m32_timing.json").read_text())["rows"]
+    r = next(x for x in t if x["module"] == "m10")
+    return r["seconds_coarse"] * (M10_CHEAP["port 0"][0] / r["res_coarse"]) ** 3
+
+
 def run():
+    """m3 and m14 at the doubled resolution; m10 only the cheap pair (new 15/um run)."""
     from multiprocessing import Pool
-    js = sorted(_jobs(1), key=lambda j: -_predicted(j))
+    js = [j for j in _jobs(1) if j[0] != "m10"] + [("m10", k, lo) for k, (lo, _) in M10_CHEAP.items()]
+    js = sorted(js, key=lambda j: -(_predicted(j) if j[0] != "m10" else _cheap_predicted_seconds()))
     with Pool(int(os.environ.get("NPROC", 4))) as pool:
         rows = pool.map(_job, js, chunksize=1)
     _save("m32_meep_highres", {"rows": rows})
@@ -218,18 +230,30 @@ def check():
     tim = {(r["module"], r["case"]): r for r in json.loads((RESULTS / "m32_timing.json").read_text())["rows"]}
     table, fails = [], []
     for h in hi:
-        low = s[h["module"]][h["case"]]
-        rows = compare(h["module"], low, h["outputs"])
-        t = tim.get((h["module"], h["case"]), {})
-        table.append({"module": h["module"], "case": h["case"], "res_low": RES[h["module"]][0], "res_high": h["res"],
-                      "seconds_high": h["seconds"], "predicted_seconds": t.get("predicted_seconds"), "rows": rows})
+        if h["module"] == "m10":  # cheap pair: new run (low) against the stored higher resolution (high)
+            lo_res, hi_res = M10_CHEAP[h["case"]]
+            p = int(h["case"].split()[1])
+            high = json.loads((RESULTS / f"m10_meep_port{p}_res{hi_res}.json").read_text())
+            rows = compare("m10", h["outputs"], high)
+            table.append({"module": "m10", "case": h["case"] + f", {lo_res} vs {hi_res} (coarser than production 20)",
+                          "res_low": lo_res, "res_high": hi_res, "seconds_new_run": h["seconds"],
+                          "predicted_seconds": _cheap_predicted_seconds(), "rows": rows})
+        else:
+            low = s[h["module"]][h["case"]]
+            rows = compare(h["module"], low, h["outputs"])
+            t = tim.get((h["module"], h["case"]), {})
+            table.append({"module": h["module"], "case": h["case"], "res_low": RES[h["module"]][0], "res_high": h["res"],
+                          "seconds_high": h["seconds"], "predicted_seconds": t.get("predicted_seconds"), "rows": rows})
         for r in rows:
             print(f"{h['module']:4s} {h['case'][:44]:44s} {r['quantity']:22s} {r['low']:.5g} -> {r['high']:.5g} "
                   f"(diff {r['diff']:+.3g}, {r['tolerance']}) {r['verdict']}", flush=True)
             if r["verdict"] == "FAIL":
                 fails.append({"module": h["module"], "case": h["case"], **r})
-    _save("m32_meep_convergence", {"tolerances": TOLERANCES, "resolutions": RES, "selftest": selftest(),
-                                   "table": table, "failures": fails,
+    not_run = [{"module": "m10", "case": "port 0, 20 vs 40 (production pair)",
+                "reason": "predicted about 15 h on one core (results/m32_timing.json), above the 4 h limit; "
+                          "not run at the user's choice"}]
+    _save("m32_meep_convergence", {"tolerances": TOLERANCES, "resolutions": RES, "m10_cheap_pair": M10_CHEAP,
+                                   "selftest": selftest(), "table": table, "failures": fails, "not_run": not_run,
                                    "notes": "low = stored production result; high = doubled resolution. FAIL rows "
                                             "are findings; no stored result or report number was changed."})
     print("failures:", len(fails), flush=True)

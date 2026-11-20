@@ -31,3 +31,10 @@ def test_tolerance_edges():
     a = {"T_re": [1.0, 0.5], "T_im": [0.0, 0.2], "capture": 0.4}
     assert m32.fidelity(np.array([1, 0.5 + 0.2j]), np.array([1, 0.5 + 0.2j])) > 1 - 1e-12
     assert all(r["verdict"] == "PASS" for r in m32.compare("m10", a, a))
+
+
+def test_cheap_m10_pair_resolves():
+    lo, hi = m32.M10_CHEAP["port 0"]
+    assert (lo, hi) == (15, 30)
+    assert (REPO / "results" / f"m10_meep_port0_res{hi}.json").exists()
+    assert 2000 < m32._cheap_predicted_seconds() < 4000  # 833 s at 10/um scaled by 1.5^3
