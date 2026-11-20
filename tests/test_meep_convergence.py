@@ -47,3 +47,17 @@ def test_pdg_rounding_rule():
     for u, (val, dec) in cases.items():
         got = m32.pdg_round(u)
         assert got[1] == dec and abs(got[0] - val) < 1e-12, (u, got)
+
+
+def test_adopted_uncertainties_match_stored_files():
+    """Every adopted uncertainty is the rounded |v80 - v40| of the stored files, and v40 is the stored value."""
+    import json
+    rec = json.loads((REPO / "results" / "m32_uncertainties.json").read_text())["outputs"]
+    s = m32.stored()
+    hi = {(r["module"], r["case"]): r["outputs"] for r in m32._load("m32_meep_highres")["rows"]}
+    scale = {"": 1, "%": 100}
+    for r in rec["rows"]:
+        k = scale[r["unit"]]
+        lo, h = k * s[r["module"]][r["case"]][r["quantity"]], k * hi[(r["module"], r["case"])][r["quantity"]]
+        u, dec = m32.pdg_round(h - lo)
+        assert abs(r["value_40"] - lo) < 1e-12 and abs(r["uncertainty"] - u) < 1e-12 and r["decimals"] == dec

@@ -62,7 +62,10 @@ below 0.125 um. (Corrected: an earlier version cited a 0.0625 um comparison that
 20/um) and the BPM agree with arm-field fidelity 0.997 (centre port), 0.985 (middle) and 0.93 (edge port), and
 capture within 2 to 5%. At FDTD resolution 30/um the edge-port fidelity rises to 0.981 (rms phase difference
 0.13 rad, capture 0.369 vs 0.371), and the FDTD result itself changes by fidelity 0.98 between the two
-resolutions; hence the residual difference is dominated by FDTD discretisation rather than by the BPM.
+resolutions; hence the residual difference is dominated by FDTD discretisation rather than by the BPM. Between 15 and 30/um
+the FDTD arm field changes by fidelity 0.90, so the FDTD fidelities quoted here are uncertain at the 0.018 level
+(1 - 0.982); the doubled pair at production resolution, 20 against 40/um, was not run (predicted about 15 h on
+one core; `docs/verification.md`).
 
 **Shared layers of the BPM-FDTD comparison.** The two routes are not independent below the propagation step.
 They share:

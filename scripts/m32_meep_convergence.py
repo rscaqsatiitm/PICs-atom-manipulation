@@ -84,6 +84,71 @@ def pdg_round(u):
     return (round(u, dec) if lead < 950 else 10.0 ** (e)), dec
 
 
+def _fmt(v, dec):
+    return f"{v:.{max(dec, 0)}f}"
+
+
+def adopted():
+    """Adopted uncertainties for every failing quantity the report or docs quote, plus the supporting numbers of
+    the footnotes; written to results/m32_uncertainties.json. Reads stored files only (no MEEP run)."""
+    s = stored()
+    hi = {(r["module"], r["case"]): r["outputs"] for r in _load("m32_meep_highres")["rows"]}
+    c01, c02, c265 = M3_CASES[0][0], M3_CASES[1][0], M3_CASES[2][0]
+    mirrors = [c[0] for c in M3_CASES[3:]]
+    rows = []
+
+    def row(module, case, q, scale, unit, where, pre=True, note=""):
+        lo, h = scale * float(s[module][case][q]), scale * float(hi[(module, case)][q])
+        u, dec = pdg_round(h - lo)
+        rows.append({"module": module, "case": case, "quantity": q, "unit": unit, "value_40": lo, "value_80": h,
+                     "abs_diff": abs(h - lo), "uncertainty": u, "decimals": dec, "central": round(lo, dec),
+                     "quoted": f"{_fmt(lo, dec)} +/- {_fmt(u, dec)}{unit}", "where": where,
+                     "pre_registered_check": pre, "note": note})
+
+    row("m3", c01, "directionality_c", 1, "", "report 03_platform.tex (emitter pitch); docs/findings.md")
+    row("m3", c265, "directionality_c", 1, "", "report 10_combine.tex (i); docs/planar_tile.md")
+    row("m14", "air", "R", 100, "%", "report 05_rows.tex (facet loss); docs/collimator.md")
+    row("m3", c02, "refl_c", 100, "%", "report 03_platform.tex; docs/findings.md", pre=False,
+        note="back-reflection was not in the pre-registered tolerance list; difference quoted, no verdict")
+
+    def mx(vals):
+        m = max(abs(v) for v in vals)
+        u, dec = pdg_round(m)
+        return {"max_abs_diff": m, "rounded": u, "decimals": dec}
+
+    d = lambda m, c, q, k=1: k * (float(hi[(m, c)][q]) - float(s[m][c][q]))  # noqa: E731
+    support = {
+        "mirror_directionality_max_diff": mx([d("m3", c, "directionality_c") for c in mirrors]),
+        "etch0.2_directionality_diff": mx([d("m3", c02, "directionality_c")]),
+        "etch0.05_angle_diff_deg_min": mx([min((d("m3", c, "theta_air_deg") for c in [c265] + mirrors), key=abs)]),
+        "etch0.05_angle_diff_deg_max": mx([d("m3", c, "theta_air_deg") for c in [c265] + mirrors]),
+        "facet_other_values_max_diff_percent": mx([d("m14", "air", "T", 100), d("m14", "air", "T_within_s0.9", 100),
+                                                  d("m14", "glass", "R", 100), d("m14", "glass", "T", 100),
+                                                  d("m14", "glass", "T_within_s0.9", 100)]),
+        "box2.65_L_1e_power_um": {"value_40": float(s["m3"][c265]["L_1e_power_um"]),
+                                  "value_80": float(hi[("m3", c265)]["L_1e_power_um"]),
+                                  "quoted": "423 to 270 um"},
+    }
+    T = lambda o: np.array(o["T_re"]) + 1j * np.array(o["T_im"])  # noqa: E731
+    m10 = {r: json.loads((RESULTS / f"m10_meep_port0_res{r}.json").read_text()) for r in (20, 30)}
+    m10 = {r: v.get("outputs", v) for r, v in m10.items()}
+    m10[15] = hi[("m10", "port 0")]
+    f2030, f1530 = fidelity(T(m10[20]), T(m10[30])), fidelity(T(m10[15]), T(m10[30]))
+    u, dec = pdg_round(1 - f2030)
+    support["m10_fidelity"] = {"20_vs_30": f2030, "15_vs_30": f1530, "quoted_20_vs_30": round(f2030, 2),
+                               "quoted_15_vs_30": round(f1530, 2), "uncertainty_level": u, "decimals": dec,
+                               "note": "no 40 px/um run (production pair 20 vs 40 predicted 15 h, not run)"}
+    for r in rows:
+        print(f"{r['module']:4s} {r['case'][:40]:40s} {r['quantity']:18s} {r['quoted']}", flush=True)
+    for k, v in support.items():
+        print(k, {a: (round(b, 5) if isinstance(b, float) else b) for a, b in v.items()}, flush=True)
+    _save("m32_uncertainties", {"rule": "uncertainty = |v80 - v40|; PDG rounding (100-354: 2 sig. fig., 355-949: 1, "
+                                        "950-999: up to 1000 with 2); central value to the same decimal place",
+                                "rows": rows, "support": support},
+          "Adopted discretisation uncertainties (option 2, user decision 2026-11-20); from stored files only.")
+    return rows, support
+
+
 # ---------------------------------------------------------------------------------------------- comparator
 def fidelity(a, b):
     a, b = np.asarray(a, complex), np.asarray(b, complex)

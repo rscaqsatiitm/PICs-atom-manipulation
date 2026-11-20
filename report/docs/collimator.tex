@@ -44,7 +44,9 @@ numbers:
 
 (i) \textbf{The emitter facet loses about a quarter of the light into
 air.} A 2D FDTD of the facet cross-section gives 79\% transmission into
-air (12.8\% reflected back into the chip) and 96\% into glass (2.3\%
+air (12.8 +/- 1.1\% reflected back into the chip; discretisation
+uncertainty: the change between 40 and 80 px/um,
+\texttt{docs/verification.md} Sec. 6) and 96\% into glass (2.3\%
 reflected). Within the collimator aperture (\textbar s\textbar{}
 \textless{} 0.9) the figures are 77\% (air) and 85\% (glass). This loss
 was not in any earlier power figure. Gluing the collimator to the facet
@@ -157,16 +159,40 @@ same, Kirchhoff \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-air & 12.8\% & 79.1\% & 77.2\% & 72.3\% \\
+air & 12.8 +/- 1.1\% & 79.1\% & 77.2\% & 72.3\% \\
 fused silica & 2.3\% & 95.9\% & 85.2\% & 82.9\% \\
 \end{longtable}
 }
 
 The two methods agree to 3 to 7\%. We use the FDTD values to scale the
-Kirchhoff spectra in the power estimate. The remainder (8\% in air, 2\%
-in glass) leaves through the cladding near the facet. It is a 2D result
-with the lateral confinement folded into the core index; a 3D FDTD of
-the facet would refine it.
+Kirchhoff spectra in the power estimate. \textbf{Shared layers of the
+Kirchhoff-FDTD comparison.} Both estimates come from
+\texttt{scripts/m14\_facet\_meep.py} and share:
+
+\begin{itemize}
+\tightlist
+\item
+  the 2D slab model, i.e. the core index 1.965 fitted so that the slab
+  mode matches the femwell 3D index 1.7995
+  (\texttt{results/m13\_facet.json}; femwell and the Sellmeier data of
+  \texttt{picsim.materials});
+\item
+  the slab mode profile (\texttt{slab\_mode}) that launches the FDTD and
+  is the Kirchhoff aperture field;
+\item
+  the oxide index;
+\item
+  the wavelength.
+\end{itemize}
+
+The agreement checks the radiation physics at the facet, i.e. reflection
+and the evanescent part of the angular spectrum. It cannot certify the
+effective-index reduction of the 3D mode, the mode solver or the
+material data. The FDTD\textquotesingle s own resolution check is in
+\texttt{docs/verification.md}. The remainder (8\% in air, 2\% in glass)
+leaves through the cladding near the facet. It is a 2D result with the
+lateral confinement folded into the core index; a 3D FDTD of the facet
+would refine it.
 
 \hypertarget{4-the-designs-in-the-wave-model}{%
 \section{The designs in the wave

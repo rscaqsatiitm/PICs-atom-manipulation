@@ -1,8 +1,8 @@
 # Verification record
 
 This note records the verification practices adopted on 2026-11-20 (rules in `CLAUDE.md`) and the results of
-their first application. No stored result and no number in the report or the other docs was changed by this
-work. Failing quantities are listed as findings in Sec. 5; how they are resolved is a separate decision.
+their first application. No stored result was changed. Failing quantities are listed as findings in Sec. 5; at the
+user's decision, the report and docs now quote them with the discretisation uncertainties of Sec. 6.
 
 ## 1. Number gate
 
@@ -140,7 +140,8 @@ A comparison between two routes cannot certify a layer they share. The layers ar
 
 ## 5. Findings
 
-These are reported, not resolved. The numbers quoted in the report and docs are unchanged.
+These were first reported without changing any number. They are resolved by option (ii) below, at the user's
+decision of 2026-11-20; see Sec. 6 for the uncertainties now quoted.
 
 **F1. Grating directionality and emission fractions at 40/um (m3).** For the 0.1 um etch on 3 um BOX, the
 directionality moves from 0.715 to 0.702 and the up and transmitted fractions by 0.02. For the weakest emitter,
@@ -180,3 +181,38 @@ at 160/um (2D, about 8 times the 80/um time per case, so about 4 to 6 h per m3 c
 values and quote the 40 to 80 difference as their discretisation uncertainty; (iii) for the weak-grating cases,
 lengthen the simulated grating so that most of the power radiates before the fit. For m10, the production pair
 20 against 40/um needs about 15 h on one core.
+
+## 6. Adopted uncertainties
+
+Decision (user, 2026-11-20): option (ii) of Sec. 5. The stored 40 px/um values are kept, and the change
+|value(80) - value(40)| is quoted as their discretisation uncertainty wherever a failing quantity is quoted. No
+new MEEP run was made.
+
+Rounding, fixed and committed (`99ffe3d`) before any uncertainty was computed: the Particle Data Group
+convention. The three leading digits of the uncertainty decide: 100 to 354 gives two significant figures, 355 to
+949 one, 950 to 999 rounds up to 1000 with two. The central value is quoted to the same decimal place.
+`scripts/m32_meep_convergence.py adopted` computes the values from the stored files only and writes
+`results/m32_uncertainties.json`; `tests/test_meep_convergence.py` checks the rule on fixed examples and checks
+every adopted value against the stored files. Deliberate breaks: moving the band edge from 354 to 355 fails the
+rule test (0.355 rounds to 0.35 instead of 0.4); corrupting one stored uncertainty fails the consistency test.
+
+| quantity | 40 px/um | 80 px/um | quoted | where |
+|---|---|---|---|---|
+| directionality, 0.1 um etch, 3 um BOX, Si | 0.71535 | 0.70194 | 0.715 +/- 0.013 | report `03_platform.tex`; `docs/findings.md` |
+| directionality, 0.05 um etch, 2.65 um BOX, Si | 0.70237 | 0.68609 | 0.702 +/- 0.016 | report `10_combine.tex` (i); `docs/planar_tile.md` |
+| facet reflection into air | 12.830% | 13.909% | 12.8 +/- 1.1% | report `05_rows.tex`; `docs/collimator.md` |
+| back-reflection, 0.2 um etch, 2 um BOX (a) | 6.27% | 7.10% | 6.3 +/- 0.8% | report `03_platform.tex`; `docs/findings.md` |
+
+(a) Not in the tolerance list fixed before the runs; its change is quoted as its uncertainty, without a verdict.
+
+Supporting numbers quoted in the footnotes (same rounding): the Bragg-mirror and metal-mirror directionalities
+change by at most 0.0013 and the 0.2 um etch directionality by 0.0019; in the 50 nm etch cases rerun, the emission
+angle moves by 0.08 to 0.4 deg; the other facet values quoted in `05_rows.tex` change by at most 0.22%; the 1/e
+power length of the 2.65 um BOX case moves from 423 to 270 um. For the star coupler there is no 40 px/um run: the
+FDTD arm field changes by fidelity 0.98 between 20 and 30/um and 0.90 between 15 and 30/um, and the report and
+`docs/fpr_design.md` now state that the FDTD fidelities are uncertain at the 0.018 level (1 - 0.982).
+
+Still unchecked at doubled resolution: the rest of the BOX sweep of `results/m30_directionality.json` (the
+"0.28 to 0.70" range and the factor of eight in emission rate, whose 960 um end lies at a metal-mirror BOX of
+2.1 um); the 50 nm etch on 3 um oxide (0.68, 10.0 deg) and the 100 nm etch at 2.65 um BOX (0.722); the
+star-coupler production pair, 20 against 40/um (about 15 h on one core).
