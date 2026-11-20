@@ -1,0 +1,360 @@
+{
+ "name": "m32_meep_highres",
+ "script": "scripts/m32_meep_convergence.py",
+ "git": "ba4b65d",
+ "notes": "Raw outputs of the doubled-resolution runs (m3, m14 at 80/um; m10 port 0 at 15/um); seconds per run.",
+ "inputs": {
+  "tol_m3_directionality_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_up_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_down_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_trans_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_theta_air_deg": {
+   "value": 0.1,
+   "unit": "deg",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_L_1e_power_um": {
+   "value": 0.1,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "rel tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_R": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_T": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_T_within_s0.9": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_fraction_within_s0.9": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_NA_1e2": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m10_fidelity": {
+   "value": 0.99,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "min tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m10_capture": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m3_low": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m3_high": {
+   "value": 80.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m14_low": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m14_high": {
+   "value": 80.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_low": {
+   "value": 20.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_high": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_cheap_low": {
+   "value": 15.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_cheap_high": {
+   "value": 30.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  }
+ },
+ "outputs": {
+  "rows": [
+   {
+    "module": "m10",
+    "case": "port 0",
+    "res": 15,
+    "seconds": 1671.6448938846588,
+    "outputs": {
+     "port": 0,
+     "resolution": 15,
+     "T_re": [
+      -0.18171343432020595,
+      -0.18742425574473115,
+      -0.20225159814457214,
+      0.05999823214119607,
+      0.06714548688226807,
+      0.02173777643768193,
+      -0.2132185191591092,
+      -0.12310901467565587
+     ],
+     "T_im": [
+      0.026140328204308498,
+      -0.05986313707189229,
+      0.0516050592847398,
+      0.2082587974690816,
+      -0.21316387213803795,
+      0.22109591577661347,
+      -0.02452238267515812,
+      -0.15252281443299232
+     ],
+     "capture": 0.34674065174431395,
+     "N_CORE": 1.84228,
+     "N_CLAD": 1.35515,
+     "z_in_measure": 9.125227099891497,
+     "z_out_measure": 109.74369569598763
+    }
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+    "res": 80,
+    "seconds": 2789.2720868587494,
+    "outputs": {
+     "etch_um": 0.1,
+     "t_box_um": 3.0,
+     "substrate": "si",
+     "period_um": 0.6503972977970898,
+     "n_periods": 46,
+     "L_um": 29.91827569866613,
+     "n_avg_slab": 1.8102401555322523,
+     "theta_air_deg": 9.654253213043193,
+     "alpha_per_um": 0.012159066619221006,
+     "L_1e_power_um": 41.121577474507944,
+     "up_c": 0.3576111810886759,
+     "down_c": 0.15185221201618954,
+     "trans_c": 0.483087919132721,
+     "refl_c": 0.0033883207009031135,
+     "directionality_c": 0.7019369515624196
+    }
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "res": 80,
+    "seconds": 2725.57097530365,
+    "outputs": {
+     "etch_um": 0.05,
+     "t_box_um": 2.65,
+     "substrate": "si",
+     "period_um": 0.6434798520154891,
+     "n_periods": 47,
+     "L_um": 30.243553044727985,
+     "n_avg_slab": 1.8278336143453395,
+     "theta_air_deg": 10.032128805691785,
+     "alpha_per_um": 0.0018546534110597855,
+     "L_1e_power_um": 269.59214968056494,
+     "up_c": 0.0724252199959948,
+     "down_c": 0.03313771952481745,
+     "trans_c": 0.8938810041603338,
+     "refl_c": 3.910597592504672e-05,
+     "directionality_c": 0.6860856691255345
+    }
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.2, BOX 2.0, Si (directionality 0.76)",
+    "res": 80,
+    "seconds": 2476.2221517562866,
+    "outputs": {
+     "etch_um": 0.2,
+     "t_box_um": 2.0,
+     "substrate": "si",
+     "period_um": 0.6707273378932628,
+     "n_periods": 45,
+     "L_um": 30.182730205196826,
+     "n_avg_slab": 1.7606343341330777,
+     "theta_air_deg": 8.971466515068332,
+     "alpha_per_um": 0.05509395222416872,
+     "L_1e_power_um": 9.075406279904875,
+     "up_c": 0.6582412730033633,
+     "down_c": 0.2110684831958451,
+     "trans_c": 0.03594476616797227,
+     "refl_c": 0.07095522565065493,
+     "directionality_c": 0.757199914425581
+    }
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, Bragg 3 pairs",
+    "res": 80,
+    "seconds": 2815.1868240833282,
+    "outputs": {
+     "etch_um": 0.05,
+     "t_box_um": 1.9,
+     "substrate": "si",
+     "period_um": 0.6434798520154891,
+     "n_periods": 47,
+     "L_um": 30.243553044727985,
+     "n_avg_slab": 1.8278336143453395,
+     "theta_air_deg": 9.88088151523484,
+     "alpha_per_um": 0.00409377450010414,
+     "L_1e_power_um": 122.13667362168597,
+     "up_c": 0.21720192443053482,
+     "down_c": 0.000499323833539779,
+     "trans_c": 0.7806560894844651,
+     "refl_c": 0.0005808207946965682,
+     "directionality_c": 0.997706380475439
+    }
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, Bragg 2 pairs",
+    "res": 80,
+    "seconds": 2582.9554028511047,
+    "outputs": {
+     "etch_um": 0.05,
+     "t_box_um": 1.9,
+     "substrate": "si",
+     "period_um": 0.6434798520154891,
+     "n_periods": 47,
+     "L_um": 30.243553044727985,
+     "n_avg_slab": 1.8278336143453395,
+     "theta_air_deg": 9.956496399549934,
+     "alpha_per_um": 0.004030417299171001,
+     "L_1e_power_um": 124.0566330694449,
+     "up_c": 0.21186487764469947,
+     "down_c": 0.0029591557976212063,
+     "trans_c": 0.7836535327980231,
+     "refl_c": 0.0004551348693858648,
+     "directionality_c": 0.9862252106982446
+    }
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, metal",
+    "res": 80,
+    "seconds": 2303.197038412094,
+    "outputs": {
+     "etch_um": 0.05,
+     "t_box_um": 1.9,
+     "substrate": "metal",
+     "period_um": 0.6434798520154891,
+     "n_periods": 47,
+     "L_um": 30.243553044727985,
+     "n_avg_slab": 1.8278336143453395,
+     "theta_air_deg": 9.88088151523484,
+     "alpha_per_um": 0.004020117541085095,
+     "L_1e_power_um": 124.3744728580851,
+     "up_c": 0.2142470238744021,
+     "down_c": 1.0279697630488892e-07,
+     "trans_c": 0.784141903067307,
+     "refl_c": 0.000523843040001637,
+     "directionality_c": 0.9999995201943761
+    }
+   },
+   {
+    "module": "m14",
+    "case": "glass",
+    "res": 80,
+    "seconds": 1007.683931350708,
+    "outputs": {
+     "medium": "glass",
+     "n_m": 1.4496257710158857,
+     "resolution": 80,
+     "core_index_2d": 1.9653466198009353,
+     "neff_2d": 1.7994707727722363,
+     "R": 0.025426084522471904,
+     "T": 0.9581600998121519,
+     "T_plus_R": 0.9835861843346239,
+     "fraction_within_s0.9": 0.889010717653484,
+     "T_within_s0.9": 0.8518145979609351,
+     "NA_1e2": 1.1548348629846081,
+     "kirchhoff": {
+      "T": 0.8907195881503318,
+      "fraction_within_s0.9": 0.9305305272043093,
+      "T_within_s0.9": 0.8288417679527335
+     }
+    }
+   },
+   {
+    "module": "m14",
+    "case": "air",
+    "res": 80,
+    "seconds": 994.0628004074097,
+    "outputs": {
+     "medium": "air",
+     "n_m": 1.0,
+     "resolution": 80,
+     "core_index_2d": 1.9653466198009353,
+     "neff_2d": 1.7994707727722363,
+     "R": 0.13909004671691919,
+     "T": 0.7888278312797323,
+     "T_plus_R": 0.9279178779966515,
+     "fraction_within_s0.9": 0.9765884856482308,
+     "T_within_s0.9": 0.7703601771866518,
+     "NA_1e2": 0.9660812725427108,
+     "kirchhoff": {
+      "T": 0.731713071995259,
+      "fraction_within_s0.9": 0.9882321865737431,
+      "T_within_s0.9": 0.7231024090824656
+     }
+    }
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

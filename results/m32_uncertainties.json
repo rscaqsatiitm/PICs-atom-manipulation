@@ -1,0 +1,245 @@
+{
+ "name": "m32_uncertainties",
+ "script": "scripts/m32_meep_convergence.py",
+ "git": "99ffe3d",
+ "notes": "Adopted discretisation uncertainties (option 2, user decision 2026-11-20); from stored files only.",
+ "inputs": {
+  "tol_m3_directionality_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_up_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_down_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_trans_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_theta_air_deg": {
+   "value": 0.1,
+   "unit": "deg",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_L_1e_power_um": {
+   "value": 0.1,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "rel tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_R": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_T": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_T_within_s0.9": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_fraction_within_s0.9": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_NA_1e2": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m10_fidelity": {
+   "value": 0.99,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "min tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m10_capture": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m3_low": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m3_high": {
+   "value": 80.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m14_low": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m14_high": {
+   "value": 80.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_low": {
+   "value": 20.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_high": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_cheap_low": {
+   "value": 15.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_cheap_high": {
+   "value": 30.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  }
+ },
+ "outputs": {
+  "rule": "uncertainty = |v80 - v40|; PDG rounding (100-354: 2 sig. fig., 355-949: 1, 950-999: up to 1000 with 2); central value to the same decimal place",
+  "rows": [
+   {
+    "module": "m3",
+    "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+    "quantity": "directionality_c",
+    "unit": "",
+    "value_40": 0.7153493535930402,
+    "value_80": 0.7019369515624196,
+    "abs_diff": 0.013412402030620552,
+    "uncertainty": 0.013,
+    "decimals": 3,
+    "central": 0.715,
+    "quoted": "0.715 +/- 0.013",
+    "where": "report 03_platform.tex (emitter pitch); docs/findings.md",
+    "pre_registered_check": true,
+    "note": ""
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "quantity": "directionality_c",
+    "unit": "",
+    "value_40": 0.7023664771091519,
+    "value_80": 0.6860856691255345,
+    "abs_diff": 0.016280807983617418,
+    "uncertainty": 0.016,
+    "decimals": 3,
+    "central": 0.702,
+    "quoted": "0.702 +/- 0.016",
+    "where": "report 10_combine.tex (i); docs/planar_tile.md",
+    "pre_registered_check": true,
+    "note": ""
+   },
+   {
+    "module": "m14",
+    "case": "air",
+    "quantity": "R",
+    "unit": "%",
+    "value_40": 12.829699527173613,
+    "value_80": 13.90900467169192,
+    "abs_diff": 1.0793051445183064,
+    "uncertainty": 1.1,
+    "decimals": 1,
+    "central": 12.8,
+    "quoted": "12.8 +/- 1.1%",
+    "where": "report 05_rows.tex (facet loss); docs/collimator.md",
+    "pre_registered_check": true,
+    "note": ""
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.2, BOX 2.0, Si (directionality 0.76)",
+    "quantity": "refl_c",
+    "unit": "%",
+    "value_40": 6.271366325513994,
+    "value_80": 7.095522565065493,
+    "abs_diff": 0.824156239551499,
+    "uncertainty": 0.8,
+    "decimals": 1,
+    "central": 6.3,
+    "quoted": "6.3 +/- 0.8%",
+    "where": "report 03_platform.tex; docs/findings.md",
+    "pre_registered_check": false,
+    "note": "back-reflection was not in the pre-registered tolerance list; difference quoted, no verdict"
+   }
+  ],
+  "support": {
+   "mirror_directionality_max_diff": {
+    "max_abs_diff": 0.0012671307540774723,
+    "rounded": 0.0013,
+    "decimals": 4
+   },
+   "etch0.2_directionality_diff": {
+    "max_abs_diff": 0.0018533950185375403,
+    "rounded": 0.0019,
+    "decimals": 4
+   },
+   "etch0.05_angle_diff_deg_min": {
+    "max_abs_diff": 0.07890073608222892,
+    "rounded": 0.08,
+    "decimals": 2
+   },
+   "etch0.05_angle_diff_deg_max": {
+    "max_abs_diff": 0.38163894598148573,
+    "rounded": 0.4,
+    "decimals": 1
+   },
+   "facet_other_values_max_diff_percent": {
+    "max_abs_diff": 0.2169876008059353,
+    "rounded": 0.22,
+    "decimals": 2
+   },
+   "box2.65_L_1e_power_um": {
+    "value_40": 422.7048414661707,
+    "value_80": 269.59214968056494,
+    "quoted": "423 to 270 um"
+   },
+   "m10_fidelity": {
+    "20_vs_30": 0.9816033976697319,
+    "15_vs_30": 0.8994759146631972,
+    "quoted_20_vs_30": 0.98,
+    "quoted_15_vs_30": 0.9,
+    "uncertainty_level": 0.018,
+    "decimals": 3,
+    "note": "no 40 px/um run (production pair 20 vs 40 predicted 15 h, not run)"
+   }
+  }
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

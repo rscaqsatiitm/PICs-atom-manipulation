@@ -17,7 +17,7 @@ We simulated the four quantities the proposal left open:
 - (iv) the power per tweezer.
 
 (i) **Directionality is solved by a mirror under the BOX** (2D FDTD, 30 um weak grating, about 10 deg emission).
-- **Si substrate alone:** at best 0.70 at a 2.65 um BOX, and between 0.28 and 0.70 as the BOX varies, so the
+- **Si substrate alone:** at best 0.702 +/- 0.016 at a 2.65 um BOX (discretisation uncertainty: the change between 40 and 80 px/um, `docs/verification.md` Sec. 6), and between 0.28 and 0.70 as the BOX varies, so the
   BOX thickness must be controlled to about +/-25 nm.
 - **Bragg mirror, two Si/SiO2 pairs:** 0.965 to 0.985 for a 1.8 to 2.2 um BOX, except 0.60 at 2.1 um.
 - **Bragg mirror, three pairs:** 0.993 to 0.997, except 0.945 at 2.1 um.
@@ -81,7 +81,7 @@ The original cases are reproduced exactly (0.715 at 0.1 um etch, 3 um BOX).
 
 | reflector | best BOX | directionality (0.05 / 0.1 um etch) | range over the BOX values simulated |
 |---|---|---|---|
-| Si substrate | 2.65 um | 0.702 / 0.722 | 0.28 to 0.70 (2.0 to 2.8 um, 50 nm steps) |
+| Si substrate | 2.65 um | 0.702 +/- 0.016 / 0.722 | 0.28 to 0.70 (2.0 to 2.8 um, 50 nm steps) |
 | Bragg, 2 pairs (Si 75 nm / SiO2 184 nm) | 1.9 um | 0.985 / 0.986 | 0.60 to 0.985 (1.8 to 2.2 um) |
 | Bragg, 3 pairs | 1.9 um | 0.997 / 0.998 | 0.945 to 0.997 |
 | perfect metal | 1.8 to 2.2 um | 1.000 / 1.000 | 1.000 |

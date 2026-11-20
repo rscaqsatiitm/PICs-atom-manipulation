@@ -8,17 +8,44 @@ choice), RECALLED (not verified; check before use). Simulation outputs
 are SIM and must be reviewed before submission.
 
 {\footnotesize
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.231\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.083\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.096\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.328\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.262\dimexpr(\linewidth-10\tabcolsep)\relax}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{0.196\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.070\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.221\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.277\dimexpr(\linewidth-10\tabcolsep)\relax}>{\raggedright\arraybackslash}p{0.236\dimexpr(\linewidth-10\tabcolsep)\relax}@{}}
 \toprule\noalign{}
 value & unit & type & pointer & used in \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
+0.01 & & CHOICE & abs tolerance; acceptance setting fixed before the
+runs (commit 9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
+0.1 & deg & CHOICE & abs tolerance; acceptance setting fixed before the
+runs (commit 9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
+40.0 & px/um & CHOICE & acceptance setting fixed before the runs (commit
+9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
+80.0 & px/um & CHOICE & acceptance setting fixed before the runs (commit
+9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
+20.0 & px/um & CHOICE & acceptance setting fixed before the runs (commit
+9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
+15.0 & px/um & CHOICE & acceptance setting fixed before the runs (commit
+9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
+30.0 & px/um & CHOICE & acceptance setting fixed before the runs (commit
+9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
 4.0 & um & CHOICE & buried thermal oxide; checked against substrate
 leakage in scripts/m1\_platform.py & m5\_heaters \\
 2.5 & um & CHOICE & lensed/tapered fibre spot, typical catalogue range
 2-3 um & m2\_couplers \\
+0.99 & & CHOICE & min tolerance; acceptance setting fixed before the
+runs (commit 9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
+0.1 & & CHOICE & rel tolerance; acceptance setting fixed before the runs
+(commit 9b9b12d; m10 cheap pair ba4b65d) & m32\_meep\_convergence,
+m32\_meep\_highres, m32\_timing, m32\_uncertainties \\
 {[}0.2, 0.3, 0.4{]} & um & CHOICE & thickness sweep agreed with PI; 200
 nm covers foundry runs & m1\_width\_sweep \\
 5.60228947368421 & V & DERIVED & 2.8 V x 1064.4/532 assuming the same
@@ -522,6 +549,23 @@ addressing (Cs D1 line, 894.6 nm) & m1\_width\_sweep, m7\_budget \\
   column-set rectangles; an arbitrary pattern lit once per site needs an
   exact partition of its ones into rectangles. Bands: real rank (lower)
   to the best of greedy, di
+\item
+  \texttt{results/m32\_meep\_convergence.json}: low = stored production
+  result; high = doubled resolution (m10: low = new 15/um run, high =
+  stored 30/um). FAIL rows are findings; no stored result or report
+  number was changed.
+\item
+  \texttt{results/m32\_meep\_highres.json}: Raw outputs of the
+  doubled-resolution runs (m3, m14 at 80/um; m10 port 0 at 15/um);
+  seconds per run.
+\item
+  \texttt{results/m32\_timing.json}: Coarse runs at half the stored
+  resolution, serial; production time predicted as t x
+  (r/r\_coarse)\^{}3.
+\item
+  \texttt{results/m32\_uncertainties.json}: Adopted discretisation
+  uncertainties (option 2, user decision 2026-11-20); from stored files
+  only.
 \item
   \texttt{results/m3\_field\_tradeoff.json}: 1D scalar Fourier optics;
   aplanatic objective (pupil radius F NA). The number of resolvable

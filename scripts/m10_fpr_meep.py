@@ -31,7 +31,8 @@ def small_layout():
     return FPRLayout(N, N, p, p, R, L_taper=15, L_port=25, L_arm=30, z0=30)
 
 
-def run(port, res):
+def run(port, res, write=True):
+    """write=False returns the outputs without touching results/ (used by the convergence check, m32)."""
     lay = small_layout()
     dpml = 2.0
     X = lay.x_slab + 6.0
@@ -80,8 +81,10 @@ def run(port, res):
     out = {"port": port, "resolution": res, "T_re": T.real.tolist(), "T_im": T.imag.tolist(),
            "capture": float(np.sum(np.abs(T) ** 2)), "N_CORE": N_CORE, "N_CLAD": N_CLAD,
            "z_in_measure": z_in, "z_out_measure": zm}
-    (REPO / "results" / f"m10_meep_port{port}_res{res}.json").write_text(json.dumps(out, indent=1))
+    if write:
+        (REPO / "results" / f"m10_meep_port{port}_res{res}.json").write_text(json.dumps(out, indent=1))
     print(json.dumps({"port": port, "res": res, "capture": out["capture"], "absT": np.abs(T).round(4).tolist()}))
+    return out
 
 
 if __name__ == "__main__":

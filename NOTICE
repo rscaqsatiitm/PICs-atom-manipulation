@@ -1,0 +1,16 @@
+PICs-atom-manipulation: third-party material
+
+BootLoops skills 1.0 (vendored, unmodified)
+-------------------------------------------
+Files: .claude/skills/planted-truth/SKILL.md, .claude/skills/acceptance-gate/SKILL.md,
+       .claude/skills/independence-bookkeeping/SKILL.md, .claude/skills/timing-discipline/SKILL.md
+Upstream: https://github.com/BootLoops-ai/skills, commit ca892277dcf0468d995f0036f3bd6d753a8afe7d
+Copyright (c) 2026 Anthropic, PBC. Created by Matthew D. Schwartz; written by Claude (Anthropic) under his
+supervision. Maintained by Matthew D. Schwartz (https://www.bootloops.ai).
+Licences: the skill texts are released under the Creative Commons Attribution 4.0 International License
+(.claude/skills/LICENSE-bootloops-CC-BY-4.0, upstream LICENSE-CONTENT); the scripts and plugin manifests of the
+upstream repository are released under the MIT License (.claude/skills/LICENSE-bootloops-MIT, upstream LICENSE).
+No upstream scripts are included here.
+Attribution requested by upstream: "BootLoops 1.0, Anthropic, PBC and Matthew D. Schwartz (2026),
+https://www.bootloops.ai".
+Details of the copy: .claude/skills/UPSTREAM.md

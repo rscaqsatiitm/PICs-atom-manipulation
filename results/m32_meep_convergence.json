@@ -1,0 +1,979 @@
+{
+ "name": "m32_meep_convergence",
+ "script": "scripts/m32_meep_convergence.py",
+ "git": "ba4b65d",
+ "notes": "low = stored production result; high = doubled resolution (m10: low = new 15/um run, high = stored 30/um). FAIL rows are findings; no stored result or report number was changed.",
+ "inputs": {
+  "tol_m3_directionality_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_up_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_down_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_trans_c": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_theta_air_deg": {
+   "value": 0.1,
+   "unit": "deg",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m3_L_1e_power_um": {
+   "value": 0.1,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "rel tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_R": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_T": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_T_within_s0.9": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_fraction_within_s0.9": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m14_NA_1e2": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m10_fidelity": {
+   "value": 0.99,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "min tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "tol_m10_capture": {
+   "value": 0.01,
+   "unit": "",
+   "kind": "CHOICE",
+   "ref": "abs tolerance; acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m3_low": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m3_high": {
+   "value": 80.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m14_low": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m14_high": {
+   "value": 80.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_low": {
+   "value": 20.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_high": {
+   "value": 40.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_cheap_low": {
+   "value": 15.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  },
+  "res_m10_cheap_high": {
+   "value": 30.0,
+   "unit": "px/um",
+   "kind": "CHOICE",
+   "ref": "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+  }
+ },
+ "outputs": {
+  "tolerances": {
+   "m3": {
+    "directionality_c": [
+     "abs",
+     0.01
+    ],
+    "up_c": [
+     "abs",
+     0.01
+    ],
+    "down_c": [
+     "abs",
+     0.01
+    ],
+    "trans_c": [
+     "abs",
+     0.01
+    ],
+    "theta_air_deg": [
+     "abs",
+     0.1
+    ],
+    "L_1e_power_um": [
+     "rel",
+     0.1
+    ]
+   },
+   "m14": {
+    "R": [
+     "abs",
+     0.01
+    ],
+    "T": [
+     "abs",
+     0.01
+    ],
+    "T_within_s0.9": [
+     "abs",
+     0.01
+    ],
+    "fraction_within_s0.9": [
+     "abs",
+     0.01
+    ],
+    "NA_1e2": [
+     "abs",
+     0.01
+    ]
+   },
+   "m10": {
+    "fidelity": [
+     "min",
+     0.99
+    ],
+    "capture": [
+     "abs",
+     0.01
+    ]
+   }
+  },
+  "resolutions": {
+   "m3": [
+    40,
+    80
+   ],
+   "m14": [
+    40,
+    80
+   ],
+   "m10": [
+    20,
+    40
+   ]
+  },
+  "m10_cheap_pair": {
+   "port 0": [
+    15,
+    30
+   ]
+  },
+  "selftest": {
+   "m3": {
+    "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+    "identical_all_pass": true,
+    "perturbed_any_fail": true,
+    "perturbed_rows": [
+     {
+      "quantity": "directionality_c",
+      "low": 0.7153493535930402,
+      "high": 0.7353493535930402,
+      "diff": 0.020000000000000018,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "up_c",
+      "low": 0.37823493600166846,
+      "high": 0.37823493600166846,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "down_c",
+      "low": 0.15050662796547398,
+      "high": 0.15050662796547398,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "trans_c",
+      "low": 0.4642107334528319,
+      "high": 0.4642107334528319,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "theta_air_deg",
+      "low": 9.651041804978119,
+      "high": 9.651041804978119,
+      "diff": 0.0,
+      "tolerance": "abs 0.1",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "L_1e_power_um",
+      "low": 38.98569987296351,
+      "high": 38.98569987296351,
+      "diff": 0.0,
+      "tolerance": "rel 0.1",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   "m14": {
+    "case": "air",
+    "identical_all_pass": true,
+    "perturbed_any_fail": true,
+    "perturbed_rows": [
+     {
+      "quantity": "R",
+      "low": 0.12829699527173613,
+      "high": 0.14829699527173612,
+      "diff": 0.01999999999999999,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "T",
+      "low": 0.7906948608326035,
+      "high": 0.7906948608326035,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "T_within_s0.9",
+      "low": 0.7717203188513421,
+      "high": 0.7717203188513421,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "fraction_within_s0.9",
+      "low": 0.976002699750342,
+      "high": 0.976002699750342,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "NA_1e2",
+      "low": 0.9666685521290088,
+      "high": 0.9666685521290088,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   "m10": {
+    "case": "port 0",
+    "identical_all_pass": true,
+    "perturbed_any_fail": true,
+    "perturbed_rows": [
+     {
+      "quantity": "arm-field fidelity",
+      "low": 1.0,
+      "high": 0.6697591410390397,
+      "diff": 0.33024085896096034,
+      "tolerance": ">= 0.99",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "capture",
+      "low": 0.3771185277908129,
+      "high": 0.3771185277908129,
+      "diff": 0.0,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     }
+    ]
+   }
+  },
+  "table": [
+   {
+    "module": "m10",
+    "case": "port 0, 15 vs 30 (coarser than production 20)",
+    "res_low": 15,
+    "res_high": 30,
+    "seconds_new_run": 1671.6448938846588,
+    "predicted_seconds": 2811.407819777727,
+    "rows": [
+     {
+      "quantity": "arm-field fidelity",
+      "low": 1.0,
+      "high": 0.8994759146631972,
+      "diff": 0.1005240853368028,
+      "tolerance": ">= 0.99",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "capture",
+      "low": 0.34674065174431395,
+      "high": 0.36894678152013266,
+      "diff": 0.022206129775818706,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     }
+    ]
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 2789.2720868587494,
+    "predicted_seconds": 1937.0388946533203,
+    "rows": [
+     {
+      "quantity": "directionality_c",
+      "low": 0.7153493535930402,
+      "high": 0.7019369515624196,
+      "diff": -0.013412402030620552,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "up_c",
+      "low": 0.37823493600166846,
+      "high": 0.3576111810886759,
+      "diff": -0.020623754912992565,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "down_c",
+      "low": 0.15050662796547398,
+      "high": 0.15185221201618954,
+      "diff": 0.0013455840507155536,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "trans_c",
+      "low": 0.4642107334528319,
+      "high": 0.483087919132721,
+      "diff": 0.018877185679889052,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "theta_air_deg",
+      "low": 9.651041804978119,
+      "high": 9.654253213043193,
+      "diff": 0.0032114080650735843,
+      "tolerance": "abs 0.1",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "L_1e_power_um",
+      "low": 38.98569987296351,
+      "high": 41.121577474507944,
+      "diff": 2.1358776015444363,
+      "tolerance": "rel 0.1",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 2725.57097530365,
+    "predicted_seconds": 1878.0860595703125,
+    "rows": [
+     {
+      "quantity": "directionality_c",
+      "low": 0.7023664771091519,
+      "high": 0.6860856691255345,
+      "diff": -0.016280807983617418,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "up_c",
+      "low": 0.04829532073977872,
+      "high": 0.0724252199959948,
+      "diff": 0.02412989925621608,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "down_c",
+      "low": 0.02046553604051055,
+      "high": 0.03313771952481745,
+      "diff": 0.0126721834843069,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "trans_c",
+      "low": 0.9309518836563833,
+      "high": 0.8938810041603338,
+      "diff": -0.03707087949604948,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "theta_air_deg",
+      "low": 10.262520461216326,
+      "high": 10.032128805691785,
+      "diff": -0.23039165552454044,
+      "tolerance": "abs 0.1",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "L_1e_power_um",
+      "low": 422.7048414661707,
+      "high": 269.59214968056494,
+      "diff": -153.11269178560576,
+      "tolerance": "rel 0.1",
+      "verdict": "FAIL"
+     }
+    ]
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.2, BOX 2.0, Si (directionality 0.76)",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 2476.2221517562866,
+    "predicted_seconds": 1870.1921844482422,
+    "rows": [
+     {
+      "quantity": "directionality_c",
+      "low": 0.7590533094441185,
+      "high": 0.757199914425581,
+      "diff": -0.0018533950185375403,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "up_c",
+      "low": 0.6714651201869261,
+      "high": 0.6582412730033633,
+      "diff": -0.013223847183562731,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "down_c",
+      "low": 0.2131435256520119,
+      "high": 0.2110684831958451,
+      "diff": -0.002075042456166798,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "trans_c",
+      "low": 0.031895789750363,
+      "high": 0.03594476616797227,
+      "diff": 0.004048976417609269,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "theta_air_deg",
+      "low": 8.94262367550408,
+      "high": 8.971466515068332,
+      "diff": 0.028842839564251932,
+      "tolerance": "abs 0.1",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "L_1e_power_um",
+      "low": 8.760599765811456,
+      "high": 9.075406279904875,
+      "diff": 0.3148065140934193,
+      "tolerance": "rel 0.1",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, Bragg 3 pairs",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 2815.1868240833282,
+    "predicted_seconds": 1828.583480834961,
+    "rows": [
+     {
+      "quantity": "directionality_c",
+      "low": 0.9974200633119698,
+      "high": 0.997706380475439,
+      "diff": 0.00028631716346927405,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "up_c",
+      "low": 0.21025862735498138,
+      "high": 0.21720192443053482,
+      "diff": 0.0069432970755534396,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "down_c",
+      "low": 0.0005438570634791146,
+      "high": 0.000499323833539779,
+      "diff": -4.453322993933561e-05,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "trans_c",
+      "low": 0.7877078835370882,
+      "high": 0.7806560894844651,
+      "diff": -0.007051794052623128,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "theta_air_deg",
+      "low": 10.262520461216326,
+      "high": 9.88088151523484,
+      "diff": -0.38163894598148573,
+      "tolerance": "abs 0.1",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "L_1e_power_um",
+      "low": 126.73934996859052,
+      "high": 122.13667362168597,
+      "diff": -4.602676346904545,
+      "tolerance": "rel 0.1",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, Bragg 2 pairs",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 2582.9554028511047,
+    "predicted_seconds": 1795.7057495117188,
+    "rows": [
+     {
+      "quantity": "directionality_c",
+      "low": 0.9849580799441672,
+      "high": 0.9862252106982446,
+      "diff": 0.0012671307540774723,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "up_c",
+      "low": 0.2123454344491049,
+      "high": 0.21186487764469947,
+      "diff": -0.00048055680440542425,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "down_c",
+      "low": 0.0032428619189413506,
+      "high": 0.0029591557976212063,
+      "diff": -0.00028370612132014436,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "trans_c",
+      "low": 0.7831149825588897,
+      "high": 0.7836535327980231,
+      "diff": 0.0005385502391334063,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "theta_air_deg",
+      "low": 10.11111569958084,
+      "high": 9.956496399549934,
+      "diff": -0.1546193000309053,
+      "tolerance": "abs 0.1",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "L_1e_power_um",
+      "low": 123.70778557187775,
+      "high": 124.0566330694449,
+      "diff": 0.3488474975671494,
+      "tolerance": "rel 0.1",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, metal",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 2303.197038412094,
+    "predicted_seconds": 1746.9134216308594,
+    "rows": [
+     {
+      "quantity": "directionality_c",
+      "low": 0.9999995310027391,
+      "high": 0.9999995201943761,
+      "diff": -1.0808362982395181e-08,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "up_c",
+      "low": 0.21996342074406286,
+      "high": 0.2142470238744021,
+      "diff": -0.0057163968696607725,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "down_c",
+      "low": 1.031622902039405e-07,
+      "high": 1.0279697630488892e-07,
+      "diff": -3.653138990515707e-10,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "trans_c",
+      "low": 0.7787961499157624,
+      "high": 0.784141903067307,
+      "diff": 0.005345753151544619,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "theta_air_deg",
+      "low": 9.959782251317069,
+      "high": 9.88088151523484,
+      "diff": -0.07890073608222892,
+      "tolerance": "abs 0.1",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "L_1e_power_um",
+      "low": 120.9713334931391,
+      "high": 124.3744728580851,
+      "diff": 3.403139364946,
+      "tolerance": "rel 0.1",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   {
+    "module": "m14",
+    "case": "glass",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 1007.683931350708,
+    "predicted_seconds": 535.8713836669922,
+    "rows": [
+     {
+      "quantity": "R",
+      "low": 0.02325620851441255,
+      "high": 0.025426084522471904,
+      "diff": 0.002169876008059353,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "T",
+      "low": 0.9590714631696732,
+      "high": 0.9581600998121519,
+      "diff": -0.0009113633575212887,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "T_within_s0.9",
+      "low": 0.8518373279111675,
+      "high": 0.8518145979609351,
+      "diff": -2.2729950232447393e-05,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "fraction_within_s0.9",
+      "low": 0.8881896298904532,
+      "high": 0.889010717653484,
+      "diff": 0.0008210877630308033,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "NA_1e2",
+      "low": 1.1581456969863957,
+      "high": 1.1548348629846081,
+      "diff": -0.003310834001787555,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     }
+    ]
+   },
+   {
+    "module": "m14",
+    "case": "air",
+    "res_low": 40,
+    "res_high": 80,
+    "seconds_high": 994.0628004074097,
+    "predicted_seconds": 527.1781311035156,
+    "rows": [
+     {
+      "quantity": "R",
+      "low": 0.12829699527173613,
+      "high": 0.13909004671691919,
+      "diff": 0.010793051445183055,
+      "tolerance": "abs 0.01",
+      "verdict": "FAIL"
+     },
+     {
+      "quantity": "T",
+      "low": 0.7906948608326035,
+      "high": 0.7888278312797323,
+      "diff": -0.0018670295528712133,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "T_within_s0.9",
+      "low": 0.7717203188513421,
+      "high": 0.7703601771866518,
+      "diff": -0.0013601416646902287,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "fraction_within_s0.9",
+      "low": 0.976002699750342,
+      "high": 0.9765884856482308,
+      "diff": 0.0005857858978887132,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     },
+     {
+      "quantity": "NA_1e2",
+      "low": 0.9666685521290088,
+      "high": 0.9660812725427108,
+      "diff": -0.0005872795862980063,
+      "tolerance": "abs 0.01",
+      "verdict": "PASS"
+     }
+    ]
+   }
+  ],
+  "failures": [
+   {
+    "module": "m10",
+    "case": "port 0",
+    "quantity": "arm-field fidelity",
+    "low": 1.0,
+    "high": 0.8994759146631972,
+    "diff": 0.1005240853368028,
+    "tolerance": ">= 0.99",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m10",
+    "case": "port 0",
+    "quantity": "capture",
+    "low": 0.34674065174431395,
+    "high": 0.36894678152013266,
+    "diff": 0.022206129775818706,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+    "quantity": "directionality_c",
+    "low": 0.7153493535930402,
+    "high": 0.7019369515624196,
+    "diff": -0.013412402030620552,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+    "quantity": "up_c",
+    "low": 0.37823493600166846,
+    "high": 0.3576111810886759,
+    "diff": -0.020623754912992565,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+    "quantity": "trans_c",
+    "low": 0.4642107334528319,
+    "high": 0.483087919132721,
+    "diff": 0.018877185679889052,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "quantity": "directionality_c",
+    "low": 0.7023664771091519,
+    "high": 0.6860856691255345,
+    "diff": -0.016280807983617418,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "quantity": "up_c",
+    "low": 0.04829532073977872,
+    "high": 0.0724252199959948,
+    "diff": 0.02412989925621608,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "quantity": "down_c",
+    "low": 0.02046553604051055,
+    "high": 0.03313771952481745,
+    "diff": 0.0126721834843069,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "quantity": "trans_c",
+    "low": 0.9309518836563833,
+    "high": 0.8938810041603338,
+    "diff": -0.03707087949604948,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "quantity": "theta_air_deg",
+    "low": 10.262520461216326,
+    "high": 10.032128805691785,
+    "diff": -0.23039165552454044,
+    "tolerance": "abs 0.1",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+    "quantity": "L_1e_power_um",
+    "low": 422.7048414661707,
+    "high": 269.59214968056494,
+    "diff": -153.11269178560576,
+    "tolerance": "rel 0.1",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.2, BOX 2.0, Si (directionality 0.76)",
+    "quantity": "up_c",
+    "low": 0.6714651201869261,
+    "high": 0.6582412730033633,
+    "diff": -0.013223847183562731,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, Bragg 3 pairs",
+    "quantity": "theta_air_deg",
+    "low": 10.262520461216326,
+    "high": 9.88088151523484,
+    "diff": -0.38163894598148573,
+    "tolerance": "abs 0.1",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m3",
+    "case": "etch 0.05, BOX 1.9, Bragg 2 pairs",
+    "quantity": "theta_air_deg",
+    "low": 10.11111569958084,
+    "high": 9.956496399549934,
+    "diff": -0.1546193000309053,
+    "tolerance": "abs 0.1",
+    "verdict": "FAIL"
+   },
+   {
+    "module": "m14",
+    "case": "air",
+    "quantity": "R",
+    "low": 0.12829699527173613,
+    "high": 0.13909004671691919,
+    "diff": 0.010793051445183055,
+    "tolerance": "abs 0.01",
+    "verdict": "FAIL"
+   }
+  ],
+  "not_run": [
+   {
+    "module": "m10",
+    "case": "port 0, 20 vs 40 (production pair)",
+    "reason": "predicted about 15 h on one core (results/m32_timing.json), above the 4 h limit; not run at the user's choice"
+   }
+  ]
+ },
+ "outputs_kind": "SIM (review before submission)"
+}

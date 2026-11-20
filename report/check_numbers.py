@@ -1,17 +1,24 @@
-"""List numbers in the report that do not occur in docs/*.md or results/*.json (for review by hand).
+"""Gate: every number in the report must occur in docs/*.md, README.md or results/*.json.
 
 A number is a token like 57, 0.973, 1.8e-4 (also written $1.8\\times10^{-4}$), 2,088. Integers below 10, years,
 and section/figure numbering are skipped. A token counts as found if its normalised form appears in the corpus
 (docs text, README, and all numbers in results JSON, rounded to the token's precision).
+
+Exit status: 0 if every number is found or allowlisted, 1 if any number is unmatched, 2 if the allowlist is
+malformed (an entry without a file, a token or a non-empty reason). The allowlist (report/number_allowlist.json)
+is a list of {"file": <tex file name>, "token": <number as written>, "reason": <why it is not a result>}; entries
+that no longer match anything are reported as stale (warning only).
 """
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+ALLOWLIST = ROOT / "report" / "number_allowlist.json"
 
 
 def norm(tok: str) -> str:
@@ -71,7 +78,26 @@ def found(tok, toks, nums):
     return any(round(x, dec) == round(v, dec) for x in nums)
 
 
-def main(files):
+def load_allowlist(path):
+    """Return (entries, malformed entries)."""
+    path = Path(path)
+    data = json.loads(path.read_text()) if path.exists() else []
+    if not isinstance(data, list):
+        return [], [data]
+    bad = [e for e in data if not isinstance(e, dict) or not str(e.get("file", "")).strip()
+           or not str(e.get("token", "")).strip() or not str(e.get("reason", "")).strip()]
+    return data, bad
+
+
+def main(files, allowlist=ALLOWLIST):
+    allow, bad = load_allowlist(allowlist)
+    if bad:
+        print("malformed allowlist entries (file, token and a non-empty reason are required):")
+        for e in bad:
+            print("  ", e)
+        return 2
+    allowed = {(Path(e["file"]).name, norm(str(e["token"]))) for e in allow}
+    used = set()
     toks, nums = corpus()
     miss = {}
     for f in files:
@@ -80,11 +106,24 @@ def main(files):
             if re.fullmatch(r"\d", n) or re.fullmatch(r"(19|20)\d\d", n):
                 continue
             if not found(t, toks, nums):
+                key = (Path(f).name, n)
+                if key in allowed:
+                    used.add(key)
+                    continue
                 miss.setdefault(f, []).append(t)
     for f, ts in miss.items():
         print(f, ":", " ".join(sorted(set(ts), key=ts.index)))
-    print("unmatched:", sum(len(set(v)) for v in miss.values()))
+    stale = sorted(allowed - used)
+    if stale:
+        print("warning: allowlist entries that match nothing:", stale)
+    n_miss = sum(len(set(v)) for v in miss.values())
+    print("unmatched:", n_miss, "| allowlisted:", len(used))
+    return 1 if n_miss else 0
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:] or sorted(str(p) for p in (ROOT / "report" / "sections").glob("[0-9]*.tex")))
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("files", nargs="*", help="tex files (default: report/sections/[0-9]*.tex)")
+    ap.add_argument("--allowlist", default=str(ALLOWLIST))
+    a = ap.parse_args()
+    sys.exit(main(a.files or sorted(str(p) for p in (ROOT / "report" / "sections").glob("[0-9]*.tex")), a.allowlist))

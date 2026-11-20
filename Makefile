@@ -4,12 +4,18 @@ MEEPPY ?= $(shell command -v meep-python 2>/dev/null)
 export OMP_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 
-.PHONY: all test m1 m2 m3 m3g m4 m5 m7
+.PHONY: all test check check-numbers m1 m2 m3 m3g m4 m5 m7
 
 all: m1 m2 m3g m3 m4 m5 m7
 
 test:
 	$(PY) -m pytest -q
+
+# every number in report/sections must occur in docs, README or results (exit 1 otherwise)
+check-numbers:
+	$(PY) report/check_numbers.py
+
+check: test check-numbers
 
 m1:
 	$(PY) scripts/m1_platform.py
@@ -28,6 +34,6 @@ m7:
 	$(PY) scripts/m7_budget.py
 
 .PHONY: report
-report:
+report: check-numbers
 	cd report && $(PY) build_docs_volume.py && $(PY) make_appendices.py && \
 	latexmk -pdf -interaction=nonstopmode report.tex && latexmk -pdf -interaction=nonstopmode docs_volume.tex

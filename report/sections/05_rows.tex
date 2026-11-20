@@ -128,12 +128,12 @@ $R=80$~\textmu m, a 10~\textmu m gap, a 250~\textmu m aplanat and $n=1.8$, with 
 $4\times10^{-5}$ with no residual wavefront error (Table~\ref{tab:rows-designs}).
 
 \paragraph{Facet loss.} The engine model treated the emitter facet as lossless. A 2D FDTD (MEEP, resolution
-40/\textmu m, core index 1.965 chosen to match the 3D mode index 1.7995) shows that the facet reflects 12.8\%
+40/\textmu m, core index 1.965 chosen to match the 3D mode index 1.7995) shows that the facet reflects $12.8\pm1.1$\%
 into the chip and transmits 79.1\% into air, of which 77.2\% of the guided power falls within the collimator
 aperture (Kirchhoff estimate 72.3\%). Into fused silica, as for the glued block, it reflects 2.3\% and transmits
 95.9\%, with 85.2\% within the aperture (Kirchhoff 82.9\%). The emitter facet thus loses about a quarter of the
 light into air, a loss absent from all earlier power figures; gluing the collimator recovers about 10\% and cuts
-the back-reflection sixfold. The FDTD is 2D, with lateral confinement folded into the core index.
+the back-reflection sixfold. The FDTD is 2D, with lateral confinement folded into the core index. The uncertainty of the reflection into air is its change when the resolution is doubled to 80/\textmu m; the other values of this paragraph change by at most 0.22\% (\texttt{docs/\allowbreak verification.md}).
 
 \begin{table}[htbp]\centering\small
 \caption{Collimator designs in the wave model (FDTD-scaled facet, AR-coated surfaces, NA~0.5 pupil, $s_x=0$).
