@@ -59,6 +59,31 @@ M10_PORTS = [0]
 M10_CHEAP = {"port 0": (15, 30)}
 
 
+# ------------------------------------------------------------------------------------- adopted uncertainties
+# The user chose (2026-11-20) to keep the stored 40 px/um values and quote |value(80) - value(40)| as their
+# discretisation uncertainty. Rounding rule, fixed before any uncertainty was computed (Particle Data Group
+# convention): the three leading digits of the uncertainty decide; 100-354 -> two significant figures, 355-949 ->
+# one, 950-999 -> rounded up to 1000 with two. The central value is quoted to the same decimal place.
+def pdg_round(u):
+    """Return (rounded uncertainty, number of decimal places) for u > 0."""
+    import math
+    u = abs(float(u))
+    if u == 0:
+        return 0.0, 0
+    e = math.floor(math.log10(u))
+    lead = int(round(u / 10 ** (e - 2)))
+    if lead >= 1000:  # e.g. 0.09996 -> leading digits 1000
+        e, lead = e + 1, 100
+    if lead <= 354:
+        sig = 2
+    elif lead <= 949:
+        sig = 1
+    else:
+        e, sig = e + 1, 2  # 950-999: round up to 1000, quoted with two significant figures
+    dec = sig - 1 - e
+    return (round(u, dec) if lead < 950 else 10.0 ** (e)), dec
+
+
 # ---------------------------------------------------------------------------------------------- comparator
 def fidelity(a, b):
     a, b = np.asarray(a, complex), np.asarray(b, complex)

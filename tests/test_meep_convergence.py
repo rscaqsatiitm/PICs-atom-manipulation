@@ -38,3 +38,12 @@ def test_cheap_m10_pair_resolves():
     assert (lo, hi) == (15, 30)
     assert (REPO / "results" / f"m10_meep_port0_res{hi}.json").exists()
     assert 2000 < m32._cheap_predicted_seconds() < 4000  # 833 s at 10/um scaled by 1.5^3
+
+
+def test_pdg_rounding_rule():
+    """The rounding rule fixed before the adopted uncertainties were computed."""
+    cases = {0.0134: (0.013, 3), 0.0163: (0.016, 3), 0.0108: (0.011, 3), 0.382: (0.4, 1), 0.0083: (0.008, 3),
+             0.354: (0.35, 2), 0.355: (0.4, 1), 0.96: (1.0, 1), 1.08: (1.1, 1), 153.1: (150.0, -1)}
+    for u, (val, dec) in cases.items():
+        got = m32.pdg_round(u)
+        assert got[1] == dec and abs(got[0] - val) < 1e-12, (u, got)
