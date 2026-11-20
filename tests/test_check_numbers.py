@@ -25,6 +25,12 @@ def test_real_report_passes():
     assert "unmatched: 0" in r.stdout
 
 
+def test_planted_token_occurs_nowhere():
+    """Precondition of the break: the planted token must not occur in the corpus the gate searches."""
+    corpus = [*REPO.glob("docs/*.md"), REPO / "README.md", *REPO.glob("results/*.json")]
+    assert not [p.name for p in corpus if "123.457" in p.read_text()]
+
+
 def test_planted_number_fails(tmp_path):
     r = run(planted(tmp_path))
     assert r.returncode == 1

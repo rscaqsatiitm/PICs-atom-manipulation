@@ -149,9 +149,28 @@ def _jobs(res_index):
     return js
 
 
-def _save(name, payload):
-    payload = {"name": name, "script": "scripts/m32_meep_convergence.py", **payload}
-    (RESULTS / f"{name}.json").write_text(json.dumps(payload, indent=1, default=float))
+def _inputs():
+    """Acceptance settings, all CHOICE: fixed in commit 9b9b12d (m10 cheap pair in ba4b65d) before any run."""
+    from picsim.provenance import P
+    ref = "acceptance setting fixed before the runs (commit 9b9b12d; m10 cheap pair ba4b65d)"
+    inp = {f"tol_{m}_{q}": P(float(t), "deg" if q.endswith("deg") else "", "CHOICE", f"{k} tolerance; {ref}")
+           for m, qs in TOLERANCES.items() for q, (k, t) in qs.items()}
+    inp.update({f"res_{m}_{w}": P(float(r), "px/um", "CHOICE", ref)
+                for m, rr in RES.items() for w, r in zip(("low", "high"), rr)})
+    inp.update({f"res_m10_cheap_{w}": P(float(r), "px/um", "CHOICE", ref)
+                for w, r in zip(("low", "high"), M10_CHEAP["port 0"])})
+    return inp
+
+
+def _save(name, payload, notes=""):
+    """Write through picsim.provenance.save_result: inputs with provenance, outputs (SIM), git revision."""
+    from picsim.provenance import save_result
+    save_result(name, inputs=_inputs(), outputs=json.loads(json.dumps(payload, default=float)),
+                script="scripts/m32_meep_convergence.py", notes=notes)
+
+
+def _load(name):
+    return json.loads((RESULTS / f"{name}.json").read_text())["outputs"]
 
 
 def selftest():
@@ -193,12 +212,13 @@ def timing():
     print(f"total predicted {total / 3600:.2f} h serial, about {total / 3600 / ncpu:.2f} h on {ncpu} processes",
           flush=True)
     _save("m32_timing", {"rule": "2D FDTD time ~ resolution^3 (pixels x steps)", "rows": rows,
-                         "total_predicted_hours_serial": total / 3600, "processes": ncpu})
+                         "total_predicted_hours_serial": total / 3600, "processes": ncpu},
+          "Coarse runs at half the stored resolution, serial; production time predicted as t x (r/r_coarse)^3.")
     return rows
 
 
 def _cheap_predicted_seconds():
-    t = json.loads((RESULTS / "m32_timing.json").read_text())["rows"]
+    t = _load("m32_timing")["rows"]
     r = next(x for x in t if x["module"] == "m10")
     return r["seconds_coarse"] * (M10_CHEAP["port 0"][0] / r["res_coarse"]) ** 3
 
@@ -210,7 +230,8 @@ def run():
     js = sorted(js, key=lambda j: -(_predicted(j) if j[0] != "m10" else _cheap_predicted_seconds()))
     with Pool(int(os.environ.get("NPROC", 4))) as pool:
         rows = pool.map(_job, js, chunksize=1)
-    _save("m32_meep_highres", {"rows": rows})
+    _save("m32_meep_highres", {"rows": rows},
+          "Raw outputs of the doubled-resolution runs (m3, m14 at 80/um; m10 port 0 at 15/um); seconds per run.")
     return rows
 
 
@@ -218,7 +239,7 @@ def _predicted(job):
     p = RESULTS / "m32_timing.json"
     if not p.exists():
         return 0.0
-    for r in json.loads(p.read_text())["rows"]:
+    for r in _load("m32_timing")["rows"]:
         if r["module"] == job[0] and r["case"] == job[1]:
             return r["predicted_seconds"]
     return 0.0
@@ -226,8 +247,8 @@ def _predicted(job):
 
 def check():
     s = stored()
-    hi = json.loads((RESULTS / "m32_meep_highres.json").read_text())["rows"]
-    tim = {(r["module"], r["case"]): r for r in json.loads((RESULTS / "m32_timing.json").read_text())["rows"]}
+    hi = _load("m32_meep_highres")["rows"]
+    tim = {(r["module"], r["case"]): r for r in _load("m32_timing")["rows"]}
     table, fails = [], []
     for h in hi:
         if h["module"] == "m10":  # cheap pair: new run (low) against the stored higher resolution (high)
@@ -253,9 +274,9 @@ def check():
                 "reason": "predicted about 15 h on one core (results/m32_timing.json), above the 4 h limit; "
                           "not run at the user's choice"}]
     _save("m32_meep_convergence", {"tolerances": TOLERANCES, "resolutions": RES, "m10_cheap_pair": M10_CHEAP,
-                                   "selftest": selftest(), "table": table, "failures": fails, "not_run": not_run,
-                                   "notes": "low = stored production result; high = doubled resolution. FAIL rows "
-                                            "are findings; no stored result or report number was changed."})
+                                   "selftest": selftest(), "table": table, "failures": fails, "not_run": not_run},
+          "low = stored production result; high = doubled resolution (m10: low = new 15/um run, high = stored "
+          "30/um). FAIL rows are findings; no stored result or report number was changed.")
     print("failures:", len(fails), flush=True)
     return fails
 

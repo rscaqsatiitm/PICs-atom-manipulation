@@ -9,6 +9,8 @@ See `docs/findings.md` for the results, `docs/twenty_tweezers.md` for the 20-twe
 `docs/independent_steering.md` for independently steerable tweezers, `docs/fpr_design.md` for the
 beam-propagation design and optimisation of that engine, and
 `docs/parameters.md` for the provenance of every input.
+`docs/verification.md` records the verification checks (number gate, MEEP doubled-resolution acceptance,
+shared layers of the independent routes) and their open findings; the rules are in `CLAUDE.md`.
 
 **Report.** `report/report.pdf` (Volume I, synthesised report organised by physical question) and
 `report/docs_volume.pdf` (Volume II, the documents of `docs/` compiled without rewriting). Sources in `report/`;
