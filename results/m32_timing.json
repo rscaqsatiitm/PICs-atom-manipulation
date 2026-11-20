@@ -1,0 +1,81 @@
+{
+ "name": "m32_timing",
+ "script": "scripts/m32_meep_convergence.py",
+ "rule": "2D FDTD time ~ resolution^3 (pixels x steps)",
+ "rows": [
+  {
+   "module": "m3",
+   "case": "etch 0.1, BOX 3.0, Si (stored regression case)",
+   "res_coarse": 20,
+   "seconds_coarse": 30.26623272895813,
+   "res_production": 80,
+   "predicted_seconds": 1937.0388946533203
+  },
+  {
+   "module": "m3",
+   "case": "etch 0.2, BOX 2.0, Si (directionality 0.76)",
+   "res_coarse": 20,
+   "seconds_coarse": 29.221752882003784,
+   "res_production": 80,
+   "predicted_seconds": 1870.1921844482422
+  },
+  {
+   "module": "m3",
+   "case": "etch 0.05, BOX 2.65, Si (m30 best substrate)",
+   "res_coarse": 20,
+   "seconds_coarse": 29.345094680786133,
+   "res_production": 80,
+   "predicted_seconds": 1878.0860595703125
+  },
+  {
+   "module": "m3",
+   "case": "etch 0.05, BOX 1.9, Bragg 2 pairs",
+   "res_coarse": 20,
+   "seconds_coarse": 28.057902336120605,
+   "res_production": 80,
+   "predicted_seconds": 1795.7057495117188
+  },
+  {
+   "module": "m3",
+   "case": "etch 0.05, BOX 1.9, Bragg 3 pairs",
+   "res_coarse": 20,
+   "seconds_coarse": 28.571616888046265,
+   "res_production": 80,
+   "predicted_seconds": 1828.583480834961
+  },
+  {
+   "module": "m3",
+   "case": "etch 0.05, BOX 1.9, metal",
+   "res_coarse": 20,
+   "seconds_coarse": 27.295522212982178,
+   "res_production": 80,
+   "predicted_seconds": 1746.9134216308594
+  },
+  {
+   "module": "m14",
+   "case": "air",
+   "res_coarse": 20,
+   "seconds_coarse": 8.237158298492432,
+   "res_production": 80,
+   "predicted_seconds": 527.1781311035156
+  },
+  {
+   "module": "m14",
+   "case": "glass",
+   "res_coarse": 20,
+   "seconds_coarse": 8.372990369796753,
+   "res_production": 80,
+   "predicted_seconds": 535.8713836669922
+  },
+  {
+   "module": "m10",
+   "case": "port 0",
+   "res_coarse": 10,
+   "seconds_coarse": 833.0097243785858,
+   "res_production": 40,
+   "predicted_seconds": 53312.62236022949
+  }
+ ],
+ "total_predicted_hours_serial": 18.175608796013726,
+ "processes": 4
+}
