@@ -64,6 +64,22 @@ capture within 2 to 5%. At FDTD resolution 30/um the edge-port fidelity rises to
 0.13 rad, capture 0.369 vs 0.371), and the FDTD result itself changes by fidelity 0.98 between the two
 resolutions; hence the residual difference is dominated by FDTD discretisation rather than by the BPM.
 
+**Shared layers of the BPM-FDTD comparison.** The two routes are not independent below the propagation step.
+They share:
+- (i) the geometry builder (`picsim.opa.fpr_layout.FPRLayout`: port, arm and slab positions, tapers, the reduced
+  8 x 8 layout);
+- (ii) the lateral material model, i.e. the calibrated indices N_CORE = 1.84228 and N_CLAD = 1.35515 from
+  `picsim.bpm.calibrate_eim`, fitted to femwell vector-FEM modes (`picsim.modes`) built on the Sellmeier data of
+  `picsim.materials`;
+- (iii) the launch and projection fields (`picsim.opa.fpr_bpm.narrow_mode` and `tilted`): the FDTD is excited and
+  read out with the BPM's own port and arm modes;
+- (iv) the 2D reduction and the wavelength.
+
+The comparison therefore tests the BPM's wide-angle propagation and discretisation only. It cannot certify the
+geometry, the effective-index reduction (and with it femwell and the material data), or the mode definitions used
+for launch and projection. Those need their own checks; the effective-index reduction is checked separately
+against vector FEM. The FDTD's own resolution check is in `docs/verification.md`.
+
 **Exact-path (Huygens) model.** For fast optimisation, a 2D Rayleigh-Sommerfeld model with exact path lengths
 (`star_rs.py`) reproduces the full 128 x 128 BPM to within 1% in capture and with fidelity 0.996 to 0.9996
 after arm-phase calibration (0.96 at the two extreme ports, where taper coupling, absent from this model,

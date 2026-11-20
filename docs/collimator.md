@@ -93,6 +93,16 @@ silica for a glued lens.
 | fused silica | 2.3% | 95.9% | 85.2% | 82.9% |
 
 The two methods agree to 3 to 7%. We use the FDTD values to scale the Kirchhoff spectra in the power estimate.
+**Shared layers of the Kirchhoff-FDTD comparison.** Both estimates come from `scripts/m14_facet_meep.py` and share:
+- the 2D slab model, i.e. the core index 1.965 fitted so that the slab mode matches the femwell 3D index 1.7995
+  (`results/m13_facet.json`; femwell and the Sellmeier data of `picsim.materials`);
+- the slab mode profile (`slab_mode`) that launches the FDTD and is the Kirchhoff aperture field;
+- the oxide index;
+- the wavelength.
+
+The agreement checks the radiation physics at the facet, i.e. reflection and the evanescent part of the angular
+spectrum. It cannot certify the effective-index reduction of the 3D mode, the mode solver or the material data. The
+FDTD's own resolution check is in `docs/verification.md`.
 The remainder (8% in air, 2% in glass) leaves through the cladding near the facet. It is a 2D result with the
 lateral confinement folded into the core index; a 3D FDTD of the facet would refine it.
 
